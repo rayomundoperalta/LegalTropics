@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
 using System.Linq.Expressions;
+using System.IO;
 
 namespace LegalTropics
 {
@@ -76,6 +77,8 @@ namespace LegalTropics
             // TODO: Llamar a analyzer a través de sockets y recuperar la salida 
             // TODO: Almacenar la salida de Analyzer en una estructura de datos apropiada para procesar
 
+           
+
             AnalyzerProcess.StartInfo.UseShellExecute = false;
             AnalyzerProcess.StartInfo.FileName = @"D:\freeling-4.0-win64\freeling\bin\analyzer.exe";
             AnalyzerProcess.StartInfo.Arguments = @" -f D:\mx.cfg --outlv parsed --output conll --workers 5 --server --port 5000 "; //argument
@@ -87,6 +90,7 @@ namespace LegalTropics
             InicializaDatosIP();
             Globals.Ribbons.Tropicalizador.buttonParrafos.Enabled = false;
             Globals.Ribbons.Tropicalizador.buttonAnalyzer.Enabled = false;
+            
         }
 
         private void Application_WindowDeactivate(Word.Document Doc, Word.Window Wn)

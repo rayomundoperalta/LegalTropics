@@ -8,6 +8,16 @@ using System.Net.Sockets;
 using System.Windows.Forms;
 using Microsoft.Office.Interop.Word;
 using System.Text.RegularExpressions;
+using Traductor;
+using System.Data.Linq;
+using System.Data.OleDb;
+using System.Data;
+using DataTable = System.Data.DataTable;
+using System.IO;
+using System.Drawing;
+using Arboles;
+using Globales;
+
 
 namespace LegalTropics
 {
@@ -15,10 +25,78 @@ namespace LegalTropics
     {
         // Create a TCP/IP  socket.  
         Socket sender1;
+        Dictionary<string, string> dicFuncionarios = new Dictionary<string, string>();
+        public Node<Registro> APF;
+        public NavegaciónAPF VentanaNavegación;
+        public ImageScroll AparadorDeFotografias;
+
+        enum Formato
+        {
+            Justificado = 0,
+            Centrado = 1
+        }
+
+        enum Italic
+        {
+            Italicas = 1,
+            NoItalicas = 0
+        }
+
+        enum Bold
+        {
+            Bold = 1,
+            NoBold = 0
+        }
+
+        enum ALaLinea
+        {
+            NewLine = 1,
+            NoNewLine = 0
+        }
 
         private void Tropicalizador_Load(object sender, RibbonUIEventArgs e)
         {
-        }
+            Registro Presidente = new Registro("P", "Presidencia", "A0");
+            APF = new Node<Registro>(Presidente);
+            Parser.Parsea(APF, 0);
+            // Console.WriteLine("Imprimimos arbol");
+            // APF.Print();
+            // Console.WriteLine("\nbuscamos ");
+            // NodeList<Registro> lista = Parser.GetNodeListOf(APF, "DG 2");
+            // for (int i = 0; i < lista.Count; i++)
+            // {
+            //     Console.WriteLine(lista[i].Value.ToString());
+            // }
+            
+            RibbonDropDownItem item; 
+            DataRow[] funcionarios = MSAccess.GetFuncionarios();
+            for (int i = 0; i < funcionarios.Length; i++)
+            {
+                item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+                item.Label = funcionarios[i]["PrimerNombre"] + " " + funcionarios[i]["ApellidoPaterno"] + " " + funcionarios[i]["ID"];
+                dicFuncionarios.Add(item.Label, funcionarios[i]["ID"].ToString());
+                comboBoxFuncionarios.Items.Add(item);
+            }
+
+            List<string> Puestos = APF.ListPuestos();
+
+            Puestos.Sort(delegate (string x, string y)
+            {
+                return x.CompareTo(y);
+            });
+
+            Puestos.Sort();
+
+            for (int i = 0; i < Puestos.Count; i++)
+            {
+                item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
+                item.Label = Puestos[i];
+                comboBoxPuestos.Items.Add(item);
+            }
+
+            VentanaNavegación = new NavegaciónAPF();
+            AparadorDeFotografias = new ImageScroll();
+    }
 
         private IPAddress parse(string ipAddress)
         {
@@ -99,20 +177,12 @@ namespace LegalTropics
                 bytesSent = sender1.Send(msg);
 
                 bytesRec = sender1.Receive(bytes);
-                // Release the socket.  
+                // Release the socket.
                 //sender1.Shutdown(SocketShutdown.Both);
                 //sender1.Close();
-                Regex regex = new Regex(@"- - [a-zA-Z0-9 ():-]+ - - - -");
-                MatchCollection AllMatches = regex.Matches(Encoding.UTF8.GetString(bytes, 0, bytesRec));
-                string result = string.Empty;
-                if (AllMatches.Count > 0)
-                {
-                    foreach (Match someMatch in AllMatches)
-                    {
-                        result += someMatch.Groups[0].Value.Replace(" -","").Replace("- ","").Replace(" ","") + " ";
-                    }
-                }
-                return "\n" + result;
+
+                Compilador lc = new Compilador(Encoding.UTF8.GetString(bytes, 0, bytesRec));
+                return /* "\n" + lc.result + */ "\n" + lc.result1; // + "\n" + lc.result2;
             }
             catch (ArgumentNullException ane)
             {
@@ -261,32 +331,387 @@ namespace LegalTropics
                 string textoAInsertar = analisis;
                 Utility.InsertText(currentSelection, textoAInsertar);
             }
-
         }
-    }
 
-    public static class Utility
-    {
-        public static void InsertText(Selection currentSelection, string text)
+        string linea;
+
+        private void CRLF(Range rng, float size, Italic it, string FontFamily,  Formato fmt, Bold negritas, ALaLinea NewLine)
         {
-            if (currentSelection.Type == WdSelectionType.wdSelectionIP)
+            rng.Text = (NewLine == ALaLinea.NewLine) ? linea + "\n" : linea;
+            rng.Font.Name = FontFamily;
+            rng.Font.Bold = (negritas == Bold.Bold) ? 1 : 0;
+            switch (fmt)
             {
-                currentSelection.TypeText(text);
-                currentSelection.TypeParagraph();
+                case Formato.Justificado:
+                    rng.Paragraphs.Alignment = WdParagraphAlignment.wdAlignParagraphJustify;
+                    break;
+                case Formato.Centrado:
+                    rng.Paragraphs.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+                    break;
+                default:
+                    break;
             }
+            rng.Font.Size = size;
+            rng.Font.Italic = (it == Italic.Italicas) ? 1 : 0;
+            rng.Collapse(WdCollapseDirection.wdCollapseEnd);
+            rng.Select();
+        }
+
+        private void WriteLine(Range rango, string text, float size, Italic it, string FontFamily, Formato fmt, Bold negritas, ALaLinea NewLine)
+        {
+            linea = text;
+            CRLF(rango, size, it, FontFamily, fmt, negritas, NewLine);
+        }
+
+        private void ImprimeDatosFuncionarios(Range rng, DataRow[] funcionarios)
+        {
+            Object oMissing = System.Reflection.Missing.Value;
+            int inicio = rng.Start;
+            for (int i = 0; i < funcionarios.Length; i++)
+            {
+                float PageWidthPoints = Globals.ThisAddIn.Application.ActiveDocument.PageSetup.PageWidth;
+                string nombre = funcionarios[i]["PrimerNombre"] + " " + funcionarios[i]["ApellidoPaterno"];
+                WriteLine(rng, nombre, (float)16, Italic.NoItalicas, "Century Gothic", Formato.Centrado, Bold.Bold, ALaLinea.NewLine);
+                DataRow[] puestos = MSAccess.GetPuestos(funcionarios[i]["ID"].ToString());
+                if (puestos.Length > 0)
+                {
+                    WriteLine(rng, puestos[puestos.Length - 1]["Puesto"].ToString(), (float)10.5, Italic.NoItalicas, "Century Gothic", Formato.Centrado, Bold.NoBold, ALaLinea.NewLine);
+                    WriteLine(rng, puestos[puestos.Length - 1]["DependenciaEntidad"].ToString(), (float)10.5, Italic.NoItalicas, "Century Gothic", Formato.Centrado, Bold.NoBold, ALaLinea.NewLine);
+                }
+
+                /* Poner la foto aquí */
+                WriteLine(rng, "\n", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                string FullName = MSAccess.GetFoto(funcionarios[i]["ID"].ToString());
+                if (FullName != String.Empty)
+                {
+                    object PhotoPos = rng;
+                    ((Range) PhotoPos).Paragraphs.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+                    object tr = true;
+                    object fa = false;
+                    InlineShape shape = Globals.ThisAddIn.Application.ActiveDocument.InlineShapes.AddPicture(FullName, ref tr, ref fa, ref PhotoPos);
+                    
+                    float alto = shape.Height;
+                    float ancho = shape.Width;
+                    float anchoDoc = Globals.ThisAddIn.Application.ActiveDocument.PageSetup.PageWidth;
+                    float AnchoUtilizable = anchoDoc - Globals.ThisAddIn.Application.ActiveDocument.PageSetup.LeftMargin - Globals.ThisAddIn.Application.ActiveDocument.PageSetup.RightMargin;
+                    shape.Width = (float)0.25 * AnchoUtilizable;
+                    shape.Height = (alto / ancho) * (float)0.25 * AnchoUtilizable;
+                    Shape ShapeFoto = shape.ConvertToShape();
+                    InlineShape shape1 = Globals.ThisAddIn.Application.ActiveDocument.InlineShapes.AddPicture(FullName, ref tr, ref fa, ref PhotoPos);
+                    shape1.Height = (alto / ancho) * (float)0.25 * AnchoUtilizable;
+                    shape1.Width = 0;
+                    ShapeFoto.Left = (float)(0.75 / 2.0) * (anchoDoc - Globals.ThisAddIn.Application.ActiveDocument.PageSetup.LeftMargin - Globals.ThisAddIn.Application.ActiveDocument.PageSetup.RightMargin);
+                    Range rangoFoto = shape.Range;
+                    rangoFoto.Collapse(WdCollapseDirection.wdCollapseEnd);
+                    rangoFoto.Select();
+                    rng = rangoFoto;
+                    rng.Collapse(WdCollapseDirection.wdCollapseEnd);
+                    rng.Select();
+                    FileInfo fi = new FileInfo(FullName);
+                    if (fi.Exists) File.Delete(FullName);
+                    //WriteLine(rng, "\n" + alto.ToString() + " " + ancho.ToString() + " " + anchoDoc.ToString(), (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NewLine);
+                }
+
+                WriteLine(rng, "\n", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NewLine);
+
+                Table tabla1 = Globals.ThisAddIn.Application.ActiveDocument.Tables.Add(rng, 6, 2);
+
+                tabla1.AllowPageBreaks = true;
+                tabla1.Borders.InsideLineStyle = WdLineStyle.wdLineStyleSingle;
+                tabla1.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleSingle;
+
+                tabla1.PreferredWidth = PageWidthPoints;
+                tabla1.Columns[1].SetWidth(PageWidthPoints * (float) (0.15), WdRulerStyle.wdAdjustSameWidth);
+
+                tabla1.Cell(1, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
+                WriteLine(tabla1.Cell(1, 1).Range, "Nombre Completo", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                string nombreCompleto = funcionarios[i]["PrimerNombre"] + " " + funcionarios[i]["SegundoNombre"] + " " + funcionarios[i]["ApellidoPaterno"] + " " + funcionarios[i]["ApellidoMaterno"];
+                WriteLine(tabla1.Cell(1, 2).Range, nombreCompleto, (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+
+                tabla1.Cell(2, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
+                WriteLine(tabla1.Cell(2, 1).Range, "Lugar y fecha de nacimiento", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                WriteLine(tabla1.Cell(2, 2).Range, funcionarios[i]["FechaDeNacimiento"].ToString().Replace("00:00:00", ""), (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+
+                tabla1.Cell(3, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
+                WriteLine(tabla1.Cell(3, 1).Range, "Partido", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                DataRow[] adscripcionPolitica = MSAccess.GetAdscripcionPolitica(funcionarios[i]["ID"].ToString());
+                if (adscripcionPolitica.Length > 0)
+                {
+                    WriteLine(tabla1.Cell(3, 2).Range, adscripcionPolitica[adscripcionPolitica.Length - 1]["NombreDelPartido"].ToString(), (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                }
+
+                tabla1.Cell(4, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
+                WriteLine(tabla1.Cell(4, 1).Range, "Cargo Actual", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                if (puestos.Length > 0)
+                {
+                    WriteLine(tabla1.Cell(4, 2).Range, puestos[puestos.Length - 1]["DependenciaEntidad"].ToString(), (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                }
+
+                tabla1.Cell(5, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
+                WriteLine(tabla1.Cell(5, 1).Range, "Datos de Contacto", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                WriteLine(tabla1.Cell(5, 2).Range, "", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+
+                tabla1.Cell(6, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
+                WriteLine(tabla1.Cell(6, 1).Range, "Familia", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                WriteLine(tabla1.Cell(6, 2).Range, "", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+
+                rng = Globals.ThisAddIn.Application.ActiveDocument.Range(Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1, Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1);
+
+                DataRow[] escolaridad = MSAccess.GetEscolaridad(funcionarios[i]["ID"].ToString());
+                if (escolaridad.Length > 0)
+                {
+                    rng.Select();
+
+                    WriteLine(rng, " ", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+
+                    Table tabla2 = Globals.ThisAddIn.Application.ActiveDocument.Tables.Add(rng, 1, 2);
+
+                    tabla2.AllowPageBreaks = true;
+                    tabla2.Borders.InsideLineStyle = WdLineStyle.wdLineStyleSingle;
+                    tabla2.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleSingle;
+
+                    tabla2.PreferredWidth = PageWidthPoints;
+                    tabla2.Columns[1].SetWidth(PageWidthPoints * (float)(0.15), WdRulerStyle.wdAdjustSameWidth);
+
+                    tabla2.Cell(1, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
+                    WriteLine(tabla2.Cell(1, 1).Range, "Estudios", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+
+                    string datosEscolares = "";
+                    for (int j = 0; j < escolaridad.Length; j++)
+                    {
+                        datosEscolares += escolaridad[j]["Universidad"] + "  " + escolaridad[j]["Grado"] + " " + escolaridad[j]["FechaDeFin"];
+                        datosEscolares += (j == escolaridad.Length - 1) ? string.Empty : "\n";
+                    }
+                    tabla2.Cell(1, 2).Range.ListFormat.ApplyBulletDefault(ref oMissing);
+                    WriteLine(tabla2.Cell(1, 2).Range, datosEscolares, (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                    rng = Globals.ThisAddIn.Application.ActiveDocument.Range(Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1, Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1);
+                }
+
+                if (puestos.Length > 0)
+                {
+                    rng.Select();
+
+                    WriteLine(rng, " ", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+
+                    Table tabla3 = Globals.ThisAddIn.Application.ActiveDocument.Tables.Add(rng, 1, 2);
+
+                    tabla3.AllowPageBreaks = true;
+                    tabla3.Borders.InsideLineStyle = WdLineStyle.wdLineStyleSingle;
+                    tabla3.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleSingle;
+
+                    tabla3.PreferredWidth = PageWidthPoints;
+                    tabla3.Columns[1].SetWidth(PageWidthPoints * (float)(0.20), WdRulerStyle.wdAdjustSameWidth);
+
+                    tabla3.Cell(1, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
+                    WriteLine(tabla3.Cell(1, 1).Range, "Trayectoria", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                    string trayectoria = "";
+                    for (int j = 0; j < puestos.Length; j++)
+                    {
+                        trayectoria += puestos[j]["Puesto"] + "  " + puestos[j]["DependenciaEntidad"] + " " + puestos[j]["FechaDeInicio"] + " " + puestos[j]["FechaDeFin"];
+                        trayectoria += (j == puestos.Length - 1) ? string.Empty : "\n";
+                    }
+                    tabla3.Cell(1, 2).Range.ListFormat.ApplyBulletDefault(ref oMissing);
+                    WriteLine(tabla3.Cell(1, 2).Range, trayectoria, (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                    rng = Globals.ThisAddIn.Application.ActiveDocument.Range(Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1, Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1);
+                }
+
+                DataRow[] notas = MSAccess.GetNotasRelevantes(funcionarios[i]["ID"].ToString());
+                if (notas.Length > 0)
+                {
+                    rng.Select();
+
+                    WriteLine(rng, " ", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+
+                    Table tabla4 = Globals.ThisAddIn.Application.ActiveDocument.Tables.Add(rng, 1, 2);
+
+                    tabla4.AllowPageBreaks = true;
+                    tabla4.Borders.InsideLineStyle = WdLineStyle.wdLineStyleSingle;
+                    tabla4.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleSingle;
+
+                    tabla4.PreferredWidth = PageWidthPoints;
+                    tabla4.Columns[1].SetWidth(PageWidthPoints * (float)(0.20), WdRulerStyle.wdAdjustSameWidth);
+
+                    tabla4.Cell(1, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
+                    WriteLine(tabla4.Cell(1, 1).Range, "Notas relevantes", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+
+                    string notasRelevantes = "";
+                    for (int j = 0; j < notas.Length; j++)
+                    {
+                        notasRelevantes += notas[j]["Referencia"].ToString().Replace("\n", string.Empty);
+                        notasRelevantes += (j == notas.Length - 1) ? string.Empty : "\n";
+                    }
+                    tabla4.Cell(1, 2).Range.ListFormat.ApplyNumberDefault(ref oMissing);
+                    ListTemplate lt = tabla4.Cell(1, 2).Range.ListFormat.ListTemplate;
+                    tabla4.Cell(1, 2).Range.ListFormat.ApplyListTemplate(lt , false);
+                    
+                    WriteLine(tabla4.Cell(1, 2).Range, notasRelevantes, (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                    rng = Globals.ThisAddIn.Application.ActiveDocument.Range(Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1, Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1);
+                }
+
+                DataRow[] comentarios = MSAccess.GetComentarios(funcionarios[i]["ID"].ToString());
+                if (comentarios.Length > 0)
+                {
+                    rng.Select();
+
+                    WriteLine(rng, " ", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+
+                    Table tabla5 = Globals.ThisAddIn.Application.ActiveDocument.Tables.Add(rng, 1, 2);
+
+                    tabla5.AllowPageBreaks = true;
+                    tabla5.Borders.InsideLineStyle = WdLineStyle.wdLineStyleSingle;
+                    tabla5.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleSingle;
+
+                    tabla5.PreferredWidth = PageWidthPoints;
+                    tabla5.Columns[1].SetWidth(PageWidthPoints * (float)(0.20), WdRulerStyle.wdAdjustSameWidth);
+
+                    tabla5.Cell(1, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
+                    WriteLine(tabla5.Cell(1, 1).Range, "Comentarios", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+
+                    string comments = "";
+                    for (int j = 0; j < comentarios.Length; j++)
+                    {
+                        comments += comentarios[j]["Referencia"].ToString().Replace("\n", string.Empty);
+                        comments += (j == comentarios.Length - 1) ? string.Empty : "\n";
+                    }
+                    tabla5.Cell(1, 2).Range.ListFormat.ApplyBulletDefault(ref oMissing);
+                    WriteLine(tabla5.Cell(1, 2).Range, comments, (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                    rng = Globals.ThisAddIn.Application.ActiveDocument.Range(Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1, Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1);
+                }
+
+                // insertamos un salto de pagina al final de los datos de cada funcionario
+                //Utility.InsertText(currentSelection, "==========================================================");
+                object type = 7;
+                rng.InsertBreak(ref type);
+                int fin = rng.End;
+                Range rango = Globals.ThisAddIn.Application.ActiveDocument.Range(inicio, fin);
+                rango.Paragraphs.Space1();
+                rango.Paragraphs.SpaceBefore = 0;
+                rango.Paragraphs.SpaceAfter = 0;
+
+                rng.Collapse(WdCollapseDirection.wdCollapseEnd);
+                rng.Select();
+                
+            }
+        }
+
+        public void DelteBlankPages()
+        {
+
+            // Get application object
+            //Microsoft.Office.Interop.Word.Application WordApplication = new Microsoft.Office.Interop.Word.Application();
+
+            // Get document object
+            object Miss = System.Reflection.Missing.Value;
+            object ReadOnly = false;
+            object Visible = false;
+            Document Doc = Globals.ThisAddIn.Application.ActiveDocument; 
+            // WordApplication.Documents.Open(ref Path, ref Miss, ref ReadOnly, ref Miss, ref Miss, ref Miss, ref Miss, ref Miss, ref Miss, ref Miss, ref Miss, ref Visible, ref Miss, ref Miss, ref Miss, ref Miss);
+
+            // Get pages count
+            Microsoft.Office.Interop.Word.WdStatistic PagesCountStat = Microsoft.Office.Interop.Word.WdStatistic.wdStatisticPages;
+            int PagesCount = Doc.ComputeStatistics(PagesCountStat, ref Miss);
+
+            //Get pages
+            object What = Microsoft.Office.Interop.Word.WdGoToItem.wdGoToPage;
+            object Which = Microsoft.Office.Interop.Word.WdGoToDirection.wdGoToAbsolute;
+            object Start;
+            object End;
+            object CurrentPageNumber;
+            object NextPageNumber;
+
+            for (int Index = 1; Index < PagesCount + 1; Index++)
+            {
+                CurrentPageNumber = (Convert.ToInt32(Index.ToString()));
+                NextPageNumber = (Convert.ToInt32((Index + 1).ToString()));
+
+                // Get start position of current page
+                Start = Globals.ThisAddIn.Application.Selection.GoTo(ref What, ref Which, ref CurrentPageNumber, ref Miss).Start;
+
+                // Get end position of current page                                
+                End = Globals.ThisAddIn.Application.Selection.GoTo(ref What, ref Which, ref NextPageNumber, ref Miss).End;
+
+                // Get text
+                Int32 inicio = Convert.ToInt32(Start.ToString());
+                Int32 fin = Convert.ToInt32(End.ToString());
+                if (System.Math.Abs(inicio - fin)  < 4) {
+                    Doc.Range(ref Start, ref End).Delete();
+                }
+            }
+        }
+
+        private void buttonGeneraReporte_Click(object sender, RibbonControlEventArgs e)
+        {
+            DataRow[] funcionarios = MSAccess.GetFuncionarios();
+            //Range rng = Globals.ThisAddIn.Application.ActiveDocument.Range(0, 0);
+            Range rng = Globals.ThisAddIn.Application.Selection.Range;
+            ImprimeDatosFuncionarios(rng, funcionarios);
+            DelteBlankPages();
+            
+        }
+
+        public void GeneraReporte(string ID)
+        {
+            DataRow[] funcionarios = MSAccess.GetFuncionario(ID);
+            //Range rng = Globals.ThisAddIn.Application.ActiveDocument.Range(0, 0);
+            Range rng = Globals.ThisAddIn.Application.Selection.Range;
+            if (funcionarios.Length > 1)
+            {
+                MessageBox.Show("Error grave en la base de datos.\nComunicarse con la DNCP");
+            } 
             else
             {
-                if (currentSelection.Type == WdSelectionType.wdSelectionNormal)
-                {
-                    if (Globals.ThisAddIn.Application.Options.ReplaceSelection)
-                    {
-                        object direction = WdCollapseDirection.wdCollapseStart;
-                        currentSelection.Collapse(ref direction);
-                    }
-                    currentSelection.TypeText(text);
-                    currentSelection.TypeParagraph();
-                }
+                ImprimeDatosFuncionarios(rng, funcionarios);
+            }
+        }
+
+        private void comboBoxFuncionarios_TextChanged(object sender, RibbonControlEventArgs e)
+        {
+            GeneraReporte(dicFuncionarios[comboBoxFuncionarios.Text]);
+        }
+
+        private void comboBoxPuestos_TextChanged(object sender, RibbonControlEventArgs e)
+        {
+            DataRow[] IDs = MSAccess.GetIDPuestoAPF(comboBoxPuestos.Text);
+            for (int i = 0; i < IDs.Length; i++)
+            {
+                GeneraReporte(IDs[i]["ID"].ToString());
+            }
+        }
+
+        
+
+        private void VentanaNavegación_Deactivate(object sender, System.EventArgs e)
+        {
+            VentanaNavegación.Hide();
+        }
+
+        private void buttonOrganigrama_Click(object sender, RibbonControlEventArgs e)
+        {
+            VentanaNavegación.Deactivate += VentanaNavegación_Deactivate;
+            VentanaNavegación.Show();
+        }
+
+
+        private void AparadorDeFotografias_Deactivate(object sender, EventArgs e)
+        {
+            AparadorDeFotografias.Hide();
+        }
+
+        private void buttonCatalogoFotos_Click(object sender, RibbonControlEventArgs e)
+        {
+            
+            AparadorDeFotografias.Deactivate += AparadorDeFotografias_Deactivate;
+            AparadorDeFotografias.Show();
+        }
+
+        private void buttonActualizaBaseDeDatos_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (GetDataBaseOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                MSAccess.ActualizaDataBase(GetDataBaseOpenFileDialog.FileName);
+                
             }
         }
     }
 }
+

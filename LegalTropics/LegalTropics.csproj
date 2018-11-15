@@ -102,6 +102,7 @@
     <Reference Include="Accessibility" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -156,6 +157,19 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="ImageScroll.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImageScroll.Designer.cs">
+      <DependentUpon>ImageScroll.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MSAccess.cs" />
+    <Compile Include="NavegaciónAPF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NavegaciónAPF.Designer.cs">
+      <DependentUpon>NavegaciónAPF.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -165,6 +179,13 @@
     <Compile Include="Tropicalizador.Designer.cs">
       <DependentUpon>Tropicalizador.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utility.cs" />
+    <EmbeddedResource Include="ImageScroll.resx">
+      <DependentUpon>ImageScroll.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NavegaciónAPF.resx">
+      <DependentUpon>NavegaciónAPF.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -177,6 +198,7 @@
     <EmbeddedResource Include="Tropicalizador.resx">
       <DependentUpon>Tropicalizador.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="LegalTropics_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -185,6 +207,7 @@
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ThisAddIn.cs">
       <SubType>Code</SubType>
@@ -200,6 +223,23 @@
   <ItemGroup>
     <Content Include="analyzer_client.cc" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Arboles\Arboles.csproj">
+      <Project>{0365e5a2-c233-4090-ac0a-1b9ac833be16}</Project>
+      <Name>Arboles</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Globales\Globales.csproj">
+      <Project>{9875d5fc-5821-4cd5-a9e0-2a18db463db9}</Project>
+      <Name>Globales</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Traductor\Traductor.csproj">
+      <Project>{8f1ccffe-6dfa-49bd-8721-48e47d72bc2b}</Project>
+      <Name>Traductor</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -212,6 +252,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>58712043C0776733A19A42AAC4BE4D0713F2B209</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

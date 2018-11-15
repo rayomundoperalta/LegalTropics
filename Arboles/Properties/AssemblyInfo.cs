@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Tokenizer")]
+[assembly: AssemblyTitle("Arboles")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Tokenizer")]
+[assembly: AssemblyProduct("Arboles")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("eab0ad4d-ebe4-46f0-a308-5c5de5a26b62")]
+[assembly: Guid("0365e5a2-c233-4090-ac0a-1b9ac833be16")]
 
 // Version information for an assembly consists of the following four values:
 //

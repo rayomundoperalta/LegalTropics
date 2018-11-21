@@ -4,10 +4,11 @@ using System.Data;
 using System.Data.OleDb;
 using System.IO;
 using Globales;
+using System.Windows.Forms;
 
-namespace LegalTropics
+namespace MSAccess
 {
-    public static class MSAccess
+    public static class AccessUtility
     {
         static private OleDbConnectionStringBuilder Builder = new OleDbConnectionStringBuilder();
         static private System.Data.DataTable tablaDeDatos { get; set; }
@@ -75,6 +76,32 @@ namespace LegalTropics
                 }
             }
             return (tablaDeDatos.Select());
+        }
+
+        static public string GetNombreFuncionario(string ID)
+        {
+            Builder.Provider = Defines.StringAccessProvider;
+            Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+            tablaDeDatos = new System.Data.DataTable();
+            using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+            {
+                var sql = "SELECT * FROM Funcionarios where ID = @ID;";
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
+                    cn.Open();
+                    tablaDeDatos.Load(cmd.ExecuteReader());
+                    cn.Close();
+                }
+            }
+            DataRow[] funcionarios = tablaDeDatos.Select();
+            String name = string.Empty;
+            for (int i = 0; i < funcionarios.Length; i++)
+            {
+                name = funcionarios[i]["PrimerNombre"] + " " + funcionarios[i]["ApellidoPaterno"];
+                return name;
+            }
+            return name;
         }
 
         static public DataRow[] GetEscolaridad(string ID)

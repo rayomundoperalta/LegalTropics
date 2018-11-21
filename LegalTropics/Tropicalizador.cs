@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Microsoft.Office.Tools.Ribbon;
 using System.Net;
 using System.Net.Sockets;
 using System.Windows.Forms;
 using Microsoft.Office.Interop.Word;
-using System.Text.RegularExpressions;
 using Traductor;
-using System.Data.Linq;
-using System.Data.OleDb;
 using System.Data;
-using DataTable = System.Data.DataTable;
 using System.IO;
-using System.Drawing;
 using Arboles;
 using Globales;
+using APFInfo;
+using MSAccess;
 
 
 namespace LegalTropics
@@ -29,6 +25,8 @@ namespace LegalTropics
         public Node<Registro> APF;
         public NavegaciónAPF VentanaNavegación;
         public ImageScroll AparadorDeFotografias;
+        public PuestosAPF VentanaPuestos;
+        public FuncionariosAPF VentanaFuncionarios;
 
         enum Formato
         {
@@ -69,7 +67,7 @@ namespace LegalTropics
             // }
             
             RibbonDropDownItem item; 
-            DataRow[] funcionarios = MSAccess.GetFuncionarios();
+            DataRow[] funcionarios = AccessUtility.GetFuncionarios();
             for (int i = 0; i < funcionarios.Length; i++)
             {
                 item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
@@ -96,6 +94,8 @@ namespace LegalTropics
 
             VentanaNavegación = new NavegaciónAPF();
             AparadorDeFotografias = new ImageScroll();
+            VentanaPuestos = new PuestosAPF();
+            VentanaFuncionarios = new FuncionariosAPF();
     }
 
         private IPAddress parse(string ipAddress)
@@ -372,7 +372,7 @@ namespace LegalTropics
                 float PageWidthPoints = Globals.ThisAddIn.Application.ActiveDocument.PageSetup.PageWidth;
                 string nombre = funcionarios[i]["PrimerNombre"] + " " + funcionarios[i]["ApellidoPaterno"];
                 WriteLine(rng, nombre, (float)16, Italic.NoItalicas, "Century Gothic", Formato.Centrado, Bold.Bold, ALaLinea.NewLine);
-                DataRow[] puestos = MSAccess.GetPuestos(funcionarios[i]["ID"].ToString());
+                DataRow[] puestos = AccessUtility.GetPuestos(funcionarios[i]["ID"].ToString());
                 if (puestos.Length > 0)
                 {
                     WriteLine(rng, puestos[puestos.Length - 1]["Puesto"].ToString(), (float)10.5, Italic.NoItalicas, "Century Gothic", Formato.Centrado, Bold.NoBold, ALaLinea.NewLine);
@@ -381,13 +381,14 @@ namespace LegalTropics
 
                 /* Poner la foto aquí */
                 WriteLine(rng, "\n", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
-                string FullName = MSAccess.GetFoto(funcionarios[i]["ID"].ToString());
+                string FullName = AccessUtility.GetFoto(funcionarios[i]["ID"].ToString());
                 if (FullName != String.Empty)
                 {
                     object PhotoPos = rng;
+
                     ((Range) PhotoPos).Paragraphs.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
                     object tr = true;
-                    object fa = false;
+                    object fa = true;
                     InlineShape shape = Globals.ThisAddIn.Application.ActiveDocument.InlineShapes.AddPicture(FullName, ref tr, ref fa, ref PhotoPos);
                     
                     float alto = shape.Height;
@@ -434,7 +435,7 @@ namespace LegalTropics
 
                 tabla1.Cell(3, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
                 WriteLine(tabla1.Cell(3, 1).Range, "Partido", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
-                DataRow[] adscripcionPolitica = MSAccess.GetAdscripcionPolitica(funcionarios[i]["ID"].ToString());
+                DataRow[] adscripcionPolitica = AccessUtility.GetAdscripcionPolitica(funcionarios[i]["ID"].ToString());
                 if (adscripcionPolitica.Length > 0)
                 {
                     WriteLine(tabla1.Cell(3, 2).Range, adscripcionPolitica[adscripcionPolitica.Length - 1]["NombreDelPartido"].ToString(), (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
@@ -457,7 +458,7 @@ namespace LegalTropics
 
                 rng = Globals.ThisAddIn.Application.ActiveDocument.Range(Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1, Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1);
 
-                DataRow[] escolaridad = MSAccess.GetEscolaridad(funcionarios[i]["ID"].ToString());
+                DataRow[] escolaridad = AccessUtility.GetEscolaridad(funcionarios[i]["ID"].ToString());
                 if (escolaridad.Length > 0)
                 {
                     rng.Select();
@@ -515,7 +516,7 @@ namespace LegalTropics
                     rng = Globals.ThisAddIn.Application.ActiveDocument.Range(Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1, Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1);
                 }
 
-                DataRow[] notas = MSAccess.GetNotasRelevantes(funcionarios[i]["ID"].ToString());
+                DataRow[] notas = AccessUtility.GetNotasRelevantes(funcionarios[i]["ID"].ToString());
                 if (notas.Length > 0)
                 {
                     rng.Select();
@@ -548,7 +549,7 @@ namespace LegalTropics
                     rng = Globals.ThisAddIn.Application.ActiveDocument.Range(Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1, Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1);
                 }
 
-                DataRow[] comentarios = MSAccess.GetComentarios(funcionarios[i]["ID"].ToString());
+                DataRow[] comentarios = AccessUtility.GetComentarios(funcionarios[i]["ID"].ToString());
                 if (comentarios.Length > 0)
                 {
                     rng.Select();
@@ -641,7 +642,7 @@ namespace LegalTropics
 
         private void buttonGeneraReporte_Click(object sender, RibbonControlEventArgs e)
         {
-            DataRow[] funcionarios = MSAccess.GetFuncionarios();
+            DataRow[] funcionarios = AccessUtility.GetFuncionarios();
             //Range rng = Globals.ThisAddIn.Application.ActiveDocument.Range(0, 0);
             Range rng = Globals.ThisAddIn.Application.Selection.Range;
             ImprimeDatosFuncionarios(rng, funcionarios);
@@ -651,7 +652,7 @@ namespace LegalTropics
 
         public void GeneraReporte(string ID)
         {
-            DataRow[] funcionarios = MSAccess.GetFuncionario(ID);
+            DataRow[] funcionarios = AccessUtility.GetFuncionario(ID);
             //Range rng = Globals.ThisAddIn.Application.ActiveDocument.Range(0, 0);
             Range rng = Globals.ThisAddIn.Application.Selection.Range;
             if (funcionarios.Length > 1)
@@ -671,7 +672,7 @@ namespace LegalTropics
 
         private void comboBoxPuestos_TextChanged(object sender, RibbonControlEventArgs e)
         {
-            DataRow[] IDs = MSAccess.GetIDPuestoAPF(comboBoxPuestos.Text);
+            DataRow[] IDs = AccessUtility.GetIDPuestoAPF(comboBoxPuestos.Text);
             for (int i = 0; i < IDs.Length; i++)
             {
                 GeneraReporte(IDs[i]["ID"].ToString());
@@ -685,10 +686,22 @@ namespace LegalTropics
             VentanaNavegación.Hide();
         }
 
+        private void VentanaPuestos_Deactivate(object sender, System.EventArgs e)
+        {
+            VentanaPuestos.Hide();
+        }
+
+        private void VentanaFuncionarios_Deactivate(object sender, System.EventArgs e)
+        {
+            VentanaFuncionarios.Hide();
+        }
+
         private void buttonOrganigrama_Click(object sender, RibbonControlEventArgs e)
         {
             VentanaNavegación.Deactivate += VentanaNavegación_Deactivate;
+            VentanaNavegación.treeViewAPF.Enabled = false;
             VentanaNavegación.Show();
+            VentanaNavegación.treeViewAPF.Enabled = true;
         }
 
 
@@ -708,9 +721,25 @@ namespace LegalTropics
         {
             if (GetDataBaseOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                MSAccess.ActualizaDataBase(GetDataBaseOpenFileDialog.FileName);
+                // AccessUtility.ActualizaDataBase(GetDataBaseOpenFileDialog.FileName);
                 
             }
+        }
+
+        private void buttonPuestos_Click(object sender, RibbonControlEventArgs e)
+        {
+            VentanaPuestos.Deactivate += VentanaPuestos_Deactivate;
+            VentanaPuestos.treeViewPuestos.Enabled = false;
+            VentanaPuestos.Show();
+            VentanaPuestos.treeViewPuestos.Enabled = true;
+        }
+
+        private void buttonFuncionarios_Click(object sender, RibbonControlEventArgs e)
+        {
+            VentanaFuncionarios.Deactivate += VentanaFuncionarios_Deactivate;
+            VentanaFuncionarios.treeViewFuncionarios.Enabled = false;
+            VentanaFuncionarios.Show();
+            VentanaFuncionarios.treeViewFuncionarios.Enabled = true;
         }
     }
 }

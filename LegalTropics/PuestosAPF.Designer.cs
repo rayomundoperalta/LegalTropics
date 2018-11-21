@@ -1,6 +1,6 @@
 ﻿namespace LegalTropics
 {
-    partial class NavegaciónAPF
+    partial class PuestosAPF
     {
         /// <summary>
         /// Required designer variable.
@@ -28,32 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.treeViewAPF = new System.Windows.Forms.TreeView();
+            this.treeViewPuestos = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
-            // treeViewAPF
+            // treeViewPuestos
             // 
-            this.treeViewAPF.Location = new System.Drawing.Point(12, 12);
-            this.treeViewAPF.Name = "treeViewAPF";
-            this.treeViewAPF.Size = new System.Drawing.Size(558, 329);
-            this.treeViewAPF.TabIndex = 1;
-            this.treeViewAPF.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewAPF_AfterSelect);
+            this.treeViewPuestos.Location = new System.Drawing.Point(13, 13);
+            this.treeViewPuestos.Name = "treeViewPuestos";
+            this.treeViewPuestos.Size = new System.Drawing.Size(775, 425);
+            this.treeViewPuestos.TabIndex = 0;
+            this.treeViewPuestos.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewPuestos_AfterSelect);
             // 
-            // NavegaciónAPF
+            // PuestosAPF
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(582, 353);
-            this.ControlBox = false;
-            this.Controls.Add(this.treeViewAPF);
-            this.Name = "NavegaciónAPF";
-            this.Text = "Organigrama de la APF";
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.treeViewPuestos);
+            this.Name = "PuestosAPF";
+            this.Text = "Puestos APF";
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        public System.Windows.Forms.TreeView treeViewAPF;
+        public System.Windows.Forms.TreeView treeViewPuestos;
     }
 }

@@ -157,13 +157,18 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="FuncionariosAPF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FuncionariosAPF.Designer.cs">
+      <DependentUpon>FuncionariosAPF.cs</DependentUpon>
+    </Compile>
     <Compile Include="ImageScroll.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ImageScroll.Designer.cs">
       <DependentUpon>ImageScroll.cs</DependentUpon>
     </Compile>
-    <Compile Include="MSAccess.cs" />
     <Compile Include="NavegaciónAPF.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,6 +178,12 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="PuestosAPF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PuestosAPF.Designer.cs">
+      <DependentUpon>PuestosAPF.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tropicalizador.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -180,6 +191,9 @@
       <DependentUpon>Tropicalizador.cs</DependentUpon>
     </Compile>
     <Compile Include="Utility.cs" />
+    <EmbeddedResource Include="FuncionariosAPF.resx">
+      <DependentUpon>FuncionariosAPF.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ImageScroll.resx">
       <DependentUpon>ImageScroll.cs</DependentUpon>
     </EmbeddedResource>
@@ -195,6 +209,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="PuestosAPF.resx">
+      <DependentUpon>PuestosAPF.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Tropicalizador.resx">
       <DependentUpon>Tropicalizador.cs</DependentUpon>
     </EmbeddedResource>
@@ -224,6 +241,10 @@
     <Content Include="analyzer_client.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\APFInfo\APFInfo.csproj">
+      <Project>{78e95583-3d1a-4b69-a3e2-734756f80145}</Project>
+      <Name>APFInfo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Arboles\Arboles.csproj">
       <Project>{0365e5a2-c233-4090-ac0a-1b9ac833be16}</Project>
       <Name>Arboles</Name>
@@ -231,6 +252,10 @@
     <ProjectReference Include="..\Globales\Globales.csproj">
       <Project>{9875d5fc-5821-4cd5-a9e0-2a18db463db9}</Project>
       <Name>Globales</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MSAccess\MSAccess.csproj">
+      <Project>{4887b47f-4a46-487e-ae56-782ae53c39d7}</Project>
+      <Name>MSAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\Traductor\Traductor.csproj">
       <Project>{8f1ccffe-6dfa-49bd-8721-48e47d72bc2b}</Project>

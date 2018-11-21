@@ -10,21 +10,23 @@ namespace UpLoadImagesToMsAccess
 {
     public static class UpLoadPhotos
     {
+        static private OleDbConnectionStringBuilder Builder = new OleDbConnectionStringBuilder();
+        static private DataTable DataTable { get; set; }
+
         static public void SubeFoto(string filename)
         {
-            OleDbConnectionStringBuilder Builder = new OleDbConnectionStringBuilder();
-            DataTable DataTable { get; set; }
+            Console.WriteLine(filename);
             string PhotoType = Path.GetExtension(filename);
             string ID = string.Empty;
 
-            var myRegex = new Regex(@"[a-zA-Z]+[0-9]+");
+            var myRegex = new Regex(@"[a-zA-Z]+[ ]*[0-9]+");
 
             MatchCollection AllMatches = myRegex.Matches(Path.GetFileName(filename));
             if (AllMatches.Count > 0)
             {
                 foreach (Match someMatch in AllMatches)
                 {
-                    ID = someMatch.Groups[0].Value;
+                    ID = someMatch.Groups[0].Value.Replace(" ", string.Empty);
                     break;
                 }
                 Console.WriteLine(ID + " " + filename + " " + PhotoType);

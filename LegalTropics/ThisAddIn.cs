@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
 using Word = Microsoft.Office.Interop.Word;
 using Office = Microsoft.Office.Core;
 using Microsoft.Office.Tools.Word;
@@ -10,8 +6,6 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
-using System.Linq.Expressions;
-using System.IO;
 
 namespace LegalTropics
 {

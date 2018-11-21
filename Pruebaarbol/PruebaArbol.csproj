@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0365E5A2-C233-4090-AC0A-1B9AC833BE16}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Arboles</RootNamespace>
-    <AssemblyName>Arboles</AssemblyName>
+    <ProjectGuid>{3DDF80B8-10CF-4857-AA65-6B4670A91197}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Pruebaarbol</RootNamespace>
+    <AssemblyName>Pruebaarbol</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -32,13 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,17 +43,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Node.cs" />
-    <Compile Include="NodeList.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Globales\Globales.csproj">
-      <Project>{9875d5fc-5821-4cd5-a9e0-2a18db463db9}</Project>
-      <Name>Globales</Name>
+    <ProjectReference Include="..\APFInfo\APFInfo.csproj">
+      <Project>{78e95583-3d1a-4b69-a3e2-734756f80145}</Project>
+      <Name>APFInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Arboles\Arboles.csproj">
+      <Project>{0365e5a2-c233-4090-ac0a-1b9ac833be16}</Project>
+      <Name>Arboles</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

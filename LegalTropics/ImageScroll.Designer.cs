@@ -30,15 +30,16 @@
         {
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
+            this.labelNombreFoto = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(32, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(32, 51);
             this.pictureBox1.MaximumSize = new System.Drawing.Size(520, 385);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(520, 385);
+            this.pictureBox1.Size = new System.Drawing.Size(520, 366);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -46,11 +47,20 @@
             // 
             // hScrollBar1
             // 
-            this.hScrollBar1.Location = new System.Drawing.Point(32, 404);
+            this.hScrollBar1.Location = new System.Drawing.Point(32, 420);
             this.hScrollBar1.Name = "hScrollBar1";
-            this.hScrollBar1.Size = new System.Drawing.Size(524, 21);
+            this.hScrollBar1.Size = new System.Drawing.Size(520, 21);
             this.hScrollBar1.TabIndex = 2;
             this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
+            // 
+            // labelNombreFoto
+            // 
+            this.labelNombreFoto.AutoSize = true;
+            this.labelNombreFoto.Location = new System.Drawing.Point(258, 19);
+            this.labelNombreFoto.Name = "labelNombreFoto";
+            this.labelNombreFoto.Size = new System.Drawing.Size(56, 17);
+            this.labelNombreFoto.TabIndex = 3;
+            this.labelNombreFoto.Text = "nombre";
             // 
             // ImageScroll
             // 
@@ -58,17 +68,20 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(587, 450);
             this.ControlBox = false;
+            this.Controls.Add(this.labelNombreFoto);
             this.Controls.Add(this.hScrollBar1);
             this.Controls.Add(this.pictureBox1);
             this.Name = "ImageScroll";
             this.Text = "Catalogo de Fotografias";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
         private System.Windows.Forms.HScrollBar hScrollBar1;
         public System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label labelNombreFoto;
     }
 }

@@ -50,6 +50,8 @@
             this.comboBoxPuestos = this.Factory.CreateRibbonComboBox();
             this.buttonActualizaBaseDeDatos = this.Factory.CreateRibbonButton();
             this.GetDataBaseOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.buttonPuestos = this.Factory.CreateRibbonButton();
+            this.buttonFuncionarios = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.Analyzer.SuspendLayout();
             this.Párrafos.SuspendLayout();
@@ -109,6 +111,8 @@
             // 
             this.groupAMLOTeam.Items.Add(this.buttonGroup1);
             this.groupAMLOTeam.Items.Add(this.comboBoxFuncionarios);
+            this.groupAMLOTeam.Items.Add(this.buttonFuncionarios);
+            this.groupAMLOTeam.Items.Add(this.buttonPuestos);
             this.groupAMLOTeam.Items.Add(this.comboBoxPuestos);
             this.groupAMLOTeam.Items.Add(this.buttonActualizaBaseDeDatos);
             this.groupAMLOTeam.Label = "AMLOTeam";
@@ -163,6 +167,18 @@
             // 
             this.GetDataBaseOpenFileDialog.FileName = "GetDataBaseOpenFileDialog";
             // 
+            // buttonPuestos
+            // 
+            this.buttonPuestos.Label = "Puestos";
+            this.buttonPuestos.Name = "buttonPuestos";
+            this.buttonPuestos.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonPuestos_Click);
+            // 
+            // buttonFuncionarios
+            // 
+            this.buttonFuncionarios.Label = "Funcionarios";
+            this.buttonFuncionarios.Name = "buttonFuncionarios";
+            this.buttonFuncionarios.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonFuncionarios_Click);
+            // 
             // Tropicalizador
             // 
             this.Name = "Tropicalizador";
@@ -201,6 +217,8 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonCatalogoFotos;
         private System.Windows.Forms.OpenFileDialog GetDataBaseOpenFileDialog;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonActualizaBaseDeDatos;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonPuestos;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonFuncionarios;
     }
 
     partial class ThisRibbonCollection

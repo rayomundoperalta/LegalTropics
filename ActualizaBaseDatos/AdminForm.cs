@@ -83,9 +83,9 @@ namespace ActualizaBaseDatos
             pictureBox1.ImageLocation = PhotoFileName;
             pictureBox1.Load();
             // ancho 172 alto 199
-            float prop = (float)pictureBox1.Height / (float)pictureBox1.Width;
-            pictureBox1.Height = (int)prop * 172;
-            pictureBox1.Width = 172;
+            float prop = (float)pictureBox1.Width / (float)pictureBox1.Height;
+            pictureBox1.Height = 199;
+            pictureBox1.Width = (int) (prop * 199);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
         }
 

@@ -129,6 +129,7 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.treeViewOrganigramaAPF = new System.Windows.Forms.TreeView();
+            this.openFileDialogFoto = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tabControlInformación.SuspendLayout();
@@ -180,7 +181,7 @@
             // 
             // buttonNuevo
             // 
-            this.buttonNuevo.Location = new System.Drawing.Point(822, 48);
+            this.buttonNuevo.Location = new System.Drawing.Point(1060, 47);
             this.buttonNuevo.Name = "buttonNuevo";
             this.buttonNuevo.Size = new System.Drawing.Size(75, 23);
             this.buttonNuevo.TabIndex = 18;
@@ -190,7 +191,7 @@
             // 
             // buttonModifica
             // 
-            this.buttonModifica.Location = new System.Drawing.Point(741, 47);
+            this.buttonModifica.Location = new System.Drawing.Point(979, 48);
             this.buttonModifica.Name = "buttonModifica";
             this.buttonModifica.Size = new System.Drawing.Size(75, 23);
             this.buttonModifica.TabIndex = 17;
@@ -199,7 +200,7 @@
             // 
             // buttonInserta
             // 
-            this.buttonInserta.Location = new System.Drawing.Point(660, 47);
+            this.buttonInserta.Location = new System.Drawing.Point(898, 47);
             this.buttonInserta.Name = "buttonInserta";
             this.buttonInserta.Size = new System.Drawing.Size(75, 23);
             this.buttonInserta.TabIndex = 16;
@@ -208,7 +209,7 @@
             // 
             // buttonSiguiente
             // 
-            this.buttonSiguiente.Location = new System.Drawing.Point(822, 12);
+            this.buttonSiguiente.Location = new System.Drawing.Point(1060, 12);
             this.buttonSiguiente.Name = "buttonSiguiente";
             this.buttonSiguiente.Size = new System.Drawing.Size(106, 23);
             this.buttonSiguiente.TabIndex = 15;
@@ -218,7 +219,7 @@
             // 
             // buttonAnterior
             // 
-            this.buttonAnterior.Location = new System.Drawing.Point(741, 12);
+            this.buttonAnterior.Location = new System.Drawing.Point(979, 12);
             this.buttonAnterior.Name = "buttonAnterior";
             this.buttonAnterior.Size = new System.Drawing.Size(75, 23);
             this.buttonAnterior.TabIndex = 14;
@@ -228,7 +229,7 @@
             // 
             // buttonBusca
             // 
-            this.buttonBusca.Location = new System.Drawing.Point(660, 12);
+            this.buttonBusca.Location = new System.Drawing.Point(898, 12);
             this.buttonBusca.Name = "buttonBusca";
             this.buttonBusca.Size = new System.Drawing.Size(75, 23);
             this.buttonBusca.TabIndex = 13;
@@ -238,42 +239,42 @@
             // 
             // textBoxFechaNacimiento
             // 
-            this.textBoxFechaNacimiento.Location = new System.Drawing.Point(332, 197);
+            this.textBoxFechaNacimiento.Location = new System.Drawing.Point(570, 196);
             this.textBoxFechaNacimiento.Name = "textBoxFechaNacimiento";
             this.textBoxFechaNacimiento.Size = new System.Drawing.Size(182, 22);
             this.textBoxFechaNacimiento.TabIndex = 12;
             // 
             // textBoxNacionalidad
             // 
-            this.textBoxNacionalidad.Location = new System.Drawing.Point(332, 169);
+            this.textBoxNacionalidad.Location = new System.Drawing.Point(570, 168);
             this.textBoxNacionalidad.Name = "textBoxNacionalidad";
             this.textBoxNacionalidad.Size = new System.Drawing.Size(182, 22);
             this.textBoxNacionalidad.TabIndex = 11;
             // 
             // textBoxApellidoMaterno
             // 
-            this.textBoxApellidoMaterno.Location = new System.Drawing.Point(332, 109);
+            this.textBoxApellidoMaterno.Location = new System.Drawing.Point(570, 108);
             this.textBoxApellidoMaterno.Name = "textBoxApellidoMaterno";
             this.textBoxApellidoMaterno.Size = new System.Drawing.Size(322, 22);
             this.textBoxApellidoMaterno.TabIndex = 10;
             // 
             // textBoxApellidoPaterno
             // 
-            this.textBoxApellidoPaterno.Location = new System.Drawing.Point(332, 79);
+            this.textBoxApellidoPaterno.Location = new System.Drawing.Point(570, 78);
             this.textBoxApellidoPaterno.Name = "textBoxApellidoPaterno";
             this.textBoxApellidoPaterno.Size = new System.Drawing.Size(322, 22);
             this.textBoxApellidoPaterno.TabIndex = 9;
             // 
             // textBoxSegundoNombre
             // 
-            this.textBoxSegundoNombre.Location = new System.Drawing.Point(332, 48);
+            this.textBoxSegundoNombre.Location = new System.Drawing.Point(570, 47);
             this.textBoxSegundoNombre.Name = "textBoxSegundoNombre";
             this.textBoxSegundoNombre.Size = new System.Drawing.Size(322, 22);
             this.textBoxSegundoNombre.TabIndex = 8;
             // 
             // textBoxPrimerNombre
             // 
-            this.textBoxPrimerNombre.Location = new System.Drawing.Point(332, 13);
+            this.textBoxPrimerNombre.Location = new System.Drawing.Point(570, 12);
             this.textBoxPrimerNombre.Name = "textBoxPrimerNombre";
             this.textBoxPrimerNombre.Size = new System.Drawing.Size(322, 22);
             this.textBoxPrimerNombre.TabIndex = 7;
@@ -281,7 +282,7 @@
             // labelFechaDeNacimiento
             // 
             this.labelFechaDeNacimiento.AutoSize = true;
-            this.labelFechaDeNacimiento.Location = new System.Drawing.Point(184, 203);
+            this.labelFechaDeNacimiento.Location = new System.Drawing.Point(426, 200);
             this.labelFechaDeNacimiento.Name = "labelFechaDeNacimiento";
             this.labelFechaDeNacimiento.Size = new System.Drawing.Size(141, 17);
             this.labelFechaDeNacimiento.TabIndex = 6;
@@ -290,7 +291,7 @@
             // labelNacionalidad
             // 
             this.labelNacionalidad.AutoSize = true;
-            this.labelNacionalidad.Location = new System.Drawing.Point(184, 176);
+            this.labelNacionalidad.Location = new System.Drawing.Point(426, 173);
             this.labelNacionalidad.Name = "labelNacionalidad";
             this.labelNacionalidad.Size = new System.Drawing.Size(90, 17);
             this.labelNacionalidad.TabIndex = 5;
@@ -299,7 +300,7 @@
             // labelApellidoMaterno
             // 
             this.labelApellidoMaterno.AutoSize = true;
-            this.labelApellidoMaterno.Location = new System.Drawing.Point(184, 114);
+            this.labelApellidoMaterno.Location = new System.Drawing.Point(426, 111);
             this.labelApellidoMaterno.Name = "labelApellidoMaterno";
             this.labelApellidoMaterno.Size = new System.Drawing.Size(114, 17);
             this.labelApellidoMaterno.TabIndex = 4;
@@ -308,7 +309,7 @@
             // labelApellidoPaterno
             // 
             this.labelApellidoPaterno.AutoSize = true;
-            this.labelApellidoPaterno.Location = new System.Drawing.Point(184, 84);
+            this.labelApellidoPaterno.Location = new System.Drawing.Point(426, 81);
             this.labelApellidoPaterno.Name = "labelApellidoPaterno";
             this.labelApellidoPaterno.Size = new System.Drawing.Size(112, 17);
             this.labelApellidoPaterno.TabIndex = 3;
@@ -317,7 +318,7 @@
             // labelSegundoNombre
             // 
             this.labelSegundoNombre.AutoSize = true;
-            this.labelSegundoNombre.Location = new System.Drawing.Point(184, 53);
+            this.labelSegundoNombre.Location = new System.Drawing.Point(426, 50);
             this.labelSegundoNombre.Name = "labelSegundoNombre";
             this.labelSegundoNombre.Size = new System.Drawing.Size(119, 17);
             this.labelSegundoNombre.TabIndex = 2;
@@ -326,7 +327,7 @@
             // labelPrimerNombre
             // 
             this.labelPrimerNombre.AutoSize = true;
-            this.labelPrimerNombre.Location = new System.Drawing.Point(184, 18);
+            this.labelPrimerNombre.Location = new System.Drawing.Point(426, 15);
             this.labelPrimerNombre.Name = "labelPrimerNombre";
             this.labelPrimerNombre.Size = new System.Drawing.Size(103, 17);
             this.labelPrimerNombre.TabIndex = 1;
@@ -1276,6 +1277,7 @@
         private System.Windows.Forms.Button buttonPuestosPrevious;
         private System.Windows.Forms.Button buttonPuestosInicial;
         private System.Windows.Forms.Button buttonNuevo;
+        private System.Windows.Forms.OpenFileDialog openFileDialogFoto;
     }
 }
 

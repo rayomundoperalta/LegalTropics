@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Data;
-using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using MSAccess;
+using Globales;
 
 namespace ActualizaBaseDatos
 {
@@ -14,10 +15,26 @@ namespace ActualizaBaseDatos
         IndiceBD indexAP;
         IndiceBD indexINFO;
         IndiceBD indexPuestos;
+        string NewFotoFileName;
+
         public AdminForm()
         {
+            string[] PhotoFiles = Directory.GetFiles(Defines.FotoTempBasePath, "*.*");
+
+            for (int i = 0; i < PhotoFiles.Length; i++)
+            {
+                FileInfo fi = new FileInfo(PhotoFiles[i]);
+                fi.Delete();
+            }
             InitializeComponent();
+            this.FormClosed += AdminForm_FormClosed;
         }
+
+        private void AdminForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
+        }
+
         DataRow[] funcionarios;
         DataRow[] escolaridad;
         DataRow[] AP;
@@ -37,12 +54,9 @@ namespace ActualizaBaseDatos
 
             IDFuncionario = funcionarios[index]["ID"].ToString();
 
-            pictureBox1.ImageLocation = AccessUtility.GetFoto(IDFuncionario);
-            escolaridad = AccessUtility.GetEscolaridad(IDFuncionario);
-            pictureBox1.Load();
-            pictureBox1.Height = 150;
-            pictureBox1.Width = 110;
+            LoadPhoto(AccessUtility.GetFoto(IDFuncionario));
 
+            escolaridad = AccessUtility.GetEscolaridad(IDFuncionario);
             indexEscolaridad = new IndiceBD(escolaridad.Length);
             LlenaEscolaridad();
 
@@ -62,6 +76,17 @@ namespace ActualizaBaseDatos
 
             tabControlAdministracionBaseDatos.Selected += TabControlAdministracionBaseDatos_Selected;
             tabControlInformación.Selected += TabControlInformación_Selected;
+        }
+
+        private void LoadPhoto(string PhotoFileName)
+        {
+            pictureBox1.ImageLocation = PhotoFileName;
+            pictureBox1.Load();
+            // ancho 172 alto 199
+            float prop = (float)pictureBox1.Height / (float)pictureBox1.Width;
+            pictureBox1.Height = (int)prop * 172;
+            pictureBox1.Width = 172;
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
         }
 
         private void LlenaEscolaridad()
@@ -425,7 +450,9 @@ namespace ActualizaBaseDatos
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-
+            openFileDialogFoto.ShowDialog();
+            NewFotoFileName = openFileDialogFoto.FileName;
+            LoadPhoto(NewFotoFileName);
         }
 
         private void buttonNuevo_Click(object sender, EventArgs e)

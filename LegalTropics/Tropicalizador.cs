@@ -52,11 +52,17 @@ namespace LegalTropics
             NoNewLine = 0
         }
 
+        private int ImprimeConsola(string line)
+        {
+            return 0;
+        }
+
         private void Tropicalizador_Load(object sender, RibbonUIEventArgs e)
         {
+            Parser parser = new Parser(ImprimeConsola);
             Registro Presidente = new Registro("P", "Presidencia", "A0");
             APF = new Node<Registro>(Presidente);
-            Parser.Parsea(APF, 0);
+            parser.Parsea(APF, 0);
             // Console.WriteLine("Imprimimos arbol");
             // APF.Print();
             // Console.WriteLine("\nbuscamos ");
@@ -71,24 +77,29 @@ namespace LegalTropics
             for (int i = 0; i < funcionarios.Length; i++)
             {
                 item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
-                item.Label = funcionarios[i]["PrimerNombre"] + " " + funcionarios[i]["ApellidoPaterno"] + " " + funcionarios[i]["ID"];
-                dicFuncionarios.Add(item.Label, funcionarios[i]["ID"].ToString());
+                item.Label = funcionarios[i]["PrimerNombre"] + " " + funcionarios[i]["SegundoNombre"] + " " + funcionarios[i]["ApellidoPaterno"] + " " + funcionarios[i]["ApellidoMaterno"] + "_" + funcionarios[i]["ID"];
+                //dicFuncionarios.Add(item.Label, funcionarios[i]["ID"].ToString());
                 comboBoxFuncionarios.Items.Add(item);
             }
 
-            List<string> Puestos = APF.ListPuestos();
 
-            Puestos.Sort(delegate (string x, string y)
+            //List<Registro> Puestos = APF.ListPuestos();
+            DataRow[] Puestos = AccessUtility.GetDistinctPuestos();
+            List<string> StringPuestos = new List<string>();
+            for (int i = 0; i < Puestos.Length; i++)
             {
-                return x.CompareTo(y);
-            });
+                StringPuestos.Add(Puestos[i]["Puesto"].ToString());
+            }
 
-            Puestos.Sort();
+            StringPuestos.Sort((x, y) => x.CompareTo(y));
+            
+            StringPuestos.Sort();
+            
 
-            for (int i = 0; i < Puestos.Count; i++)
+            for (int i = 0; i < StringPuestos.Count; i++)
             {
                 item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
-                item.Label = Puestos[i];
+                item.Label = StringPuestos[i];
                 comboBoxPuestos.Items.Add(item);
             }
 
@@ -538,7 +549,7 @@ namespace LegalTropics
                     string notasRelevantes = "";
                     for (int j = 0; j < notas.Length; j++)
                     {
-                        notasRelevantes += notas[j]["Referencia"].ToString().Replace("\n", string.Empty);
+                        notasRelevantes += notas[j]["Referencia"].ToString().Replace("\n\n", "\n");
                         notasRelevantes += (j == notas.Length - 1) ? string.Empty : "\n";
                     }
                     tabla4.Cell(1, 2).Range.ListFormat.ApplyNumberDefault(ref oMissing);
@@ -571,7 +582,7 @@ namespace LegalTropics
                     string comments = "";
                     for (int j = 0; j < comentarios.Length; j++)
                     {
-                        comments += comentarios[j]["Referencia"].ToString().Replace("\n", string.Empty);
+                        comments += comentarios[j]["Referencia"].ToString().Replace("\n\n", "\n");
                         comments += (j == comentarios.Length - 1) ? string.Empty : "\n";
                     }
                     tabla5.Cell(1, 2).Range.ListFormat.ApplyBulletDefault(ref oMissing);
@@ -667,12 +678,14 @@ namespace LegalTropics
 
         private void comboBoxFuncionarios_TextChanged(object sender, RibbonControlEventArgs e)
         {
-            GeneraReporte(dicFuncionarios[comboBoxFuncionarios.Text]);
+            int pos = comboBoxFuncionarios.Text.IndexOf('_');
+            string ID = comboBoxFuncionarios.Text.Substring(pos + 1, comboBoxFuncionarios.Text.Length - pos - 1);
+            GeneraReporte(ID);
         }
 
         private void comboBoxPuestos_TextChanged(object sender, RibbonControlEventArgs e)
         {
-            DataRow[] IDs = AccessUtility.GetIDPuestoAPF(comboBoxPuestos.Text);
+            DataRow[] IDs = AccessUtility.GetIDPuestos(comboBoxPuestos.Text);
             for (int i = 0; i < IDs.Length; i++)
             {
                 GeneraReporte(IDs[i]["ID"].ToString());

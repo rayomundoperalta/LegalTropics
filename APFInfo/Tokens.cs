@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Data.OleDb;
 using System.IO;
 using Globales;
@@ -14,9 +15,11 @@ namespace APFInfo
         private Registro currentToken = null;
         private Registro lastToken = null;
         private Registro[] Registros = null;
+        Func<string, int> Print;
 
-        public Tokens()
+        public Tokens(Func<string, int> print)
         {
+            Print = print;
             DataRow[] Posiciones = null;
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
@@ -33,12 +36,16 @@ namespace APFInfo
                 }
                 Posiciones = DataTable.Select();
                 Registros = new Registro[Posiciones.Length];
+#if Debug
+                Print("# de Registros" + Registros.Length);
+#endif
+
                 int i = 0;
                 foreach (DataRow row in Posiciones)
                 {
                     Registros[i] = new Registro(row["TipoRegistro"].ToString(), row["NombrePuesto"].ToString(), row["ID"].ToString());
 #if Debug
-                    Console.WriteLine(Registros[i].ToString());
+                    Print((i + 1) + "-> " + Registros[i].ToString());
 #endif
                     i++;
                 }
@@ -51,7 +58,7 @@ namespace APFInfo
         private bool AdvanceToken()
         {
 #if Debug
-            Console.WriteLine("Cursor " + cursor + "Registros.Length " + Registros.Length);
+            Print("Cursor " + cursor + "(++Cursor < " + Registros.Length + ")");
 #endif
             if (++cursor < Registros.Length)
             {
@@ -71,7 +78,7 @@ namespace APFInfo
         {
             // SOLO AVANZA EL PARSER SI ENCONTRÓ EL TOKEN
 #if Debug
-            if (CurrentToken != null) Console.WriteLine("CT-> " + CurrentToken.TipoRegistro + " =? " + TipoRegistro);
+            if (CurrentToken != null) Print("CurrentToken-> " + CurrentToken.TipoRegistro + " =? " + TipoRegistro);
 #endif
             if (CurrentToken != null && CurrentToken.TipoRegistro.Equals(TipoRegistro))
             {

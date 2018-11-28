@@ -10,19 +10,24 @@ namespace LegalTropics
 {
     public partial class PuestosAPF : Form
     {
-        List<string> ListaPuestos;
+        List<Registro> ListaPuestos;
 
         public PuestosAPF()
         {
             InitializeComponent();
             this.Resize += Puestos_Resize;
             ListaPuestos = Globals.Ribbons.Tropicalizador.APF.ListPuestos();
-            ListaPuestos.Sort(delegate (string x, string y)
+            List<string> StringPuestos = new List<string>();
+            for (int i = 0; i < ListaPuestos.Count; i++)
+            {
+                StringPuestos.Add(ListaPuestos[i].NombrePuesto + "_" + ListaPuestos[i].ID);
+            }
+            StringPuestos.Sort(delegate (string x, string y)
             {
                 return x.CompareTo(y);
             });
 
-            ListaPuestos.Sort();
+            StringPuestos.Sort();
 
             List<Rangos> rangos = new List<Rangos>();
             rangos.Add(new Rangos("a", "A","c","C"));
@@ -40,9 +45,9 @@ namespace LegalTropics
             {
                 treeViewPuestos.Nodes.Add(new TreeNode(rangos[i].IniMayuscula + " - " + rangos[i].FinMayuscula));
                 /* O J O   CON EL ORDEN DE LOS OPERANDOS */
-                while ((j < ListaPuestos.Count) && EnRango(rangos[i], ListaPuestos[j])) // Cuidado el orden de las condiciones es importante
+                while ((j < ListaPuestos.Count) && EnRango(rangos[i], StringPuestos[j])) // Cuidado el orden de las condiciones es importante
                 {
-                    treeViewPuestos.Nodes[i].Nodes.Add(new TreeNode(ListaPuestos[j]));
+                    treeViewPuestos.Nodes[i].Nodes.Add(new TreeNode(StringPuestos[j]));
                     j++;
                 }
             }
@@ -64,9 +69,9 @@ namespace LegalTropics
             }
         }
 
-        private bool EnRango(Rangos rangos, string cuerda)
+        private bool EnRango(Rangos rangos, string puesto)
         {
-            char IniChar = cuerda[0];
+            char IniChar = puesto[0];
             bool c1, c2, c3, c4, r1, r2;
             c1 = rangos.IniMinuscula <= IniChar;
             c2 = IniChar <= rangos.FinMinuscula;

@@ -8,10 +8,14 @@ namespace Globales
 {
     public static class Defines
     {
-        public const string DataBasePath = @"D:\Base de datos de las Secretarías de Estado\nueva versión\";
-        public const string DataBaseFileName = @"BDSecretarias1.accdb";
-        public const string FotoBasePath = @"D:\Base de datos de las Secretarías de Estado\nueva versión\Base de datos Secretarías Fotografías";
-        public const string FotoTempBasePath = @"D:\APFFotos\";
+        //public const string DataBasePath = @"D:\Base de datos de las Secretarías de Estado\nueva versión\";
+        //public const string DataBaseFileName = @"BDSecretarias1.accdb";
+        //public const string FotoBasePath = @"D:\Base de datos de las Secretarías de Estado\nueva versión\Base de datos Secretarías Fotografías";
+        public const string DataBasePath = @"C:\INFO APF\";
+        public const string DataBaseFileName = @"AMLOTeam.accdb";
+        public const string FotoBasePath = DataBasePath + @"Base de Datos Fotografías";
+
+        public const string FotoTempBasePath = @"C:\APFFotos\";
         public const int ColorInstitucional = 149 + 0x100 * 179 + 0x10000 * 215;
         public const string StringAccessProvider = @"Microsoft.ACE.OLEDB.12.0";
     }

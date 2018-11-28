@@ -27,9 +27,9 @@ namespace Arboles
             foreach (Node<T> nodo in base.Items) nodo.Print();
         }
 
-        public List<string> ListPuestosDeHijos()
+        public List<T> ListPuestosDeHijos()
         {
-            List<string> Resultado = new List<string>();
+            List<T> Resultado = new List<T>();
             foreach (Node<T> nodo in base.Items) Resultado.AddRange(nodo.ListPuestos());
             return Resultado;
         }

@@ -49,10 +49,10 @@ namespace Arboles
             Console.Write(")");
         }
 
-        public List<string> ListPuestos()
+        public List<T> ListPuestos()
         {
-            List<string> Resultado = new List<string>();
-            Resultado.Add(data.ToString());
+            List<T> Resultado = new List<T>();
+            Resultado.Add(data);
             if (sons == null || sons.Count == 0)
             {
                 return Resultado;

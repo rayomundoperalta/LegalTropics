@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegalTropics", "LegalTropics\LegalTropics.csproj", "{3B0412C4-0D16-4707-AE31-81D7F3F5ADF1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{123ED336-C658-4846-89A3-8CE6AC9F689A} = {123ED336-C658-4846-89A3-8CE6AC9F689A}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Traductor", "Traductor\Traductor.csproj", "{8F1CCFFE-6DFA-49BD-8721-48E47D72BC2B}"
 EndProject
@@ -22,6 +25,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PruebaArbol", "Pruebaarbol\PruebaArbol.csproj", "{3DDF80B8-10CF-4857-AA65-6B4670A91197}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSAccess", "MSAccess\MSAccess.csproj", "{4887B47F-4A46-487E-AE56-782AE53C39D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTraductor", "TestTraductor\TestTraductor.csproj", "{F85CD33B-DD00-4E4C-962F-49AA197B37CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +74,10 @@ Global
 		{4887B47F-4A46-487E-AE56-782AE53C39D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4887B47F-4A46-487E-AE56-782AE53C39D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4887B47F-4A46-487E-AE56-782AE53C39D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F85CD33B-DD00-4E4C-962F-49AA197B37CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F85CD33B-DD00-4E4C-962F-49AA197B37CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F85CD33B-DD00-4E4C-962F-49AA197B37CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F85CD33B-DD00-4E4C-962F-49AA197B37CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

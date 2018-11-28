@@ -1,31 +1,32 @@
 ﻿using MSAccess;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using APFInfo;
+using System.Data;
 
 namespace LegalTropics
 {
     public partial class FuncionariosAPF : Form
     {
-        List<string> ListaFuncionarios;
+        List<Registro> ListaFuncionarios;
 
         public FuncionariosAPF()
         {
             InitializeComponent();
             this.Resize += Puestos_Resize;
             ListaFuncionarios = Globals.Ribbons.Tropicalizador.APF.ListPuestos();
-            ListaFuncionarios.Sort(delegate (string x, string y)
+            List<string> nombres = new List<string>();
+            for (int i = 0; i < ListaFuncionarios.Count; i++)
             {
-                return x.CompareTo(y);
-            });
+                DataRow[] fun = AccessUtility.GetFuncionario(ListaFuncionarios[i].ID);
+                nombres.Add(fun[0]["ApellidoPaterno"].ToString().Substring(0, 1) + fun[0]["PrimerNombre"].ToString() + " " + fun[0]["ApellidoPaterno"].ToString() + "_" + ListaFuncionarios[i].ID);
+            }
+            nombres.Sort((x, y) => x[0].CompareTo(y[0]));
+            
 
-            ListaFuncionarios.Sort();
+            nombres.Sort();
 
             List<Rangos> rangos = new List<Rangos>();
             rangos.Add(new Rangos("a", "A", "c", "C"));
@@ -43,12 +44,9 @@ namespace LegalTropics
             {
                 treeViewFuncionarios.Nodes.Add(new TreeNode(rangos[i].IniMayuscula + " - " + rangos[i].FinMayuscula));
                 /* O J O   CON EL ORDEN DE LOS OPERANDOS */
-                while ((j < ListaFuncionarios.Count) && EnRango(rangos[i], ListaFuncionarios[j])) // Cuidado el orden de las condiciones es importante
+                while ((j < nombres.Count) && EnRango(rangos[i], nombres[j])) // Cuidado el orden de las condiciones es importante
                 {
-                    int pos = ListaFuncionarios[j].IndexOf('_');
-                    string ID = ListaFuncionarios[j].Substring(pos + 1, ListaFuncionarios[j].Length - pos - 1);
-
-                    treeViewFuncionarios.Nodes[i].Nodes.Add(new TreeNode(AccessUtility.GetNombreFuncionario(ID) + "_" + ID));
+                    treeViewFuncionarios.Nodes[i].Nodes.Add(new TreeNode(nombres[j].Substring(1, nombres[j].Length - 1)));
                     j++;
                 }
             }
@@ -70,9 +68,10 @@ namespace LegalTropics
             }
         }
 
-        private bool EnRango(Rangos rangos, string cuerda)
+        private bool EnRango(Rangos rangos, string nombre)
         {
-            char IniChar = cuerda[0];
+            ;
+            char IniChar = nombre[0];
             bool c1, c2, c3, c4, r1, r2;
             c1 = rangos.IniMinuscula <= IniChar;
             c2 = IniChar <= rangos.FinMinuscula;

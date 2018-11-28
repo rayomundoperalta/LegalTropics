@@ -1,31 +1,41 @@
 ﻿using Arboles;
+using System;
+using System.Runtime.CompilerServices;
 
 namespace APFInfo
 {
-    static public class Parser
+    public class Parser
     {
-        public static Tokens RT = new Tokens();
-        static private string[] pila = new string[] { "Presidencia", "S", "SS", "DG", "Dir" };
+        Func<string, int> Print;
+        public Tokens RT;
+        private string[] pila = new string[] { "Presidencia", "S", "SS", "DG", "Dir" };
 
-        static public void Parsea(Node<Registro> nodo, int Nivel)
+        public Parser(Func<string, int> print)
+        {
+            Print = print;
+            RT = new Tokens(Print);
+        }
+
+        public void Parsea(Node<Registro> nodo, int Nivel)
         {
             Nivel++;
             if (Nivel < pila.Length)
             {
 #if Debug
-                Console.WriteLine("Nivel " + Nivel + " busco " + pila[Nivel] + " tengo " + RT.CurrentToken.ToString());
+                if (RT.CurrentToken != null)
+                    Print("Nivel " + Nivel + " busco " + pila[Nivel] + " tengo " + RT.CurrentToken.ToString());
 #endif
                 NodeList<Registro> hijos = new NodeList<Registro>();
                 while (RT.CheckToken(pila[Nivel]))
                 {
 #if Debug
-                    Console.WriteLine("Insertamos -> " + RT.LastToken.ToString());
+                    Print("Insertamos -> " + RT.LastToken.ToString());
 #endif
                     Node<Registro> NivelJerarquia = new Node<Registro>(RT.LastToken);
                     Parsea(NivelJerarquia, Nivel);
                     hijos.InsertaHijo(NivelJerarquia);
 #if Debug
-                    if (RT.CurrentToken != null) Console.WriteLine("CurrentToken -> " + RT.CurrentToken.ToString());
+                    if (RT.CurrentToken != null) Print("CurrentToken -> " + RT.CurrentToken.ToString());
 #endif
                 }
                 nodo.AddNodeList(hijos);
@@ -34,7 +44,7 @@ namespace APFInfo
             return;
         }
 
-        static public NodeList<Registro> GetNodeListOf(Node<Registro> nodo, string NombrePuesto)
+        public NodeList<Registro> GetNodeListOf(Node<Registro> nodo, string NombrePuesto)
         {
             if (nodo.Value.NombrePuesto.Equals(NombrePuesto))
             {

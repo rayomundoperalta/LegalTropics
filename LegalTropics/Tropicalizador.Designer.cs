@@ -42,20 +42,22 @@
             this.Párrafos = this.Factory.CreateRibbonGroup();
             this.buttonParrafos = this.Factory.CreateRibbonButton();
             this.groupAMLOTeam = this.Factory.CreateRibbonGroup();
-            this.buttonGroup1 = this.Factory.CreateRibbonButtonGroup();
-            this.buttonGeneraReporte = this.Factory.CreateRibbonButton();
-            this.buttonOrganigrama = this.Factory.CreateRibbonButton();
-            this.buttonCatalogoFotos = this.Factory.CreateRibbonButton();
+            this.box1 = this.Factory.CreateRibbonBox();
             this.comboBoxFuncionarios = this.Factory.CreateRibbonComboBox();
             this.comboBoxPuestos = this.Factory.CreateRibbonComboBox();
-            this.buttonActualizaBaseDeDatos = this.Factory.CreateRibbonButton();
-            this.GetDataBaseOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.buttonGroup1 = this.Factory.CreateRibbonButtonGroup();
+            this.buttonOrganigrama = this.Factory.CreateRibbonButton();
             this.buttonPuestos = this.Factory.CreateRibbonButton();
             this.buttonFuncionarios = this.Factory.CreateRibbonButton();
+            this.buttonCatalogoFotos = this.Factory.CreateRibbonButton();
+            this.buttonGeneraReporte = this.Factory.CreateRibbonButton();
+            this.buttonActualizaBaseDeDatos = this.Factory.CreateRibbonButton();
+            this.GetDataBaseOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tab1.SuspendLayout();
             this.Analyzer.SuspendLayout();
             this.Párrafos.SuspendLayout();
             this.groupAMLOTeam.SuspendLayout();
+            this.box1.SuspendLayout();
             this.buttonGroup1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -109,63 +111,46 @@
             // 
             // groupAMLOTeam
             // 
+            this.groupAMLOTeam.Items.Add(this.box1);
             this.groupAMLOTeam.Items.Add(this.buttonGroup1);
-            this.groupAMLOTeam.Items.Add(this.comboBoxFuncionarios);
-            this.groupAMLOTeam.Items.Add(this.buttonFuncionarios);
-            this.groupAMLOTeam.Items.Add(this.buttonPuestos);
-            this.groupAMLOTeam.Items.Add(this.comboBoxPuestos);
             this.groupAMLOTeam.Items.Add(this.buttonActualizaBaseDeDatos);
             this.groupAMLOTeam.Label = "AMLOTeam";
             this.groupAMLOTeam.Name = "groupAMLOTeam";
             // 
-            // buttonGroup1
+            // box1
             // 
-            this.buttonGroup1.Items.Add(this.buttonGeneraReporte);
-            this.buttonGroup1.Items.Add(this.buttonOrganigrama);
-            this.buttonGroup1.Items.Add(this.buttonCatalogoFotos);
-            this.buttonGroup1.Name = "buttonGroup1";
-            // 
-            // buttonGeneraReporte
-            // 
-            this.buttonGeneraReporte.Label = "GenRep";
-            this.buttonGeneraReporte.Name = "buttonGeneraReporte";
-            this.buttonGeneraReporte.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonGeneraReporte_Click);
-            // 
-            // buttonOrganigrama
-            // 
-            this.buttonOrganigrama.Label = "APF Org.";
-            this.buttonOrganigrama.Name = "buttonOrganigrama";
-            this.buttonOrganigrama.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonOrganigrama_Click);
-            // 
-            // buttonCatalogoFotos
-            // 
-            this.buttonCatalogoFotos.Label = "Catalogo Fotos";
-            this.buttonCatalogoFotos.Name = "buttonCatalogoFotos";
-            this.buttonCatalogoFotos.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonCatalogoFotos_Click);
+            this.box1.Items.Add(this.comboBoxFuncionarios);
+            this.box1.Items.Add(this.comboBoxPuestos);
+            this.box1.Name = "box1";
             // 
             // comboBoxFuncionarios
             // 
-            this.comboBoxFuncionarios.Label = " Funcionarios";
+            this.comboBoxFuncionarios.Label = " Fichas";
             this.comboBoxFuncionarios.Name = "comboBoxFuncionarios";
             this.comboBoxFuncionarios.Text = "Funcionario";
             this.comboBoxFuncionarios.TextChanged += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.comboBoxFuncionarios_TextChanged);
             // 
             // comboBoxPuestos
             // 
-            this.comboBoxPuestos.Label = " Puestos";
+            this.comboBoxPuestos.Label = " Puestos historicos";
             this.comboBoxPuestos.Name = "comboBoxPuestos";
             this.comboBoxPuestos.Text = "Puesto";
             this.comboBoxPuestos.TextChanged += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.comboBoxPuestos_TextChanged);
             // 
-            // buttonActualizaBaseDeDatos
+            // buttonGroup1
             // 
-            this.buttonActualizaBaseDeDatos.Label = "Actualiza Base de Datos";
-            this.buttonActualizaBaseDeDatos.Name = "buttonActualizaBaseDeDatos";
-            this.buttonActualizaBaseDeDatos.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonActualizaBaseDeDatos_Click);
+            this.buttonGroup1.Items.Add(this.buttonOrganigrama);
+            this.buttonGroup1.Items.Add(this.buttonPuestos);
+            this.buttonGroup1.Items.Add(this.buttonFuncionarios);
+            this.buttonGroup1.Items.Add(this.buttonCatalogoFotos);
+            this.buttonGroup1.Items.Add(this.buttonGeneraReporte);
+            this.buttonGroup1.Name = "buttonGroup1";
             // 
-            // GetDataBaseOpenFileDialog
+            // buttonOrganigrama
             // 
-            this.GetDataBaseOpenFileDialog.FileName = "GetDataBaseOpenFileDialog";
+            this.buttonOrganigrama.Label = "APF Org.";
+            this.buttonOrganigrama.Name = "buttonOrganigrama";
+            this.buttonOrganigrama.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonOrganigrama_Click);
             // 
             // buttonPuestos
             // 
@@ -178,6 +163,28 @@
             this.buttonFuncionarios.Label = "Funcionarios";
             this.buttonFuncionarios.Name = "buttonFuncionarios";
             this.buttonFuncionarios.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonFuncionarios_Click);
+            // 
+            // buttonCatalogoFotos
+            // 
+            this.buttonCatalogoFotos.Label = "Catalogo Fotos";
+            this.buttonCatalogoFotos.Name = "buttonCatalogoFotos";
+            this.buttonCatalogoFotos.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonCatalogoFotos_Click);
+            // 
+            // buttonGeneraReporte
+            // 
+            this.buttonGeneraReporte.Label = "GenRep";
+            this.buttonGeneraReporte.Name = "buttonGeneraReporte";
+            this.buttonGeneraReporte.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonGeneraReporte_Click);
+            // 
+            // buttonActualizaBaseDeDatos
+            // 
+            this.buttonActualizaBaseDeDatos.Label = "Actualiza Base de Datos";
+            this.buttonActualizaBaseDeDatos.Name = "buttonActualizaBaseDeDatos";
+            this.buttonActualizaBaseDeDatos.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonActualizaBaseDeDatos_Click);
+            // 
+            // GetDataBaseOpenFileDialog
+            // 
+            this.GetDataBaseOpenFileDialog.FileName = "GetDataBaseOpenFileDialog";
             // 
             // Tropicalizador
             // 
@@ -193,6 +200,8 @@
             this.Párrafos.PerformLayout();
             this.groupAMLOTeam.ResumeLayout(false);
             this.groupAMLOTeam.PerformLayout();
+            this.box1.ResumeLayout(false);
+            this.box1.PerformLayout();
             this.buttonGroup1.ResumeLayout(false);
             this.buttonGroup1.PerformLayout();
             this.ResumeLayout(false);
@@ -219,6 +228,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonActualizaBaseDeDatos;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonPuestos;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonFuncionarios;
+        internal Microsoft.Office.Tools.Ribbon.RibbonBox box1;
     }
 
     partial class ThisRibbonCollection

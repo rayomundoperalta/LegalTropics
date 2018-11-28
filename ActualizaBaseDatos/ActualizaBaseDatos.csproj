@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E538FEE3-D2FD-4EFE-9700-DA64D59E9E17}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>ActualizaBaseDatos</RootNamespace>
     <AssemblyName>ActualizaBaseDatos</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>ActualizaBaseDatos.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,16 +49,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="AdminForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="AdminForm.Designer.cs">
+      <DependentUpon>AdminForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="IndiceBD.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="AdminForm.resx">
+      <DependentUpon>AdminForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -80,9 +84,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\APFInfo\APFInfo.csproj">
+      <Project>{78e95583-3d1a-4b69-a3e2-734756f80145}</Project>
+      <Name>APFInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Arboles\Arboles.csproj">
+      <Project>{0365e5a2-c233-4090-ac0a-1b9ac833be16}</Project>
+      <Name>Arboles</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Globales\Globales.csproj">
       <Project>{9875d5fc-5821-4cd5-a9e0-2a18db463db9}</Project>
       <Name>Globales</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MSAccess\MSAccess.csproj">
+      <Project>{4887b47f-4a46-487e-ae56-782ae53c39d7}</Project>
+      <Name>MSAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

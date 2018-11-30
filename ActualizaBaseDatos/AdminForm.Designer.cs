@@ -30,6 +30,7 @@
         {
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.buttonCargaBD = new System.Windows.Forms.Button();
             this.buttonNuevo = new System.Windows.Forms.Button();
             this.buttonModifica = new System.Windows.Forms.Button();
             this.buttonInserta = new System.Windows.Forms.Button();
@@ -130,6 +131,7 @@
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.treeViewOrganigramaAPF = new System.Windows.Forms.TreeView();
             this.openFileDialogFoto = new System.Windows.Forms.OpenFileDialog();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tabControlInformación.SuspendLayout();
@@ -153,6 +155,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.buttonCargaBD);
             this.groupBox1.Controls.Add(this.buttonNuevo);
             this.groupBox1.Controls.Add(this.buttonModifica);
             this.groupBox1.Controls.Add(this.buttonInserta);
@@ -174,10 +177,19 @@
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1454, 231);
+            this.groupBox1.Size = new System.Drawing.Size(1454, 251);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos Personales";
+            // 
+            // buttonCargaBD
+            // 
+            this.buttonCargaBD.Location = new System.Drawing.Point(898, 77);
+            this.buttonCargaBD.Name = "buttonCargaBD";
+            this.buttonCargaBD.Size = new System.Drawing.Size(75, 23);
+            this.buttonCargaBD.TabIndex = 19;
+            this.buttonCargaBD.Text = "Carga BD";
+            this.buttonCargaBD.UseVisualStyleBackColor = true;
             // 
             // buttonNuevo
             // 
@@ -197,6 +209,7 @@
             this.buttonModifica.TabIndex = 17;
             this.buttonModifica.Text = "Modifica";
             this.buttonModifica.UseVisualStyleBackColor = true;
+            this.buttonModifica.Click += new System.EventHandler(this.buttonModifica_Click);
             // 
             // buttonInserta
             // 
@@ -206,6 +219,7 @@
             this.buttonInserta.TabIndex = 16;
             this.buttonInserta.Text = "Inserta";
             this.buttonInserta.UseVisualStyleBackColor = true;
+            this.buttonInserta.Click += new System.EventHandler(this.buttonInserta_Click);
             // 
             // buttonSiguiente
             // 
@@ -243,6 +257,7 @@
             this.textBoxFechaNacimiento.Name = "textBoxFechaNacimiento";
             this.textBoxFechaNacimiento.Size = new System.Drawing.Size(182, 22);
             this.textBoxFechaNacimiento.TabIndex = 12;
+            this.textBoxFechaNacimiento.TextChanged += new System.EventHandler(this.textBoxFechaNacimiento_TextChanged);
             // 
             // textBoxNacionalidad
             // 
@@ -250,6 +265,7 @@
             this.textBoxNacionalidad.Name = "textBoxNacionalidad";
             this.textBoxNacionalidad.Size = new System.Drawing.Size(182, 22);
             this.textBoxNacionalidad.TabIndex = 11;
+            this.textBoxNacionalidad.TextChanged += new System.EventHandler(this.textBoxNacionalidad_TextChanged);
             // 
             // textBoxApellidoMaterno
             // 
@@ -257,6 +273,7 @@
             this.textBoxApellidoMaterno.Name = "textBoxApellidoMaterno";
             this.textBoxApellidoMaterno.Size = new System.Drawing.Size(322, 22);
             this.textBoxApellidoMaterno.TabIndex = 10;
+            this.textBoxApellidoMaterno.TextChanged += new System.EventHandler(this.textBoxApellidoMaterno_TextChanged);
             // 
             // textBoxApellidoPaterno
             // 
@@ -264,6 +281,7 @@
             this.textBoxApellidoPaterno.Name = "textBoxApellidoPaterno";
             this.textBoxApellidoPaterno.Size = new System.Drawing.Size(322, 22);
             this.textBoxApellidoPaterno.TabIndex = 9;
+            this.textBoxApellidoPaterno.TextChanged += new System.EventHandler(this.textBoxApellidoPaterno_TextChanged);
             // 
             // textBoxSegundoNombre
             // 
@@ -271,6 +289,7 @@
             this.textBoxSegundoNombre.Name = "textBoxSegundoNombre";
             this.textBoxSegundoNombre.Size = new System.Drawing.Size(322, 22);
             this.textBoxSegundoNombre.TabIndex = 8;
+            this.textBoxSegundoNombre.TextChanged += new System.EventHandler(this.textBoxSegundoNombre_TextChanged);
             // 
             // textBoxPrimerNombre
             // 
@@ -278,6 +297,7 @@
             this.textBoxPrimerNombre.Name = "textBoxPrimerNombre";
             this.textBoxPrimerNombre.Size = new System.Drawing.Size(322, 22);
             this.textBoxPrimerNombre.TabIndex = 7;
+            this.textBoxPrimerNombre.TextChanged += new System.EventHandler(this.textBoxPrimerNombre_TextChanged);
             // 
             // labelFechaDeNacimiento
             // 
@@ -339,7 +359,7 @@
             this.tabControlInformación.Controls.Add(this.tabPageAP);
             this.tabControlInformación.Controls.Add(this.tabPageINFO);
             this.tabControlInformación.Controls.Add(this.tabPagePuestos);
-            this.tabControlInformación.Location = new System.Drawing.Point(6, 243);
+            this.tabControlInformación.Location = new System.Drawing.Point(6, 274);
             this.tabControlInformación.Name = "tabControlInformación";
             this.tabControlInformación.SelectedIndex = 0;
             this.tabControlInformación.Size = new System.Drawing.Size(1443, 356);
@@ -1110,10 +1130,11 @@
             // 
             this.tabControlAdministracionBaseDatos.Controls.Add(this.tabPage4);
             this.tabControlAdministracionBaseDatos.Controls.Add(this.tabPage5);
+            this.tabControlAdministracionBaseDatos.Controls.Add(this.tabPage1);
             this.tabControlAdministracionBaseDatos.Location = new System.Drawing.Point(12, 12);
             this.tabControlAdministracionBaseDatos.Name = "tabControlAdministracionBaseDatos";
             this.tabControlAdministracionBaseDatos.SelectedIndex = 0;
-            this.tabControlAdministracionBaseDatos.Size = new System.Drawing.Size(1474, 640);
+            this.tabControlAdministracionBaseDatos.Size = new System.Drawing.Size(1474, 667);
             this.tabControlAdministracionBaseDatos.TabIndex = 3;
             // 
             // tabPage4
@@ -1123,7 +1144,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 25);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1466, 611);
+            this.tabPage4.Size = new System.Drawing.Size(1466, 638);
             this.tabPage4.TabIndex = 0;
             this.tabPage4.Text = "Fichas";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -1134,7 +1155,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 25);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(1466, 611);
+            this.tabPage5.Size = new System.Drawing.Size(1466, 638);
             this.tabPage5.TabIndex = 1;
             this.tabPage5.Text = "Organigrama APF";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -1146,11 +1167,21 @@
             this.treeViewOrganigramaAPF.Size = new System.Drawing.Size(472, 598);
             this.treeViewOrganigramaAPF.TabIndex = 0;
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1466, 638);
+            this.tabPage1.TabIndex = 2;
+            this.tabPage1.Text = "Publica Info";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1516, 657);
+            this.ClientSize = new System.Drawing.Size(1516, 679);
             this.Controls.Add(this.tabControlAdministracionBaseDatos);
             this.Name = "AdminForm";
             this.Text = "Administración de la Administración la Base de Datos";
@@ -1278,6 +1309,8 @@
         private System.Windows.Forms.Button buttonPuestosInicial;
         private System.Windows.Forms.Button buttonNuevo;
         private System.Windows.Forms.OpenFileDialog openFileDialogFoto;
+        private System.Windows.Forms.Button buttonCargaBD;
+        private System.Windows.Forms.TabPage tabPage1;
     }
 }
 

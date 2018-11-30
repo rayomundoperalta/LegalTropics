@@ -5,6 +5,7 @@ using System.Data.OleDb;
 using System.IO;
 using Globales;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace MSAccess
 {
@@ -15,30 +16,12 @@ namespace MSAccess
         
         static public void ActualizaDataBase(string NewDataBaseFileName)
         {
-            // leemos el nuevo archivo con la base de datos
-            FileInfo fi = new FileInfo(NewDataBaseFileName);
-            byte[] bData = null;
-            if (fi.Exists)
+            if (File.Exists(Defines.DataBasePath + Defines.DataBaseFileName))
             {
-                
-                // Read file data into buffer
-                using (FileStream fs = fi.OpenRead())
-                {
-                    bData = new byte[fi.Length];
-                    int nReadLength = fs.Read(bData, 0, (int)(fi.Length));
-                }
+                System.IO.File.Delete(Defines.DataBasePath + Defines.DataBaseFileName);
             }
-            // Vamos a escribir el nuevo archivo en el lugar del anterior
-            // No vamos a generar copias del archivo
-            FileInfo fo;
-            string FullName = Defines.DataBasePath + Defines.DataBaseFileName;
-            fo = new FileInfo(FullName);
 
-            //Create the file.
-            using (FileStream fs = fi.Create())
-            {
-                fs.Write(bData, 0, (int)fi.Length);
-            }
+            System.IO.File.Move(NewDataBaseFileName, Defines.DataBasePath + Defines.DataBaseFileName);
         }
 
         static public DataRow[] GetFuncionarios()
@@ -529,6 +512,139 @@ namespace MSAccess
                     cmd.ExecuteNonQuery();
                     cn.Close();
                 }
+            }
+        }
+
+        static public void UpdateFuncionario(string ID, string PrimerNombre, string SegundoNombre, string ApellidoPaterno, string ApellidoMaterno, string Nacionalidad, string FechaDeNacimiento)
+        {
+            Builder.Provider = Defines.StringAccessProvider;
+            Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+            tablaDeDatos = new System.Data.DataTable();
+            using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+            {
+                var sql = "UPDATE Funcionarios set ApellidoPaterno = @ApellidoPaterno, ApellidoMaterno = @ApellidoMaterno, PrimerNombre = @PrimerNombre, SegundoNombre = @SegundoNombre, Nacionalidad = @Nacionalidad, FechaDeNacimiento = @FechaDeNacimiento WHERE ID = @ID;";
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
+                    cmd.Parameters.Add("@ApellidoPaterno", OleDbType.VarChar, 80).Value = ApellidoPaterno;
+                    cmd.Parameters.Add("@ApellidoMaterno", OleDbType.VarChar, 80).Value = ApellidoMaterno;
+                    cmd.Parameters.Add("@PrimerNombre", OleDbType.VarChar, 80).Value = PrimerNombre;
+                    cmd.Parameters.Add("@SegundoNombre", OleDbType.VarChar, 80).Value = SegundoNombre;
+                    cmd.Parameters.Add("@Nacionalidad", OleDbType.VarChar, 80).Value = Nacionalidad;
+                    cmd.Parameters.Add("@FechaDeNacimiento", OleDbType.DBDate, 80).Value = FechaDeNacimiento;
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+        }
+
+        static public void InsertFuncionario(string ID, string PrimerNombre, string SegundoNombre, string ApellidoPaterno, string ApellidoMaterno, string Nacionalidad, string FechaDeNacimiento)
+        {
+            Builder.Provider = Defines.StringAccessProvider;
+            Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+            tablaDeDatos = new System.Data.DataTable();
+            using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+            {
+                var sql = "INSERT INTO Funcionarios (ID, ApellidoPaterno, ApellidoMaterno, PrimerNombre, SegundoNombre, Nacionalidad, FechaDeNacimiento) VALUES (@ID, @ApellidoPaterno, @ApellidoMaterno, @PrimerNombre, @SegundoNombre, @Nacionalidad, @FechaDeNacimiento);";
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
+                    cmd.Parameters.Add("@ApellidoPaterno", OleDbType.VarChar, 80).Value = ApellidoPaterno;
+                    cmd.Parameters.Add("@ApellidoMaterno", OleDbType.VarChar, 80).Value = ApellidoMaterno;
+                    cmd.Parameters.Add("@PrimerNombre", OleDbType.VarChar, 80).Value = PrimerNombre;
+                    cmd.Parameters.Add("@SegundoNombre", OleDbType.VarChar, 80).Value = SegundoNombre;
+                    cmd.Parameters.Add("@Nacionalidad", OleDbType.VarChar, 80).Value = Nacionalidad;
+                    cmd.Parameters.Add("@FechaDeNacimiento", OleDbType.DBDate, 80).Value = FechaDeNacimiento;
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+        }
+
+        static private System.Data.DataTable DataTable { get; set; }
+
+        static public void SubeFoto(string filename, string DiskFileName)
+        {
+            string PhotoType = Path.GetExtension(DiskFileName);
+            string ID = string.Empty;
+
+            var myRegex = new Regex(@"[a-zA-Z]+[ ]*[0-9]+");
+
+            MatchCollection AllMatches = myRegex.Matches(Path.GetFileName(filename));
+            if (AllMatches.Count > 0)
+            {
+                foreach (Match someMatch in AllMatches)
+                {
+                    ID = someMatch.Groups[0].Value.Replace(" ", string.Empty);
+                    break;
+                }
+                FileInfo fi = new FileInfo(DiskFileName);
+
+                if (fi.Exists)
+                {
+                    Builder.Provider = Defines.StringAccessProvider;
+                    Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+                    byte[] bData = null;
+                    DataTable = new System.Data.DataTable();
+
+                    // Read file data into buffer
+
+                    using (FileStream fs = fi.OpenRead())
+                    {
+                        bData = new byte[fi.Length];
+
+                        int nReadLength = fs.Read(bData, 0, (int)(fi.Length));
+
+                        using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+                        {
+                            cn.Open();
+                            string sqlQuery = "select * from Fotos where ID = @ID";
+                            DataRow[] fotos;
+                            using (OleDbCommand cmd = new OleDbCommand { CommandText = sqlQuery, Connection = cn })
+                            {
+                                cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
+                                DataTable.Load(cmd.ExecuteReader());
+                                fotos = DataTable.Select();
+                            }
+                            if ((fotos.Length == 0))
+                            {
+                                // Add file info into DB
+                                string sql = "INSERT INTO Fotos "
+                                      + " ( ID, Foto, PhotoType ) "
+                                      + " VALUES "
+                                      + " ( @ID, @FotoData, @tipoFoto ) ";
+
+                                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                                {
+                                    cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
+                                    cmd.Parameters.Add("@FotoData", OleDbType.LongVarBinary, (int)fi.Length).Value = bData;
+                                    cmd.Parameters.Add("@tipoFoto", OleDbType.VarChar, 80).Value = PhotoType;
+                                    Console.WriteLine(ID + " " + PhotoType);
+                                    cmd.ExecuteReader();
+                                }
+                            }
+                            else
+                            {
+                                // Update file info in DB
+                                string sql = "UPDATE Fotos SET Foto = @Foto, PhotoType = @PhotoType where ID = @ID";
+
+                                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                                {
+                                    cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
+                                    cmd.Parameters.Add("@FotoData", OleDbType.LongVarBinary, (int)fi.Length).Value = bData;
+                                    cmd.Parameters.Add("@tipoFoto", OleDbType.VarChar, 80).Value = PhotoType;
+                                    cmd.ExecuteReader();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("El nombre del archivo esta mal formado: " + filename);
             }
         }
     }

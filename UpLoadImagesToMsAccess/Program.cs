@@ -88,14 +88,67 @@ namespace UpLoadImagesToMsAccess
 
     class Program
     {
+        static private OleDbConnectionStringBuilder Builder = new OleDbConnectionStringBuilder();
+
+        static void limpiaDataBase(string DB)
+        {
+            Builder.Provider = Defines.StringAccessProvider;
+            Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+            
+            using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+            {
+                cn.Open();
+                string sql = "Delete from " + DB + " where ID = ID";
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                cn.Close();
+            }   
+        }
+
+        static bool AcceptedFileType(string PhotoFileName)
+        {
+            if (PhotoFileName != string.Empty)
+            {
+                switch (Path.GetExtension(PhotoFileName))
+                {
+                    case ".gif":
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".bmp":
+                    case ".wmf":
+                    case ".png":
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+            else
+                return false;
+        }
+
         static void Main(string[] args)
         {
+            //limpiaDataBase("AdscripciónPolítica");
+            //limpiaDataBase("Escolaridad");
+            limpiaDataBase("Fotos");
+            //limpiaDataBase("Funcionarios");
+            //limpiaDataBase("InformaciónGeneral");
+            //limpiaDataBase("OrganigramaFederal");
+            //limpiaDataBase("Puestos");
+
+
             string[] PhotoFiles = Directory.GetFiles(Defines.FotoBasePath, "*.*");
 
             for (int i = 0; i < PhotoFiles.Length; i++)
             {
-                UpLoadPhotos.SubeFoto(PhotoFiles[i]);
+                if (AcceptedFileType(PhotoFiles[i]))
+                {
+                    UpLoadPhotos.SubeFoto(PhotoFiles[i]);
+                }
             }
+            Console.WriteLine("F i n");
             Console.ReadKey();
         }
 

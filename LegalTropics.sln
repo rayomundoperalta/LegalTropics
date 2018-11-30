@@ -28,6 +28,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSAccess", "MSAccess\MSAcce
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTraductor", "TestTraductor\TestTraductor.csproj", "{F85CD33B-DD00-4E4C-962F-49AA197B37CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Photo2String", "Photo2String\Photo2String.csproj", "{CDEE69B9-E2FD-4D2C-8250-D21FE9358B4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CifradoPeta", "CifradoPeta\CifradoPeta.csproj", "{3D6BB4C5-A330-483F-A41A-E7C5632E6AD0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +82,14 @@ Global
 		{F85CD33B-DD00-4E4C-962F-49AA197B37CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F85CD33B-DD00-4E4C-962F-49AA197B37CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F85CD33B-DD00-4E4C-962F-49AA197B37CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDEE69B9-E2FD-4D2C-8250-D21FE9358B4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDEE69B9-E2FD-4D2C-8250-D21FE9358B4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDEE69B9-E2FD-4D2C-8250-D21FE9358B4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDEE69B9-E2FD-4D2C-8250-D21FE9358B4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D6BB4C5-A330-483F-A41A-E7C5632E6AD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D6BB4C5-A330-483F-A41A-E7C5632E6AD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D6BB4C5-A330-483F-A41A-E7C5632E6AD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D6BB4C5-A330-483F-A41A-E7C5632E6AD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,6 +4,8 @@ using System.IO;
 using System.Windows.Forms;
 using MSAccess;
 using Globales;
+using System.Text.RegularExpressions;
+using System.Drawing;
 
 namespace ActualizaBaseDatos
 {
@@ -15,7 +17,15 @@ namespace ActualizaBaseDatos
         IndiceBD indexAP;
         IndiceBD indexINFO;
         IndiceBD indexPuestos;
-        string NewFotoFileName;
+        
+        bool DatosPersonalesModificados = false;
+        DataRow[] funcionarios;
+        DataRow[] escolaridad;
+        DataRow[] AP;
+        DataRow[] INFO;
+        DataRow[] Puestos;
+
+        string NewFotoFileName = string.Empty;
 
         public AdminForm()
         {
@@ -28,6 +38,28 @@ namespace ActualizaBaseDatos
             }
             InitializeComponent();
             this.FormClosed += AdminForm_FormClosed;
+
+            tabControlAdministracionBaseDatos.Selected += TabControlAdministracionBaseDatos_Selected;
+            tabControlInformación.Selected += TabControlInformación_Selected;
+        }
+
+        private void AdminForm_Load(object sender, EventArgs e)
+        {
+            // TODO: This line of code loads data into the 'bDSecretarias1DataSet.Escolaridad' table. You can move, or remove it, as needed.
+            funcionarios = AccessUtility.GetFuncionarios();
+            funcionarioMostrado = new IndiceBD(funcionarios.Length);
+            if (funcionarioMostrado.Length > 0)
+            {
+                DespliegaInformación(funcionarioMostrado.Pos);
+                buttonInserta.Enabled = false;
+                buttonModifica.Enabled = true;
+            }
+            else
+            {
+                LimpiaInformación();
+                buttonInserta.Enabled = true;
+                buttonModifica.Enabled = false;
+            }
         }
 
         private void AdminForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -35,16 +67,9 @@ namespace ActualizaBaseDatos
             
         }
 
-        DataRow[] funcionarios;
-        DataRow[] escolaridad;
-        DataRow[] AP;
-        DataRow[] INFO;
-        DataRow[] Puestos;
-
         private void DespliegaInformación(int index)
         {
             // Datos Personales
-
             textBoxPrimerNombre.Text = funcionarios[index]["PrimerNombre"].ToString();
             textBoxSegundoNombre.Text = funcionarios[index]["SegundoNombre"].ToString();
             textBoxApellidoPaterno.Text = funcionarios[index]["ApellidoPaterno"].ToString();
@@ -58,85 +83,237 @@ namespace ActualizaBaseDatos
 
             escolaridad = AccessUtility.GetEscolaridad(IDFuncionario);
             indexEscolaridad = new IndiceBD(escolaridad.Length);
-            LlenaEscolaridad();
+            LlenaEscolaridad(IDFuncionario);
 
             AP = AccessUtility.GetAdscripcionPolitica(IDFuncionario);
             indexAP = new IndiceBD(AP.Length);
-            LlenaAP();
+            LlenaAP(IDFuncionario);
 
             INFO = AccessUtility.GetNotasRelevantes(IDFuncionario);
             indexINFO = new IndiceBD(INFO.Length);
-            LlenaINFO();
+            LlenaINFO(IDFuncionario);
 
             Puestos = AccessUtility.GetPuestos(IDFuncionario);
             indexPuestos = new IndiceBD(Puestos.Length);
-            LlenaPuestos();
+            LlenaPuestos(IDFuncionario);
 
             GetTabShown();
+        }
 
-            tabControlAdministracionBaseDatos.Selected += TabControlAdministracionBaseDatos_Selected;
-            tabControlInformación.Selected += TabControlInformación_Selected;
+        private string GetNextUsableID()
+        {
+            if (funcionarios.Length == 0)
+            {
+                return "A0";
+            }
+            else
+            {
+                string llave = string.Empty;
+                var myRegex = new Regex(@"[0-9]+");
+                int Numero = 0;
+                int Max = 0;
+
+                for (int i = 0; i < funcionarios.Length; i++)
+                {
+                    llave = funcionarios[i]["ID"].ToString();
+                    MatchCollection AllMatches = myRegex.Matches(llave);
+                    if (AllMatches.Count > 0)
+                    {
+                        foreach (Match someMatch in AllMatches)
+                        {   
+                            Numero = Int32.Parse(someMatch.Groups[0].Value);
+                            break;
+                        }
+                        Max = Numero > Max ? Numero : Max;
+                    }
+                    else
+                        MessageBox.Show("Error en los ID de la base de datos");
+                }
+                return "A" + (Max + 1);
+            }
+        }
+
+        private void LimpiaInformación()
+        {
+            // Datos Personales
+            textBoxPrimerNombre.Text = string.Empty;
+            textBoxSegundoNombre.Text = string.Empty;
+            textBoxApellidoPaterno.Text = string.Empty;
+            textBoxApellidoMaterno.Text = string.Empty;
+            textBoxNacionalidad.Text = string.Empty;
+            textBoxFechaNacimiento.Text = string.Empty;
+
+            IDFuncionario = GetNextUsableID();
+
+            using (var ms = new MemoryStream(Defines.ImagenDefault))
+            {
+                pictureBox1.Image = Image.FromStream(ms);
+            }
+
+            NewFotoFileName = string.Empty;
+
+            LimpiaEscolaridad(IDFuncionario);
+
+            LimpiaAP(IDFuncionario);
+            
+            LimpiaINFO(IDFuncionario);
+            
+            LimpiaPuestos(IDFuncionario);
+
+            GetTabShown();
+        }
+
+        private bool AcceptedFileType(string PhotoFileName)
+        {
+            if (PhotoFileName != string.Empty)
+            {
+                switch (Path.GetExtension(PhotoFileName))
+                {
+                    case ".gif":
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".bmp":
+                    case ".wmf":
+                    case ".png":
+                        return true; 
+                    default:
+                        return false;
+                }
+            }
+            else
+                return false;
         }
 
         private void LoadPhoto(string PhotoFileName)
         {
-            pictureBox1.ImageLocation = PhotoFileName;
-            pictureBox1.Load();
-            // ancho 172 alto 199
-            float prop = (float)pictureBox1.Width / (float)pictureBox1.Height;
-            pictureBox1.Height = 199;
-            pictureBox1.Width = (int) (prop * 199);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            if (AcceptedFileType(PhotoFileName))
+            {
+                pictureBox1.ImageLocation = PhotoFileName;
+                pictureBox1.Load();
+                // ancho 172 alto 199
+                float prop = (float)pictureBox1.Width / (float)pictureBox1.Height;
+                pictureBox1.Height = 199;
+                pictureBox1.Width = (int)(prop * 199);
+                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            }
         }
 
-        private void LlenaEscolaridad()
+        private void LlenaEscolaridad(string ID)
         {
             // Escolaridad
-            textBoxID.Text = escolaridad[indexEscolaridad.Pos]["ID"].ToString();
-            textBoxFechaDeInicio.Text = escolaridad[indexEscolaridad.Pos]["FechaDeInicio"].ToString();
-            textBoxFechaDeFin.Text = escolaridad[indexEscolaridad.Pos]["FechaDeFin"].ToString();
-            textBoxUniversidad.Text = escolaridad[indexEscolaridad.Pos]["Universidad"].ToString();
-            textBoxGrado.Text = escolaridad[indexEscolaridad.Pos]["Grado"].ToString();
-            labelEscolaridadPos.Text = (indexEscolaridad.Pos + 1).ToString();
-            labelEscolaridadLength.Text = "de " + indexEscolaridad.Length.ToString();
+            if (indexEscolaridad.Length == 0)
+            {
+                LimpiaEscolaridad(ID);
+            }
+            else
+            {
+                textBoxID.Text = escolaridad[indexEscolaridad.Pos]["ID"].ToString();
+                textBoxFechaDeInicio.Text = escolaridad[indexEscolaridad.Pos]["FechaDeInicio"].ToString();
+                textBoxFechaDeFin.Text = escolaridad[indexEscolaridad.Pos]["FechaDeFin"].ToString();
+                textBoxUniversidad.Text = escolaridad[indexEscolaridad.Pos]["Universidad"].ToString();
+                textBoxGrado.Text = escolaridad[indexEscolaridad.Pos]["Grado"].ToString();
+                labelEscolaridadPos.Text = (indexEscolaridad.Pos + 1).ToString();
+                labelEscolaridadLength.Text = "de " + indexEscolaridad.Length.ToString();
+            }
+        }
+
+        private void LimpiaEscolaridad(string ID)
+        {
+            textBoxID.Text = ID;
+            textBoxFechaDeInicio.Text = string.Empty;
+            textBoxFechaDeFin.Text = string.Empty;
+            textBoxUniversidad.Text = string.Empty;
+            textBoxGrado.Text = string.Empty;
+            labelEscolaridadPos.Text = string.Empty;
+            labelEscolaridadLength.Text = string.Empty;
         }
         
-        private void LlenaAP()
+        private void LlenaAP(string ID)
         {
             // Adscripción Política
-            
-            textBoxAPID.Text = AP[indexAP.Pos]["ID"].ToString();
-            textBoxAPFechaDeInicio.Text = AP[indexAP.Pos]["FechaDeInicio"].ToString();
-            textBoxAPFechaDeFin.Text = AP[indexAP.Pos]["FechaDeFin"].ToString();
-            textBoxAPPartido.Text = AP[indexAP.Pos]["NombreDelPartido"].ToString();
-            labelAPPos.Text = (indexAP.Pos + 1).ToString();
-            labelAPLength.Text = "de " + indexAP.Length.ToString();
+            if (indexAP.Length == 0)
+            {
+                LimpiaAP(ID);
+            }
+            else
+            {
+                textBoxAPID.Text = AP[indexAP.Pos]["ID"].ToString();
+                textBoxAPFechaDeInicio.Text = AP[indexAP.Pos]["FechaDeInicio"].ToString();
+                textBoxAPFechaDeFin.Text = AP[indexAP.Pos]["FechaDeFin"].ToString();
+                textBoxAPPartido.Text = AP[indexAP.Pos]["NombreDelPartido"].ToString();
+                labelAPPos.Text = (indexAP.Pos + 1).ToString();
+                labelAPLength.Text = "de " + indexAP.Length.ToString();
+            }
         }
 
-        private void LlenaINFO()
+        private void LimpiaAP(string ID)
+        {
+            textBoxAPID.Text = ID;
+            textBoxAPFechaDeInicio.Text = string.Empty;
+            textBoxAPFechaDeFin.Text = string.Empty;
+            textBoxAPPartido.Text = string.Empty;
+            labelAPPos.Text = string.Empty;
+            labelAPLength.Text = string.Empty;
+        }
+
+        private void LlenaINFO(string ID)
         {
             // Información General
-            
-            textBoxINFOID.Text = INFO[indexINFO.Pos]["ID"].ToString();
-            textBoxINFOTipoDeInformacion.Text = INFO[indexINFO.Pos]["TipoDeInformación"].ToString();
-            textBoxINFOReferencia.Multiline = true;
-            textBoxINFOReferencia.Text = INFO[indexINFO.Pos]["Referencia"].ToString();
-            labelINFOPos.Text = (indexINFO.Pos + 1).ToString();
-            labelINFOLength.Text = "de " + indexINFO.Length.ToString();
+            if (indexINFO.Length == 0)
+            {
+                LimpiaINFO(ID);
+            }
+            else
+            {
+                textBoxINFOID.Text = INFO[indexINFO.Pos]["ID"].ToString();
+                textBoxINFOTipoDeInformacion.Text = INFO[indexINFO.Pos]["TipoDeInformación"].ToString();
+                textBoxINFOReferencia.Multiline = true;
+                textBoxINFOReferencia.Text = INFO[indexINFO.Pos]["Referencia"].ToString();
+                labelINFOPos.Text = (indexINFO.Pos + 1).ToString();
+                labelINFOLength.Text = "de " + indexINFO.Length.ToString();
+            }
         }
 
-        private void LlenaPuestos()
+        private void LimpiaINFO(string ID)
+        {
+            textBoxINFOID.Text = ID;
+            textBoxINFOTipoDeInformacion.Text = string.Empty;
+            textBoxINFOReferencia.Multiline = true;
+            textBoxINFOReferencia.Text = string.Empty;
+            labelINFOPos.Text = string.Empty;
+            labelINFOLength.Text = string.Empty;
+        }
+
+        private void LlenaPuestos(string ID)
         {
             // Puestos
-            
-            textBoxPuestosID.Text = Puestos[indexPuestos.Pos]["ID"].ToString();
-            textBoxPuestosDependencia.Text = Puestos[indexPuestos.Pos]["DependenciaEntidad"].ToString();
-            textBoxPuestosPuesto.Text = Puestos[indexPuestos.Pos]["Puesto"].ToString();
-            textBoxPuestosSuperior.Text = Puestos[indexPuestos.Pos]["JefeInmediantoSuperior"].ToString();
-            textBoxPuestosFechaDeInicio.Text = Puestos[indexPuestos.Pos]["FechaDeInicio"].ToString();
-            textBoxPuestosFechaDeFin.Text = Puestos[indexPuestos.Pos]["FechaDeFin"].ToString();
-            labelPuestosPos.Text = (indexPuestos.Pos + 1).ToString();
-            labelPuestosLength.Text = "de " + indexPuestos.Length.ToString();
+            if (indexPuestos.Length == 0)
+            {
+                LimpiaPuestos(ID);
+            }
+            else
+            {
+                textBoxPuestosID.Text = Puestos[indexPuestos.Pos]["ID"].ToString();
+                textBoxPuestosDependencia.Text = Puestos[indexPuestos.Pos]["DependenciaEntidad"].ToString();
+                textBoxPuestosPuesto.Text = Puestos[indexPuestos.Pos]["Puesto"].ToString();
+                textBoxPuestosSuperior.Text = Puestos[indexPuestos.Pos]["JefeInmediantoSuperior"].ToString();
+                textBoxPuestosFechaDeInicio.Text = Puestos[indexPuestos.Pos]["FechaDeInicio"].ToString();
+                textBoxPuestosFechaDeFin.Text = Puestos[indexPuestos.Pos]["FechaDeFin"].ToString();
+                labelPuestosPos.Text = (indexPuestos.Pos + 1).ToString();
+                labelPuestosLength.Text = "de " + indexPuestos.Length.ToString();
+            }
+        }
+
+        private void LimpiaPuestos(string ID)
+        {
+            textBoxPuestosID.Text = ID;
+            textBoxPuestosDependencia.Text = string.Empty;
+            textBoxPuestosPuesto.Text = string.Empty;
+            textBoxPuestosSuperior.Text = string.Empty;
+            textBoxPuestosFechaDeInicio.Text = string.Empty;
+            textBoxPuestosFechaDeFin.Text = string.Empty;
+            labelPuestosPos.Text = string.Empty;
+            labelPuestosLength.Text = string.Empty;
         }
 
         private void TabControlInformación_Selected(object sender, TabControlEventArgs e)
@@ -145,16 +322,16 @@ namespace ActualizaBaseDatos
             switch (TabPageInformación.Text)
             {
                 case "Escolaridad":
-                    LlenaEscolaridad();
+                    LlenaEscolaridad(IDFuncionario);
                     break;
                 case "Adscripción Política":
-                    LlenaAP();
+                    LlenaAP(IDFuncionario);
                     break;
                 case "Información General":
-                    LlenaINFO();
+                    LlenaINFO(IDFuncionario);
                     break;
                 case "Puestos":
-                    LlenaPuestos();
+                    LlenaPuestos(IDFuncionario);
                     break;
                 default:
                     break;
@@ -172,15 +349,6 @@ namespace ActualizaBaseDatos
 
         }
         
-        private void AdminForm_Load(object sender, EventArgs e)
-        {
-            // TODO: This line of code loads data into the 'bDSecretarias1DataSet.Escolaridad' table. You can move, or remove it, as needed.
-            funcionarios = AccessUtility.GetFuncionarios();
-            funcionarioMostrado = new IndiceBD(funcionarios.Length);
-            DespliegaInformación(funcionarioMostrado.Pos);
-            
-        }
-
         private void tabPageEscolaridad_Click(object sender, EventArgs e)
         {
 
@@ -203,50 +371,61 @@ namespace ActualizaBaseDatos
         
         private void buttonAnterior_Click(object sender, EventArgs e)
         {
-            funcionarioMostrado.Previous();
-            DespliegaInformación(funcionarioMostrado.Pos);
+            if (funcionarioMostrado.Length > 0)
+            {
+                funcionarioMostrado.Previous();
+                DespliegaInformación(funcionarioMostrado.Pos);
+                buttonInserta.Enabled = false;
+                buttonModifica.Enabled = true;
+            }
+            else
+            {
+                buttonInserta.Enabled = true;
+                buttonModifica.Enabled = false;
+            }
         }
 
         private void buttonSiguiente_Click(object sender, EventArgs e)
         {
-            funcionarioMostrado.Next();
-            DespliegaInformación(funcionarioMostrado.Pos);
+            if (funcionarios.Length > 0)
+            {
+                funcionarioMostrado.Next();
+                DespliegaInformación(funcionarioMostrado.Pos);
+            }
+            else
+            {
+                buttonInserta.Enabled = true;
+                buttonModifica.Enabled = false;
+            }
         }
 
         private void buttonEscolaridadInicial_Click(object sender, EventArgs e)
         {
             indexEscolaridad.Inicial();
-            LlenaEscolaridad();
+            LlenaEscolaridad(IDFuncionario);
         }
 
         private void buttonEscolaridadSiguiente_Click(object sender, EventArgs e)
         {
             indexEscolaridad.Next();
-            LlenaEscolaridad();
+            LlenaEscolaridad(IDFuncionario);
         }
 
         private void buttonEscolaridadPrevio_Click(object sender, EventArgs e)
         {
             indexEscolaridad.Previous();
-            LlenaEscolaridad();
+            LlenaEscolaridad(IDFuncionario);
         }
 
         private void buttonEscolaridadFinal_Click(object sender, EventArgs e)
         {
             indexEscolaridad.Final();
-            LlenaEscolaridad();
+            LlenaEscolaridad(IDFuncionario);
         }
 
         private void buttonEscolaridadLimpia_Click(object sender, EventArgs e)
         {
-            // Escolaridad
-            textBoxID.Text = escolaridad[indexEscolaridad.Pos]["ID"].ToString();
-            textBoxFechaDeInicio.Text = String.Empty;
-            textBoxFechaDeFin.Text = String.Empty;
-            textBoxUniversidad.Text = String.Empty;
-            textBoxGrado.Text = String.Empty;
-            labelEscolaridadPos.Text = string.Empty;
-            labelEscolaridadLength.Text = string.Empty;
+            LimpiaEscolaridad(IDFuncionario);
         }
 
         private void buttonEscolaridadInserta_Click(object sender, EventArgs e)
@@ -262,7 +441,7 @@ namespace ActualizaBaseDatos
                 MessageBox.Show("Debe proporcionarse al menos la información de la Universidad y el Grado");
             escolaridad = AccessUtility.GetEscolaridad(IDFuncionario);
             indexEscolaridad = new IndiceBD(escolaridad.Length);
-            LlenaEscolaridad();
+            LlenaEscolaridad(IDFuncionario);
         }
 
         private void buttonEscolaridadElimina_Click(object sender, EventArgs e)
@@ -270,31 +449,31 @@ namespace ActualizaBaseDatos
             AccessUtility.DeleteRegistroEscolaridad(escolaridad[indexEscolaridad.Pos]["Id1"].ToString());
             escolaridad = AccessUtility.GetEscolaridad(IDFuncionario);
             indexEscolaridad = new IndiceBD(escolaridad.Length);
-            LlenaEscolaridad();
+            LlenaEscolaridad(IDFuncionario);
         }
 
         private void buttonAPInicial_Click(object sender, EventArgs e)
         {
             indexAP.Inicial();
-            LlenaAP();
+            LlenaAP(IDFuncionario);
         }
 
         private void buttonAPPrevious_Click(object sender, EventArgs e)
         {
             indexAP.Previous();
-            LlenaAP();
+            LlenaAP(IDFuncionario);
         }
 
         private void buttonAPSiguiente_Click(object sender, EventArgs e)
         {
             indexAP.Next();
-            LlenaAP();
+            LlenaAP(IDFuncionario);
         }
 
         private void buttonAPFinal_Click(object sender, EventArgs e)
         {
             indexAP.Final();
-            LlenaAP();
+            LlenaAP(IDFuncionario);
         }
 
         private void buttonAPInserta_Click(object sender, EventArgs e)
@@ -308,18 +487,12 @@ namespace ActualizaBaseDatos
                 MessageBox.Show("Debe proporcionarse al menos la información del Partido de adscripción");
             AP = AccessUtility.GetAdscripcionPolitica(IDFuncionario);
             indexAP = new IndiceBD(AP.Length);
-            LlenaAP();
+            LlenaAP(IDFuncionario);
         }
 
         private void buttonAPLimpia_Click(object sender, EventArgs e)
         {
-            // Adscripción Política
-
-            textBoxAPFechaDeInicio.Text = String.Empty;
-            textBoxAPFechaDeFin.Text = String.Empty;
-            textBoxAPPartido.Text = String.Empty;
-            labelAPPos.Text = string.Empty;
-            labelAPLength.Text = string.Empty;
+            LimpiaAP(IDFuncionario);
         }
 
         private void buttonAPElimina_Click(object sender, EventArgs e)
@@ -327,31 +500,31 @@ namespace ActualizaBaseDatos
             AccessUtility.DeleteRegistroAP(AP[indexAP.Pos]["Id1"].ToString());
             AP = AccessUtility.GetAdscripcionPolitica(IDFuncionario);
             indexAP = new IndiceBD(AP.Length);
-            LlenaAP();
+            LlenaAP(IDFuncionario);
         }
 
         private void buttonINFOInicial_Click(object sender, EventArgs e)
         {
             indexINFO.Inicial();
-            LlenaINFO();
+            LlenaINFO(IDFuncionario);
         }
 
         private void buttonINFOPrevious_Click(object sender, EventArgs e)
         {
             indexINFO.Previous();
-            LlenaINFO();
+            LlenaINFO(IDFuncionario);
         }
 
         private void buttonINFOSiguiente_Click(object sender, EventArgs e)
         {
             indexINFO.Next();
-            LlenaINFO();
+            LlenaINFO(IDFuncionario);
         }
 
         private void buttonINFOFinal_Click(object sender, EventArgs e)
         {
             indexINFO.Final();
-            LlenaINFO();
+            LlenaINFO(IDFuncionario);
         }
 
         private void buttonINFOInserta_Click(object sender, EventArgs e)
@@ -366,16 +539,12 @@ namespace ActualizaBaseDatos
                 MessageBox.Show("Debe proporcionarse al menos la información del tipo de referencia y la referencia");
             INFO = AccessUtility.GetNotasRelevantes(IDFuncionario);
             indexINFO = new IndiceBD(INFO.Length);
-            LlenaINFO();
+            LlenaINFO(IDFuncionario);
         }
 
         private void buttonINFOLimpia_Click(object sender, EventArgs e)
         {
-            textBoxINFOTipoDeInformacion.Text = String.Empty;
-            textBoxINFOReferencia.Multiline = true;
-            textBoxINFOReferencia.Text = String.Empty;
-            labelINFOPos.Text = string.Empty;
-            labelINFOLength.Text = string.Empty;
+            LimpiaINFO(IDFuncionario);
         }
 
         private void buttonINFOElimina_Click(object sender, EventArgs e)
@@ -383,31 +552,31 @@ namespace ActualizaBaseDatos
             AccessUtility.DeleteRegistroINFO(INFO[indexINFO.Pos]["Id1"].ToString());
             INFO = AccessUtility.GetNotasRelevantes(IDFuncionario);
             indexINFO = new IndiceBD(INFO.Length);
-            LlenaINFO();
+            LlenaINFO(IDFuncionario);
         }
 
         private void buttonPuestosInicial_Click(object sender, EventArgs e)
         {
             indexPuestos.Inicial();
-            LlenaPuestos();
+            LlenaPuestos(IDFuncionario);
         }
 
         private void buttonPuestosPrevious_Click(object sender, EventArgs e)
         {
             indexPuestos.Previous();
-            LlenaPuestos();
+            LlenaPuestos(IDFuncionario);
         }
 
         private void buttonPuestosSiguiente_Click(object sender, EventArgs e)
         {
             indexPuestos.Next();
-            LlenaPuestos();
+            LlenaPuestos(IDFuncionario);
         }
 
         private void buttonPuestosFinal_Click(object sender, EventArgs e)
         {
             indexPuestos.Final();
-            LlenaPuestos();
+            LlenaPuestos(IDFuncionario);
         }
 
         private void buttonPuestosInserta_Click(object sender, EventArgs e)
@@ -426,18 +595,12 @@ namespace ActualizaBaseDatos
                 MessageBox.Show("Debe proporcionarse la información de la dependencia/entidad, puesto y jefe inmediato");
             Puestos = AccessUtility.GetPuestos(IDFuncionario);
             indexPuestos = new IndiceBD(Puestos.Length);
-            LlenaPuestos();
+            LlenaPuestos(IDFuncionario);
         }
 
         private void buttonPuestosLimpia_Click(object sender, EventArgs e)
         {
-            textBoxPuestosDependencia.Text = String.Empty;
-            textBoxPuestosPuesto.Text = String.Empty;
-            textBoxPuestosSuperior.Text = String.Empty;
-            textBoxPuestosFechaDeInicio.Text = String.Empty;
-            textBoxPuestosFechaDeFin.Text = String.Empty;
-            labelPuestosPos.Text = string.Empty;
-            labelPuestosLength.Text = string.Empty;
+            LimpiaPuestos(IDFuncionario);
         }
 
         private void buttonPuestosElimina_Click(object sender, EventArgs e)
@@ -445,7 +608,7 @@ namespace ActualizaBaseDatos
             AccessUtility.DeleteRegistroPuestos(Puestos[indexPuestos.Pos]["Id1"].ToString());
             Puestos = AccessUtility.GetPuestos(IDFuncionario);
             indexPuestos = new IndiceBD(Puestos.Length);
-            LlenaPuestos();
+            LlenaPuestos(IDFuncionario);
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -453,11 +616,59 @@ namespace ActualizaBaseDatos
             openFileDialogFoto.ShowDialog();
             NewFotoFileName = openFileDialogFoto.FileName;
             LoadPhoto(NewFotoFileName);
+            DatosPersonalesModificados = true;
         }
 
         private void buttonNuevo_Click(object sender, EventArgs e)
         {
+            LimpiaInformación();
+            buttonInserta.Enabled = true;
+        }
 
+        private void textBoxPrimerNombre_TextChanged(object sender, EventArgs e)
+        {
+            buttonModifica.Enabled = true;
+        }
+
+        private void textBoxSegundoNombre_TextChanged(object sender, EventArgs e)
+        {
+            buttonModifica.Enabled = true;
+        }
+
+        private void textBoxApellidoPaterno_TextChanged(object sender, EventArgs e)
+        {
+            buttonModifica.Enabled = true;
+        }
+
+        private void textBoxApellidoMaterno_TextChanged(object sender, EventArgs e)
+        {
+            buttonModifica.Enabled = true;
+        }
+
+        private void textBoxNacionalidad_TextChanged(object sender, EventArgs e)
+        {
+            buttonModifica.Enabled = true;
+        }
+
+        private void textBoxFechaNacimiento_TextChanged(object sender, EventArgs e)
+        {
+            buttonModifica.Enabled = true;
+        }
+
+        private void buttonInserta_Click(object sender, EventArgs e)
+        {
+            string ID = GetNextUsableID();
+            AccessUtility.InsertFuncionario(ID, textBoxPrimerNombre.Text, textBoxSegundoNombre.Text, textBoxApellidoPaterno.Text, textBoxApellidoMaterno.Text, textBoxNacionalidad.Text, textBoxFechaNacimiento.Text);
+            AccessUtility.SubeFoto(ID, NewFotoFileName);
+            buttonInserta.Enabled = false;
+            buttonModifica.Enabled = true;
+        }
+
+        private void buttonModifica_Click(object sender, EventArgs e)
+        {
+            AccessUtility.UpdateFuncionario(textBoxID.Text, textBoxPrimerNombre.Text, textBoxSegundoNombre.Text, textBoxApellidoPaterno.Text, textBoxApellidoMaterno.Text, textBoxNacionalidad.Text, textBoxFechaNacimiento.Text);
+            AccessUtility.SubeFoto(textBoxID.Text, NewFotoFileName);
+            buttonModifica.Enabled = false;
         }
     }
 }

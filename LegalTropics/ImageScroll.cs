@@ -20,7 +20,11 @@ namespace LegalTropics
             for (int i = 0; i < PhotoFiles.Length; i++)
             {
                 FileInfo fi = new FileInfo(PhotoFiles[i]);
-                fi.Delete();
+                try
+                {
+                    fi.Delete();
+                }
+                catch (IOException) { }
             }
             InitializeComponent();
             IDs = AccessUtility.GetFotoIDs();

@@ -59,6 +59,11 @@ namespace LegalTropics
 
         private void Tropicalizador_Load(object sender, RibbonUIEventArgs e)
         {
+            LoadDataBaseAPF();
+        }
+
+        private void LoadDataBaseAPF()
+        {
             Parser parser = new Parser(ImprimeConsola);
             Registro Presidente = new Registro("P", "Presidencia", "A0");
             APF = new Node<Registro>(Presidente);
@@ -71,8 +76,8 @@ namespace LegalTropics
             // {
             //     Console.WriteLine(lista[i].Value.ToString());
             // }
-            
-            RibbonDropDownItem item; 
+
+            RibbonDropDownItem item;
             DataRow[] funcionarios = AccessUtility.GetFuncionarios();
             for (int i = 0; i < funcionarios.Length; i++)
             {
@@ -92,9 +97,9 @@ namespace LegalTropics
             }
 
             StringPuestos.Sort((x, y) => x.CompareTo(y));
-            
+
             StringPuestos.Sort();
-            
+
 
             for (int i = 0; i < StringPuestos.Count; i++)
             {
@@ -107,7 +112,7 @@ namespace LegalTropics
             AparadorDeFotografias = new ImageScroll();
             VentanaPuestos = new PuestosAPF();
             VentanaFuncionarios = new FuncionariosAPF();
-    }
+        }
 
         private IPAddress parse(string ipAddress)
         {
@@ -732,10 +737,13 @@ namespace LegalTropics
 
         private void buttonActualizaBaseDeDatos_Click(object sender, RibbonControlEventArgs e)
         {
+            GetDataBaseOpenFileDialog.CheckFileExists = true;
+            GetDataBaseOpenFileDialog.CheckPathExists = true;
+            GetDataBaseOpenFileDialog.Filter = "PETA Information Data (*.peta)|*.peta";
             if (GetDataBaseOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                // AccessUtility.ActualizaDataBase(GetDataBaseOpenFileDialog.FileName);
-                
+                AccessUtility.ActualizaDataBase(GetDataBaseOpenFileDialog.FileName);
+                LoadDataBaseAPF();
             }
         }
 

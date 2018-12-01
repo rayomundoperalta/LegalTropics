@@ -8,6 +8,9 @@
         public const string DataBasePath = @"C:\INFO APF\";
         public const string DataBaseFileName = @"AMLOTeam.accdb";
         public const string FotoBasePath = DataBasePath + @"Base de Datos Fotografías";
+        public const string DataBaseFileNameEncriptado = @"qqsaved.peta";
+        public const int PosInicial = 20;
+        public const int PosFinal = 253;
 
         public const string FotoTempBasePath = @"C:\APFFotos\";
         public const int ColorInstitucional = 149 + 0x100 * 179 + 0x10000 * 215;

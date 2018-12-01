@@ -130,8 +130,9 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.treeViewOrganigramaAPF = new System.Windows.Forms.TreeView();
-            this.openFileDialogFoto = new System.Windows.Forms.OpenFileDialog();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.openFileDialogFoto = new System.Windows.Forms.OpenFileDialog();
+            this.labelSTATUS = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tabControlInformación.SuspendLayout();
@@ -142,6 +143,7 @@
             this.tabControlAdministracionBaseDatos.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -1169,6 +1171,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.labelSTATUS);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -1176,6 +1179,16 @@
             this.tabPage1.TabIndex = 2;
             this.tabPage1.Text = "Publica Info";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // labelSTATUS
+            // 
+            this.labelSTATUS.AutoSize = true;
+            this.labelSTATUS.Font = new System.Drawing.Font("Segoe Script", 40.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSTATUS.Location = new System.Drawing.Point(361, 140);
+            this.labelSTATUS.Name = "labelSTATUS";
+            this.labelSTATUS.Size = new System.Drawing.Size(456, 113);
+            this.labelSTATUS.TabIndex = 0;
+            this.labelSTATUS.Text = "Trabajando";
             // 
             // AdminForm
             // 
@@ -1201,6 +1214,8 @@
             this.tabControlAdministracionBaseDatos.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1311,6 +1326,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialogFoto;
         private System.Windows.Forms.Button buttonCargaBD;
         private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.Label labelSTATUS;
     }
 }
 

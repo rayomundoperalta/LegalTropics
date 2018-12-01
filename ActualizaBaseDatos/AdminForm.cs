@@ -6,6 +6,9 @@ using MSAccess;
 using Globales;
 using System.Text.RegularExpressions;
 using System.Drawing;
+using CifradoPeta;
+using System.Security.Policy;
+using PetaPublish;
 
 namespace ActualizaBaseDatos
 {
@@ -67,7 +70,7 @@ namespace ActualizaBaseDatos
             
         }
 
-        private void DespliegaInformación(int index)
+        private string DespliegaInformación(int index)
         {
             // Datos Personales
             textBoxPrimerNombre.Text = funcionarios[index]["PrimerNombre"].ToString();
@@ -98,6 +101,7 @@ namespace ActualizaBaseDatos
             LlenaPuestos(IDFuncionario);
 
             GetTabShown();
+            return IDFuncionario;
         }
 
         private string GetNextUsableID()
@@ -167,7 +171,7 @@ namespace ActualizaBaseDatos
         {
             if (PhotoFileName != string.Empty)
             {
-                switch (Path.GetExtension(PhotoFileName))
+                switch (Path.GetExtension(PhotoFileName).ToLower())
                 {
                     case ".gif":
                     case ".jpg":
@@ -175,7 +179,15 @@ namespace ActualizaBaseDatos
                     case ".bmp":
                     case ".wmf":
                     case ".png":
-                        return true; 
+                        if (File.Exists(PhotoFileName))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                        
                     default:
                         return false;
                 }
@@ -196,6 +208,8 @@ namespace ActualizaBaseDatos
                 pictureBox1.Width = (int)(prop * 199);
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             }
+            else
+                MessageBox.Show("Problema con el archivo " + PhotoFileName);
         }
 
         private void LlenaEscolaridad(string ID)
@@ -342,6 +356,22 @@ namespace ActualizaBaseDatos
         private void TabControlAdministracionBaseDatos_Selected(object sender, TabControlEventArgs e)
         {
             GetTabShown();
+            switch (TabPageAdministración.Text)
+            {
+                case "Fichas":
+                case "Organigrama APF":
+                    break;
+                case "Publica Info":
+                    PetaSecure cipher = new PetaSecure();
+                    labelSTATUS.Text = "Trabajando";
+                    cipher.FileEncrypt(Defines.DataBasePath + Defines.DataBaseFileName, Defines.DataBasePath + Defines.DataBaseFileNameEncriptado,
+                        System.Text.Encoding.UTF8.GetString(Defines.ImagenDefault).Substring(Defines.PosInicial,Defines.PosFinal));
+                    PetaPublish.Publisher.UploadInfoAPFDB(Defines.DataBasePath, Defines.DataBaseFileNameEncriptado);
+                    labelSTATUS.Text = "Terminado";
+                    break;
+                default:
+                    break;
+            }
         }
         
         private void buttonBusca_Click(object sender, EventArgs e)
@@ -391,6 +421,8 @@ namespace ActualizaBaseDatos
             {
                 funcionarioMostrado.Next();
                 DespliegaInformación(funcionarioMostrado.Pos);
+                buttonInserta.Enabled = false;
+                buttonModifica.Enabled = true;
             }
             else
             {

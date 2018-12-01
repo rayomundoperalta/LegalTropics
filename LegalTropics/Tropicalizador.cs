@@ -13,6 +13,8 @@ using Arboles;
 using Globales;
 using APFInfo;
 using MSAccess;
+using CifradoPeta;
+using PetaPublish;
 
 
 namespace LegalTropics
@@ -233,7 +235,6 @@ namespace LegalTropics
                 remoteEP = new IPEndPoint(ipdir, 5000);
             }
            
-
             // Create a TCP/IP  socket.  
             sender1 = new Socket(Globals.ThisAddIn.ipAddress.AddressFamily,
                 SocketType.Stream, ProtocolType.Tcp);
@@ -737,14 +738,37 @@ namespace LegalTropics
 
         private void buttonActualizaBaseDeDatos_Click(object sender, RibbonControlEventArgs e)
         {
+            /*
             GetDataBaseOpenFileDialog.CheckFileExists = true;
             GetDataBaseOpenFileDialog.CheckPathExists = true;
             GetDataBaseOpenFileDialog.Filter = "PETA Information Data (*.peta)|*.peta";
             if (GetDataBaseOpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                AccessUtility.ActualizaDataBase(GetDataBaseOpenFileDialog.FileName);
-                LoadDataBaseAPF();
+                GetDataBaseOpenFileDialog.FileName
             }
+            */
+            PetaSecure cipher = new PetaSecure();
+            if (File.Exists(Defines.DataBasePath + Defines.DataBaseFileNameEncriptado))
+            {
+                System.IO.File.Delete(Defines.DataBasePath + Defines.DataBaseFileNameEncriptado);
+            }
+            if (Publisher.DownloadInfoAPFDB(Defines.DataBasePath, Defines.DataBaseFileNameEncriptado) != 0)
+            {
+                if (File.Exists(Defines.DataBasePath + Defines.DataBaseFileName))
+                {
+                    System.IO.File.Delete(Defines.DataBasePath + Defines.DataBaseFileName);
+                }
+                cipher.FileDecrypt(Defines.DataBasePath + Defines.DataBaseFileNameEncriptado,
+                Defines.DataBasePath + Defines.DataBaseFileName,
+                System.Text.Encoding.UTF8.GetString(Defines.ImagenDefault).Substring(Defines.PosInicial, Defines.PosFinal));
+                LoadDataBaseAPF();
+                MessageBox.Show("Base de datos actualizada");
+                if (File.Exists(Defines.DataBasePath + Defines.DataBaseFileNameEncriptado))
+                {
+                    System.IO.File.Delete(Defines.DataBasePath + Defines.DataBaseFileNameEncriptado);
+                }
+            }
+            
         }
 
         private void buttonPuestos_Click(object sender, RibbonControlEventArgs e)

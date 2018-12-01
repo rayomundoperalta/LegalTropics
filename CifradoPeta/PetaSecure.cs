@@ -31,7 +31,7 @@ namespace CifradoPeta
             return data;
         }
 
-        private void FileEncrypt(string inputFile, string OutputFile, string password)
+        public void FileEncrypt(string inputFile, string OutputFile, string password)
         {
             //http://stackoverflow.com/questions/27645527/aes-encryption-on-large-files
 
@@ -90,7 +90,7 @@ namespace CifradoPeta
             }
         }
         
-        private void FileDecrypt(string inputFile, string outputFile, string password)
+        public void FileDecrypt(string inputFile, string outputFile, string password)
         {
             byte[] passwordBytes = System.Text.Encoding.UTF8.GetBytes(password);
             byte[] salt = new byte[32];

@@ -14,16 +14,6 @@ namespace MSAccess
         static private OleDbConnectionStringBuilder Builder = new OleDbConnectionStringBuilder();
         static private System.Data.DataTable tablaDeDatos { get; set; }
         
-        static public void ActualizaDataBase(string NewDataBaseFileName)
-        {
-            if (File.Exists(Defines.DataBasePath + Defines.DataBaseFileName))
-            {
-                System.IO.File.Delete(Defines.DataBasePath + Defines.DataBaseFileName);
-            }
-
-            System.IO.File.Move(NewDataBaseFileName, Defines.DataBasePath + Defines.DataBaseFileName);
-        }
-
         static public DataRow[] GetFuncionarios()
         {
             Builder.Provider = Defines.StringAccessProvider;
@@ -319,11 +309,11 @@ namespace MSAccess
                     return FullName;
                 }
                 else
-                    return string.Empty;
+                    return ID + " - No Photo 1";
             }
             else
             {
-                return string.Empty;
+                return ID + " - No Photo 2";
             }
         }
 

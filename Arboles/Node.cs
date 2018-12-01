@@ -59,7 +59,6 @@ namespace Arboles
             }
             else
             {
-
                 Resultado.AddRange(sons.ListPuestosDeHijos());
                 return Resultado;
             }

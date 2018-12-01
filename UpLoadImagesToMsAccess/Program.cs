@@ -15,7 +15,6 @@ namespace UpLoadImagesToMsAccess
 
         static public void SubeFoto(string filename)
         {
-            Console.WriteLine(filename);
             string PhotoType = Path.GetExtension(filename);
             string ID = string.Empty;
 
@@ -38,7 +37,6 @@ namespace UpLoadImagesToMsAccess
 
             if (fi.Exists)
             {
-                Console.WriteLine("Existe");
                 Builder.Provider = Defines.StringAccessProvider;
                 Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
                 DataTable = new DataTable();
@@ -76,7 +74,6 @@ namespace UpLoadImagesToMsAccess
                                 cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
                                 cmd.Parameters.Add("@FotoData", OleDbType.LongVarBinary, (int)fi.Length).Value = bData;
                                 cmd.Parameters.Add("@tipoFoto", OleDbType.VarChar, 80).Value = PhotoType;
-                                Console.WriteLine(ID + " " + PhotoType);
                                 cmd.ExecuteReader();
                             }
                         }
@@ -109,9 +106,10 @@ namespace UpLoadImagesToMsAccess
 
         static bool AcceptedFileType(string PhotoFileName)
         {
+            Console.Write("-" + PhotoFileName + "-");
             if (PhotoFileName != string.Empty)
             {
-                switch (Path.GetExtension(PhotoFileName))
+                switch (Path.GetExtension(PhotoFileName).ToLower())
                 {
                     case ".gif":
                     case ".jpg":
@@ -140,18 +138,19 @@ namespace UpLoadImagesToMsAccess
 
 
             string[] PhotoFiles = Directory.GetFiles(Defines.FotoBasePath, "*.*");
+            Console.WriteLine("Numero de Photos " + PhotoFiles.Length);
 
             for (int i = 0; i < PhotoFiles.Length; i++)
             {
+                Console.Write((i + 1) + " ");
                 if (AcceptedFileType(PhotoFiles[i]))
                 {
+                    Console.Write("- ");
                     UpLoadPhotos.SubeFoto(PhotoFiles[i]);
                 }
             }
             Console.WriteLine("F i n");
             Console.ReadKey();
         }
-
-            
     }
 }

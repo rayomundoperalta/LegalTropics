@@ -92,6 +92,10 @@
       <Project>{0365e5a2-c233-4090-ac0a-1b9ac833be16}</Project>
       <Name>Arboles</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CifradoPeta\CifradoPeta.csproj">
+      <Project>{3d6bb4c5-a330-483f-a41a-e7c5632e6ad0}</Project>
+      <Name>CifradoPeta</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Globales\Globales.csproj">
       <Project>{9875d5fc-5821-4cd5-a9e0-2a18db463db9}</Project>
       <Name>Globales</Name>
@@ -99,6 +103,10 @@
     <ProjectReference Include="..\MSAccess\MSAccess.csproj">
       <Project>{4887b47f-4a46-487e-ae56-782ae53c39d7}</Project>
       <Name>MSAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PetaPublish\PetaPublish.csproj">
+      <Project>{6e8d55e7-f2d3-4992-b3b4-1ffe9ad3ebc4}</Project>
+      <Name>PetaPublish</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

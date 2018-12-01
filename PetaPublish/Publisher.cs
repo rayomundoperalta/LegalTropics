@@ -7,13 +7,12 @@ namespace PetaPublish
     {
         private const string USER = "infoapf";
         private const string PASSWORD = "Samahil";
+        private const string ftphost = "peta.dynu.net";
 
         public static int DownloadInfoAPFDB(string Path, string Remote)
         {
-            string ftphost = "peta.dynu.net";
             //string ftpfilepath = "/" + Defines.DataBaseFileNameEncriptado;
             string ftpfilepath = "/" + Remote;
-
             string ftpfullpath = "ftp://" + ftphost + ftpfilepath;
 
             using (WebClient request = new WebClient())
@@ -33,7 +32,6 @@ namespace PetaPublish
 
         public static void UploadInfoAPFDB(string Path, string Local)
         {
-            string ftphost = "peta.dynu.net";
             string ftpfilepath = "/" + Local;
 
             string ftpfullpath = "ftp://" + ftphost + ftpfilepath;

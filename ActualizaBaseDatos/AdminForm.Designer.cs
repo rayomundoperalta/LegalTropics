@@ -131,8 +131,8 @@
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.treeViewOrganigramaAPF = new System.Windows.Forms.TreeView();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.openFileDialogFoto = new System.Windows.Forms.OpenFileDialog();
             this.labelSTATUS = new System.Windows.Forms.Label();
+            this.openFileDialogFoto = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tabControlInformación.SuspendLayout();
@@ -192,6 +192,7 @@
             this.buttonCargaBD.TabIndex = 19;
             this.buttonCargaBD.Text = "Carga BD";
             this.buttonCargaBD.UseVisualStyleBackColor = true;
+            this.buttonCargaBD.Click += new System.EventHandler(this.buttonCargaBD_Click);
             // 
             // buttonNuevo
             // 

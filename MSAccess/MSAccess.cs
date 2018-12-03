@@ -309,11 +309,13 @@ namespace MSAccess
                     return FullName;
                 }
                 else
-                    return ID + " - No Photo 1";
+                {
+                    return Defines.DefaultPhoto();
+                }
             }
             else
             {
-                return ID + " - No Photo 2";
+                return Defines.DefaultPhoto();
             }
         }
 
@@ -555,14 +557,14 @@ namespace MSAccess
 
         static private System.Data.DataTable DataTable { get; set; }
 
-        static public void SubeFoto(string filename, string DiskFileName)
+        static public void SubeFoto(string DBfilename, string DiskFileName)
         {
             string PhotoType = Path.GetExtension(DiskFileName);
             string ID = string.Empty;
 
             var myRegex = new Regex(@"[a-zA-Z]+[ ]*[0-9]+");
 
-            MatchCollection AllMatches = myRegex.Matches(Path.GetFileName(filename));
+            MatchCollection AllMatches = myRegex.Matches(Path.GetFileName(DBfilename));
             if (AllMatches.Count > 0)
             {
                 foreach (Match someMatch in AllMatches)
@@ -592,49 +594,49 @@ namespace MSAccess
                             cn.Open();
                             string sqlQuery = "select * from Fotos where ID = @ID";
                             DataRow[] fotos;
+                            string sql;
+
                             using (OleDbCommand cmd = new OleDbCommand { CommandText = sqlQuery, Connection = cn })
                             {
                                 cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
                                 DataTable.Load(cmd.ExecuteReader());
                                 fotos = DataTable.Select();
                             }
-                            if ((fotos.Length == 0))
+                            // Si no existe la foto en la bd se inserta, sino se actualiza
+                            if ((fotos.Length > 0))
                             {
-                                // Add file info into DB
-                                string sql = "INSERT INTO Fotos "
-                                      + " ( ID, Foto, PhotoType ) "
-                                      + " VALUES "
-                                      + " ( @ID, @FotoData, @tipoFoto ) ";
+                                sql = @"DELETE FROM Fotos where ID = '" + ID + @"'";
 
                                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                                 {
-                                    cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
-                                    cmd.Parameters.Add("@FotoData", OleDbType.LongVarBinary, (int)fi.Length).Value = bData;
-                                    cmd.Parameters.Add("@tipoFoto", OleDbType.VarChar, 80).Value = PhotoType;
-                                    Console.WriteLine(ID + " " + PhotoType);
-                                    cmd.ExecuteReader();
+                                    int AffectedRows = cmd.ExecuteNonQuery();
                                 }
                             }
-                            else
-                            {
-                                // Update file info in DB
-                                string sql = "UPDATE Fotos SET Foto = @Foto, PhotoType = @PhotoType where ID = @ID";
+                            // Add file info into DB
+                            sql = "INSERT INTO Fotos "
+                                  + " ( ID, Foto, PhotoType ) "
+                                  + " VALUES "
+                                  + " ( @ID, @FotoData, @tipoFoto ) ";
 
-                                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
-                                {
-                                    cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
-                                    cmd.Parameters.Add("@FotoData", OleDbType.LongVarBinary, (int)fi.Length).Value = bData;
-                                    cmd.Parameters.Add("@tipoFoto", OleDbType.VarChar, 80).Value = PhotoType;
-                                    cmd.ExecuteReader();
-                                }
+                            using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                            {
+                                cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
+                                cmd.Parameters.Add("@FotoData", OleDbType.LongVarBinary, (int)fi.Length).Value = bData;
+                                cmd.Parameters.Add("@tipoFoto", OleDbType.VarChar, 80).Value = PhotoType;
+                                int AffectedRows = cmd.ExecuteNonQuery();
                             }
+                            cn.Close();
                         }
                     }
+                }
+                else
+                {
+                    MessageBox.Show("El archivo con la foto no existe");
                 }
             }
             else
             {
-                MessageBox.Show("El nombre del archivo esta mal formado: " + filename);
+                MessageBox.Show("El nombre del archivo esta mal formado: " + DBfilename);
             }
         }
     }

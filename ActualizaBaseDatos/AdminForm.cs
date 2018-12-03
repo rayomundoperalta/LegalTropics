@@ -7,8 +7,6 @@ using Globales;
 using System.Text.RegularExpressions;
 using System.Drawing;
 using CifradoPeta;
-using System.Security.Policy;
-using PetaPublish;
 
 namespace ActualizaBaseDatos
 {
@@ -646,9 +644,12 @@ namespace ActualizaBaseDatos
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             openFileDialogFoto.ShowDialog();
-            NewFotoFileName = openFileDialogFoto.FileName;
-            LoadPhoto(NewFotoFileName);
-            DatosPersonalesModificados = true;
+            if (File.Exists(openFileDialogFoto.FileName) && AcceptedFileType(openFileDialogFoto.FileName))
+            {
+                NewFotoFileName = openFileDialogFoto.FileName;
+                LoadPhoto(NewFotoFileName);
+                DatosPersonalesModificados = true;
+            }
         }
 
         private void buttonNuevo_Click(object sender, EventArgs e)
@@ -701,6 +702,11 @@ namespace ActualizaBaseDatos
             AccessUtility.UpdateFuncionario(textBoxID.Text, textBoxPrimerNombre.Text, textBoxSegundoNombre.Text, textBoxApellidoPaterno.Text, textBoxApellidoMaterno.Text, textBoxNacionalidad.Text, textBoxFechaNacimiento.Text);
             AccessUtility.SubeFoto(textBoxID.Text, NewFotoFileName);
             buttonModifica.Enabled = false;
+        }
+
+        private void buttonCargaBD_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

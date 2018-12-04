@@ -46,7 +46,7 @@ namespace ActualizaBaseDatos
             pos = length - 1;
         }
 
-        public int Pos { get { return pos; } }
+        public int Pos { get { return pos; } set { pos = value; } }
 
         public int Length {  get { return length; } }
     }

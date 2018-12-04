@@ -20,6 +20,7 @@ namespace ActualizaBaseDatos
         IndiceBD indexPuestos;
         
         bool DatosPersonalesModificados = false;
+        bool FotoModificada = false;
         DataRow[] funcionarios;
         DataRow[] escolaridad;
         DataRow[] AP;
@@ -27,6 +28,8 @@ namespace ActualizaBaseDatos
         DataRow[] Puestos;
 
         string NewFotoFileName = string.Empty;
+
+        bool BusquedaEnProceso = false;
 
         public AdminForm()
         {
@@ -54,12 +57,14 @@ namespace ActualizaBaseDatos
                 DespliegaInformación(funcionarioMostrado.Pos);
                 buttonInserta.Enabled = false;
                 buttonModifica.Enabled = true;
+                BusquedaEnProceso = false;
             }
             else
             {
                 LimpiaInformación();
                 buttonInserta.Enabled = true;
                 buttonModifica.Enabled = false;
+                BusquedaEnProceso = false;
             }
         }
 
@@ -99,6 +104,8 @@ namespace ActualizaBaseDatos
             LlenaPuestos(IDFuncionario);
 
             GetTabShown();
+            DatosPersonalesModificados = false;
+            FotoModificada = false;
             return IDFuncionario;
         }
 
@@ -163,6 +170,7 @@ namespace ActualizaBaseDatos
             LimpiaPuestos(IDFuncionario);
 
             GetTabShown();
+            BusquedaEnProceso = false;
         }
 
         private bool AcceptedFileType(string PhotoFileName)
@@ -204,6 +212,11 @@ namespace ActualizaBaseDatos
                 float prop = (float)pictureBox1.Width / (float)pictureBox1.Height;
                 pictureBox1.Height = 199;
                 pictureBox1.Width = (int)(prop * 199);
+                if (pictureBox1.Width > 172)
+                {
+                    pictureBox1.Width = 172;
+                    pictureBox1.Height = (int)(172 / prop);
+                }
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             }
             else
@@ -371,10 +384,54 @@ namespace ActualizaBaseDatos
                     break;
             }
         }
-        
+
+        private string SinA(string Cadena)
+        {
+            return Cadena.ToLower().Replace("á", "a").Replace("é", "e").Replace("í", "i").Replace("ó", "o").Replace("ú", "u").Replace("ü", "u")
+                .Replace(" ", string.Empty).Replace("\n", string.Empty).Replace("\t", string.Empty);                
+        }
+
+        Busqueda BusquedaActiva;
+
         private void buttonBusca_Click(object sender, EventArgs e)
         {
-
+            int i = 0;
+            if (BusquedaEnProceso)
+            {
+                i = funcionarioMostrado.Pos + 1;  
+            }
+            else // nueva busqueda
+            {
+                BusquedaActiva = new Busqueda();
+                DatosPersonalesModificados = false;
+                FotoModificada = false;
+                if (!SinA(textBoxApellidoPaterno.Text).Equals(string.Empty)) BusquedaActiva.Add(textBoxApellidoPaterno.Text);
+                if (!SinA(textBoxApellidoMaterno.Text).Equals(string.Empty)) BusquedaActiva.Add(textBoxApellidoMaterno.Text);
+                if (!SinA(textBoxPrimerNombre.Text).Equals(string.Empty)) BusquedaActiva.Add(textBoxPrimerNombre.Text);
+                if (!SinA(textBoxSegundoNombre.Text).Equals(string.Empty)) BusquedaActiva.Add(textBoxSegundoNombre.Text);
+                if (!SinA(textBoxNacionalidad.Text).Equals(string.Empty)) BusquedaActiva.Add(textBoxNacionalidad.Text);
+                if (!SinA(textBoxFechaNacimiento.Text).Equals(string.Empty)) BusquedaActiva.Add(textBoxFechaNacimiento.Text);
+            }
+            while (i < funcionarioMostrado.Length &&
+                    !BusquedaActiva.SatisfaceCriterio(SinA(funcionarios[i]["PrimerNombre"].ToString()) + " " +
+                        SinA(funcionarios[i]["SegundoNombre"].ToString()) + " " +
+                        SinA(funcionarios[i]["ApellidoPaterno"].ToString()) + " " +
+                        SinA(funcionarios[i]["ApellidoMaterno"].ToString()) + " " +
+                        SinA(funcionarios[i]["Nacionalidad"].ToString()) + " " +
+                        SinA(funcionarios[i]["FechaDeNacimiento"].ToString()))) i++;
+            if (i < funcionarioMostrado.Length)
+            {
+                funcionarioMostrado.Pos = i;
+                DespliegaInformación(funcionarioMostrado.Pos);
+                buttonInserta.Enabled = false;
+                buttonModifica.Enabled = true;
+                BusquedaEnProceso = true;
+            }
+            else
+            {
+                BusquedaEnProceso = false;
+                MessageBox.Show("No se encontró un registro con los datos señalados");
+            }
         }
         
         private void tabPageEscolaridad_Click(object sender, EventArgs e)
@@ -399,33 +456,101 @@ namespace ActualizaBaseDatos
         
         private void buttonAnterior_Click(object sender, EventArgs e)
         {
-            if (funcionarioMostrado.Length > 0)
+            BusquedaEnProceso = false;
+            if (DatosPersonalesModificados)
             {
-                funcionarioMostrado.Previous();
-                DespliegaInformación(funcionarioMostrado.Pos);
-                buttonInserta.Enabled = false;
-                buttonModifica.Enabled = true;
+                if (MessageBox.Show("¿Desea ignorar las modificaciones hechas a la ficha?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    // YES
+                    if (funcionarioMostrado.Length > 0)
+                    {
+                        funcionarioMostrado.Previous();
+                        DespliegaInformación(funcionarioMostrado.Pos);
+                        buttonInserta.Enabled = false;
+                        buttonModifica.Enabled = true;
+                        DatosPersonalesModificados = false;
+                        FotoModificada = false;
+                    }
+                    else
+                    {
+                        LimpiaInformación();
+                        buttonInserta.Enabled = true;
+                        buttonModifica.Enabled = false;
+                    }
+                    DatosPersonalesModificados = false;
+                    FotoModificada = false;
+                }
+                else
+                {
+                    // NO
+                }
             }
             else
             {
-                buttonInserta.Enabled = true;
-                buttonModifica.Enabled = false;
+                if (funcionarioMostrado.Length > 0)
+                {
+                    funcionarioMostrado.Previous();
+                    DespliegaInformación(funcionarioMostrado.Pos);
+                    buttonInserta.Enabled = false;
+                    buttonModifica.Enabled = true;
+                    DatosPersonalesModificados = false;
+                    FotoModificada = false;
+                }
+                else
+                {
+                    LimpiaInformación();
+                    buttonInserta.Enabled = true;
+                    buttonModifica.Enabled = false;
+                }
             }
         }
 
         private void buttonSiguiente_Click(object sender, EventArgs e)
         {
-            if (funcionarios.Length > 0)
+            BusquedaEnProceso = false;
+            if (DatosPersonalesModificados)
             {
-                funcionarioMostrado.Next();
-                DespliegaInformación(funcionarioMostrado.Pos);
-                buttonInserta.Enabled = false;
-                buttonModifica.Enabled = true;
+                if (MessageBox.Show("¿Desea ignorar las modificaciones hechas a la ficha?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    // YES
+                    if (funcionarioMostrado.Length > 0)
+                    {
+                        funcionarioMostrado.Next();
+                        DespliegaInformación(funcionarioMostrado.Pos);
+                        buttonInserta.Enabled = false;
+                        buttonModifica.Enabled = true;
+                    }
+                    else
+                    {
+                        LimpiaInformación();
+                        buttonInserta.Enabled = true;
+                        buttonModifica.Enabled = false;
+                    }
+                    DatosPersonalesModificados = false;
+                    FotoModificada = false;
+                }
+                else
+                {
+                    // NO
+                }
             }
             else
             {
-                buttonInserta.Enabled = true;
-                buttonModifica.Enabled = false;
+                if (funcionarioMostrado.Length > 0)
+                {
+                    funcionarioMostrado.Next();
+                    DespliegaInformación(funcionarioMostrado.Pos);
+                    buttonInserta.Enabled = false;
+                    buttonModifica.Enabled = true;
+                }
+                else
+                {
+                    LimpiaInformación();
+                    buttonInserta.Enabled = true;
+                    buttonModifica.Enabled = false;
+                }
+                DatosPersonalesModificados = false;
+                FotoModificada = false;
             }
         }
 
@@ -649,43 +774,77 @@ namespace ActualizaBaseDatos
                 NewFotoFileName = openFileDialogFoto.FileName;
                 LoadPhoto(NewFotoFileName);
                 DatosPersonalesModificados = true;
+                FotoModificada = true;
             }
         }
 
         private void buttonNuevo_Click(object sender, EventArgs e)
         {
-            LimpiaInformación();
-            buttonInserta.Enabled = true;
+            if (DatosPersonalesModificados)
+            {
+                if (MessageBox.Show("¿Desea ignorar las modificaciones hechas a la ficha?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    LimpiaInformación();
+                    buttonInserta.Enabled = true;
+                    DatosPersonalesModificados = false;
+                    FotoModificada = false;
+                    BusquedaEnProceso = false;
+                }
+                else
+                {
+                    
+                }
+            }
+            else
+            {
+                LimpiaInformación();
+                buttonInserta.Enabled = true;
+                DatosPersonalesModificados = false;
+                FotoModificada = false;
+                BusquedaEnProceso = false;
+            }
         }
 
         private void textBoxPrimerNombre_TextChanged(object sender, EventArgs e)
         {
             buttonModifica.Enabled = true;
+            DatosPersonalesModificados = true;
+            BusquedaEnProceso = false;
         }
 
         private void textBoxSegundoNombre_TextChanged(object sender, EventArgs e)
         {
             buttonModifica.Enabled = true;
+            DatosPersonalesModificados = true;
+            BusquedaEnProceso = false;
         }
 
         private void textBoxApellidoPaterno_TextChanged(object sender, EventArgs e)
         {
             buttonModifica.Enabled = true;
+            DatosPersonalesModificados = true;
+            BusquedaEnProceso = false;
         }
 
         private void textBoxApellidoMaterno_TextChanged(object sender, EventArgs e)
         {
             buttonModifica.Enabled = true;
+            DatosPersonalesModificados = true;
+            BusquedaEnProceso = false;
         }
 
         private void textBoxNacionalidad_TextChanged(object sender, EventArgs e)
         {
             buttonModifica.Enabled = true;
+            DatosPersonalesModificados = true;
+            BusquedaEnProceso = false;
         }
 
         private void textBoxFechaNacimiento_TextChanged(object sender, EventArgs e)
         {
             buttonModifica.Enabled = true;
+            DatosPersonalesModificados = true;
+            BusquedaEnProceso = false;
         }
 
         private void buttonInserta_Click(object sender, EventArgs e)
@@ -695,18 +854,41 @@ namespace ActualizaBaseDatos
             AccessUtility.SubeFoto(ID, NewFotoFileName);
             buttonInserta.Enabled = false;
             buttonModifica.Enabled = true;
+            DatosPersonalesModificados = false;
+            FotoModificada = false;
+            BusquedaEnProceso = false;
         }
 
         private void buttonModifica_Click(object sender, EventArgs e)
         {
             AccessUtility.UpdateFuncionario(textBoxID.Text, textBoxPrimerNombre.Text, textBoxSegundoNombre.Text, textBoxApellidoPaterno.Text, textBoxApellidoMaterno.Text, textBoxNacionalidad.Text, textBoxFechaNacimiento.Text);
-            AccessUtility.SubeFoto(textBoxID.Text, NewFotoFileName);
+            if (FotoModificada) AccessUtility.SubeFoto(textBoxID.Text, NewFotoFileName);
             buttonModifica.Enabled = false;
+            DatosPersonalesModificados = false;
+            FotoModificada = false;
+            BusquedaEnProceso = false;
         }
 
         private void buttonCargaBD_Click(object sender, EventArgs e)
         {
-
+            funcionarios = AccessUtility.GetFuncionarios();
+            funcionarioMostrado = new IndiceBD(funcionarios.Length);
+            if (funcionarioMostrado.Length > 0)
+            {
+                DespliegaInformación(funcionarioMostrado.Pos);
+                buttonInserta.Enabled = false;
+                buttonModifica.Enabled = true;
+                BusquedaEnProceso = false;
+            }
+            else
+            {
+                LimpiaInformación();
+                buttonInserta.Enabled = true;
+                buttonModifica.Enabled = false;
+                BusquedaEnProceso = false;
+            }
+            DatosPersonalesModificados = false;
+            FotoModificada = false;
         }
     }
 }

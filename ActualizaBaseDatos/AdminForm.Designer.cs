@@ -188,9 +188,9 @@
             // 
             this.buttonCargaBD.Location = new System.Drawing.Point(898, 77);
             this.buttonCargaBD.Name = "buttonCargaBD";
-            this.buttonCargaBD.Size = new System.Drawing.Size(75, 23);
+            this.buttonCargaBD.Size = new System.Drawing.Size(116, 23);
             this.buttonCargaBD.TabIndex = 19;
-            this.buttonCargaBD.Text = "Carga BD";
+            this.buttonCargaBD.Text = "Inicia BD";
             this.buttonCargaBD.UseVisualStyleBackColor = true;
             this.buttonCargaBD.Click += new System.EventHandler(this.buttonCargaBD_Click);
             // 

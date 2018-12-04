@@ -572,6 +572,7 @@ namespace MSAccess
                     ID = someMatch.Groups[0].Value.Replace(" ", string.Empty);
                     break;
                 }
+                MessageBox.Show(DiskFileName);
                 FileInfo fi = new FileInfo(DiskFileName);
 
                 if (fi.Exists)

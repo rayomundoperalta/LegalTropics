@@ -105,6 +105,10 @@
       <Project>{4887b47f-4a46-487e-ae56-782ae53c39d7}</Project>
       <Name>MSAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OrganigramaAdmin\OrganigramaAdmin.csproj">
+      <Project>{0d4b448c-a406-49be-89ee-fc3875d57da5}</Project>
+      <Name>OrganigramaAdmin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PetaPublish\PetaPublish.csproj">
       <Project>{6e8d55e7-f2d3-4992-b3b4-1ffe9ad3ebc4}</Project>
       <Name>PetaPublish</Name>

@@ -7,6 +7,10 @@ using Globales;
 using System.Text.RegularExpressions;
 using System.Drawing;
 using CifradoPeta;
+using OrganigramaAdmin;
+using Arboles;
+using APFInfo;
+using System.Collections.Generic;
 
 namespace ActualizaBaseDatos
 {
@@ -18,7 +22,7 @@ namespace ActualizaBaseDatos
         IndiceBD indexAP;
         IndiceBD indexINFO;
         IndiceBD indexPuestos;
-        
+
         bool DatosPersonalesModificados = false;
         bool FotoModificada = false;
         DataRow[] funcionarios;
@@ -30,6 +34,32 @@ namespace ActualizaBaseDatos
         string NewFotoFileName = string.Empty;
 
         bool BusquedaEnProceso = false;
+
+        public Node<Registro> APF;
+        Dictionary<string, Node<Registro>> ListaDeNodosPorID = new Dictionary<string, Node<Registro>>();
+        public Node<Registro> nodoSeleccionado = null;
+        TreeNode NodoDeArbolMostrado = null;
+
+        System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
+
+        public Node<Registro> NodoSeleccionado
+        {
+            get
+            {
+                if (nodoSeleccionado == null)
+                {
+                    t.ToString();
+                }
+                return nodoSeleccionado;
+            }
+            set
+            {
+                t.ToString();
+                nodoSeleccionado = value;
+            }
+        }
+
+        Dictionary<string, string> NivelSIguiente = new Dictionary<string, string>();
 
         public AdminForm()
         {
@@ -45,11 +75,30 @@ namespace ActualizaBaseDatos
 
             tabControlAdministracionBaseDatos.Selected += TabControlAdministracionBaseDatos_Selected;
             tabControlInformación.Selected += TabControlInformación_Selected;
+            NivelSIguiente.Add("Presidencia", "S");
+            NivelSIguiente.Add("S", "SS");
+            NivelSIguiente.Add("SS", "DG");
+            NivelSIguiente.Add("DG", "Dir");
+            NivelSIguiente.Add("Dir", "nadie");
+
         }
+
+        private int ImprimeConsola(string line)
+        {
+            Console.WriteLine(line);
+            return 0;
+        }
+
+        Organigrama organigrama = new Organigrama();
 
         private void AdminForm_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'bDSecretarias1DataSet.Escolaridad' table. You can move, or remove it, as needed.
+            Parser parser = new Parser(ImprimeConsola);
+            Registro Presidente = new Registro("Presidencia", "Presidencia", "A0");
+            APF = new Node<Registro>(Presidente);
+            ListaDeNodosPorID.Add("A0", APF);
+            parser.Parsea(APF, 0, ListaDeNodosPorID);
+
             funcionarios = AccessUtility.GetFuncionarios();
             funcionarioMostrado = new IndiceBD(funcionarios.Length);
             if (funcionarioMostrado.Length > 0)
@@ -66,6 +115,8 @@ namespace ActualizaBaseDatos
                 buttonModifica.Enabled = false;
                 BusquedaEnProceso = false;
             }
+            organigrama.LlenaTreeAPF(treeViewOrganigramaAPF.Nodes, APF, 0);
+            organigrama.PrintTreeAPF(APF, ImprimeConsola);
         }
 
         private void AdminForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -371,6 +422,7 @@ namespace ActualizaBaseDatos
             {
                 case "Fichas":
                 case "Organigrama APF":
+                    NodoSeleccionado = null;
                     break;
                 case "Publica Info":
                     PetaSecure cipher = new PetaSecure();
@@ -849,14 +901,21 @@ namespace ActualizaBaseDatos
 
         private void buttonInserta_Click(object sender, EventArgs e)
         {
-            string ID = GetNextUsableID();
-            AccessUtility.InsertFuncionario(ID, textBoxPrimerNombre.Text, textBoxSegundoNombre.Text, textBoxApellidoPaterno.Text, textBoxApellidoMaterno.Text, textBoxNacionalidad.Text, textBoxFechaNacimiento.Text);
-            AccessUtility.SubeFoto(ID, NewFotoFileName);
-            buttonInserta.Enabled = false;
-            buttonModifica.Enabled = true;
-            DatosPersonalesModificados = false;
-            FotoModificada = false;
-            BusquedaEnProceso = false;
+            if (!NewFotoFileName.Equals(string.Empty))
+            {
+                string ID = GetNextUsableID();
+                AccessUtility.InsertFuncionario(ID, textBoxPrimerNombre.Text, textBoxSegundoNombre.Text, textBoxApellidoPaterno.Text, textBoxApellidoMaterno.Text, textBoxNacionalidad.Text, textBoxFechaNacimiento.Text);
+                AccessUtility.SubeFoto(ID, NewFotoFileName);
+                buttonInserta.Enabled = false;
+                buttonModifica.Enabled = true;
+                DatosPersonalesModificados = false;
+                FotoModificada = false;
+                BusquedaEnProceso = false;
+            }
+            else
+            {
+                MessageBox.Show("No se puede insertar una ficha sin foto");
+            }
         }
 
         private void buttonModifica_Click(object sender, EventArgs e)
@@ -890,5 +949,244 @@ namespace ActualizaBaseDatos
             DatosPersonalesModificados = false;
             FotoModificada = false;
         }
+
+        private void treeViewOrganigramaAPF_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            int pos = e.Node.Text.IndexOf('_');
+            string ID = e.Node.Text.Substring(pos + 1, e.Node.Text.Length - pos - 1);
+            if (ListaDeNodosPorID.ContainsKey(ID))
+            {
+                NodoSeleccionado = ListaDeNodosPorID[ID];
+                NodoDeArbolMostrado = treeViewOrganigramaAPF.SelectedNode;
+                ImprimeConsola("-->  " + NodoSeleccionado.Data.ToString() + " # " + e.Node.Text);
+            }
+            else
+            {
+                MessageBox.Show("Error grave comunicarse con el desarrollador");
+            }
+            if (NodoSeleccionado == null) MessageBox.Show("Error error");
+        }
+
+        private void buttonOrgMuestraFuncionario_Click(object sender, EventArgs e)
+        {
+            String ID = NodoSeleccionado.Data.ID;
+            int j = 0;
+            for (int i = 0; i < funcionarios.Length; i++)
+            {
+                if (funcionarios[i]["ID"].ToString().Equals(ID))
+                {
+                    j = i;
+                    break;
+                }
+            }
+            if (j < funcionarios.Length)
+            {
+                funcionarioMostrado.Pos = j;
+                DespliegaInformación(funcionarioMostrado.Pos);
+                buttonInserta.Enabled = false;
+                buttonModifica.Enabled = true;
+                BusquedaEnProceso = true;
+                tabControlAdministracionBaseDatos.SelectedTab = tabPageFichas;
+            }
+            else
+            {
+                MessageBox.Show("Error muy importante comunicarse con el desarrollador");
+            }
+            treeViewOrganigramaAPF.SelectedNode = null;
+            NodoDeArbolMostrado = null;
+            NodoSeleccionado = null;
+        }
+
+        // Modifica
+        private void buttonOrgActualizaFuncionario_Click(object sender, EventArgs e)
+        {
+            String IDMostrado = NodoSeleccionado.Data.ID;
+            string ID = funcionarios[funcionarioMostrado.Pos]["ID"].ToString();
+            if (!(NodoSeleccionado == null) && !ListaDeNodosPorID.ContainsKey(IDMostrado))
+            {
+                NodoDeArbolMostrado.Text = textBoxOrgNombrePuestoModificado.Text + " - " + AccessUtility.GetNombreFuncionario(ID) + "_" + ID;
+                Registro NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, textBoxOrgNombrePuestoModificado.Text, ID);
+                MessageBox.Show(NuevoRegistro.ToString());
+                Node<Registro> NuevoNode = new Node<Registro>(NuevoRegistro, NodoSeleccionado.Sons, NodoSeleccionado.Padre);
+                ListaDeNodosPorID.Add(ID, NuevoNode);
+                // tengo que actualizar APF
+                ListaDeNodosPorID[IDMostrado].Data = NuevoRegistro;
+                ListaDeNodosPorID.Remove(IDMostrado);
+                treeViewOrganigramaAPF.SelectedNode = null;
+                NodoDeArbolMostrado = null;
+                NodoSeleccionado = null;
+                organigrama.PrintTreeAPF(APF, ImprimeConsola);
+                textBoxOrgNombrePuestoModificado.Text = string.Empty;
+            }  
+        }
+
+        // Inserta
+        private void buttonOrgInsertaPuesto_Click(object sender, EventArgs e)
+        {
+            string ID = funcionarios[funcionarioMostrado.Pos]["ID"].ToString();
+            if (NodoSeleccionado == null)
+            {
+                MessageBox.Show("Nodo Selecccionado es nulo");
+            }
+            if (!textBoxOrgNombrePuesto.Text.Equals(string.Empty) && !ListaDeNodosPorID.ContainsKey(ID) && !(NodoSeleccionado == null))
+            {
+                // Hay que modificar APF y ListadeNodosPorID
+                // siempre vamos a inserta el nuevo registro como un hijo, y el único nodo que no puedo borrar es el raiz (el presidente)
+                NodeList<Registro> SinHijos = new NodeList<Registro>();
+                Registro NuevoRegistro = new Registro(NivelSIguiente[NodoSeleccionado.Data.TipoRegistro], textBoxOrgNombrePuesto.Text, ID);
+                Node<Registro> NuevoPuesto = new Node<Registro>(NuevoRegistro, SinHijos, NodoSeleccionado);
+                ListaDeNodosPorID.Add(ID, NuevoPuesto);
+                ImprimeConsola("+-> Contenido nodo insertado: " + NodoSeleccionado.Data.ToString());
+                NodoSeleccionado.Sons.InsertaHijo(NuevoPuesto);
+                // Actualizamos el TreeView
+                TreeNode newNode = new TreeNode(textBoxOrgNombrePuesto.Text + " - " + AccessUtility.GetNombreFuncionario(ID) + "_" + ID);
+                NodoDeArbolMostrado.Nodes.Add(newNode);
+                NodoDeArbolMostrado.Expand();
+
+                treeViewOrganigramaAPF.SelectedNode = null;
+                NodoDeArbolMostrado = null;
+                NodoSeleccionado = null;
+                organigrama.PrintTreeAPF(APF, ImprimeConsola);
+                textBoxOrgNombrePuesto.Text = string.Empty;
+            }
+        }
+
+        private void buttonPrintTree_Click(object sender, EventArgs e)
+        {
+            ImprimeConsola("=================================");
+            organigrama.PrintTreeAPF(APF, ImprimeConsola);
+            ImprimeConsola(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><");
+        }
+
+        private void buttonListaDeNodosPorID_Click(object sender, EventArgs e)
+        {
+            ImprimeConsola("-------------------------------------------------");
+            ImprimeConsola("Tamaño de la lista: " + ListaDeNodosPorID.Count);
+            foreach(var entry in ListaDeNodosPorID)
+            {
+                ImprimeConsola(entry.Key + " -- " + entry.Value.Data.ToString());
+            }
+            ImprimeConsola("///////////////////////////////////////////////////////");
+        }
+
+        private void buttonOrgBorraEntrada_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        Node<Registro> NodoCortado = null;
+
+        public void LimpiaListaDeNodosPorID(Node<Registro> raiz)
+        {
+            ListaDeNodosPorID.Remove(raiz.Data.ID);
+            foreach (Node<Registro> nodo in raiz.Sons)
+            {
+                ListaDeNodosPorID.Remove(nodo.Data.ID);
+            }
+        }
+
+        public void LlenaListaDeNodosPorID(Node<Registro> raiz)
+        {
+            ListaDeNodosPorID.Add(raiz.Data.ID, raiz);
+            foreach (Node<Registro> nodo in raiz.Sons)
+            {
+                ListaDeNodosPorID.Add(nodo.Data.ID, nodo);
+            }
+        }
+
+        private void buttonOrgCortar_Click(object sender, EventArgs e)
+        {
+            String IDMostrado = NodoSeleccionado.Data.ID;
+            if (!(NodoSeleccionado == null) && ListaDeNodosPorID.ContainsKey(IDMostrado))
+            {
+                // quitamos el nodo del arbol de la APF
+                NodoCortado = NodoSeleccionado;
+                // Hay que quitar el nodo y todos sus hijos
+                if (NodoSeleccionado.Padre != null)
+                {
+                    NodoSeleccionado.Padre.Sons.Remove(NodoSeleccionado);
+                    LimpiaListaDeNodosPorID(NodoSeleccionado);
+                    //quitamos el nodo del TreeView mostrado
+                    treeViewOrganigramaAPF.Nodes.Remove(treeViewOrganigramaAPF.SelectedNode);
+                }
+                else
+                {
+                    MessageBox.Show("No se puede remover la Presidencia");
+                }
+            }
+            else
+                MessageBox.Show("Se debe seleccionar el puesto que se va a cortar");
+        }
+
+        private int NivelGerarquico(Node<Registro> nodo)
+        {
+            Parser p = new Parser(ImprimeConsola);
+            ImprimeConsola("--->  " + nodo.Data.TipoRegistro);
+            for (int i = 0; i < p.pila.Length; i++)
+            {
+                if (p.pila[i].Equals(nodo.Data.TipoRegistro)) return i;
+            }
+            return -1;
+        }
+
+        private void ActualizaTipoDePuestoYPoda(Node<Registro> raiz, int NivelDelSuperior)
+        {
+            Parser p = new Parser(ImprimeConsola);
+            if ((NivelDelSuperior + 1) < p.pila.Length)
+            {
+                raiz.Data.TipoRegistro = p.pila[NivelDelSuperior + 1];
+                foreach (Node<Registro> nodo in raiz.Sons)
+                {
+                    ActualizaTipoDePuestoYPoda(nodo, NivelDelSuperior + 1);
+                }
+            }
+            else
+            {
+                raiz.Padre.Sons.Remove(raiz);
+            }
+        }
+
+        private void buttonOrgPegar_Click(object sender, EventArgs e)
+        {
+            int NivelDelJefe;
+            String IDMostrado = NodoSeleccionado.Data.ID;
+            if (!(NodoSeleccionado == null) && ListaDeNodosPorID.ContainsKey(IDMostrado))
+            {
+                if ((NivelDelJefe = NivelGerarquico(NodoSeleccionado)) == -1)
+                {
+                    MessageBox.Show("Error de nivel de puesto");
+                }
+                else
+                {
+                    NodoCortado.Padre = NodoSeleccionado;
+                    ActualizaTipoDePuestoYPoda(NodoCortado, NivelDelJefe);
+                    // Insertamos en el arbol de la APF
+                    NodoSeleccionado.Sons.InsertaHijo(NodoCortado);
+                    LlenaListaDeNodosPorID(NodoCortado);
+                    // Hay que mostrar el nuevo subarbol en el TreeView
+                    // Actualizamos el TreeView
+                    organigrama.LlenaTreeAPF(NodoDeArbolMostrado.Nodes, NodoCortado, NodoDeArbolMostrado.Nodes.Count);
+                    NodoDeArbolMostrado.Expand();
+                }
+            }
+            else
+                MessageBox.Show("Se debe seleccionar el puesto al que se le van a insertar los hijos");
+        }
+
+        private void tabPageOrganigrama_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonOrgGuardar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonOrgBackup_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
+// fabricación de mosaicos de pasta en hermosillo

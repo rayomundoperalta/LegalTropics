@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CifradoPeta", "CifradoPeta\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetaPublish", "PetaPublish\PetaPublish.csproj", "{6E8D55E7-F2D3-4992-B3B4-1FFE9AD3EBC4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrganigramaAdmin", "OrganigramaAdmin\OrganigramaAdmin.csproj", "{0D4B448C-A406-49BE-89EE-FC3875D57DA5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -96,6 +98,10 @@ Global
 		{6E8D55E7-F2D3-4992-B3B4-1FFE9AD3EBC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E8D55E7-F2D3-4992-B3B4-1FFE9AD3EBC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E8D55E7-F2D3-4992-B3B4-1FFE9AD3EBC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D4B448C-A406-49BE-89EE-FC3875D57DA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D4B448C-A406-49BE-89EE-FC3875D57DA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D4B448C-A406-49BE-89EE-FC3875D57DA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D4B448C-A406-49BE-89EE-FC3875D57DA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

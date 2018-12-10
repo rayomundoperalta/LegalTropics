@@ -16,7 +16,7 @@ namespace Arboles
         {
             // Search the list for the value
             foreach (Node<T> node in Items)
-                if (node.Value.Equals(value))
+                if (node.Data.Equals(value))
                     return node;
             // if we reached here, we didn't find a matching node
             return null;

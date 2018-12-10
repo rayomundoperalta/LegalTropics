@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Arboles;
 
 namespace APFInfo
 {
@@ -11,6 +7,7 @@ namespace APFInfo
         string tipoRegistro;
         string nombrePuesto;
         string id;
+        //Node<Registro> AutoApuntador;
 
         public Registro(string TipoRegistro, string NombrePuesto, string ID)
         {
@@ -24,9 +21,9 @@ namespace APFInfo
             return nombrePuesto + "_" + id;
         }
 
-        public string TipoRegistro { get { return tipoRegistro; } }
+        public string TipoRegistro { get { return tipoRegistro; } set { tipoRegistro = value; } }
         public string NombrePuesto { get { return nombrePuesto; } }
         public string ID { get { return id; } }
-
+        //public Node<Registro> AlterEGO { get { return AutoApuntador; } set { AutoApuntador = value; } }
     }
 }

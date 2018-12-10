@@ -27,7 +27,7 @@ namespace APFInfo
 
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
-                var sql = "SELECT * FROM OrganigramaFederal order by sec;";
+                var sql = "SELECT * FROM OrganigramaFederal order by Id1;";
                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                 {
                     cn.Open();
@@ -37,7 +37,7 @@ namespace APFInfo
                 Posiciones = DataTable.Select();
                 Registros = new Registro[Posiciones.Length];
 #if Debug
-                Print("# de Registros" + Registros.Length);
+                Print("# de Registros: " + Registros.Length);
 #endif
 
                 int i = 0;
@@ -58,7 +58,7 @@ namespace APFInfo
         private bool AdvanceToken()
         {
 #if Debug
-            Print("Cursor " + cursor + "(++Cursor < " + Registros.Length + ")");
+            //Print("Cursor " + cursor + "(++Cursor < " + Registros.Length + ")");
 #endif
             if (++cursor < Registros.Length)
             {
@@ -78,7 +78,7 @@ namespace APFInfo
         {
             // SOLO AVANZA EL PARSER SI ENCONTRÓ EL TOKEN
 #if Debug
-            if (CurrentToken != null) Print("CurrentToken-> " + CurrentToken.TipoRegistro + " =? " + TipoRegistro);
+            //if (CurrentToken != null) Print("CurrentToken-> " + CurrentToken.TipoRegistro + " =? " + TipoRegistro);
 #endif
             if (CurrentToken != null && CurrentToken.TipoRegistro.Equals(TipoRegistro))
             {

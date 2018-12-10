@@ -1,6 +1,6 @@
 ﻿using Arboles;
 using System;
-using System.Runtime.CompilerServices;
+using System.Collections.Generic;
 
 namespace APFInfo
 {
@@ -8,7 +8,7 @@ namespace APFInfo
     {
         Func<string, int> Print;
         public Tokens RT;
-        private string[] pila = new string[] { "Presidencia", "S", "SS", "DG", "Dir" };
+        public string[] pila = new string[] { "Presidencia", "S", "SS", "DG", "Dir" };
 
         public Parser(Func<string, int> print)
         {
@@ -16,26 +16,33 @@ namespace APFInfo
             RT = new Tokens(Print);
         }
 
-        public void Parsea(Node<Registro> nodo, int Nivel)
+        public void Parsea(Node<Registro> nodo, int Nivel, Dictionary<string, Node<Registro>> ListaDeNodosPorID)
         {
             Nivel++;
             if (Nivel < pila.Length)
             {
 #if Debug
-                if (RT.CurrentToken != null)
-                    Print("Nivel " + Nivel + " busco " + pila[Nivel] + " tengo " + RT.CurrentToken.ToString());
+                //if (RT.CurrentToken != null)
+                //    Print("Nivel " + Nivel + " busco " + pila[Nivel] + " tengo " + RT.CurrentToken.ToString());
 #endif
                 NodeList<Registro> hijos = new NodeList<Registro>();
                 while (RT.CheckToken(pila[Nivel]))
                 {
 #if Debug
-                    Print("Insertamos -> " + RT.LastToken.ToString());
+                    //Print("Insertamos -> " + RT.LastToken.ToString());
 #endif
-                    Node<Registro> NivelJerarquia = new Node<Registro>(RT.LastToken);
-                    Parsea(NivelJerarquia, Nivel);
+                    Node<Registro> NivelJerarquia = new Node<Registro>(RT.LastToken, null, nodo);
+                    //Registro bufferToken = NivelJerarquia.Value;
+                    ListaDeNodosPorID.Add(NivelJerarquia.Data.ID, NivelJerarquia);
+#if Debug
+                    Print("Diccionario: " + ListaDeNodosPorID[NivelJerarquia.Data.ID].Data.ToString() + " orig " + NivelJerarquia.Data.ToString());
+#endif
+                    //bufferToken.AlterEGO = NivelJerarquia;
+                    //NivelJerarquia.Value = bufferToken; // cada nodo se autoapunta, no es ortodoxo, pero me va a ayudar a editar el organigrama
+                    Parsea(NivelJerarquia, Nivel, ListaDeNodosPorID);
                     hijos.InsertaHijo(NivelJerarquia);
 #if Debug
-                    if (RT.CurrentToken != null) Print("CurrentToken -> " + RT.CurrentToken.ToString());
+                    //if (RT.CurrentToken != null) Print("CurrentToken -> " + RT.CurrentToken.ToString());
 #endif
                 }
                 nodo.AddNodeList(hijos);
@@ -46,7 +53,7 @@ namespace APFInfo
 
         public NodeList<Registro> GetNodeListOf(Node<Registro> nodo, string NombrePuesto)
         {
-            if (nodo.Value.NombrePuesto.Equals(NombrePuesto))
+            if (nodo.Data.NombrePuesto.Equals(NombrePuesto))
             {
                 return nodo.Sons;
             }

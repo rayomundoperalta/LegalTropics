@@ -64,12 +64,14 @@ namespace LegalTropics
             LoadDataBaseAPF();
         }
 
+        Dictionary<string, Node<Registro>> ListaDeNodosPorID = new Dictionary<string, Node<Registro>>();
+
         private void LoadDataBaseAPF()
         {
             Parser parser = new Parser(ImprimeConsola);
             Registro Presidente = new Registro("P", "Presidencia", "A0");
             APF = new Node<Registro>(Presidente);
-            parser.Parsea(APF, 0);
+            parser.Parsea(APF, 0, ListaDeNodosPorID);
             // Console.WriteLine("Imprimimos arbol");
             // APF.Print();
             // Console.WriteLine("\nbuscamos ");

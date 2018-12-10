@@ -127,10 +127,26 @@
             this.textBoxPuestosDependencia = new System.Windows.Forms.TextBox();
             this.textBoxPuestosID = new System.Windows.Forms.TextBox();
             this.tabControlAdministracionBaseDatos = new System.Windows.Forms.TabControl();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.tabPageFichas = new System.Windows.Forms.TabPage();
+            this.tabPageOrganigrama = new System.Windows.Forms.TabPage();
+            this.buttonOrgPegar = new System.Windows.Forms.Button();
+            this.buttonOrgCortar = new System.Windows.Forms.Button();
+            this.buttonListaDeNodosPorID = new System.Windows.Forms.Button();
+            this.buttonPrintTree = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.textBoxOrgNombrePuestoModificado = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.buttonOrgActualizaFuncionario = new System.Windows.Forms.Button();
+            this.buttonOrgBackup = new System.Windows.Forms.Button();
+            this.buttonOrgGuardar = new System.Windows.Forms.Button();
+            this.buttonOrgAtras = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.buttonOrgInsertaPuesto = new System.Windows.Forms.Button();
+            this.textBoxOrgNombrePuesto = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.buttonOrgMuestraFuncionario = new System.Windows.Forms.Button();
             this.treeViewOrganigramaAPF = new System.Windows.Forms.TreeView();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPagePublica = new System.Windows.Forms.TabPage();
             this.labelSTATUS = new System.Windows.Forms.Label();
             this.openFileDialogFoto = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -141,9 +157,11 @@
             this.tabPageINFO.SuspendLayout();
             this.tabPagePuestos.SuspendLayout();
             this.tabControlAdministracionBaseDatos.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            this.tabPage5.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tabPageFichas.SuspendLayout();
+            this.tabPageOrganigrama.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.tabPagePublica.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -1131,55 +1149,222 @@
             // 
             // tabControlAdministracionBaseDatos
             // 
-            this.tabControlAdministracionBaseDatos.Controls.Add(this.tabPage4);
-            this.tabControlAdministracionBaseDatos.Controls.Add(this.tabPage5);
-            this.tabControlAdministracionBaseDatos.Controls.Add(this.tabPage1);
+            this.tabControlAdministracionBaseDatos.Controls.Add(this.tabPageFichas);
+            this.tabControlAdministracionBaseDatos.Controls.Add(this.tabPageOrganigrama);
+            this.tabControlAdministracionBaseDatos.Controls.Add(this.tabPagePublica);
             this.tabControlAdministracionBaseDatos.Location = new System.Drawing.Point(12, 12);
             this.tabControlAdministracionBaseDatos.Name = "tabControlAdministracionBaseDatos";
             this.tabControlAdministracionBaseDatos.SelectedIndex = 0;
             this.tabControlAdministracionBaseDatos.Size = new System.Drawing.Size(1474, 667);
             this.tabControlAdministracionBaseDatos.TabIndex = 3;
             // 
-            // tabPage4
+            // tabPageFichas
             // 
-            this.tabPage4.Controls.Add(this.groupBox1);
-            this.tabPage4.Controls.Add(this.tabControlInformación);
-            this.tabPage4.Location = new System.Drawing.Point(4, 25);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1466, 638);
-            this.tabPage4.TabIndex = 0;
-            this.tabPage4.Text = "Fichas";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.tabPageFichas.Controls.Add(this.groupBox1);
+            this.tabPageFichas.Controls.Add(this.tabControlInformación);
+            this.tabPageFichas.Location = new System.Drawing.Point(4, 25);
+            this.tabPageFichas.Name = "tabPageFichas";
+            this.tabPageFichas.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageFichas.Size = new System.Drawing.Size(1466, 638);
+            this.tabPageFichas.TabIndex = 0;
+            this.tabPageFichas.Text = "Fichas";
+            this.tabPageFichas.UseVisualStyleBackColor = true;
             // 
-            // tabPage5
+            // tabPageOrganigrama
             // 
-            this.tabPage5.Controls.Add(this.treeViewOrganigramaAPF);
-            this.tabPage5.Location = new System.Drawing.Point(4, 25);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(1466, 638);
-            this.tabPage5.TabIndex = 1;
-            this.tabPage5.Text = "Organigrama APF";
-            this.tabPage5.UseVisualStyleBackColor = true;
+            this.tabPageOrganigrama.Controls.Add(this.buttonOrgPegar);
+            this.tabPageOrganigrama.Controls.Add(this.buttonOrgCortar);
+            this.tabPageOrganigrama.Controls.Add(this.buttonListaDeNodosPorID);
+            this.tabPageOrganigrama.Controls.Add(this.buttonPrintTree);
+            this.tabPageOrganigrama.Controls.Add(this.groupBox3);
+            this.tabPageOrganigrama.Controls.Add(this.buttonOrgBackup);
+            this.tabPageOrganigrama.Controls.Add(this.buttonOrgGuardar);
+            this.tabPageOrganigrama.Controls.Add(this.buttonOrgAtras);
+            this.tabPageOrganigrama.Controls.Add(this.groupBox2);
+            this.tabPageOrganigrama.Controls.Add(this.buttonOrgMuestraFuncionario);
+            this.tabPageOrganigrama.Controls.Add(this.treeViewOrganigramaAPF);
+            this.tabPageOrganigrama.Location = new System.Drawing.Point(4, 25);
+            this.tabPageOrganigrama.Name = "tabPageOrganigrama";
+            this.tabPageOrganigrama.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageOrganigrama.Size = new System.Drawing.Size(1466, 638);
+            this.tabPageOrganigrama.TabIndex = 1;
+            this.tabPageOrganigrama.Text = "Organigrama APF";
+            this.tabPageOrganigrama.UseVisualStyleBackColor = true;
+            this.tabPageOrganigrama.Click += new System.EventHandler(this.tabPageOrganigrama_Click);
+            // 
+            // buttonOrgPegar
+            // 
+            this.buttonOrgPegar.Location = new System.Drawing.Point(1194, 75);
+            this.buttonOrgPegar.Name = "buttonOrgPegar";
+            this.buttonOrgPegar.Size = new System.Drawing.Size(191, 33);
+            this.buttonOrgPegar.TabIndex = 14;
+            this.buttonOrgPegar.Text = "Pegar";
+            this.buttonOrgPegar.UseVisualStyleBackColor = true;
+            this.buttonOrgPegar.Click += new System.EventHandler(this.buttonOrgPegar_Click);
+            // 
+            // buttonOrgCortar
+            // 
+            this.buttonOrgCortar.Location = new System.Drawing.Point(785, 75);
+            this.buttonOrgCortar.Name = "buttonOrgCortar";
+            this.buttonOrgCortar.Size = new System.Drawing.Size(176, 33);
+            this.buttonOrgCortar.TabIndex = 13;
+            this.buttonOrgCortar.Text = "Cortar";
+            this.buttonOrgCortar.UseVisualStyleBackColor = true;
+            this.buttonOrgCortar.Click += new System.EventHandler(this.buttonOrgCortar_Click);
+            // 
+            // buttonListaDeNodosPorID
+            // 
+            this.buttonListaDeNodosPorID.Location = new System.Drawing.Point(1068, 514);
+            this.buttonListaDeNodosPorID.Name = "buttonListaDeNodosPorID";
+            this.buttonListaDeNodosPorID.Size = new System.Drawing.Size(266, 33);
+            this.buttonListaDeNodosPorID.TabIndex = 12;
+            this.buttonListaDeNodosPorID.Text = "Lista de Nodos por ID";
+            this.buttonListaDeNodosPorID.UseVisualStyleBackColor = true;
+            this.buttonListaDeNodosPorID.Click += new System.EventHandler(this.buttonListaDeNodosPorID_Click);
+            // 
+            // buttonPrintTree
+            // 
+            this.buttonPrintTree.Location = new System.Drawing.Point(856, 514);
+            this.buttonPrintTree.Name = "buttonPrintTree";
+            this.buttonPrintTree.Size = new System.Drawing.Size(170, 33);
+            this.buttonPrintTree.TabIndex = 11;
+            this.buttonPrintTree.Text = "Print Tree APF";
+            this.buttonPrintTree.UseVisualStyleBackColor = true;
+            this.buttonPrintTree.Click += new System.EventHandler(this.buttonPrintTree_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.textBoxOrgNombrePuestoModificado);
+            this.groupBox3.Controls.Add(this.label20);
+            this.groupBox3.Controls.Add(this.buttonOrgActualizaFuncionario);
+            this.groupBox3.Location = new System.Drawing.Point(758, 343);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(652, 137);
+            this.groupBox3.TabIndex = 10;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Modica Registro del Organigrama";
+            // 
+            // textBoxOrgNombrePuestoModificado
+            // 
+            this.textBoxOrgNombrePuestoModificado.Location = new System.Drawing.Point(159, 38);
+            this.textBoxOrgNombrePuestoModificado.Name = "textBoxOrgNombrePuestoModificado";
+            this.textBoxOrgNombrePuestoModificado.Size = new System.Drawing.Size(468, 22);
+            this.textBoxOrgNombrePuestoModificado.TabIndex = 3;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(24, 44);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(129, 17);
+            this.label20.TabIndex = 2;
+            this.label20.Text = "Nombre del Puesto";
+            // 
+            // buttonOrgActualizaFuncionario
+            // 
+            this.buttonOrgActualizaFuncionario.Location = new System.Drawing.Point(27, 83);
+            this.buttonOrgActualizaFuncionario.Name = "buttonOrgActualizaFuncionario";
+            this.buttonOrgActualizaFuncionario.Size = new System.Drawing.Size(601, 33);
+            this.buttonOrgActualizaFuncionario.TabIndex = 1;
+            this.buttonOrgActualizaFuncionario.Text = "Actualiza con funcionario seleccionado en Fichas";
+            this.buttonOrgActualizaFuncionario.UseVisualStyleBackColor = true;
+            this.buttonOrgActualizaFuncionario.Click += new System.EventHandler(this.buttonOrgActualizaFuncionario_Click);
+            // 
+            // buttonOrgBackup
+            // 
+            this.buttonOrgBackup.Location = new System.Drawing.Point(1240, 126);
+            this.buttonOrgBackup.Name = "buttonOrgBackup";
+            this.buttonOrgBackup.Size = new System.Drawing.Size(75, 40);
+            this.buttonOrgBackup.TabIndex = 9;
+            this.buttonOrgBackup.Text = "Backup";
+            this.buttonOrgBackup.UseVisualStyleBackColor = true;
+            this.buttonOrgBackup.Click += new System.EventHandler(this.buttonOrgBackup_Click);
+            // 
+            // buttonOrgGuardar
+            // 
+            this.buttonOrgGuardar.Location = new System.Drawing.Point(1038, 127);
+            this.buttonOrgGuardar.Name = "buttonOrgGuardar";
+            this.buttonOrgGuardar.Size = new System.Drawing.Size(75, 39);
+            this.buttonOrgGuardar.TabIndex = 8;
+            this.buttonOrgGuardar.Text = "Guardar";
+            this.buttonOrgGuardar.UseVisualStyleBackColor = true;
+            this.buttonOrgGuardar.Click += new System.EventHandler(this.buttonOrgGuardar_Click);
+            // 
+            // buttonOrgAtras
+            // 
+            this.buttonOrgAtras.Location = new System.Drawing.Point(856, 127);
+            this.buttonOrgAtras.Name = "buttonOrgAtras";
+            this.buttonOrgAtras.Size = new System.Drawing.Size(75, 39);
+            this.buttonOrgAtras.TabIndex = 7;
+            this.buttonOrgAtras.Text = "Atras";
+            this.buttonOrgAtras.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.buttonOrgInsertaPuesto);
+            this.groupBox2.Controls.Add(this.textBoxOrgNombrePuesto);
+            this.groupBox2.Controls.Add(this.label19);
+            this.groupBox2.Location = new System.Drawing.Point(758, 184);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(652, 132);
+            this.groupBox2.TabIndex = 6;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Crear Entrada en el Organigrama";
+            // 
+            // buttonOrgInsertaPuesto
+            // 
+            this.buttonOrgInsertaPuesto.Location = new System.Drawing.Point(26, 75);
+            this.buttonOrgInsertaPuesto.Name = "buttonOrgInsertaPuesto";
+            this.buttonOrgInsertaPuesto.Size = new System.Drawing.Size(601, 41);
+            this.buttonOrgInsertaPuesto.TabIndex = 6;
+            this.buttonOrgInsertaPuesto.Text = "Inserta entrada en el organigrama, con el funcionario seleccionado";
+            this.buttonOrgInsertaPuesto.UseVisualStyleBackColor = true;
+            this.buttonOrgInsertaPuesto.Click += new System.EventHandler(this.buttonOrgInsertaPuesto_Click);
+            // 
+            // textBoxOrgNombrePuesto
+            // 
+            this.textBoxOrgNombrePuesto.Location = new System.Drawing.Point(159, 34);
+            this.textBoxOrgNombrePuesto.Name = "textBoxOrgNombrePuesto";
+            this.textBoxOrgNombrePuesto.Size = new System.Drawing.Size(468, 22);
+            this.textBoxOrgNombrePuesto.TabIndex = 5;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(24, 37);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(129, 17);
+            this.label19.TabIndex = 4;
+            this.label19.Text = "Nombre del Puesto";
+            // 
+            // buttonOrgMuestraFuncionario
+            // 
+            this.buttonOrgMuestraFuncionario.Location = new System.Drawing.Point(785, 18);
+            this.buttonOrgMuestraFuncionario.Name = "buttonOrgMuestraFuncionario";
+            this.buttonOrgMuestraFuncionario.Size = new System.Drawing.Size(601, 32);
+            this.buttonOrgMuestraFuncionario.TabIndex = 2;
+            this.buttonOrgMuestraFuncionario.Text = "Muestra funcionario en Fichas";
+            this.buttonOrgMuestraFuncionario.UseVisualStyleBackColor = true;
+            this.buttonOrgMuestraFuncionario.Click += new System.EventHandler(this.buttonOrgMuestraFuncionario_Click);
             // 
             // treeViewOrganigramaAPF
             // 
             this.treeViewOrganigramaAPF.Location = new System.Drawing.Point(7, 7);
             this.treeViewOrganigramaAPF.Name = "treeViewOrganigramaAPF";
-            this.treeViewOrganigramaAPF.Size = new System.Drawing.Size(472, 598);
+            this.treeViewOrganigramaAPF.Size = new System.Drawing.Size(715, 598);
             this.treeViewOrganigramaAPF.TabIndex = 0;
+            this.treeViewOrganigramaAPF.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewOrganigramaAPF_AfterSelect);
             // 
-            // tabPage1
+            // tabPagePublica
             // 
-            this.tabPage1.Controls.Add(this.labelSTATUS);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1466, 638);
-            this.tabPage1.TabIndex = 2;
-            this.tabPage1.Text = "Publica Info";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabPagePublica.Controls.Add(this.labelSTATUS);
+            this.tabPagePublica.Location = new System.Drawing.Point(4, 25);
+            this.tabPagePublica.Name = "tabPagePublica";
+            this.tabPagePublica.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPagePublica.Size = new System.Drawing.Size(1466, 638);
+            this.tabPagePublica.TabIndex = 2;
+            this.tabPagePublica.Text = "Publica Info";
+            this.tabPagePublica.UseVisualStyleBackColor = true;
             // 
             // labelSTATUS
             // 
@@ -1213,10 +1398,14 @@
             this.tabPagePuestos.ResumeLayout(false);
             this.tabPagePuestos.PerformLayout();
             this.tabControlAdministracionBaseDatos.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage5.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.tabPageFichas.ResumeLayout(false);
+            this.tabPageOrganigrama.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.tabPagePublica.ResumeLayout(false);
+            this.tabPagePublica.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1247,8 +1436,8 @@
         private System.Windows.Forms.TabPage tabPageAP;
         private System.Windows.Forms.TabPage tabPageINFO;
         private System.Windows.Forms.TabControl tabControlAdministracionBaseDatos;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.TabPage tabPageFichas;
+        private System.Windows.Forms.TabPage tabPageOrganigrama;
         private System.Windows.Forms.TreeView treeViewOrganigramaAPF;
         private System.Windows.Forms.TextBox textBoxID;
         private System.Windows.Forms.TextBox textBoxGrado;
@@ -1326,8 +1515,24 @@
         private System.Windows.Forms.Button buttonNuevo;
         private System.Windows.Forms.OpenFileDialog openFileDialogFoto;
         private System.Windows.Forms.Button buttonCargaBD;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPagePublica;
         private System.Windows.Forms.Label labelSTATUS;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button buttonOrgInsertaPuesto;
+        private System.Windows.Forms.TextBox textBoxOrgNombrePuesto;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Button buttonOrgMuestraFuncionario;
+        private System.Windows.Forms.Button buttonOrgActualizaFuncionario;
+        private System.Windows.Forms.Button buttonOrgBackup;
+        private System.Windows.Forms.Button buttonOrgGuardar;
+        private System.Windows.Forms.Button buttonOrgAtras;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TextBox textBoxOrgNombrePuestoModificado;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Button buttonPrintTree;
+        private System.Windows.Forms.Button buttonListaDeNodosPorID;
+        private System.Windows.Forms.Button buttonOrgPegar;
+        private System.Windows.Forms.Button buttonOrgCortar;
     }
 }
 

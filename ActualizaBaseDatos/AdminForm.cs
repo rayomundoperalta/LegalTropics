@@ -39,6 +39,7 @@ namespace ActualizaBaseDatos
         Dictionary<string, Node<Registro>> ListaDeNodosPorID = new Dictionary<string, Node<Registro>>();
         public Node<Registro> nodoSeleccionado = null;
         TreeNode NodoDeArbolMostrado = null;
+        Parser p;
 
         System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
 
@@ -63,6 +64,7 @@ namespace ActualizaBaseDatos
 
         public AdminForm()
         {
+            
             string[] PhotoFiles = Directory.GetFiles(Defines.FotoTempBasePath, "*.*");
 
             for (int i = 0; i < PhotoFiles.Length; i++)
@@ -70,6 +72,7 @@ namespace ActualizaBaseDatos
                 FileInfo fi = new FileInfo(PhotoFiles[i]);
                 fi.Delete();
             }
+            p = new Parser(ImprimeConsola);
             InitializeComponent();
             this.FormClosed += AdminForm_FormClosed;
 
@@ -80,7 +83,6 @@ namespace ActualizaBaseDatos
             NivelSIguiente.Add("SS", "DG");
             NivelSIguiente.Add("DG", "Dir");
             NivelSIguiente.Add("Dir", "nadie");
-
         }
 
         private int ImprimeConsola(string line)
@@ -90,14 +92,14 @@ namespace ActualizaBaseDatos
         }
 
         Organigrama organigrama = new Organigrama();
+        TreeNode RaizTreeView = null;
 
-        private void AdminForm_Load(object sender, EventArgs e)
+        private void InicializaDS()
         {
-            Parser parser = new Parser(ImprimeConsola);
             Registro Presidente = new Registro("Presidencia", "Presidencia", "A0");
             APF = new Node<Registro>(Presidente);
             ListaDeNodosPorID.Add("A0", APF);
-            parser.Parsea(APF, 0, ListaDeNodosPorID);
+            p.Parsea(APF, 0, ListaDeNodosPorID);
 
             funcionarios = AccessUtility.GetFuncionarios();
             funcionarioMostrado = new IndiceBD(funcionarios.Length);
@@ -115,8 +117,13 @@ namespace ActualizaBaseDatos
                 buttonModifica.Enabled = false;
                 BusquedaEnProceso = false;
             }
-            organigrama.LlenaTreeAPF(treeViewOrganigramaAPF.Nodes, APF, 0);
-            organigrama.PrintTreeAPF(APF, ImprimeConsola);
+            organigrama.LlenaTreeAPF(treeViewOrganigramaAPF.Nodes, APF, 0, true, ref RaizTreeView);
+            //organigrama.PrintTreeAPF(APF, ImprimeConsola);
+        }
+
+        private void AdminForm_Load(object sender, EventArgs e)
+        {
+            InicializaDS();
         }
 
         private void AdminForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -958,7 +965,7 @@ namespace ActualizaBaseDatos
             {
                 NodoSeleccionado = ListaDeNodosPorID[ID];
                 NodoDeArbolMostrado = treeViewOrganigramaAPF.SelectedNode;
-                ImprimeConsola("-->  " + NodoSeleccionado.Data.ToString() + " # " + e.Node.Text);
+                //ImprimeConsola("-->  " + NodoSeleccionado.Data.ToString() + " # " + e.Node.Text);
             }
             else
             {
@@ -1036,7 +1043,7 @@ namespace ActualizaBaseDatos
                 Registro NuevoRegistro = new Registro(NivelSIguiente[NodoSeleccionado.Data.TipoRegistro], textBoxOrgNombrePuesto.Text, ID);
                 Node<Registro> NuevoPuesto = new Node<Registro>(NuevoRegistro, SinHijos, NodoSeleccionado);
                 ListaDeNodosPorID.Add(ID, NuevoPuesto);
-                ImprimeConsola("+-> Contenido nodo insertado: " + NodoSeleccionado.Data.ToString());
+                //ImprimeConsola("+-> Contenido nodo insertado: " + NodoSeleccionado.Data.ToString());
                 NodoSeleccionado.Sons.InsertaHijo(NuevoPuesto);
                 // Actualizamos el TreeView
                 TreeNode newNode = new TreeNode(textBoxOrgNombrePuesto.Text + " - " + AccessUtility.GetNombreFuncionario(ID) + "_" + ID);
@@ -1120,8 +1127,7 @@ namespace ActualizaBaseDatos
 
         private int NivelGerarquico(Node<Registro> nodo)
         {
-            Parser p = new Parser(ImprimeConsola);
-            ImprimeConsola("--->  " + nodo.Data.TipoRegistro);
+            //ImprimeConsola("--->  " + nodo.Data.TipoRegistro);
             for (int i = 0; i < p.pila.Length; i++)
             {
                 if (p.pila[i].Equals(nodo.Data.TipoRegistro)) return i;
@@ -1131,7 +1137,7 @@ namespace ActualizaBaseDatos
 
         private void ActualizaTipoDePuestoYPoda(Node<Registro> raiz, int NivelDelSuperior)
         {
-            Parser p = new Parser(ImprimeConsola);
+            
             if ((NivelDelSuperior + 1) < p.pila.Length)
             {
                 raiz.Data.TipoRegistro = p.pila[NivelDelSuperior + 1];
@@ -1165,7 +1171,8 @@ namespace ActualizaBaseDatos
                     LlenaListaDeNodosPorID(NodoCortado);
                     // Hay que mostrar el nuevo subarbol en el TreeView
                     // Actualizamos el TreeView
-                    organigrama.LlenaTreeAPF(NodoDeArbolMostrado.Nodes, NodoCortado, NodoDeArbolMostrado.Nodes.Count);
+                    TreeNode Auxiliar = null;
+                    organigrama.LlenaTreeAPF(NodoDeArbolMostrado.Nodes, NodoCortado, NodoDeArbolMostrado.Nodes.Count, false, ref Auxiliar);
                     NodoDeArbolMostrado.Expand();
                 }
             }
@@ -1178,14 +1185,62 @@ namespace ActualizaBaseDatos
 
         }
 
-        private void buttonOrgGuardar_Click(object sender, EventArgs e)
+        private void buttonOrgSubir_Click(object sender, EventArgs e)
         {
+            if ((NodoSeleccionado != null) && (NodoSeleccionado.Padre != null))
+            {
+                int IndiceSeleccionado = NodoSeleccionado.Padre.Sons.IndexOf(NodoSeleccionado);
+                if (IndiceSeleccionado > 0)
+                {
+                    treeViewOrganigramaAPF.Nodes.Remove(RaizTreeView);
+                    NodoSeleccionado.Padre.Sons.RemoveAt(IndiceSeleccionado);
+                    NodoSeleccionado.Padre.Sons.Insert(IndiceSeleccionado - 1, NodoSeleccionado);
+                    organigrama.LlenaTreeAPF(treeViewOrganigramaAPF.Nodes, APF, 0, true, ref RaizTreeView);
+                }
+            }
+        }
 
+        private void buttonOrgBajar_Click(object sender, EventArgs e)
+        {
+            if ((NodoSeleccionado != null) && (NodoSeleccionado.Padre != null))
+            {
+                int IndiceSeleccionado = NodoSeleccionado.Padre.Sons.IndexOf(NodoSeleccionado);
+                if (IndiceSeleccionado < (NodoSeleccionado.Padre.Sons.Count - 1))
+                {
+                    treeViewOrganigramaAPF.Nodes.Remove(RaizTreeView);
+                    NodoSeleccionado.Padre.Sons.RemoveAt(IndiceSeleccionado);
+                    NodoSeleccionado.Padre.Sons.Insert(IndiceSeleccionado + 1, NodoSeleccionado);
+                    organigrama.LlenaTreeAPF(treeViewOrganigramaAPF.Nodes, APF, 0, true, ref RaizTreeView);
+                }
+            }
+        }
+
+        private void buttonOrgAtras_Click(object sender, EventArgs e)
+        {
+            System.IO.File.Copy(Defines.DataBasePath + Defines.BackupDataBaseFileName, Defines.DataBasePath + Defines.DataBaseFileName, true);
+            treeViewOrganigramaAPF.Nodes.Remove(RaizTreeView);
+            ListaDeNodosPorID.Clear();
+            Registro Presidente = new Registro("Presidencia", "Presidencia", "A0");
+            APF = new Node<Registro>(Presidente);
+            ListaDeNodosPorID.Add("A0", APF);
+            p.InitTokens();
+            p.Parsea(APF, 0, ListaDeNodosPorID);
+            ImprimeConsola("---------- ATRAS --------------");
+            organigrama.PrintTreeAPF(APF, ImprimeConsola);
+            organigrama.LlenaTreeAPF(treeViewOrganigramaAPF.Nodes, APF, 0, true, ref RaizTreeView);
         }
 
         private void buttonOrgBackup_Click(object sender, EventArgs e)
         {
+            System.IO.File.Copy(Defines.DataBasePath + Defines.DataBaseFileName, Defines.DataBasePath + Defines.BackupDataBaseFileName, true);
+        }
 
+        private void buttonOrgGuardar_Click(object sender, EventArgs e)
+        {
+            ImprimeConsola("Guardamos el Organigrama");
+            string MaxId1 = AccessUtility.OrganigramaMaxId1();
+            organigrama.SalvaTreeAPF(APF, ImprimeConsola, false);
+            AccessUtility.DeleteOrganigrama(MaxId1);
         }
     }
 }

@@ -12,7 +12,8 @@ namespace LegalTropics
         {
             InitializeComponent();
             this.Resize += NavegaciónAPF_Resize;
-            organigrama.LlenaTreeAPF(treeViewAPF.Nodes, Globals.Ribbons.Tropicalizador.APF, 0);
+            TreeNode NodeAuxiliar = null;
+            organigrama.LlenaTreeAPF(treeViewAPF.Nodes, Globals.Ribbons.Tropicalizador.APF, 0, false, ref NodeAuxiliar);
         }
 
         private void NavegaciónAPF_Resize(object sender, EventArgs e)

@@ -27,7 +27,7 @@ namespace APFInfo
 
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
-                var sql = "SELECT * FROM OrganigramaFederal order by Id1;";
+                var sql = "SELECT * FROM OrganigramaFederal order by Sec;";
                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                 {
                     cn.Open();
@@ -45,7 +45,7 @@ namespace APFInfo
                 {
                     Registros[i] = new Registro(row["TipoRegistro"].ToString(), row["NombrePuesto"].ToString(), row["ID"].ToString());
 #if Debug
-                    Print((i + 1) + "-> " + Registros[i].ToString());
+                   // Print((i + 1) + "-> " + Registros[i].ToString());
 #endif
                     i++;
                 }

@@ -16,20 +16,25 @@ namespace APFInfo
             RT = new Tokens(Print);
         }
 
+        public void InitTokens()
+        {
+            RT = new Tokens(Print);
+        }
+
         public void Parsea(Node<Registro> nodo, int Nivel, Dictionary<string, Node<Registro>> ListaDeNodosPorID)
         {
             Nivel++;
             if (Nivel < pila.Length)
             {
 #if Debug
-                //if (RT.CurrentToken != null)
-                //    Print("Nivel " + Nivel + " busco " + pila[Nivel] + " tengo " + RT.CurrentToken.ToString());
+                if (RT.CurrentToken != null)
+                    Print("Nivel " + Nivel + " busco " + pila[Nivel] + " tengo " + RT.CurrentToken.ToString());
 #endif
                 NodeList<Registro> hijos = new NodeList<Registro>();
                 while (RT.CheckToken(pila[Nivel]))
                 {
 #if Debug
-                    //Print("Insertamos -> " + RT.LastToken.ToString());
+                    Print("Insertamos -> " + RT.LastToken.ToString());
 #endif
                     Node<Registro> NivelJerarquia = new Node<Registro>(RT.LastToken, null, nodo);
                     //Registro bufferToken = NivelJerarquia.Value;
@@ -42,7 +47,7 @@ namespace APFInfo
                     Parsea(NivelJerarquia, Nivel, ListaDeNodosPorID);
                     hijos.InsertaHijo(NivelJerarquia);
 #if Debug
-                    //if (RT.CurrentToken != null) Print("CurrentToken -> " + RT.CurrentToken.ToString());
+                    if (RT.CurrentToken != null) Print("CurrentToken -> " + RT.CurrentToken.ToString());
 #endif
                 }
                 nodo.AddNodeList(hijos);

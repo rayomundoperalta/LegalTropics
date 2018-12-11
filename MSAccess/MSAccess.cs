@@ -347,7 +347,6 @@ namespace MSAccess
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
-            tablaDeDatos = new System.Data.DataTable();
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
                 var sql = "INSERT INTO Escolaridad (ID,FechaDeInicio,FechaDeFin,Universidad,Grado)  VALUES (@ID, @FechaDeInicio, @FechaDeFin, @Universidad, @Grado);";
@@ -369,7 +368,6 @@ namespace MSAccess
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
-            tablaDeDatos = new System.Data.DataTable();
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
                 var sql = "DELETE FROM Escolaridad WHERE Id1 = @Id1;";
@@ -388,7 +386,6 @@ namespace MSAccess
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
-            tablaDeDatos = new System.Data.DataTable();
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
                 var sql = "INSERT INTO AdscripciónPolítica (ID,FechaDeInicio,FechaDeFin,NombreDelPartido)  VALUES (@ID, @FechaDeInicio, @FechaDeFin, @NombreDelPartido);";
@@ -409,7 +406,6 @@ namespace MSAccess
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
-            tablaDeDatos = new System.Data.DataTable();
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
                 var sql = "DELETE FROM AdscripciónPolítica WHERE Id1 = @Id1;";
@@ -428,7 +424,6 @@ namespace MSAccess
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
-            tablaDeDatos = new System.Data.DataTable();
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
                 var sql = "INSERT INTO InformaciónGeneral (ID,TipoDeInformación,Referencia)  VALUES (@ID, @TipoDeInformación, @Referencia);";
@@ -449,7 +444,6 @@ namespace MSAccess
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
-            tablaDeDatos = new System.Data.DataTable();
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
                 var sql = "DELETE FROM InformaciónGeneral WHERE Id1 = @Id1;";
@@ -468,7 +462,6 @@ namespace MSAccess
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
-            tablaDeDatos = new System.Data.DataTable();
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
                 var sql = "INSERT INTO Puestos (ID,FechaDeInicio,FechaDeFin,DependenciaEntidad,Puesto,JefeInmediantoSuperior,CurrículumVitae)  VALUES (@ID, @FechaDeInicio, @FechaDeFin, @DependenciaEntidad, @Puesto, @JefeInmediantoSuperior, @CurrículumVitae);";
@@ -492,7 +485,6 @@ namespace MSAccess
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
-            tablaDeDatos = new System.Data.DataTable();
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
                 var sql = "DELETE FROM Puestos WHERE Id1 = @Id1;";
@@ -511,7 +503,6 @@ namespace MSAccess
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
-            tablaDeDatos = new System.Data.DataTable();
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
                 var sql = "UPDATE Funcionarios set ApellidoPaterno = @ApellidoPaterno, ApellidoMaterno = @ApellidoMaterno, PrimerNombre = @PrimerNombre, SegundoNombre = @SegundoNombre, Nacionalidad = @Nacionalidad, FechaDeNacimiento = @FechaDeNacimiento WHERE ID = @ID;";
@@ -535,7 +526,6 @@ namespace MSAccess
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
-            tablaDeDatos = new System.Data.DataTable();
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
                 var sql = "INSERT INTO Funcionarios (ID, ApellidoPaterno, ApellidoMaterno, PrimerNombre, SegundoNombre, Nacionalidad, FechaDeNacimiento) VALUES (@ID, @ApellidoPaterno, @ApellidoMaterno, @PrimerNombre, @SegundoNombre, @Nacionalidad, @FechaDeNacimiento);";
@@ -638,6 +628,58 @@ namespace MSAccess
             else
             {
                 MessageBox.Show("El nombre del archivo esta mal formado: " + DBfilename);
+            }
+        }
+
+        static public string OrganigramaMaxId1()
+        {
+            Builder.Provider = Defines.StringAccessProvider;
+            Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+            DataTable = new System.Data.DataTable();
+            using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+            {
+                var sql = "SELECT Id1 FROM OrganigramaFederal order by Id1;";
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    cn.Open();
+                    tablaDeDatos.Load(cmd.ExecuteReader());
+                    cn.Close();
+                }
+            }
+            DataRow[] Rows = tablaDeDatos.Select();
+            return Rows[Rows.Length - 1]["Id1"].ToString();
+        }
+
+        static public void DeleteOrganigrama(string MaxId1)
+        {
+            Builder.Provider = Defines.StringAccessProvider;
+            Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+            using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+            {
+                var sql = "DELETE FROM OrganigramaFederal where Id1 <= " + MaxId1 + ";";
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+        }
+
+        static public void InsertRegistroOrganigrama(string TipoRegistro, string NombrePuesto, string ID, int Sec, Func<string, int> Print)
+        {
+            Builder.Provider = Defines.StringAccessProvider;
+            Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+            using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+            {
+                var sql = "INSERT INTO OrganigramaFederal (TipoRegistro, NombrePuesto, ID, Sec) VALUES ('" + TipoRegistro + "', '" + NombrePuesto + "', '" + ID + "', '" + Sec.ToString() + "');";
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    Print(cmd.CommandText);
+                    cn.Open();
+                    if (cmd.ExecuteNonQuery() == 0) MessageBox.Show("Error al insertar datos");
+                    cn.Close();
+                }
             }
         }
     }

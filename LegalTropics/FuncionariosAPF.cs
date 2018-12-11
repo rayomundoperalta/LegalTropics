@@ -12,6 +12,12 @@ namespace LegalTropics
     {
         List<Registro> ListaFuncionarios;
 
+        private string SinA(string Cadena)
+        {
+            return Cadena.ToLower().Replace("á", "a").Replace("é", "e").Replace("í", "i").Replace("ó", "o").Replace("ú", "u").Replace("ü", "u")
+                .Replace(" ", string.Empty).Replace("\n", string.Empty).Replace("\t", string.Empty);
+        }
+
         public FuncionariosAPF()
         {
             InitializeComponent();
@@ -25,8 +31,9 @@ namespace LegalTropics
             }
             nombres.Sort((x, y) => x[0].CompareTo(y[0]));
             
-
             nombres.Sort();
+
+            //MessageBox.Show("# Nombres: " + nombres.Count);
 
             List<Rangos> rangos = new List<Rangos>();
             rangos.Add(new Rangos("a", "A", "c", "C"));
@@ -44,8 +51,10 @@ namespace LegalTropics
             {
                 treeViewFuncionarios.Nodes.Add(new TreeNode(rangos[i].IniMayuscula + " - " + rangos[i].FinMayuscula));
                 /* O J O   CON EL ORDEN DE LOS OPERANDOS */
-                while ((j < nombres.Count) && EnRango(rangos[i], nombres[j])) // Cuidado el orden de las condiciones es importante
+                //MessageBox.Show(nombres[j]);
+                while ((j < nombres.Count) && EnRango(rangos[i], SinA(nombres[j]))) // Cuidado el orden de las condiciones es importante
                 {
+                    //MessageBox.Show(nombres[j]);
                     treeViewFuncionarios.Nodes[i].Nodes.Add(new TreeNode(nombres[j].Substring(1, nombres[j].Length - 1)));
                     j++;
                 }
@@ -80,6 +89,11 @@ namespace LegalTropics
 
             r1 = c1 && c2;
             r2 = c3 && c4;
+            //MessageBox.Show("char = " + IniChar +
+            //    "\nIniMinuscula = " + rangos.IniMinuscula + ", FinMinuscula = " + rangos.FinMinuscula +
+            //    "\nIniMayuscula = " + rangos.IniMayuscula + ", FinMayuscula = " + rangos.FinMayuscula +
+            //    "\nc1 = " + c1 + ", c2 = " + c2 + ", c3 = " + c3 + ", c4 = " + c4 +
+            //    "\nEnRango: r1 = " + r1 + ", r2 = " + r2);
             if (r1 || r2) return true;
             return false;
         }

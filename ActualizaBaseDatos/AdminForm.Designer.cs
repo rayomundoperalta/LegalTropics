@@ -129,6 +129,8 @@
             this.tabControlAdministracionBaseDatos = new System.Windows.Forms.TabControl();
             this.tabPageFichas = new System.Windows.Forms.TabPage();
             this.tabPageOrganigrama = new System.Windows.Forms.TabPage();
+            this.buttonOrgBajar = new System.Windows.Forms.Button();
+            this.buttonOrgSubir = new System.Windows.Forms.Button();
             this.buttonOrgPegar = new System.Windows.Forms.Button();
             this.buttonOrgCortar = new System.Windows.Forms.Button();
             this.buttonListaDeNodosPorID = new System.Windows.Forms.Button();
@@ -1172,6 +1174,8 @@
             // 
             // tabPageOrganigrama
             // 
+            this.tabPageOrganigrama.Controls.Add(this.buttonOrgBajar);
+            this.tabPageOrganigrama.Controls.Add(this.buttonOrgSubir);
             this.tabPageOrganigrama.Controls.Add(this.buttonOrgPegar);
             this.tabPageOrganigrama.Controls.Add(this.buttonOrgCortar);
             this.tabPageOrganigrama.Controls.Add(this.buttonListaDeNodosPorID);
@@ -1192,11 +1196,31 @@
             this.tabPageOrganigrama.UseVisualStyleBackColor = true;
             this.tabPageOrganigrama.Click += new System.EventHandler(this.tabPageOrganigrama_Click);
             // 
+            // buttonOrgBajar
+            // 
+            this.buttonOrgBajar.Location = new System.Drawing.Point(1260, 75);
+            this.buttonOrgBajar.Name = "buttonOrgBajar";
+            this.buttonOrgBajar.Size = new System.Drawing.Size(126, 33);
+            this.buttonOrgBajar.TabIndex = 16;
+            this.buttonOrgBajar.Text = "Bajar";
+            this.buttonOrgBajar.UseVisualStyleBackColor = true;
+            this.buttonOrgBajar.Click += new System.EventHandler(this.buttonOrgBajar_Click);
+            // 
+            // buttonOrgSubir
+            // 
+            this.buttonOrgSubir.Location = new System.Drawing.Point(1095, 75);
+            this.buttonOrgSubir.Name = "buttonOrgSubir";
+            this.buttonOrgSubir.Size = new System.Drawing.Size(126, 33);
+            this.buttonOrgSubir.TabIndex = 15;
+            this.buttonOrgSubir.Text = "Subir";
+            this.buttonOrgSubir.UseVisualStyleBackColor = true;
+            this.buttonOrgSubir.Click += new System.EventHandler(this.buttonOrgSubir_Click);
+            // 
             // buttonOrgPegar
             // 
-            this.buttonOrgPegar.Location = new System.Drawing.Point(1194, 75);
+            this.buttonOrgPegar.Location = new System.Drawing.Point(937, 75);
             this.buttonOrgPegar.Name = "buttonOrgPegar";
-            this.buttonOrgPegar.Size = new System.Drawing.Size(191, 33);
+            this.buttonOrgPegar.Size = new System.Drawing.Size(126, 33);
             this.buttonOrgPegar.TabIndex = 14;
             this.buttonOrgPegar.Text = "Pegar";
             this.buttonOrgPegar.UseVisualStyleBackColor = true;
@@ -1206,7 +1230,7 @@
             // 
             this.buttonOrgCortar.Location = new System.Drawing.Point(785, 75);
             this.buttonOrgCortar.Name = "buttonOrgCortar";
-            this.buttonOrgCortar.Size = new System.Drawing.Size(176, 33);
+            this.buttonOrgCortar.Size = new System.Drawing.Size(126, 33);
             this.buttonOrgCortar.TabIndex = 13;
             this.buttonOrgCortar.Text = "Cortar";
             this.buttonOrgCortar.UseVisualStyleBackColor = true;
@@ -1272,7 +1296,7 @@
             // 
             // buttonOrgBackup
             // 
-            this.buttonOrgBackup.Location = new System.Drawing.Point(1240, 126);
+            this.buttonOrgBackup.Location = new System.Drawing.Point(1311, 126);
             this.buttonOrgBackup.Name = "buttonOrgBackup";
             this.buttonOrgBackup.Size = new System.Drawing.Size(75, 40);
             this.buttonOrgBackup.TabIndex = 9;
@@ -1282,22 +1306,23 @@
             // 
             // buttonOrgGuardar
             // 
-            this.buttonOrgGuardar.Location = new System.Drawing.Point(1038, 127);
+            this.buttonOrgGuardar.Location = new System.Drawing.Point(785, 127);
             this.buttonOrgGuardar.Name = "buttonOrgGuardar";
-            this.buttonOrgGuardar.Size = new System.Drawing.Size(75, 39);
+            this.buttonOrgGuardar.Size = new System.Drawing.Size(184, 39);
             this.buttonOrgGuardar.TabIndex = 8;
-            this.buttonOrgGuardar.Text = "Guardar";
+            this.buttonOrgGuardar.Text = "Guardar Organigrama";
             this.buttonOrgGuardar.UseVisualStyleBackColor = true;
             this.buttonOrgGuardar.Click += new System.EventHandler(this.buttonOrgGuardar_Click);
             // 
             // buttonOrgAtras
             // 
-            this.buttonOrgAtras.Location = new System.Drawing.Point(856, 127);
+            this.buttonOrgAtras.Location = new System.Drawing.Point(1197, 127);
             this.buttonOrgAtras.Name = "buttonOrgAtras";
             this.buttonOrgAtras.Size = new System.Drawing.Size(75, 39);
             this.buttonOrgAtras.TabIndex = 7;
             this.buttonOrgAtras.Text = "Atras";
             this.buttonOrgAtras.UseVisualStyleBackColor = true;
+            this.buttonOrgAtras.Click += new System.EventHandler(this.buttonOrgAtras_Click);
             // 
             // groupBox2
             // 
@@ -1533,6 +1558,8 @@
         private System.Windows.Forms.Button buttonListaDeNodosPorID;
         private System.Windows.Forms.Button buttonOrgPegar;
         private System.Windows.Forms.Button buttonOrgCortar;
+        private System.Windows.Forms.Button buttonOrgBajar;
+        private System.Windows.Forms.Button buttonOrgSubir;
     }
 }
 

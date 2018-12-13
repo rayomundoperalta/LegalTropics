@@ -78,11 +78,99 @@ namespace ActualizaBaseDatos
 
             tabControlAdministracionBaseDatos.Selected += TabControlAdministracionBaseDatos_Selected;
             tabControlInformación.Selected += TabControlInformación_Selected;
+            treeViewOrganigramaAPF.ItemDrag += TreeViewOrganigramaAPF_ItemDrag;
+            treeViewOrganigramaAPF.DragEnter += TreeViewOrganigramaAPF_DragEnter;
+            treeViewOrganigramaAPF.DragDrop += TreeViewOrganigramaAPF_DragDrop;
             NivelSIguiente.Add("Presidencia", "S");
             NivelSIguiente.Add("S", "SS");
             NivelSIguiente.Add("SS", "DG");
             NivelSIguiente.Add("DG", "Dir");
             NivelSIguiente.Add("Dir", "nadie");
+        }
+
+        private void TreeViewOrganigramaAPF_DragDrop(object sender, DragEventArgs e)
+        {
+            Node<Registro> APFDraggedNode = null;
+            Node<Registro> APFTargetNode = null;
+            TreeNode targetNode = null;
+            TreeNode draggedNode;
+            // Retrieve the client coordinates of the drop location.
+            Point targetPoint = treeViewOrganigramaAPF.PointToClient(new Point(e.X, e.Y));
+
+            // Retrieve the node at the drop location.
+            targetNode = treeViewOrganigramaAPF.GetNodeAt(targetPoint);
+            int TargetPos = targetNode.Text.IndexOf('_');
+            string TargetID = targetNode.Text.Substring(TargetPos + 1, targetNode.Text.Length - TargetPos - 1);
+            if (ListaDeNodosPorID.ContainsKey(TargetID))
+            {
+                APFTargetNode = ListaDeNodosPorID[TargetID];
+                // Retrieve the node that was dragged.
+                draggedNode = (TreeNode)e.Data.GetData(typeof(TreeNode));
+                int pos = draggedNode.Text.IndexOf('_');
+                string ID = draggedNode.Text.Substring(pos + 1, draggedNode.Text.Length - pos - 1);
+                if (ListaDeNodosPorID.ContainsKey(ID))
+                {
+                    APFDraggedNode = ListaDeNodosPorID[ID];
+                    // NodoDeArbolMostrado es draggedNode
+                    // Confirm that the node at the drop location is not 
+                    // the dragged node and that target node isn't null
+                    // (for example if you drag outside the control)
+                    if (!draggedNode.Equals(targetNode) && targetNode != null)
+                    {
+                        // Hay que quitar el nodo y todos sus hijos
+                        if (APFDraggedNode.Padre != null)
+                        {
+                            APFDraggedNode.Padre.Sons.Remove(APFDraggedNode);
+                            LimpiaListaDeNodosPorID(APFDraggedNode);
+                            //quitamos el nodo del TreeView mostrado
+                            draggedNode.Remove();
+                            // ----------------------------------
+                            int NivelDelJefe;
+                            if ((NivelDelJefe = NivelGerarquico(APFTargetNode)) == -1)
+                            {
+                                MessageBox.Show("Error de nivel de puesto");
+                            }
+                            else
+                            {
+                                // Ponemos el nodo en su nuevo lugar
+                                APFDraggedNode.Padre = APFTargetNode;
+                                ActualizaTipoDePuestoYPoda(APFDraggedNode, NivelDelJefe);
+                                // Insertamos en el arbol de la APF
+                                APFTargetNode.Sons.InsertaHijo(APFDraggedNode);
+                                LlenaListaDeNodosPorID(APFDraggedNode);
+                                // Hay que mostrar el nuevo subarbol en el TreeView
+                                // Actualizamos el TreeView
+                                targetNode.Nodes.Add(draggedNode);
+                                // Expand the node at the location 
+                                // to show the dropped node.
+                                targetNode.Expand();
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se puede mover la Presidencia");
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Error grave comunicarse con el desarrollador Drag & Drop draggedNode");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Error en el nodo de destino");
+            }
+        }
+
+        private void TreeViewOrganigramaAPF_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
+        }
+
+        private void TreeViewOrganigramaAPF_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            DoDragDrop(e.Item, DragDropEffects.Move);
         }
 
         private int ImprimeConsola(string line)
@@ -1185,6 +1273,56 @@ namespace ActualizaBaseDatos
 
         }
 
+        //-------------------------------
+        private void MoveUp(TreeNode node)
+        {
+            TreeNode parent = node.Parent;
+            TreeView view = node.TreeView;
+            if (parent != null)
+            {
+                int index = parent.Nodes.IndexOf(node);
+                if (index > 0)
+                {
+                    parent.Nodes.RemoveAt(index);
+                    parent.Nodes.Insert(index - 1, node);
+                }
+            }
+            else if (node.TreeView.Nodes.Contains(node)) //root node
+            {
+                int index = view.Nodes.IndexOf(node);
+                if (index > 0)
+                {
+                    view.Nodes.RemoveAt(index);
+                    view.Nodes.Insert(index - 1, node);
+                }
+            }
+        }
+
+        private void MoveDown(TreeNode node)
+        {
+            TreeNode parent = node.Parent;
+            TreeView view = node.TreeView;
+            if (parent != null)
+            {
+                int index = parent.Nodes.IndexOf(node);
+                if (index < parent.Nodes.Count - 1)
+                {
+                    parent.Nodes.RemoveAt(index);
+                    parent.Nodes.Insert(index + 1, node);
+                }
+            }
+            else if (view != null && view.Nodes.Contains(node)) //root node
+            {
+                int index = view.Nodes.IndexOf(node);
+                if (index < view.Nodes.Count - 1)
+                {
+                    view.Nodes.RemoveAt(index);
+                    view.Nodes.Insert(index + 1, node);
+                }
+            }
+        }
+        //-------------------------------
+
         private void buttonOrgSubir_Click(object sender, EventArgs e)
         {
             if ((NodoSeleccionado != null) && (NodoSeleccionado.Padre != null))
@@ -1192,10 +1330,11 @@ namespace ActualizaBaseDatos
                 int IndiceSeleccionado = NodoSeleccionado.Padre.Sons.IndexOf(NodoSeleccionado);
                 if (IndiceSeleccionado > 0)
                 {
-                    treeViewOrganigramaAPF.Nodes.Remove(RaizTreeView);
                     NodoSeleccionado.Padre.Sons.RemoveAt(IndiceSeleccionado);
                     NodoSeleccionado.Padre.Sons.Insert(IndiceSeleccionado - 1, NodoSeleccionado);
-                    organigrama.LlenaTreeAPF(treeViewOrganigramaAPF.Nodes, APF, 0, true, ref RaizTreeView);
+                    
+                    MoveUp(NodoDeArbolMostrado);
+                    
                 }
             }
         }
@@ -1207,10 +1346,10 @@ namespace ActualizaBaseDatos
                 int IndiceSeleccionado = NodoSeleccionado.Padre.Sons.IndexOf(NodoSeleccionado);
                 if (IndiceSeleccionado < (NodoSeleccionado.Padre.Sons.Count - 1))
                 {
-                    treeViewOrganigramaAPF.Nodes.Remove(RaizTreeView);
                     NodoSeleccionado.Padre.Sons.RemoveAt(IndiceSeleccionado);
                     NodoSeleccionado.Padre.Sons.Insert(IndiceSeleccionado + 1, NodoSeleccionado);
-                    organigrama.LlenaTreeAPF(treeViewOrganigramaAPF.Nodes, APF, 0, true, ref RaizTreeView);
+                    
+                    MoveDown(NodoDeArbolMostrado);
                 }
             }
         }

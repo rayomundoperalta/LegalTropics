@@ -131,8 +131,6 @@
             this.tabPageOrganigrama = new System.Windows.Forms.TabPage();
             this.buttonOrgBajar = new System.Windows.Forms.Button();
             this.buttonOrgSubir = new System.Windows.Forms.Button();
-            this.buttonOrgPegar = new System.Windows.Forms.Button();
-            this.buttonOrgCortar = new System.Windows.Forms.Button();
             this.buttonListaDeNodosPorID = new System.Windows.Forms.Button();
             this.buttonPrintTree = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -1176,8 +1174,6 @@
             // 
             this.tabPageOrganigrama.Controls.Add(this.buttonOrgBajar);
             this.tabPageOrganigrama.Controls.Add(this.buttonOrgSubir);
-            this.tabPageOrganigrama.Controls.Add(this.buttonOrgPegar);
-            this.tabPageOrganigrama.Controls.Add(this.buttonOrgCortar);
             this.tabPageOrganigrama.Controls.Add(this.buttonListaDeNodosPorID);
             this.tabPageOrganigrama.Controls.Add(this.buttonPrintTree);
             this.tabPageOrganigrama.Controls.Add(this.groupBox3);
@@ -1208,33 +1204,13 @@
             // 
             // buttonOrgSubir
             // 
-            this.buttonOrgSubir.Location = new System.Drawing.Point(1095, 75);
+            this.buttonOrgSubir.Location = new System.Drawing.Point(785, 75);
             this.buttonOrgSubir.Name = "buttonOrgSubir";
             this.buttonOrgSubir.Size = new System.Drawing.Size(126, 33);
             this.buttonOrgSubir.TabIndex = 15;
             this.buttonOrgSubir.Text = "Subir";
             this.buttonOrgSubir.UseVisualStyleBackColor = true;
             this.buttonOrgSubir.Click += new System.EventHandler(this.buttonOrgSubir_Click);
-            // 
-            // buttonOrgPegar
-            // 
-            this.buttonOrgPegar.Location = new System.Drawing.Point(937, 75);
-            this.buttonOrgPegar.Name = "buttonOrgPegar";
-            this.buttonOrgPegar.Size = new System.Drawing.Size(126, 33);
-            this.buttonOrgPegar.TabIndex = 14;
-            this.buttonOrgPegar.Text = "Pegar";
-            this.buttonOrgPegar.UseVisualStyleBackColor = true;
-            this.buttonOrgPegar.Click += new System.EventHandler(this.buttonOrgPegar_Click);
-            // 
-            // buttonOrgCortar
-            // 
-            this.buttonOrgCortar.Location = new System.Drawing.Point(785, 75);
-            this.buttonOrgCortar.Name = "buttonOrgCortar";
-            this.buttonOrgCortar.Size = new System.Drawing.Size(126, 33);
-            this.buttonOrgCortar.TabIndex = 13;
-            this.buttonOrgCortar.Text = "Cortar";
-            this.buttonOrgCortar.UseVisualStyleBackColor = true;
-            this.buttonOrgCortar.Click += new System.EventHandler(this.buttonOrgCortar_Click);
             // 
             // buttonListaDeNodosPorID
             // 
@@ -1374,6 +1350,7 @@
             // 
             // treeViewOrganigramaAPF
             // 
+            this.treeViewOrganigramaAPF.AllowDrop = true;
             this.treeViewOrganigramaAPF.Location = new System.Drawing.Point(7, 7);
             this.treeViewOrganigramaAPF.Name = "treeViewOrganigramaAPF";
             this.treeViewOrganigramaAPF.Size = new System.Drawing.Size(715, 598);
@@ -1556,8 +1533,6 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Button buttonPrintTree;
         private System.Windows.Forms.Button buttonListaDeNodosPorID;
-        private System.Windows.Forms.Button buttonOrgPegar;
-        private System.Windows.Forms.Button buttonOrgCortar;
         private System.Windows.Forms.Button buttonOrgBajar;
         private System.Windows.Forms.Button buttonOrgSubir;
     }

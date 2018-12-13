@@ -27,6 +27,7 @@ namespace LegalTropics
             for (int i = 0; i < ListaFuncionarios.Count; i++)
             {
                 DataRow[] fun = AccessUtility.GetFuncionario(ListaFuncionarios[i].ID);
+                if (fun.Length < 1) throw new System.IndexOutOfRangeException("No hay funcionario para el ID " + ListaFuncionarios[i].ID);
                 nombres.Add(fun[0]["ApellidoPaterno"].ToString().Substring(0, 1) + fun[0]["PrimerNombre"].ToString() + " " + fun[0]["ApellidoPaterno"].ToString() + "_" + ListaFuncionarios[i].ID);
             }
             nombres.Sort((x, y) => x[0].CompareTo(y[0]));

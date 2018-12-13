@@ -22,36 +22,49 @@ namespace APFInfo
             Print = print;
             DataRow[] Posiciones = null;
             Builder.Provider = Defines.StringAccessProvider;
-            Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
-            DataTable = new DataTable();
-
-            using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+            if (!File.Exists(Defines.DataBasePath + Defines.DataBaseFileName)) {
+                throw new System.InvalidOperationException("Data Base File " + Defines.DataBasePath + Defines.DataBaseFileName + " must exits.");
+            }
+            else
             {
-                var sql = "SELECT * FROM OrganigramaFederal order by Sec;";
-                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+                DataTable = new DataTable();
+
+                using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
                 {
-                    cn.Open();
-                    DataTable.Load(cmd.ExecuteReader());
-                    cn.Close();
-                }
-                Posiciones = DataTable.Select();
-                Registros = new Registro[Posiciones.Length];
+                    var sql = "SELECT * FROM OrganigramaFederal order by Sec;";
+                    using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                    {
+                        cn.Open();
+                        DataTable.Load(cmd.ExecuteReader());
+                        cn.Close();
+                    }
+                    Posiciones = DataTable.Select();
+                    if (Posiciones.Length > 0)
+                    {
+                        Registros = new Registro[Posiciones.Length];
 #if Debug
-                Print("# de Registros: " + Registros.Length);
+                        Print("# de Registros: " + Registros.Length);
 #endif
 
-                int i = 0;
-                foreach (DataRow row in Posiciones)
-                {
-                    Registros[i] = new Registro(row["TipoRegistro"].ToString(), row["NombrePuesto"].ToString(), row["ID"].ToString());
+                        int i = 0;
+                        foreach (DataRow row in Posiciones)
+                        {
+                            Registros[i] = new Registro(row["TipoRegistro"].ToString(), row["NombrePuesto"].ToString(), row["ID"].ToString());
 #if Debug
-                   // Print((i + 1) + "-> " + Registros[i].ToString());
+                            // Print((i + 1) + "-> " + Registros[i].ToString());
 #endif
-                    i++;
+                            i++;
+                        }
+                        cursor = 0;
+                        lastToken = null;
+                        currentToken = Registros[cursor];
+                    }
+                    else
+                    {
+                        Print("No hay registros para tokens");
+                    }
                 }
-                cursor = 0;
-                lastToken = null;
-                currentToken = Registros[cursor];
             }
         }
 

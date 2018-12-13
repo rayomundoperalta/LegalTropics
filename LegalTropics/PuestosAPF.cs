@@ -12,19 +12,26 @@ namespace LegalTropics
     {
         List<Registro> ListaPuestos;
 
+        private string SinA(string Cadena)
+        {
+            return Cadena.ToLower().Replace("á", "a").Replace("é", "e").Replace("í", "i").Replace("ó", "o").Replace("ú", "u").Replace("ü", "u")
+                .Replace(" ", string.Empty).Replace("\n", string.Empty).Replace("\t", string.Empty);
+        }
+
         public PuestosAPF()
         {
             InitializeComponent();
             this.Resize += Puestos_Resize;
             ListaPuestos = Globals.Ribbons.Tropicalizador.APF.ListPuestos();
             List<string> StringPuestos = new List<string>();
+            if (ListaPuestos.Count < 1) throw new System.IndexOutOfRangeException("No hay Definicionaes de Puestos");
             for (int i = 0; i < ListaPuestos.Count; i++)
             {
-                StringPuestos.Add(ListaPuestos[i].NombrePuesto + "_" + ListaPuestos[i].ID);
+                StringPuestos.Add(ListaPuestos[i].NombrePuesto.Trim() + "_" + ListaPuestos[i].ID);
             }
             StringPuestos.Sort(delegate (string x, string y)
             {
-                return x.CompareTo(y);
+                return SinA(x).CompareTo(SinA(y));
             });
 
             StringPuestos.Sort();
@@ -80,6 +87,11 @@ namespace LegalTropics
 
             r1 = c1 && c2;
             r2 = c3 && c4;
+            //MessageBox.Show("char = " + IniChar +
+            //    "\nIniMinuscula = " + rangos.IniMinuscula + ", FinMinuscula = " + rangos.FinMinuscula +
+            //    "\nIniMayuscula = " + rangos.IniMayuscula + ", FinMayuscula = " + rangos.FinMayuscula +
+            //    "\nc1 = " + c1 + ", c2 = " + c2 + ", c3 = " + c3 + ", c4 = " + c4 +
+            //    "\nEnRango: r1 = " + r1 + ", r2 = " + r2);
             if (r1 || r2) return true;
             return false;
         }

@@ -15,6 +15,7 @@ using APFInfo;
 using MSAccess;
 using CifradoPeta;
 using PetaPublish;
+using FuncionesAuxiliares;
 
 
 namespace LegalTropics
@@ -382,6 +383,18 @@ namespace LegalTropics
             CRLF(rango, size, it, FontFamily, fmt, negritas, NewLine);
         }
 
+        private string PuestoActual(DataRow[] puestos)
+        {
+            if (puestos.Length > 0)
+            {
+                for (int i = 0; i < puestos.Length; i++)
+                {
+                    if (puestos[i]["CargoActual"].ToString().Equals("1")) return puestos[i]["Puesto"].ToString();
+                }
+            }
+            return string.Empty;
+        }
+
         private void ImprimeDatosFuncionarios(Range rng, DataRow[] funcionarios)
         {
             Object oMissing = System.Reflection.Missing.Value;
@@ -389,12 +402,12 @@ namespace LegalTropics
             for (int i = 0; i < funcionarios.Length; i++)
             {
                 float PageWidthPoints = Globals.ThisAddIn.Application.ActiveDocument.PageSetup.PageWidth;
-                string nombre = funcionarios[i]["PrimerNombre"] + " " + funcionarios[i]["ApellidoPaterno"];
+                string nombre = funcionarios[i]["PrimerNombre"] + " " + funcionarios[i]["SegundoNombre"] + " " + funcionarios[i]["ApellidoPaterno"] + " " + funcionarios[i]["ApellidoMaterno"];
                 WriteLine(rng, nombre, (float)16, Italic.NoItalicas, "Century Gothic", Formato.Centrado, Bold.Bold, ALaLinea.NewLine);
                 DataRow[] puestos = AccessUtility.GetPuestos(funcionarios[i]["ID"].ToString());
                 if (puestos.Length > 0)
                 {
-                    WriteLine(rng, puestos[puestos.Length - 1]["Puesto"].ToString(), (float)10.5, Italic.NoItalicas, "Century Gothic", Formato.Centrado, Bold.NoBold, ALaLinea.NewLine);
+                    //WriteLine(rng, puestos[puestos.Length - 1]["Puesto"].ToString(), (float)10.5, Italic.NoItalicas, "Century Gothic", Formato.Centrado, Bold.NoBold, ALaLinea.NewLine);
                     WriteLine(rng, puestos[puestos.Length - 1]["DependenciaEntidad"].ToString(), (float)10.5, Italic.NoItalicas, "Century Gothic", Formato.Centrado, Bold.NoBold, ALaLinea.NewLine);
                 }
 
@@ -434,7 +447,7 @@ namespace LegalTropics
 
                 WriteLine(rng, "\n", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NewLine);
 
-                Table tabla1 = Globals.ThisAddIn.Application.ActiveDocument.Tables.Add(rng, 6, 2);
+                Table tabla1 = Globals.ThisAddIn.Application.ActiveDocument.Tables.Add(rng, 5, 2);
 
                 tabla1.AllowPageBreaks = true;
                 tabla1.Borders.InsideLineStyle = WdLineStyle.wdLineStyleSingle;
@@ -444,36 +457,88 @@ namespace LegalTropics
                 tabla1.Columns[1].SetWidth(PageWidthPoints * (float) (0.15), WdRulerStyle.wdAdjustSameWidth);
 
                 tabla1.Cell(1, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
-                WriteLine(tabla1.Cell(1, 1).Range, "Nombre Completo", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
-                string nombreCompleto = funcionarios[i]["PrimerNombre"] + " " + funcionarios[i]["SegundoNombre"] + " " + funcionarios[i]["ApellidoPaterno"] + " " + funcionarios[i]["ApellidoMaterno"];
-                WriteLine(tabla1.Cell(1, 2).Range, nombreCompleto, (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                //WriteLine(tabla1.Cell(1, 1).Range, "Nombre Completo", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                //string nombreCompleto = funcionarios[i]["PrimerNombre"] + " " + funcionarios[i]["SegundoNombre"] + " " + funcionarios[i]["ApellidoPaterno"] + " " + funcionarios[i]["ApellidoMaterno"];
+                //WriteLine(tabla1.Cell(1, 2).Range, nombreCompleto, (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
 
+                tabla1.Cell(1, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
+                WriteLine(tabla1.Cell(1, 1).Range, "Fecha de nacimiento", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                WriteLine(tabla1.Cell(1, 2).Range,
+                    FormatoFecha.FechaString(funcionarios[i]["AñoNacimiento"].ToString(),
+                        funcionarios[i]["MesNacimiento"].ToString(),
+                        funcionarios[i]["DiaNacimiento"].ToString(), "Fecha: no disponible"),
+                    (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+
+                //         Adscripción Política
                 tabla1.Cell(2, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
-                WriteLine(tabla1.Cell(2, 1).Range, "Lugar y fecha de nacimiento", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
-                WriteLine(tabla1.Cell(2, 2).Range, funcionarios[i]["FechaDeNacimiento"].ToString().Replace("00:00:00", ""), (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
-
-                tabla1.Cell(3, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
-                WriteLine(tabla1.Cell(3, 1).Range, "Partido", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                WriteLine(tabla1.Cell(2, 1).Range, "Partido", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
                 DataRow[] adscripcionPolitica = AccessUtility.GetAdscripcionPolitica(funcionarios[i]["ID"].ToString());
-                if (adscripcionPolitica.Length > 0)
+                string HistoriaPartidista = "";
+                for (int j = adscripcionPolitica.Length - 1; j >= 0; j--)
                 {
-                    WriteLine(tabla1.Cell(3, 2).Range, adscripcionPolitica[adscripcionPolitica.Length - 1]["NombreDelPartido"].ToString(), (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                    HistoriaPartidista += adscripcionPolitica[j]["NombreDelPartido"].ToString().Replace("\n", string.Empty) + " " +
+                        adscripcionPolitica[j]["FechaDeInicio"].ToString() + " " +
+                        adscripcionPolitica[j]["FechaDeFin"].ToString();
+                    HistoriaPartidista += (j == 0) ? string.Empty : "\n";
                 }
+                tabla1.Cell(2, 2).Range.ListFormat.ApplyNumberDefault(ref oMissing);
+                ListTemplate lt1 = tabla1.Cell(2, 2).Range.ListFormat.ListTemplate;
+                tabla1.Cell(2, 2).Range.ListFormat.ApplyListTemplate(lt1, false);
 
+                WriteLine(tabla1.Cell(2, 2).Range, HistoriaPartidista, (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+
+                //      Cargo Actual
+                tabla1.Cell(3, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
+                WriteLine(tabla1.Cell(3, 1).Range, "Cargo Actual", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                WriteLine(tabla1.Cell(3, 2).Range, PuestoActual(puestos), (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+
+                //     Datos de Contacto
                 tabla1.Cell(4, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
-                WriteLine(tabla1.Cell(4, 1).Range, "Cargo Actual", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
-                if (puestos.Length > 0)
+                WriteLine(tabla1.Cell(4, 1).Range, "Datos de Contacto", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                DataRow[] DatosContacto = AccessUtility.GetDatosDeContacto(funcionarios[i]["ID"].ToString());
+                string StringDatosContacto = "";
+                for (int j = 0; j < DatosContacto.Length; j--)
                 {
-                    WriteLine(tabla1.Cell(4, 2).Range, puestos[puestos.Length - 1]["DependenciaEntidad"].ToString(), (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                    StringDatosContacto += DatosContacto[j]["Tipo"].ToString().Replace("\n", string.Empty) + ": " +
+                        DatosContacto[j]["dato"].ToString();
+                    StringDatosContacto += (j == 0) ? string.Empty : "\n";
                 }
+                if (DatosContacto.Length > 0 )
+                {
+                    tabla1.Cell(4, 2).Range.ListFormat.ApplyNumberDefault(ref oMissing);
+                    ListTemplate lt2 = tabla1.Cell(4, 2).Range.ListFormat.ListTemplate;
+                    tabla1.Cell(4, 2).Range.ListFormat.ApplyListTemplate(lt2, false);
+                    WriteLine(tabla1.Cell(4, 2).Range, StringDatosContacto, (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                }
+                   
 
+                //tabla1.Cell(4, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
+                //WriteLine(tabla1.Cell(4, 1).Range, "Datos de Contacto", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                //WriteLine(tabla1.Cell(4, 2).Range, "", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+
+                //     Circulo Cercano
                 tabla1.Cell(5, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
-                WriteLine(tabla1.Cell(5, 1).Range, "Datos de Contacto", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
-                WriteLine(tabla1.Cell(5, 2).Range, "", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                WriteLine(tabla1.Cell(5, 1).Range, "Circulo Cercano", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                DataRow[] CirculoCercano = AccessUtility.GetCirculoCercano(funcionarios[i]["ID"].ToString());
+                string StringCirculoCercano = "";
+                for (int j = 0; j < CirculoCercano.Length; j--)
+                {
+                    StringCirculoCercano += CirculoCercano [j]["Nombre"].ToString().Replace("\n", string.Empty) + ": " +
+                        CirculoCercano[j]["Información"].ToString();
+                    StringCirculoCercano += (j == 0) ? string.Empty : "\n";
+                }
+                if (CirculoCercano.Length > 0)
+                {
+                    tabla1.Cell(5, 2).Range.ListFormat.ApplyNumberDefault(ref oMissing);
+                    ListTemplate lt3 = tabla1.Cell(5, 2).Range.ListFormat.ListTemplate;
+                    tabla1.Cell(5, 2).Range.ListFormat.ApplyListTemplate(lt3, false);
+                    WriteLine(tabla1.Cell(5, 2).Range, StringCirculoCercano, (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                }
+                    
 
-                tabla1.Cell(6, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
-                WriteLine(tabla1.Cell(6, 1).Range, "Familia", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
-                WriteLine(tabla1.Cell(6, 2).Range, "", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                //tabla1.Cell(5, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
+                //WriteLine(tabla1.Cell(5, 1).Range, "Circulo Cercano", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                //WriteLine(tabla1.Cell(5, 2).Range, "", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
 
                 rng = Globals.ThisAddIn.Application.ActiveDocument.Range(Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1, Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1);
 
@@ -499,7 +564,10 @@ namespace LegalTropics
                     string datosEscolares = "";
                     for (int j = 0; j < escolaridad.Length; j++)
                     {
-                        datosEscolares += escolaridad[j]["Universidad"] + "  " + escolaridad[j]["Grado"] + " " + escolaridad[j]["FechaDeFin"];
+                        datosEscolares += escolaridad[j]["Universidad"] + "  " + escolaridad[j]["Grado"] + " " + 
+                            FormatoFecha.FechaString(escolaridad[j]["AñoFinal"].ToString(),
+                                escolaridad[j]["MesFinal"].ToString(),
+                                escolaridad[j]["DiaFinal"].ToString(), "Fecha: no disponible");
                         datosEscolares += (j == escolaridad.Length - 1) ? string.Empty : "\n";
                     }
                     tabla2.Cell(1, 2).Range.ListFormat.ApplyBulletDefault(ref oMissing);
@@ -527,7 +595,13 @@ namespace LegalTropics
                     string trayectoria = "";
                     for (int j = 0; j < puestos.Length; j++)
                     {
-                        trayectoria += puestos[j]["Puesto"] + "  " + puestos[j]["DependenciaEntidad"] + " " + puestos[j]["FechaDeInicio"] + " " + puestos[j]["FechaDeFin"];
+                        trayectoria += puestos[j]["Puesto"] + "  " + puestos[j]["DependenciaEntidad"] + " " +
+                            FormatoFecha.FechaString(puestos[j]["AñoInicial"].ToString(),
+                                puestos[j]["MesInicial"].ToString(),
+                                puestos[j]["DiaInicial"].ToString(), string.Empty) + " " +
+                            FormatoFecha.FechaString(puestos[j]["AñoFinal"].ToString(),
+                                puestos[j]["MesFinal"].ToString(),
+                                puestos[j]["DiaFinal"].ToString(), "Fecha: no disponible");
                         trayectoria += (j == puestos.Length - 1) ? string.Empty : "\n";
                     }
                     tabla3.Cell(1, 2).Range.ListFormat.ApplyBulletDefault(ref oMissing);
@@ -563,8 +637,8 @@ namespace LegalTropics
                     tabla4.Cell(1, 2).Range.ListFormat.ApplyNumberDefault(ref oMissing);
                     ListTemplate lt = tabla4.Cell(1, 2).Range.ListFormat.ListTemplate;
                     tabla4.Cell(1, 2).Range.ListFormat.ApplyListTemplate(lt , false);
-                    
                     WriteLine(tabla4.Cell(1, 2).Range, notasRelevantes, (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+
                     rng = Globals.ThisAddIn.Application.ActiveDocument.Range(Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1, Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1);
                 }
 
@@ -769,8 +843,7 @@ namespace LegalTropics
                 {
                     System.IO.File.Delete(Defines.DataBasePath + Defines.DataBaseFileNameEncriptado);
                 }
-            }
-            
+            } 
         }
 
         private void buttonPuestos_Click(object sender, RibbonControlEventArgs e)

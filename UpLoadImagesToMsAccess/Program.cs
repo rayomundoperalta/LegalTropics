@@ -149,7 +149,7 @@ namespace UpLoadImagesToMsAccess
                     UpLoadPhotos.SubeFoto(PhotoFiles[i]);
                 }
             }
-            Console.WriteLine("F i n");
+            Console.WriteLine("\n\n                       F i n");
             Console.ReadKey();
         }
     }

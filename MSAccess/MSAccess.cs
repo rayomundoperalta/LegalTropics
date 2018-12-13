@@ -77,6 +77,44 @@ namespace MSAccess
             return name;
         }
 
+        static public DataRow[] GetDatosDeContacto(string ID)
+        {
+            Builder.Provider = Defines.StringAccessProvider;
+            Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+            tablaDeDatos = new System.Data.DataTable();
+            using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+            {
+                var sql = "SELECT * FROM DatosContacto where ID = @ID;";
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
+                    cn.Open();
+                    tablaDeDatos.Load(cmd.ExecuteReader());
+                    cn.Close();
+                }
+            }
+            return (tablaDeDatos.Select());
+        }
+
+        static public DataRow[] GetCirculoCercano(string ID)
+        {
+            Builder.Provider = Defines.StringAccessProvider;
+            Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+            tablaDeDatos = new System.Data.DataTable();
+            using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+            {
+                var sql = "SELECT * FROM CirculoCercano where ID = @ID;";
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
+                    cn.Open();
+                    tablaDeDatos.Load(cmd.ExecuteReader());
+                    cn.Close();
+                }
+            }
+            return (tablaDeDatos.Select());
+        }
+
         static public DataRow[] GetEscolaridad(string ID)
         {
             Builder.Provider = Defines.StringAccessProvider;
@@ -103,7 +141,7 @@ namespace MSAccess
             tablaDeDatos = new System.Data.DataTable();
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
-                var sql = "SELECT * FROM AdscripciónPolítica where ID = @ID;";
+                var sql = "SELECT * FROM AdscripciónPolítica where ID = @ID order by Id1;";
                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                 {
                     cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;

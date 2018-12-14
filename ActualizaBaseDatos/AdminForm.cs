@@ -231,12 +231,11 @@ namespace ActualizaBaseDatos
             muestraCapturaFechaNacimiento.Año = IntParse.Numero(funcionarios[index]["AñoNacimiento"].ToString());
             muestraCapturaFechaNacimiento.Mes = IntParse.Numero(funcionarios[index]["MesNacimiento"].ToString());
             muestraCapturaFechaNacimiento.Dia = IntParse.Numero(funcionarios[index]["DiaNacimiento"].ToString());
-            /*
-             * textBoxFechaNacimiento.Text = FormatoFecha.FechaString(funcionarios[index]["AñoNacimiento"].ToString(),
+            textBoxFechaNacimiento.Text = FormatoFecha.FechaString(funcionarios[index]["AñoNacimiento"].ToString(),
                 funcionarios[index]["MesNacimiento"].ToString(),
                 funcionarios[index]["DiaNacimiento"].ToString(),
                 "Fecha: no disponible");
-                */
+            
 
             IDFuncionario = funcionarios[index]["ID"].ToString();
 

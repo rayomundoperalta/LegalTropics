@@ -26,7 +26,7 @@ namespace ActualizaBaseDatos
             }
             set
             {
-                this.año = Año;
+                this.año = value;
                 textBoxFecha.Text = FormatoFecha.FechaString(año.ToString(),
                 mes.ToString(),
                 dia.ToString(), "Fecha: no disponible");

@@ -278,7 +278,7 @@
             // 
             this.textBoxFechaNacimiento.Location = new System.Drawing.Point(570, 196);
             this.textBoxFechaNacimiento.Name = "textBoxFechaNacimiento";
-            this.textBoxFechaNacimiento.Size = new System.Drawing.Size(56, 22);
+            this.textBoxFechaNacimiento.Size = new System.Drawing.Size(151, 22);
             this.textBoxFechaNacimiento.TabIndex = 12;
             this.textBoxFechaNacimiento.TextChanged += new System.EventHandler(this.textBoxFechaNacimiento_TextChanged);
             // 
@@ -325,7 +325,7 @@
             // labelFechaDeNacimiento
             // 
             this.labelFechaDeNacimiento.AutoSize = true;
-            this.labelFechaDeNacimiento.Location = new System.Drawing.Point(727, 173);
+            this.labelFechaDeNacimiento.Location = new System.Drawing.Point(751, 171);
             this.labelFechaDeNacimiento.Name = "labelFechaDeNacimiento";
             this.labelFechaDeNacimiento.Size = new System.Drawing.Size(141, 17);
             this.labelFechaDeNacimiento.TabIndex = 6;

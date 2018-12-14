@@ -10,13 +10,13 @@ namespace FuncionesAuxiliares
     {
         static public string FechaString(string año, string mes, string dia, string PorDefecto)
         {
-            if (año.Equals(string.Empty))
+            if (año.Equals(string.Empty) || año.Equals("0"))
             {
                 return PorDefecto;
             }
             else
             {
-                if (mes.Equals(string.Empty))
+                if (mes.Equals(string.Empty) || mes.Equals("0"))
                 {
                     return año;
                 }
@@ -77,7 +77,7 @@ namespace FuncionesAuxiliares
                             MesString = string.Empty;
                             break;
                     }
-                    if (dia.Equals(string.Empty))
+                    if (dia.Equals(string.Empty) || dia.Equals("0"))
                     {
                         
                         return año + "-" + MesString;

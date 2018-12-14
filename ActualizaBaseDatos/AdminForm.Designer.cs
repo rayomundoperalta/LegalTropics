@@ -149,6 +149,7 @@
             this.tabPagePublica = new System.Windows.Forms.TabPage();
             this.labelSTATUS = new System.Windows.Forms.Label();
             this.openFileDialogFoto = new System.Windows.Forms.OpenFileDialog();
+            this.muestraCapturaFechaNacimiento = new ActualizaBaseDatos.MuestraCapturaFecha();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tabControlInformación.SuspendLayout();
@@ -175,6 +176,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.muestraCapturaFechaNacimiento);
             this.groupBox1.Controls.Add(this.buttonCargaBD);
             this.groupBox1.Controls.Add(this.buttonNuevo);
             this.groupBox1.Controls.Add(this.buttonModifica);
@@ -197,7 +199,7 @@
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1454, 251);
+            this.groupBox1.Size = new System.Drawing.Size(1454, 262);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos Personales";
@@ -276,7 +278,7 @@
             // 
             this.textBoxFechaNacimiento.Location = new System.Drawing.Point(570, 196);
             this.textBoxFechaNacimiento.Name = "textBoxFechaNacimiento";
-            this.textBoxFechaNacimiento.Size = new System.Drawing.Size(182, 22);
+            this.textBoxFechaNacimiento.Size = new System.Drawing.Size(56, 22);
             this.textBoxFechaNacimiento.TabIndex = 12;
             this.textBoxFechaNacimiento.TextChanged += new System.EventHandler(this.textBoxFechaNacimiento_TextChanged);
             // 
@@ -284,7 +286,7 @@
             // 
             this.textBoxNacionalidad.Location = new System.Drawing.Point(570, 168);
             this.textBoxNacionalidad.Name = "textBoxNacionalidad";
-            this.textBoxNacionalidad.Size = new System.Drawing.Size(182, 22);
+            this.textBoxNacionalidad.Size = new System.Drawing.Size(151, 22);
             this.textBoxNacionalidad.TabIndex = 11;
             this.textBoxNacionalidad.TextChanged += new System.EventHandler(this.textBoxNacionalidad_TextChanged);
             // 
@@ -323,7 +325,7 @@
             // labelFechaDeNacimiento
             // 
             this.labelFechaDeNacimiento.AutoSize = true;
-            this.labelFechaDeNacimiento.Location = new System.Drawing.Point(426, 200);
+            this.labelFechaDeNacimiento.Location = new System.Drawing.Point(727, 173);
             this.labelFechaDeNacimiento.Name = "labelFechaDeNacimiento";
             this.labelFechaDeNacimiento.Size = new System.Drawing.Size(141, 17);
             this.labelFechaDeNacimiento.TabIndex = 6;
@@ -1378,6 +1380,17 @@
             this.labelSTATUS.TabIndex = 0;
             this.labelSTATUS.Text = "Trabajando";
             // 
+            // muestraCapturaFechaNacimiento
+            // 
+            this.muestraCapturaFechaNacimiento.Año = 2018;
+            this.muestraCapturaFechaNacimiento.Dia = 14;
+            this.muestraCapturaFechaNacimiento.Location = new System.Drawing.Point(898, 138);
+            this.muestraCapturaFechaNacimiento.Mes = 12;
+            this.muestraCapturaFechaNacimiento.Name = "muestraCapturaFechaNacimiento";
+            this.muestraCapturaFechaNacimiento.Size = new System.Drawing.Size(268, 91);
+            this.muestraCapturaFechaNacimiento.TabIndex = 20;
+            this.muestraCapturaFechaNacimiento.Load += new System.EventHandler(this.muestraCapturaFecha1_Load);
+            // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1419,7 +1432,6 @@
         private System.Windows.Forms.Label labelApellidoPaterno;
         private System.Windows.Forms.Label labelSegundoNombre;
         private System.Windows.Forms.Label labelPrimerNombre;
-        private System.Windows.Forms.TextBox textBoxFechaNacimiento;
         private System.Windows.Forms.TextBox textBoxNacionalidad;
         private System.Windows.Forms.TextBox textBoxApellidoMaterno;
         private System.Windows.Forms.TextBox textBoxApellidoPaterno;
@@ -1535,6 +1547,8 @@
         private System.Windows.Forms.Button buttonListaDeNodosPorID;
         private System.Windows.Forms.Button buttonOrgBajar;
         private System.Windows.Forms.Button buttonOrgSubir;
+        private System.Windows.Forms.TextBox textBoxFechaNacimiento;
+        private MuestraCapturaFecha muestraCapturaFechaNacimiento;
     }
 }
 

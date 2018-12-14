@@ -85,10 +85,19 @@
     </Compile>
     <Compile Include="Busqueda.cs" />
     <Compile Include="IndiceBD.cs" />
+    <Compile Include="MuestraCapturaFecha.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MuestraCapturaFecha.Designer.cs">
+      <DependentUpon>MuestraCapturaFecha.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AdminForm.resx">
       <DependentUpon>AdminForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MuestraCapturaFecha.resx">
+      <DependentUpon>MuestraCapturaFecha.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -125,6 +134,10 @@
     <ProjectReference Include="..\CifradoPeta\CifradoPeta.csproj">
       <Project>{3d6bb4c5-a330-483f-a41a-e7c5632e6ad0}</Project>
       <Name>CifradoPeta</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FuncionesAuxiliares\FuncionesAuxiliares.csproj">
+      <Project>{67844adb-37ea-49e2-8db2-59c1cfa5ac1f}</Project>
+      <Name>FuncionesAuxiliares</Name>
     </ProjectReference>
     <ProjectReference Include="..\Globales\Globales.csproj">
       <Project>{9875d5fc-5821-4cd5-a9e0-2a18db463db9}</Project>

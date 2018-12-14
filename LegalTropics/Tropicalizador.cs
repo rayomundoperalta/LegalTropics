@@ -564,7 +564,7 @@ namespace LegalTropics
                     string datosEscolares = "";
                     for (int j = 0; j < escolaridad.Length; j++)
                     {
-                        datosEscolares += escolaridad[j]["Universidad"] + "  " + escolaridad[j]["Grado"] + " " + 
+                        datosEscolares += escolaridad[j]["Universidad"] + "  " + escolaridad[j]["Grado"] + " - " + 
                             FormatoFecha.FechaString(escolaridad[j]["AñoFinal"].ToString(),
                                 escolaridad[j]["MesFinal"].ToString(),
                                 escolaridad[j]["DiaFinal"].ToString(), "Fecha: no disponible");
@@ -595,10 +595,10 @@ namespace LegalTropics
                     string trayectoria = "";
                     for (int j = 0; j < puestos.Length; j++)
                     {
-                        trayectoria += puestos[j]["Puesto"] + "  " + puestos[j]["DependenciaEntidad"] + " " +
+                        trayectoria += puestos[j]["Puesto"] + " - " + puestos[j]["DependenciaEntidad"] + " - " +
                             FormatoFecha.FechaString(puestos[j]["AñoInicial"].ToString(),
                                 puestos[j]["MesInicial"].ToString(),
-                                puestos[j]["DiaInicial"].ToString(), string.Empty) + " " +
+                                puestos[j]["DiaInicial"].ToString(), string.Empty) + "   " +
                             FormatoFecha.FechaString(puestos[j]["AñoFinal"].ToString(),
                                 puestos[j]["MesFinal"].ToString(),
                                 puestos[j]["DiaFinal"].ToString(), "Fecha: no disponible");

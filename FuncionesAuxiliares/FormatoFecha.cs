@@ -90,7 +90,7 @@ namespace FuncionesAuxiliares
                         }
                         else
                         {
-                            return año + "-" + mes + "-" + dia;
+                            return año + "-" + MesString + "-" + dia;
                         }
 
                     }

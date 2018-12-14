@@ -11,6 +11,7 @@ using OrganigramaAdmin;
 using Arboles;
 using APFInfo;
 using System.Collections.Generic;
+using FuncionesAuxiliares;
 
 namespace ActualizaBaseDatos
 {
@@ -227,7 +228,15 @@ namespace ActualizaBaseDatos
             textBoxApellidoPaterno.Text = funcionarios[index]["ApellidoPaterno"].ToString();
             textBoxApellidoMaterno.Text = funcionarios[index]["ApellidoMaterno"].ToString();
             textBoxNacionalidad.Text = funcionarios[index]["Nacionalidad"].ToString();
-            textBoxFechaNacimiento.Text = funcionarios[index]["FechaDeNacimiento"].ToString();
+            muestraCapturaFechaNacimiento.Año = IntParse.Numero(funcionarios[index]["AñoNacimiento"].ToString());
+            muestraCapturaFechaNacimiento.Mes = IntParse.Numero(funcionarios[index]["MesNacimiento"].ToString());
+            muestraCapturaFechaNacimiento.Dia = IntParse.Numero(funcionarios[index]["DiaNacimiento"].ToString());
+            /*
+             * textBoxFechaNacimiento.Text = FormatoFecha.FechaString(funcionarios[index]["AñoNacimiento"].ToString(),
+                funcionarios[index]["MesNacimiento"].ToString(),
+                funcionarios[index]["DiaNacimiento"].ToString(),
+                "Fecha: no disponible");
+                */
 
             IDFuncionario = funcionarios[index]["ID"].ToString();
 
@@ -296,7 +305,10 @@ namespace ActualizaBaseDatos
             textBoxApellidoPaterno.Text = string.Empty;
             textBoxApellidoMaterno.Text = string.Empty;
             textBoxNacionalidad.Text = string.Empty;
-            textBoxFechaNacimiento.Text = string.Empty;
+            //textBoxFechaNacimiento.Text = string.Empty;
+            muestraCapturaFechaNacimiento.Año = 1900;
+            muestraCapturaFechaNacimiento.Mes = 1;
+            muestraCapturaFechaNacimiento.Dia = 1;
 
             IDFuncionario = GetNextUsableID();
 
@@ -379,8 +391,14 @@ namespace ActualizaBaseDatos
             else
             {
                 textBoxID.Text = escolaridad[indexEscolaridad.Pos]["ID"].ToString();
-                textBoxFechaDeInicio.Text = escolaridad[indexEscolaridad.Pos]["FechaDeInicio"].ToString();
-                textBoxFechaDeFin.Text = escolaridad[indexEscolaridad.Pos]["FechaDeFin"].ToString();
+                textBoxFechaDeInicio.Text = FormatoFecha.FechaString(escolaridad[indexEscolaridad.Pos]["AñoInicial"].ToString(),
+                    escolaridad[indexEscolaridad.Pos]["MesInicial"].ToString(),
+                    escolaridad[indexEscolaridad.Pos]["DiaInicial"].ToString(),
+                    "Fecha: no disponible");
+                textBoxFechaDeFin.Text = FormatoFecha.FechaString(escolaridad[indexEscolaridad.Pos]["AñoFinal"].ToString(),
+                    escolaridad[indexEscolaridad.Pos]["MesFinal"].ToString(),
+                    escolaridad[indexEscolaridad.Pos]["DiaFinal"].ToString(),
+                    "Fecha: no disponible");
                 textBoxUniversidad.Text = escolaridad[indexEscolaridad.Pos]["Universidad"].ToString();
                 textBoxGrado.Text = escolaridad[indexEscolaridad.Pos]["Grado"].ToString();
                 labelEscolaridadPos.Text = (indexEscolaridad.Pos + 1).ToString();
@@ -468,8 +486,14 @@ namespace ActualizaBaseDatos
                 textBoxPuestosDependencia.Text = Puestos[indexPuestos.Pos]["DependenciaEntidad"].ToString();
                 textBoxPuestosPuesto.Text = Puestos[indexPuestos.Pos]["Puesto"].ToString();
                 textBoxPuestosSuperior.Text = Puestos[indexPuestos.Pos]["JefeInmediantoSuperior"].ToString();
-                textBoxPuestosFechaDeInicio.Text = Puestos[indexPuestos.Pos]["FechaDeInicio"].ToString();
-                textBoxPuestosFechaDeFin.Text = Puestos[indexPuestos.Pos]["FechaDeFin"].ToString();
+                textBoxPuestosFechaDeInicio.Text = FormatoFecha.FechaString(Puestos[indexPuestos.Pos]["AñoInicial"].ToString(),
+                    Puestos[indexPuestos.Pos]["MesInicial"].ToString(),
+                    Puestos[indexPuestos.Pos]["DiaInicial"].ToString(),
+                    "Fecha: no disponible");
+                textBoxPuestosFechaDeFin.Text = FormatoFecha.FechaString(Puestos[indexPuestos.Pos]["AñoFinal"].ToString(),
+                    Puestos[indexPuestos.Pos]["MesFinal"].ToString(),
+                    Puestos[indexPuestos.Pos]["DiaFinal"].ToString(),
+                    "Fecha: no disponible");
                 labelPuestosPos.Text = (indexPuestos.Pos + 1).ToString();
                 labelPuestosLength.Text = "de " + indexPuestos.Length.ToString();
             }
@@ -557,7 +581,7 @@ namespace ActualizaBaseDatos
                 if (!SinA(textBoxPrimerNombre.Text).Equals(string.Empty)) BusquedaActiva.Add(textBoxPrimerNombre.Text);
                 if (!SinA(textBoxSegundoNombre.Text).Equals(string.Empty)) BusquedaActiva.Add(textBoxSegundoNombre.Text);
                 if (!SinA(textBoxNacionalidad.Text).Equals(string.Empty)) BusquedaActiva.Add(textBoxNacionalidad.Text);
-                if (!SinA(textBoxFechaNacimiento.Text).Equals(string.Empty)) BusquedaActiva.Add(textBoxFechaNacimiento.Text);
+                //if (!SinA(textBoxFechaNacimiento.Text).Equals(string.Empty)) BusquedaActiva.Add(textBoxFechaNacimiento.Text);
             }
             while (i < funcionarioMostrado.Length &&
                     !BusquedaActiva.SatisfaceCriterio(SinA(funcionarios[i]["PrimerNombre"].ToString()) + " " +
@@ -565,7 +589,7 @@ namespace ActualizaBaseDatos
                         SinA(funcionarios[i]["ApellidoPaterno"].ToString()) + " " +
                         SinA(funcionarios[i]["ApellidoMaterno"].ToString()) + " " +
                         SinA(funcionarios[i]["Nacionalidad"].ToString()) + " " +
-                        SinA(funcionarios[i]["FechaDeNacimiento"].ToString()))) i++;
+                        SinA(funcionarios[i]["AñoNacimiento"].ToString()))) i++;
             if (i < funcionarioMostrado.Length)
             {
                 funcionarioMostrado.Pos = i;
@@ -992,6 +1016,7 @@ namespace ActualizaBaseDatos
             buttonModifica.Enabled = true;
             DatosPersonalesModificados = true;
             BusquedaEnProceso = false;
+            //textBoxFechaNacimiento.Text = FormatoFecha.FechaString(fecha.Año.ToString(), fecha.Mes.ToString(), fecha.Dia.ToString(), "Fecha: no disponible");
         }
 
         private void buttonInserta_Click(object sender, EventArgs e)
@@ -999,7 +1024,7 @@ namespace ActualizaBaseDatos
             if (!NewFotoFileName.Equals(string.Empty))
             {
                 string ID = GetNextUsableID();
-                AccessUtility.InsertFuncionario(ID, textBoxPrimerNombre.Text, textBoxSegundoNombre.Text, textBoxApellidoPaterno.Text, textBoxApellidoMaterno.Text, textBoxNacionalidad.Text, textBoxFechaNacimiento.Text);
+                AccessUtility.InsertFuncionario(ID, textBoxPrimerNombre.Text, textBoxSegundoNombre.Text, textBoxApellidoPaterno.Text, textBoxApellidoMaterno.Text, textBoxNacionalidad.Text, muestraCapturaFechaNacimiento.StringFecha);
                 AccessUtility.SubeFoto(ID, NewFotoFileName);
                 buttonInserta.Enabled = false;
                 buttonModifica.Enabled = true;
@@ -1015,7 +1040,7 @@ namespace ActualizaBaseDatos
 
         private void buttonModifica_Click(object sender, EventArgs e)
         {
-            AccessUtility.UpdateFuncionario(textBoxID.Text, textBoxPrimerNombre.Text, textBoxSegundoNombre.Text, textBoxApellidoPaterno.Text, textBoxApellidoMaterno.Text, textBoxNacionalidad.Text, textBoxFechaNacimiento.Text);
+            AccessUtility.UpdateFuncionario(textBoxID.Text, textBoxPrimerNombre.Text, textBoxSegundoNombre.Text, textBoxApellidoPaterno.Text, textBoxApellidoMaterno.Text, textBoxNacionalidad.Text, muestraCapturaFechaNacimiento.StringFecha);
             if (FotoModificada) AccessUtility.SubeFoto(textBoxID.Text, NewFotoFileName);
             buttonModifica.Enabled = false;
             DatosPersonalesModificados = false;
@@ -1380,6 +1405,20 @@ namespace ActualizaBaseDatos
             string MaxId1 = AccessUtility.OrganigramaMaxId1();
             organigrama.SalvaTreeAPF(APF, ImprimeConsola, false);
             AccessUtility.DeleteOrganigrama(MaxId1);
+        }
+
+        private void dateTimePickerFechaNacimiento_ValueChanged(object sender, EventArgs e)
+        {
+            buttonModifica.Enabled = true;
+            DatosPersonalesModificados = true;
+            BusquedaEnProceso = false;
+        }
+
+        private void muestraCapturaFecha1_Load(object sender, EventArgs e)
+        {
+            buttonModifica.Enabled = true;
+            DatosPersonalesModificados = true;
+            BusquedaEnProceso = false;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace ActualizaBaseDatos
         {
             get
             {
-                return textBoxFecha.Text;
+                return labelFecha.Text;
             }
         }
 
@@ -27,7 +27,7 @@ namespace ActualizaBaseDatos
             set
             {
                 this.año = value;
-                textBoxFecha.Text = FormatoFecha.FechaString(año.ToString(),
+                labelFecha.Text = FormatoFecha.FechaString(año.ToString(),
                 mes.ToString(),
                 dia.ToString(), "Fecha: no disponible");
             }
@@ -42,7 +42,7 @@ namespace ActualizaBaseDatos
             set
             {
                 this.mes = value;
-                textBoxFecha.Text = FormatoFecha.FechaString(año.ToString(),
+                labelFecha.Text = FormatoFecha.FechaString(año.ToString(),
                 mes.ToString(),
                 dia.ToString(), "Fecha: no disponible");
             }
@@ -57,7 +57,7 @@ namespace ActualizaBaseDatos
             set
             {
                 this.dia = value;
-                textBoxFecha.Text = FormatoFecha.FechaString(año.ToString(),
+                labelFecha.Text = FormatoFecha.FechaString(año.ToString(),
                 mes.ToString(),
                 dia.ToString(), "Fecha: no disponible");
             }
@@ -65,9 +65,10 @@ namespace ActualizaBaseDatos
         public MuestraCapturaFecha()
         {
             InitializeComponent();
-            textBoxFecha.Enabled = true;
             dateTimePickerPeta.Enabled = false;
+            dateTimePickerPeta.Hide();
             buttonHecho.Enabled = false;
+            buttonHecho.Hide();
         }
 
         public void SetFecha(int Año, int Mes, int Dia)
@@ -80,33 +81,35 @@ namespace ActualizaBaseDatos
         private void MuestraCapturaFecha_Load(object sender, EventArgs e)
         {
             dateTimePickerPeta.MinDate = new DateTime(1900, 1, 1);
-            dateTimePickerPeta.MaxDate = DateTime.Today;
-            dateTimePickerPeta.CustomFormat = "yyyy-MMM-dd, yyyy - dddd";
+            dateTimePickerPeta.MaxDate = new DateTime(2100, 1, 1);
+            dateTimePickerPeta.CustomFormat = "yyyy-MMM-dd";
             dateTimePickerPeta.Format = DateTimePickerFormat.Custom;
-            textBoxFecha.Text = FormatoFecha.FechaString(dateTimePickerPeta.Value.Year.ToString(),
+            labelFecha.Text = FormatoFecha.FechaString(dateTimePickerPeta.Value.Year.ToString(),
                 dateTimePickerPeta.Value.Month.ToString(),
                 dateTimePickerPeta.Value.Day.ToString(), "Fecha: no disponible");
-        }
-
-        private void textBoxFecha_TextChanged(object sender, EventArgs e)
-        {
-            textBoxFecha.Enabled = false;
-            dateTimePickerPeta.Enabled = true;
-            buttonHecho.Enabled = false;
         }
 
         private void buttonHecho_Click(object sender, EventArgs e)
         {
-            dateTimePickerPeta.Enabled = true;
-            textBoxFecha.Enabled = true;
+            dateTimePickerPeta.Enabled = false;
+            dateTimePickerPeta.Hide();
             buttonHecho.Enabled = false;
+            buttonHecho.Hide();
         }
 
         private void dateTimePickerPeta_ValueChanged(object sender, EventArgs e)
         {
-            textBoxFecha.Text = FormatoFecha.FechaString(dateTimePickerPeta.Value.Year.ToString(),
+            labelFecha.Text = FormatoFecha.FechaString(dateTimePickerPeta.Value.Year.ToString(),
                 dateTimePickerPeta.Value.Month.ToString(),
                 dateTimePickerPeta.Value.Day.ToString(), "Fecha: no disponible");
+        }
+
+        private void labelFecha_Click(object sender, EventArgs e)
+        {
+            dateTimePickerPeta.Enabled = true;
+            dateTimePickerPeta.Show();
+            buttonHecho.Enabled = true;
+            buttonHecho.Show();
         }
     }
 }

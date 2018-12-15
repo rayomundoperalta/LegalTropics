@@ -65,7 +65,7 @@ namespace ActualizaBaseDatos
 
         public AdminForm()
         {
-            
+
             string[] PhotoFiles = Directory.GetFiles(Defines.FotoTempBasePath, "*.*");
 
             for (int i = 0; i < PhotoFiles.Length; i++)
@@ -87,6 +87,8 @@ namespace ActualizaBaseDatos
             NivelSIguiente.Add("SS", "DG");
             NivelSIguiente.Add("DG", "Dir");
             NivelSIguiente.Add("Dir", "nadie");
+            checkedListBoxTipoINFO.ItemCheck += checkedListBoxTipoINFO_ItemCheck;
+            checkedListBoxTipoInformacion.ItemCheck += CheckedListBoxTipoInformacion_ItemCheck;
         }
 
         private void TreeViewOrganigramaAPF_DragDrop(object sender, DragEventArgs e)
@@ -217,7 +219,7 @@ namespace ActualizaBaseDatos
 
         private void AdminForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            
+
         }
 
         private string DespliegaInformación(int index)
@@ -228,14 +230,9 @@ namespace ActualizaBaseDatos
             textBoxApellidoPaterno.Text = funcionarios[index]["ApellidoPaterno"].ToString();
             textBoxApellidoMaterno.Text = funcionarios[index]["ApellidoMaterno"].ToString();
             textBoxNacionalidad.Text = funcionarios[index]["Nacionalidad"].ToString();
-            muestraCapturaFechaNacimiento.Año = IntParse.Numero(funcionarios[index]["AñoNacimiento"].ToString());
-            muestraCapturaFechaNacimiento.Mes = IntParse.Numero(funcionarios[index]["MesNacimiento"].ToString());
-            muestraCapturaFechaNacimiento.Dia = IntParse.Numero(funcionarios[index]["DiaNacimiento"].ToString());
-            textBoxFechaNacimiento.Text = FormatoFecha.FechaString(funcionarios[index]["AñoNacimiento"].ToString(),
-                funcionarios[index]["MesNacimiento"].ToString(),
-                funcionarios[index]["DiaNacimiento"].ToString(),
-                "Fecha: no disponible");
-            
+            muestraCapturaFechaNacimiento.SetFecha(IntParse.Numero(funcionarios[index]["AñoNacimiento"].ToString()),
+                IntParse.Numero(funcionarios[index]["MesNacimiento"].ToString()),
+                IntParse.Numero(funcionarios[index]["DiaNacimiento"].ToString()));
 
             IDFuncionario = funcionarios[index]["ID"].ToString();
 
@@ -283,7 +280,7 @@ namespace ActualizaBaseDatos
                     if (AllMatches.Count > 0)
                     {
                         foreach (Match someMatch in AllMatches)
-                        {   
+                        {
                             Numero = Int32.Parse(someMatch.Groups[0].Value);
                             break;
                         }
@@ -304,10 +301,7 @@ namespace ActualizaBaseDatos
             textBoxApellidoPaterno.Text = string.Empty;
             textBoxApellidoMaterno.Text = string.Empty;
             textBoxNacionalidad.Text = string.Empty;
-            //textBoxFechaNacimiento.Text = string.Empty;
-            muestraCapturaFechaNacimiento.Año = 1900;
-            muestraCapturaFechaNacimiento.Mes = 1;
-            muestraCapturaFechaNacimiento.Dia = 1;
+            muestraCapturaFechaNacimiento.SetFecha(1900, 1, 1);
 
             IDFuncionario = GetNextUsableID();
 
@@ -321,9 +315,9 @@ namespace ActualizaBaseDatos
             LimpiaEscolaridad(IDFuncionario);
 
             LimpiaAP(IDFuncionario);
-            
+
             LimpiaINFO(IDFuncionario);
-            
+
             LimpiaPuestos(IDFuncionario);
 
             GetTabShown();
@@ -350,7 +344,7 @@ namespace ActualizaBaseDatos
                         {
                             return false;
                         }
-                        
+
                     default:
                         return false;
                 }
@@ -390,14 +384,12 @@ namespace ActualizaBaseDatos
             else
             {
                 textBoxID.Text = escolaridad[indexEscolaridad.Pos]["ID"].ToString();
-                textBoxFechaDeInicio.Text = FormatoFecha.FechaString(escolaridad[indexEscolaridad.Pos]["AñoInicial"].ToString(),
-                    escolaridad[indexEscolaridad.Pos]["MesInicial"].ToString(),
-                    escolaridad[indexEscolaridad.Pos]["DiaInicial"].ToString(),
-                    "Fecha: no disponible");
-                textBoxFechaDeFin.Text = FormatoFecha.FechaString(escolaridad[indexEscolaridad.Pos]["AñoFinal"].ToString(),
-                    escolaridad[indexEscolaridad.Pos]["MesFinal"].ToString(),
-                    escolaridad[indexEscolaridad.Pos]["DiaFinal"].ToString(),
-                    "Fecha: no disponible");
+                muestraCapturaFechaInicio.SetFecha(IntParse.Numero(escolaridad[indexEscolaridad.Pos]["AñoInicial"].ToString()),
+                    IntParse.Numero(escolaridad[indexEscolaridad.Pos]["MesInicial"].ToString()),
+                    IntParse.Numero(escolaridad[indexEscolaridad.Pos]["DiaInicial"].ToString()));
+                muestraCapturaFechaFin.SetFecha(IntParse.Numero(escolaridad[indexEscolaridad.Pos]["AñoFinal"].ToString()),
+                    IntParse.Numero(escolaridad[indexEscolaridad.Pos]["MesFinal"].ToString()),
+                    IntParse.Numero(escolaridad[indexEscolaridad.Pos]["DiaFinal"].ToString()));
                 textBoxUniversidad.Text = escolaridad[indexEscolaridad.Pos]["Universidad"].ToString();
                 textBoxGrado.Text = escolaridad[indexEscolaridad.Pos]["Grado"].ToString();
                 labelEscolaridadPos.Text = (indexEscolaridad.Pos + 1).ToString();
@@ -408,14 +400,14 @@ namespace ActualizaBaseDatos
         private void LimpiaEscolaridad(string ID)
         {
             textBoxID.Text = ID;
-            textBoxFechaDeInicio.Text = string.Empty;
-            textBoxFechaDeFin.Text = string.Empty;
+            muestraCapturaFechaInicio.SetFecha(1900, 1, 1);
+            muestraCapturaFechaFin.SetFecha(1900, 1, 1);
             textBoxUniversidad.Text = string.Empty;
             textBoxGrado.Text = string.Empty;
             labelEscolaridadPos.Text = string.Empty;
             labelEscolaridadLength.Text = string.Empty;
         }
-        
+
         private void LlenaAP(string ID)
         {
             // Adscripción Política
@@ -426,8 +418,9 @@ namespace ActualizaBaseDatos
             else
             {
                 textBoxAPID.Text = AP[indexAP.Pos]["ID"].ToString();
-                textBoxAPFechaDeInicio.Text = AP[indexAP.Pos]["FechaDeInicio"].ToString();
-                textBoxAPFechaDeFin.Text = AP[indexAP.Pos]["FechaDeFin"].ToString();
+                // adscripción politica solo tiene año no maneja mes y día
+                muestraCapturaFechaAPInicio.SetFecha(IntParse.Numero(AP[indexAP.Pos]["FechaDeInicio"].ToString()), 1, 1);
+                muestraCapturaFechaAPFin.SetFecha(IntParse.Numero(AP[indexAP.Pos]["FechaDeFin"].ToString()), 1, 1);
                 textBoxAPPartido.Text = AP[indexAP.Pos]["NombreDelPartido"].ToString();
                 labelAPPos.Text = (indexAP.Pos + 1).ToString();
                 labelAPLength.Text = "de " + indexAP.Length.ToString();
@@ -437,8 +430,8 @@ namespace ActualizaBaseDatos
         private void LimpiaAP(string ID)
         {
             textBoxAPID.Text = ID;
-            textBoxAPFechaDeInicio.Text = string.Empty;
-            textBoxAPFechaDeFin.Text = string.Empty;
+            muestraCapturaFechaAPInicio.SetFecha(1900, 1, 1);
+            muestraCapturaFechaAPFin.SetFecha(1900, 1, 1);
             textBoxAPPartido.Text = string.Empty;
             labelAPPos.Text = string.Empty;
             labelAPLength.Text = string.Empty;
@@ -485,14 +478,13 @@ namespace ActualizaBaseDatos
                 textBoxPuestosDependencia.Text = Puestos[indexPuestos.Pos]["DependenciaEntidad"].ToString();
                 textBoxPuestosPuesto.Text = Puestos[indexPuestos.Pos]["Puesto"].ToString();
                 textBoxPuestosSuperior.Text = Puestos[indexPuestos.Pos]["JefeInmediantoSuperior"].ToString();
-                textBoxPuestosFechaDeInicio.Text = FormatoFecha.FechaString(Puestos[indexPuestos.Pos]["AñoInicial"].ToString(),
-                    Puestos[indexPuestos.Pos]["MesInicial"].ToString(),
-                    Puestos[indexPuestos.Pos]["DiaInicial"].ToString(),
-                    "Fecha: no disponible");
-                textBoxPuestosFechaDeFin.Text = FormatoFecha.FechaString(Puestos[indexPuestos.Pos]["AñoFinal"].ToString(),
-                    Puestos[indexPuestos.Pos]["MesFinal"].ToString(),
-                    Puestos[indexPuestos.Pos]["DiaFinal"].ToString(),
-                    "Fecha: no disponible");
+                muestraCapturaFechaPuestoInicio.SetFecha(IntParse.Numero(Puestos[indexPuestos.Pos]["AñoInicial"].ToString()),
+                    IntParse.Numero(Puestos[indexPuestos.Pos]["MesInicial"].ToString()),
+                    IntParse.Numero(Puestos[indexPuestos.Pos]["DiaInicial"].ToString()));
+                muestraCapturaFechaPuestoFin.SetFecha(IntParse.Numero(Puestos[indexPuestos.Pos]["AñoFinal"].ToString()),
+                    IntParse.Numero(Puestos[indexPuestos.Pos]["MesFinal"].ToString()),
+                    IntParse.Numero(Puestos[indexPuestos.Pos]["DiaFinal"].ToString()));
+
                 labelPuestosPos.Text = (indexPuestos.Pos + 1).ToString();
                 labelPuestosLength.Text = "de " + indexPuestos.Length.ToString();
             }
@@ -504,8 +496,8 @@ namespace ActualizaBaseDatos
             textBoxPuestosDependencia.Text = string.Empty;
             textBoxPuestosPuesto.Text = string.Empty;
             textBoxPuestosSuperior.Text = string.Empty;
-            textBoxPuestosFechaDeInicio.Text = string.Empty;
-            textBoxPuestosFechaDeFin.Text = string.Empty;
+            muestraCapturaFechaPuestoInicio.SetFecha(1900, 1, 1);
+            muestraCapturaFechaPuestoFin.SetFecha(1900, 1, 1);
             labelPuestosPos.Text = string.Empty;
             labelPuestosLength.Text = string.Empty;
         }
@@ -546,7 +538,7 @@ namespace ActualizaBaseDatos
                     PetaSecure cipher = new PetaSecure();
                     labelSTATUS.Text = "Trabajando";
                     cipher.FileEncrypt(Defines.DataBasePath + Defines.DataBaseFileName, Defines.DataBasePath + Defines.DataBaseFileNameEncriptado,
-                        System.Text.Encoding.UTF8.GetString(Defines.ImagenDefault).Substring(Defines.PosInicial,Defines.PosFinal));
+                        System.Text.Encoding.UTF8.GetString(Defines.ImagenDefault).Substring(Defines.PosInicial, Defines.PosFinal));
                     PetaPublish.Publisher.UploadInfoAPFDB(Defines.DataBasePath, Defines.DataBaseFileNameEncriptado);
                     labelSTATUS.Text = "Terminado";
                     break;
@@ -558,7 +550,7 @@ namespace ActualizaBaseDatos
         private string SinA(string Cadena)
         {
             return Cadena.ToLower().Replace("á", "a").Replace("é", "e").Replace("í", "i").Replace("ó", "o").Replace("ú", "u").Replace("ü", "u")
-                .Replace(" ", string.Empty).Replace("\n", string.Empty).Replace("\t", string.Empty);                
+                .Replace(" ", string.Empty).Replace("\n", string.Empty).Replace("\t", string.Empty);
         }
 
         Busqueda BusquedaActiva;
@@ -568,7 +560,7 @@ namespace ActualizaBaseDatos
             int i = 0;
             if (BusquedaEnProceso)
             {
-                i = funcionarioMostrado.Pos + 1;  
+                i = funcionarioMostrado.Pos + 1;
             }
             else // nueva busqueda
             {
@@ -603,7 +595,7 @@ namespace ActualizaBaseDatos
                 MessageBox.Show("No se encontró un registro con los datos señalados");
             }
         }
-        
+
         private void tabPageEscolaridad_Click(object sender, EventArgs e)
         {
 
@@ -623,7 +615,7 @@ namespace ActualizaBaseDatos
         {
 
         }
-        
+
         private void buttonAnterior_Click(object sender, EventArgs e)
         {
             BusquedaEnProceso = false;
@@ -759,7 +751,7 @@ namespace ActualizaBaseDatos
             bool grado = textBoxGrado.Text != string.Empty;
             if (universidad && grado)
             {
-                AccessUtility.InsertRegistroEscolaridad(textBoxID.Text, textBoxFechaDeInicio.Text, textBoxFechaDeFin.Text,
+                AccessUtility.InsertRegistroEscolaridad(textBoxID.Text, muestraCapturaFechaInicio.StringFecha, muestraCapturaFechaFin.StringFecha,
                 textBoxUniversidad.Text, textBoxGrado.Text);
             }
             else
@@ -805,7 +797,7 @@ namespace ActualizaBaseDatos
         {
             if (textBoxAPPartido.Text != string.Empty)
             {
-                AccessUtility.InsertRegistroAP(textBoxAPID.Text, textBoxAPFechaDeInicio.Text, textBoxAPFechaDeFin.Text,
+                AccessUtility.InsertRegistroAP(textBoxAPID.Text, muestraCapturaFechaAPInicio.StringFecha, muestraCapturaFechaAPFin.StringFecha,
                 textBoxAPPartido.Text);
             }
             else
@@ -912,8 +904,8 @@ namespace ActualizaBaseDatos
             bool res = dependencia && puesto && jefe;
             if (res)
             {
-                AccessUtility.InsertRegistroPuestos(textBoxPuestosID.Text, textBoxPuestosFechaDeInicio.Text,
-                    textBoxPuestosFechaDeFin.Text, textBoxPuestosDependencia.Text, textBoxPuestosPuesto.Text,
+                AccessUtility.InsertRegistroPuestos(textBoxPuestosID.Text, muestraCapturaFechaPuestoInicio.StringFecha,
+                    muestraCapturaFechaPuestoFin.StringFecha, textBoxPuestosDependencia.Text, textBoxPuestosPuesto.Text,
                     textBoxPuestosSuperior.Text);
             }
             else
@@ -962,7 +954,7 @@ namespace ActualizaBaseDatos
                 }
                 else
                 {
-                    
+
                 }
             }
             else
@@ -1136,7 +1128,7 @@ namespace ActualizaBaseDatos
                 NodoSeleccionado = null;
                 organigrama.PrintTreeAPF(APF, ImprimeConsola);
                 textBoxOrgNombrePuestoModificado.Text = string.Empty;
-            }  
+            }
         }
 
         // Inserta
@@ -1181,7 +1173,7 @@ namespace ActualizaBaseDatos
         {
             ImprimeConsola("-------------------------------------------------");
             ImprimeConsola("Tamaño de la lista: " + ListaDeNodosPorID.Count);
-            foreach(var entry in ListaDeNodosPorID)
+            foreach (var entry in ListaDeNodosPorID)
             {
                 ImprimeConsola(entry.Key + " -- " + entry.Value.Data.ToString());
             }
@@ -1249,7 +1241,7 @@ namespace ActualizaBaseDatos
 
         private void ActualizaTipoDePuestoYPoda(Node<Registro> raiz, int NivelDelSuperior)
         {
-            
+
             if ((NivelDelSuperior + 1) < p.pila.Length)
             {
                 raiz.Data.TipoRegistro = p.pila[NivelDelSuperior + 1];
@@ -1356,9 +1348,9 @@ namespace ActualizaBaseDatos
                 {
                     NodoSeleccionado.Padre.Sons.RemoveAt(IndiceSeleccionado);
                     NodoSeleccionado.Padre.Sons.Insert(IndiceSeleccionado - 1, NodoSeleccionado);
-                    
+
                     MoveUp(NodoDeArbolMostrado);
-                    
+
                 }
             }
         }
@@ -1372,7 +1364,7 @@ namespace ActualizaBaseDatos
                 {
                     NodoSeleccionado.Padre.Sons.RemoveAt(IndiceSeleccionado);
                     NodoSeleccionado.Padre.Sons.Insert(IndiceSeleccionado + 1, NodoSeleccionado);
-                    
+
                     MoveDown(NodoDeArbolMostrado);
                 }
             }
@@ -1413,12 +1405,46 @@ namespace ActualizaBaseDatos
             BusquedaEnProceso = false;
         }
 
-        private void muestraCapturaFecha1_Load(object sender, EventArgs e)
+        private void muestraCapturaFechaNacimiento_Load(object sender, EventArgs e)
         {
             buttonModifica.Enabled = true;
             DatosPersonalesModificados = true;
             BusquedaEnProceso = false;
         }
+
+        int PosTipoINFO = -1;
+
+        private void checkedListBoxTipoINFO_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            PosTipoINFO = checkedListBoxTipoINFO.SelectedIndex;
+        }
+
+        private void checkedListBoxTipoINFO_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            if (e.NewValue == CheckState.Checked)
+                for (int ix = 0; ix < checkedListBoxTipoINFO.Items.Count; ++ix)
+                    if (e.Index != ix) checkedListBoxTipoINFO.SetItemChecked(ix, false);
+        }
+
+        int PosTipoInformacion = -1;
+
+        private void checkedListBoxTipoInformacion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            PosTipoInformacion = checkedListBoxTipoInformacion.SelectedIndex;
+        }
+
+        private void CheckedListBoxTipoInformacion_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            if (e.NewValue == CheckState.Checked)
+                for (int ix = 0; ix < checkedListBoxTipoInformacion.Items.Count; ++ix)
+                    if (e.Index != ix) checkedListBoxTipoInformacion.SetItemChecked(ix, false);
+        }
+
     }
 }
+// TODO: Agrupacion de arbol
+// TODO: Revisar Campos Nulos
+// TODO: Acabar de implementar Datos de Contacto y Circulo Cercano
+// TODO: Buscar por ID
+// TODO: quitar la fecha de la busqueda o implementarla bien
 // fabricación de mosaicos de pasta en hermosillo

@@ -84,6 +84,9 @@
       <DependentUpon>AdminForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Busqueda.cs" />
+    <Compile Include="controlFlotante.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="IndiceBD.cs" />
     <Compile Include="MuestraCapturaFecha.cs">
       <SubType>UserControl</SubType>

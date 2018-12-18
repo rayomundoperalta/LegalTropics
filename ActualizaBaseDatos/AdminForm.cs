@@ -192,7 +192,7 @@ namespace ActualizaBaseDatos
 
         private void InicializaDS()
         {
-            Registro Presidente = new Registro("Presidencia", "Presidencia", "A0");
+            Registro Presidente = new Registro("Presidencia", "Presidencia", "A0", "El sistema");
             APF = new Node<Registro>(Presidente);
             ListaDeNodosPorID.Add("A0", APF);
             p.Parsea(APF, 0, ListaDeNodosPorID);
@@ -901,7 +901,7 @@ namespace ActualizaBaseDatos
                 }
             }
             else
-                MessageBox.Show("Te tienes que identificar primero")
+                MessageBox.Show("Te tienes que identificar primero");
         }
 
         private void buttonINFOLimpia_Click(object sender, EventArgs e)
@@ -943,13 +943,17 @@ namespace ActualizaBaseDatos
 
         private void buttonPuestosInserta_Click(object sender, EventArgs e)
         {
-            AccessUtility.InsertRegistroPuestos(textBoxPuestosID.Text, muestraCapturaFechaPuestoInicio.StringFecha,
+            if (!AbogadoIrresponsable.Equals(""))
+            {
+                AccessUtility.InsertRegistroPuestos(textBoxPuestosID.Text, muestraCapturaFechaPuestoInicio.StringFecha,
                 muestraCapturaFechaPuestoFin.StringFecha, textBoxPuestosDependencia.Text, textBoxPuestosPuesto.Text,
                 textBoxPuestosSuperior.Text, checkBoxPuestosCargoActual.CheckState == CheckState.Checked ? "actual" :
-                string.Empty, labelAbogadoRespPuesto.Text);
-            Puestos = AccessUtility.GetPuestos(IDFuncionario);
-            indexPuestos = new IndiceBD(Puestos.Length);
-            LlenaPuestos(IDFuncionario);
+                string.Empty, AbogadoIrresponsable);
+                Puestos = AccessUtility.GetPuestos(IDFuncionario);
+                indexPuestos = new IndiceBD(Puestos.Length);
+                LlenaPuestos(IDFuncionario);
+            }
+            MessageBox.Show("Tienes que identificarte primero");
         }
 
         private void buttonPuestosLimpia_Click(object sender, EventArgs e)
@@ -1048,11 +1052,16 @@ namespace ActualizaBaseDatos
 
         private void buttonInserta_Click(object sender, EventArgs e)
         {
-            if (!NewFotoFileName.Equals(string.Empty))
+            if (!AbogadoIrresponsable.Equals(""))
             {
                 string ID = GetNextUsableID();
-                AccessUtility.InsertFuncionario(ID, textBoxPrimerNombre.Text, textBoxSegundoNombre.Text, textBoxApellidoPaterno.Text, textBoxApellidoMaterno.Text, textBoxNacionalidad.Text, muestraCapturaFechaNacimiento.StringFecha);
-                AccessUtility.SubeFoto(ID, NewFotoFileName);
+                AccessUtility.InsertFuncionario(ID, textBoxPrimerNombre.Text, textBoxSegundoNombre.Text, textBoxApellidoPaterno.Text, textBoxApellidoMaterno.Text,
+                    textBoxNacionalidad.Text, muestraCapturaFechaNacimiento.Año.ToString(), muestraCapturaFechaNacimiento.Mes.ToString(),
+                    muestraCapturaFechaNacimiento.Dia.ToString(), AbogadoIrresponsable);
+                if (!NewFotoFileName.Equals(string.Empty))
+                {
+                    AccessUtility.SubeFoto(ID, NewFotoFileName);
+                }
                 buttonInserta.Enabled = false;
                 buttonModifica.Enabled = true;
                 DatosPersonalesModificados = false;
@@ -1061,18 +1070,24 @@ namespace ActualizaBaseDatos
             }
             else
             {
-                MessageBox.Show("No se puede insertar una ficha sin foto");
+                MessageBox.Show("Tienes que identificarte");
             }
         }
 
         private void buttonModifica_Click(object sender, EventArgs e)
         {
-            AccessUtility.UpdateFuncionario(textBoxID.Text, textBoxPrimerNombre.Text, textBoxSegundoNombre.Text, textBoxApellidoPaterno.Text, textBoxApellidoMaterno.Text, textBoxNacionalidad.Text, muestraCapturaFechaNacimiento.StringFecha);
-            if (FotoModificada) AccessUtility.SubeFoto(textBoxID.Text, NewFotoFileName);
-            buttonModifica.Enabled = false;
-            DatosPersonalesModificados = false;
-            FotoModificada = false;
-            BusquedaEnProceso = false;
+            if (!AbogadoIrresponsable.Equals(""))
+            {
+                AccessUtility.UpdateFuncionario(textBoxID.Text, textBoxPrimerNombre.Text, textBoxSegundoNombre.Text, textBoxApellidoPaterno.Text, textBoxApellidoMaterno.Text, textBoxNacionalidad.Text,
+                    muestraCapturaFechaNacimiento.Año.ToString(), muestraCapturaFechaNacimiento.Mes.ToString(), muestraCapturaFechaNacimiento.Dia.ToString(), AbogadoIrresponsable);
+                if (FotoModificada) AccessUtility.SubeFoto(textBoxID.Text, NewFotoFileName);
+                buttonModifica.Enabled = false;
+                DatosPersonalesModificados = false;
+                FotoModificada = false;
+                BusquedaEnProceso = false;
+            }
+            else
+                MessageBox.Show("Tienes que identificarte primero");
         }
 
         private void buttonCargaBD_Click(object sender, EventArgs e)
@@ -1105,6 +1120,7 @@ namespace ActualizaBaseDatos
             {
                 NodoSeleccionado = ListaDeNodosPorID[ID];
                 NodoDeArbolMostrado = treeViewOrganigramaAPF.SelectedNode;
+                labelOrgAbogadoIrresponsable.Text = NodoSeleccionado.Data.AbogadoIrresponsable.Equals("")?"     ": NodoSeleccionado.Data.AbogadoIrresponsable;
                 //ImprimeConsola("-->  " + NodoSeleccionado.Data.ToString() + " # " + e.Node.Text);
             }
             else
@@ -1147,55 +1163,64 @@ namespace ActualizaBaseDatos
         // Modifica
         private void buttonOrgActualizaFuncionario_Click(object sender, EventArgs e)
         {
-            String IDMostrado = NodoSeleccionado.Data.ID;
-            string ID = funcionarios[funcionarioMostrado.Pos]["ID"].ToString();
-            if (!(NodoSeleccionado == null) && !ListaDeNodosPorID.ContainsKey(IDMostrado))
+            if (!AbogadoIrresponsable.Equals(""))
             {
-                NodoDeArbolMostrado.Text = textBoxOrgNombrePuestoModificado.Text + " - " + AccessUtility.GetNombreFuncionario(ID) + "_" + ID;
-                Registro NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, textBoxOrgNombrePuestoModificado.Text, ID);
-                MessageBox.Show(NuevoRegistro.ToString());
-                Node<Registro> NuevoNode = new Node<Registro>(NuevoRegistro, NodoSeleccionado.Sons, NodoSeleccionado.Padre);
-                ListaDeNodosPorID.Add(ID, NuevoNode);
-                // tengo que actualizar APF
-                ListaDeNodosPorID[IDMostrado].Data = NuevoRegistro;
-                ListaDeNodosPorID.Remove(IDMostrado);
-                treeViewOrganigramaAPF.SelectedNode = null;
-                NodoDeArbolMostrado = null;
-                NodoSeleccionado = null;
-                organigrama.PrintTreeAPF(APF, ImprimeConsola);
-                textBoxOrgNombrePuestoModificado.Text = string.Empty;
+                String IDMostrado = NodoSeleccionado.Data.ID;
+                string ID = funcionarios[funcionarioMostrado.Pos]["ID"].ToString();
+                if (!(NodoSeleccionado == null) && !ListaDeNodosPorID.ContainsKey(IDMostrado))
+                {
+                    NodoDeArbolMostrado.Text = textBoxOrgNombrePuestoModificado.Text + " - " + AccessUtility.GetNombreFuncionario(ID) + "_" + ID;
+                    Registro NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, textBoxOrgNombrePuestoModificado.Text, AbogadoIrresponsable, ID);
+                    MessageBox.Show(NuevoRegistro.ToString());
+                    Node<Registro> NuevoNode = new Node<Registro>(NuevoRegistro, NodoSeleccionado.Sons, NodoSeleccionado.Padre);
+                    ListaDeNodosPorID.Add(ID, NuevoNode);
+                    // tengo que actualizar APF
+                    ListaDeNodosPorID[IDMostrado].Data = NuevoRegistro;
+                    ListaDeNodosPorID.Remove(IDMostrado);
+                    treeViewOrganigramaAPF.SelectedNode = null;
+                    NodoDeArbolMostrado = null;
+                    NodoSeleccionado = null;
+                    organigrama.PrintTreeAPF(APF, ImprimeConsola);
+                    textBoxOrgNombrePuestoModificado.Text = string.Empty;
+                }
             }
+            
         }
 
         // Inserta
         private void buttonOrgInsertaPuesto_Click(object sender, EventArgs e)
         {
-            string ID = funcionarios[funcionarioMostrado.Pos]["ID"].ToString();
-            if (NodoSeleccionado == null)
+            if (!AbogadoIrresponsable.Equals(""))
             {
-                MessageBox.Show("Nodo Selecccionado es nulo");
-            }
-            if (!textBoxOrgNombrePuesto.Text.Equals(string.Empty) && !ListaDeNodosPorID.ContainsKey(ID) && !(NodoSeleccionado == null))
-            {
-                // Hay que modificar APF y ListadeNodosPorID
-                // siempre vamos a inserta el nuevo registro como un hijo, y el único nodo que no puedo borrar es el raiz (el presidente)
-                NodeList<Registro> SinHijos = new NodeList<Registro>();
-                Registro NuevoRegistro = new Registro(NivelSIguiente[NodoSeleccionado.Data.TipoRegistro], textBoxOrgNombrePuesto.Text, ID);
-                Node<Registro> NuevoPuesto = new Node<Registro>(NuevoRegistro, SinHijos, NodoSeleccionado);
-                ListaDeNodosPorID.Add(ID, NuevoPuesto);
-                //ImprimeConsola("+-> Contenido nodo insertado: " + NodoSeleccionado.Data.ToString());
-                NodoSeleccionado.Sons.InsertaHijo(NuevoPuesto);
-                // Actualizamos el TreeView
-                TreeNode newNode = new TreeNode(textBoxOrgNombrePuesto.Text + " - " + AccessUtility.GetNombreFuncionario(ID) + "_" + ID);
-                NodoDeArbolMostrado.Nodes.Add(newNode);
-                NodoDeArbolMostrado.Expand();
+                string ID = funcionarios[funcionarioMostrado.Pos]["ID"].ToString();
+                if (NodoSeleccionado == null)
+                {
+                    MessageBox.Show("Nodo Selecccionado es nulo");
+                }
+                if (!textBoxOrgNombrePuesto.Text.Equals(string.Empty) && !ListaDeNodosPorID.ContainsKey(ID) && !(NodoSeleccionado == null))
+                {
+                    // Hay que modificar APF y ListadeNodosPorID
+                    // siempre vamos a inserta el nuevo registro como un hijo, y el único nodo que no puedo borrar es el raiz (el presidente)
+                    NodeList<Registro> SinHijos = new NodeList<Registro>();
+                    Registro NuevoRegistro = new Registro(NivelSIguiente[NodoSeleccionado.Data.TipoRegistro], textBoxOrgNombrePuesto.Text, AbogadoIrresponsable, ID);
+                    Node<Registro> NuevoPuesto = new Node<Registro>(NuevoRegistro, SinHijos, NodoSeleccionado);
+                    ListaDeNodosPorID.Add(ID, NuevoPuesto);
+                    //ImprimeConsola("+-> Contenido nodo insertado: " + NodoSeleccionado.Data.ToString());
+                    NodoSeleccionado.Sons.InsertaHijo(NuevoPuesto);
+                    // Actualizamos el TreeView
+                    TreeNode newNode = new TreeNode(textBoxOrgNombrePuesto.Text + " - " + AccessUtility.GetNombreFuncionario(ID) + "_" + ID);
+                    NodoDeArbolMostrado.Nodes.Add(newNode);
+                    NodoDeArbolMostrado.Expand();
 
-                treeViewOrganigramaAPF.SelectedNode = null;
-                NodoDeArbolMostrado = null;
-                NodoSeleccionado = null;
-                organigrama.PrintTreeAPF(APF, ImprimeConsola);
-                textBoxOrgNombrePuesto.Text = string.Empty;
+                    treeViewOrganigramaAPF.SelectedNode = null;
+                    NodoDeArbolMostrado = null;
+                    NodoSeleccionado = null;
+                    organigrama.PrintTreeAPF(APF, ImprimeConsola);
+                    textBoxOrgNombrePuesto.Text = string.Empty;
+                }
             }
+            else
+                MessageBox.Show("Tienes que identificarte primero");
         }
 
         private void buttonPrintTree_Click(object sender, EventArgs e)
@@ -1410,7 +1435,7 @@ namespace ActualizaBaseDatos
             System.IO.File.Copy(Defines.DataBasePath + Defines.BackupDataBaseFileName, Defines.DataBasePath + Defines.DataBaseFileName, true);
             treeViewOrganigramaAPF.Nodes.Remove(RaizTreeView);
             ListaDeNodosPorID.Clear();
-            Registro Presidente = new Registro("Presidencia", "Presidencia", "A0");
+            Registro Presidente = new Registro("Presidencia", "Presidencia", "El Sistema", "A0");
             APF = new Node<Registro>(Presidente);
             ListaDeNodosPorID.Add("A0", APF);
             p.InitTokens();
@@ -1427,10 +1452,15 @@ namespace ActualizaBaseDatos
 
         private void buttonOrgGuardar_Click(object sender, EventArgs e)
         {
-            ImprimeConsola("Guardamos el Organigrama");
-            string MaxId1 = AccessUtility.OrganigramaMaxId1();
-            organigrama.SalvaTreeAPF(APF, ImprimeConsola, false);
-            AccessUtility.DeleteOrganigrama(MaxId1);
+            if (!AbogadoIrresponsable.Equals(""))
+            {
+                ImprimeConsola("Guardamos el Organigrama");
+                string MaxId1 = AccessUtility.OrganigramaMaxId1();
+                organigrama.SalvaTreeAPF(APF, ImprimeConsola, false);
+                AccessUtility.DeleteOrganigrama(MaxId1);
+            }
+            else
+                MessageBox.Show("Tienes que identificarte primero");
         }
 
         private void dateTimePickerFechaNacimiento_ValueChanged(object sender, EventArgs e)
@@ -1657,6 +1687,7 @@ namespace ActualizaBaseDatos
             {
                 AbogadoIrresponsable = textBoxAbogadoIrresponsable.Text;
                 buttonVerificaOK.Text = "OK";
+                textBoxAbogadoIrresponsable.Text = string.Empty;
                 textBoxPassword.Text = string.Empty;
             }
             else
@@ -1670,5 +1701,4 @@ namespace ActualizaBaseDatos
 }
 // TODO: Agrupacion de arbol
 // TODO: Probar DatosContacto y CirculoCercano
-// TODO: Login button
 // fabricación de mosaicos de pasta en hermosillo

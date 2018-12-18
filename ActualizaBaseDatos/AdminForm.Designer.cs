@@ -35,6 +35,7 @@
             this.label22 = new System.Windows.Forms.Label();
             this.textBoxRecuperaID = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
+            this.muestraCapturaFechaNacimiento = new ActualizaBaseDatos.MuestraCapturaFecha();
             this.buttonCargaBD = new System.Windows.Forms.Button();
             this.buttonNuevo = new System.Windows.Forms.Button();
             this.buttonModifica = new System.Windows.Forms.Button();
@@ -57,6 +58,8 @@
             this.tabPageEscolaridad = new System.Windows.Forms.TabPage();
             this.labelAbogadoRespEsc = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
+            this.muestraCapturaFechaFin = new ActualizaBaseDatos.MuestraCapturaFecha();
+            this.muestraCapturaFechaInicio = new ActualizaBaseDatos.MuestraCapturaFecha();
             this.buttonEscolaridadElimina = new System.Windows.Forms.Button();
             this.buttonEscolaridadLimpia = new System.Windows.Forms.Button();
             this.buttonEscolaridadInserta = new System.Windows.Forms.Button();
@@ -92,6 +95,8 @@
             this.label12 = new System.Windows.Forms.Label();
             this.textBoxAPPartido = new System.Windows.Forms.TextBox();
             this.textBoxAPID = new System.Windows.Forms.TextBox();
+            this.muestraCapturaFechaAPFin = new ActualizaBaseDatos.MuestraCapturaFecha();
+            this.muestraCapturaFechaAPInicio = new ActualizaBaseDatos.MuestraCapturaFecha();
             this.tabPageINFO = new System.Windows.Forms.TabPage();
             this.checkedListBoxTipoInformacion = new System.Windows.Forms.CheckedListBox();
             this.labelAbogadoRespInfoGral = new System.Windows.Forms.Label();
@@ -133,6 +138,8 @@
             this.textBoxPuestosPuesto = new System.Windows.Forms.TextBox();
             this.textBoxPuestosDependencia = new System.Windows.Forms.TextBox();
             this.textBoxPuestosID = new System.Windows.Forms.TextBox();
+            this.muestraCapturaFechaPuestoFin = new ActualizaBaseDatos.MuestraCapturaFecha();
+            this.muestraCapturaFechaPuestoInicio = new ActualizaBaseDatos.MuestraCapturaFecha();
             this.tabPageCirculoCerrado = new System.Windows.Forms.TabPage();
             this.labelCirculoCercanoAbogadoResp = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
@@ -172,7 +179,7 @@
             this.tabControlAdministracionBaseDatos = new System.Windows.Forms.TabControl();
             this.tabPageFichas = new System.Windows.Forms.TabPage();
             this.tabPageOrganigrama = new System.Windows.Forms.TabPage();
-            this.label27 = new System.Windows.Forms.Label();
+            this.labelOrgAbogadoIrresponsable = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.buttonOrgBajar = new System.Windows.Forms.Button();
             this.buttonOrgSubir = new System.Windows.Forms.Button();
@@ -193,21 +200,14 @@
             this.treeViewOrganigramaAPF = new System.Windows.Forms.TreeView();
             this.tabPagePublica = new System.Windows.Forms.TabPage();
             this.labelSTATUS = new System.Windows.Forms.Label();
-            this.openFileDialogFoto = new System.Windows.Forms.OpenFileDialog();
-            this.muestraCapturaFechaNacimiento = new ActualizaBaseDatos.MuestraCapturaFecha();
-            this.muestraCapturaFechaFin = new ActualizaBaseDatos.MuestraCapturaFecha();
-            this.muestraCapturaFechaInicio = new ActualizaBaseDatos.MuestraCapturaFecha();
-            this.muestraCapturaFechaAPFin = new ActualizaBaseDatos.MuestraCapturaFecha();
-            this.muestraCapturaFechaAPInicio = new ActualizaBaseDatos.MuestraCapturaFecha();
-            this.muestraCapturaFechaPuestoFin = new ActualizaBaseDatos.MuestraCapturaFecha();
-            this.muestraCapturaFechaPuestoInicio = new ActualizaBaseDatos.MuestraCapturaFecha();
             this.tabPageIdentificate = new System.Windows.Forms.TabPage();
-            this.tabPageDesconectate = new System.Windows.Forms.TabPage();
-            this.textBoxAbogadoIrresponsable = new System.Windows.Forms.TextBox();
-            this.label29 = new System.Windows.Forms.Label();
-            this.textBoxPassword = new System.Windows.Forms.TextBox();
-            this.label31 = new System.Windows.Forms.Label();
             this.buttonVerificaOK = new System.Windows.Forms.Button();
+            this.label31 = new System.Windows.Forms.Label();
+            this.textBoxPassword = new System.Windows.Forms.TextBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.textBoxAbogadoIrresponsable = new System.Windows.Forms.TextBox();
+            this.tabPageDesconectate = new System.Windows.Forms.TabPage();
+            this.openFileDialogFoto = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tabControlInformación.SuspendLayout();
@@ -314,6 +314,17 @@
             this.label21.Size = new System.Drawing.Size(21, 17);
             this.label21.TabIndex = 21;
             this.label21.Text = "ID";
+            // 
+            // muestraCapturaFechaNacimiento
+            // 
+            this.muestraCapturaFechaNacimiento.Año = 2018;
+            this.muestraCapturaFechaNacimiento.Dia = 18;
+            this.muestraCapturaFechaNacimiento.Location = new System.Drawing.Point(899, 133);
+            this.muestraCapturaFechaNacimiento.Mes = 12;
+            this.muestraCapturaFechaNacimiento.Name = "muestraCapturaFechaNacimiento";
+            this.muestraCapturaFechaNacimiento.Size = new System.Drawing.Size(211, 59);
+            this.muestraCapturaFechaNacimiento.TabIndex = 20;
+            this.muestraCapturaFechaNacimiento.Load += new System.EventHandler(this.muestraCapturaFechaNacimiento_Load);
             // 
             // buttonCargaBD
             // 
@@ -544,6 +555,26 @@
             this.label23.Size = new System.Drawing.Size(91, 17);
             this.label23.TabIndex = 22;
             this.label23.Text = "Responsable";
+            // 
+            // muestraCapturaFechaFin
+            // 
+            this.muestraCapturaFechaFin.Año = 2018;
+            this.muestraCapturaFechaFin.Dia = 18;
+            this.muestraCapturaFechaFin.Location = new System.Drawing.Point(288, 125);
+            this.muestraCapturaFechaFin.Mes = 12;
+            this.muestraCapturaFechaFin.Name = "muestraCapturaFechaFin";
+            this.muestraCapturaFechaFin.Size = new System.Drawing.Size(211, 59);
+            this.muestraCapturaFechaFin.TabIndex = 21;
+            // 
+            // muestraCapturaFechaInicio
+            // 
+            this.muestraCapturaFechaInicio.Año = 2018;
+            this.muestraCapturaFechaInicio.Dia = 18;
+            this.muestraCapturaFechaInicio.Location = new System.Drawing.Point(6, 125);
+            this.muestraCapturaFechaInicio.Mes = 12;
+            this.muestraCapturaFechaInicio.Name = "muestraCapturaFechaInicio";
+            this.muestraCapturaFechaInicio.Size = new System.Drawing.Size(211, 59);
+            this.muestraCapturaFechaInicio.TabIndex = 20;
             // 
             // buttonEscolaridadElimina
             // 
@@ -886,6 +917,26 @@
             this.textBoxAPID.ReadOnly = true;
             this.textBoxAPID.Size = new System.Drawing.Size(100, 22);
             this.textBoxAPID.TabIndex = 1;
+            // 
+            // muestraCapturaFechaAPFin
+            // 
+            this.muestraCapturaFechaAPFin.Año = 2018;
+            this.muestraCapturaFechaAPFin.Dia = 18;
+            this.muestraCapturaFechaAPFin.Location = new System.Drawing.Point(276, 135);
+            this.muestraCapturaFechaAPFin.Mes = 12;
+            this.muestraCapturaFechaAPFin.Name = "muestraCapturaFechaAPFin";
+            this.muestraCapturaFechaAPFin.Size = new System.Drawing.Size(211, 59);
+            this.muestraCapturaFechaAPFin.TabIndex = 30;
+            // 
+            // muestraCapturaFechaAPInicio
+            // 
+            this.muestraCapturaFechaAPInicio.Año = 2018;
+            this.muestraCapturaFechaAPInicio.Dia = 18;
+            this.muestraCapturaFechaAPInicio.Location = new System.Drawing.Point(3, 135);
+            this.muestraCapturaFechaAPInicio.Mes = 12;
+            this.muestraCapturaFechaAPInicio.Name = "muestraCapturaFechaAPInicio";
+            this.muestraCapturaFechaAPInicio.Size = new System.Drawing.Size(211, 59);
+            this.muestraCapturaFechaAPInicio.TabIndex = 29;
             // 
             // tabPageINFO
             // 
@@ -1313,6 +1364,26 @@
             this.textBoxPuestosID.Size = new System.Drawing.Size(100, 22);
             this.textBoxPuestosID.TabIndex = 1;
             // 
+            // muestraCapturaFechaPuestoFin
+            // 
+            this.muestraCapturaFechaPuestoFin.Año = 2018;
+            this.muestraCapturaFechaPuestoFin.Dia = 18;
+            this.muestraCapturaFechaPuestoFin.Location = new System.Drawing.Point(276, 157);
+            this.muestraCapturaFechaPuestoFin.Mes = 12;
+            this.muestraCapturaFechaPuestoFin.Name = "muestraCapturaFechaPuestoFin";
+            this.muestraCapturaFechaPuestoFin.Size = new System.Drawing.Size(211, 59);
+            this.muestraCapturaFechaPuestoFin.TabIndex = 30;
+            // 
+            // muestraCapturaFechaPuestoInicio
+            // 
+            this.muestraCapturaFechaPuestoInicio.Año = 2018;
+            this.muestraCapturaFechaPuestoInicio.Dia = 18;
+            this.muestraCapturaFechaPuestoInicio.Location = new System.Drawing.Point(9, 157);
+            this.muestraCapturaFechaPuestoInicio.Mes = 12;
+            this.muestraCapturaFechaPuestoInicio.Name = "muestraCapturaFechaPuestoInicio";
+            this.muestraCapturaFechaPuestoInicio.Size = new System.Drawing.Size(211, 59);
+            this.muestraCapturaFechaPuestoInicio.TabIndex = 29;
+            // 
             // tabPageCirculoCerrado
             // 
             this.tabPageCirculoCerrado.Controls.Add(this.labelCirculoCercanoAbogadoResp);
@@ -1716,7 +1787,7 @@
             // 
             // tabPageOrganigrama
             // 
-            this.tabPageOrganigrama.Controls.Add(this.label27);
+            this.tabPageOrganigrama.Controls.Add(this.labelOrgAbogadoIrresponsable);
             this.tabPageOrganigrama.Controls.Add(this.label25);
             this.tabPageOrganigrama.Controls.Add(this.buttonOrgBajar);
             this.tabPageOrganigrama.Controls.Add(this.buttonOrgSubir);
@@ -1738,15 +1809,15 @@
             this.tabPageOrganigrama.UseVisualStyleBackColor = true;
             this.tabPageOrganigrama.Click += new System.EventHandler(this.tabPageOrganigrama_Click);
             // 
-            // label27
+            // labelOrgAbogadoIrresponsable
             // 
-            this.label27.AutoSize = true;
-            this.label27.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label27.Location = new System.Drawing.Point(1023, 512);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(73, 19);
-            this.label27.TabIndex = 18;
-            this.label27.Text = "el sistema";
+            this.labelOrgAbogadoIrresponsable.AutoSize = true;
+            this.labelOrgAbogadoIrresponsable.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelOrgAbogadoIrresponsable.Location = new System.Drawing.Point(1023, 512);
+            this.labelOrgAbogadoIrresponsable.Name = "labelOrgAbogadoIrresponsable";
+            this.labelOrgAbogadoIrresponsable.Size = new System.Drawing.Size(73, 19);
+            this.labelOrgAbogadoIrresponsable.TabIndex = 18;
+            this.labelOrgAbogadoIrresponsable.Text = "el sistema";
             // 
             // label25
             // 
@@ -1943,77 +2014,6 @@
             this.labelSTATUS.TabIndex = 0;
             this.labelSTATUS.Text = "Trabajando";
             // 
-            // muestraCapturaFechaNacimiento
-            // 
-            this.muestraCapturaFechaNacimiento.Año = 2018;
-            this.muestraCapturaFechaNacimiento.Dia = 17;
-            this.muestraCapturaFechaNacimiento.Location = new System.Drawing.Point(899, 133);
-            this.muestraCapturaFechaNacimiento.Mes = 12;
-            this.muestraCapturaFechaNacimiento.Name = "muestraCapturaFechaNacimiento";
-            this.muestraCapturaFechaNacimiento.Size = new System.Drawing.Size(211, 59);
-            this.muestraCapturaFechaNacimiento.TabIndex = 20;
-            this.muestraCapturaFechaNacimiento.Load += new System.EventHandler(this.muestraCapturaFechaNacimiento_Load);
-            // 
-            // muestraCapturaFechaFin
-            // 
-            this.muestraCapturaFechaFin.Año = 2018;
-            this.muestraCapturaFechaFin.Dia = 17;
-            this.muestraCapturaFechaFin.Location = new System.Drawing.Point(288, 125);
-            this.muestraCapturaFechaFin.Mes = 12;
-            this.muestraCapturaFechaFin.Name = "muestraCapturaFechaFin";
-            this.muestraCapturaFechaFin.Size = new System.Drawing.Size(211, 59);
-            this.muestraCapturaFechaFin.TabIndex = 21;
-            // 
-            // muestraCapturaFechaInicio
-            // 
-            this.muestraCapturaFechaInicio.Año = 2018;
-            this.muestraCapturaFechaInicio.Dia = 17;
-            this.muestraCapturaFechaInicio.Location = new System.Drawing.Point(6, 125);
-            this.muestraCapturaFechaInicio.Mes = 12;
-            this.muestraCapturaFechaInicio.Name = "muestraCapturaFechaInicio";
-            this.muestraCapturaFechaInicio.Size = new System.Drawing.Size(211, 59);
-            this.muestraCapturaFechaInicio.TabIndex = 20;
-            // 
-            // muestraCapturaFechaAPFin
-            // 
-            this.muestraCapturaFechaAPFin.Año = 2018;
-            this.muestraCapturaFechaAPFin.Dia = 17;
-            this.muestraCapturaFechaAPFin.Location = new System.Drawing.Point(276, 135);
-            this.muestraCapturaFechaAPFin.Mes = 12;
-            this.muestraCapturaFechaAPFin.Name = "muestraCapturaFechaAPFin";
-            this.muestraCapturaFechaAPFin.Size = new System.Drawing.Size(211, 59);
-            this.muestraCapturaFechaAPFin.TabIndex = 30;
-            // 
-            // muestraCapturaFechaAPInicio
-            // 
-            this.muestraCapturaFechaAPInicio.Año = 2018;
-            this.muestraCapturaFechaAPInicio.Dia = 17;
-            this.muestraCapturaFechaAPInicio.Location = new System.Drawing.Point(3, 135);
-            this.muestraCapturaFechaAPInicio.Mes = 12;
-            this.muestraCapturaFechaAPInicio.Name = "muestraCapturaFechaAPInicio";
-            this.muestraCapturaFechaAPInicio.Size = new System.Drawing.Size(211, 59);
-            this.muestraCapturaFechaAPInicio.TabIndex = 29;
-            // 
-            // muestraCapturaFechaPuestoFin
-            // 
-            this.muestraCapturaFechaPuestoFin.Año = 2018;
-            this.muestraCapturaFechaPuestoFin.Dia = 17;
-            this.muestraCapturaFechaPuestoFin.Location = new System.Drawing.Point(276, 157);
-            this.muestraCapturaFechaPuestoFin.Mes = 12;
-            this.muestraCapturaFechaPuestoFin.Name = "muestraCapturaFechaPuestoFin";
-            this.muestraCapturaFechaPuestoFin.Size = new System.Drawing.Size(211, 59);
-            this.muestraCapturaFechaPuestoFin.TabIndex = 30;
-            // 
-            // muestraCapturaFechaPuestoInicio
-            // 
-            this.muestraCapturaFechaPuestoInicio.Año = 2018;
-            this.muestraCapturaFechaPuestoInicio.Dia = 17;
-            this.muestraCapturaFechaPuestoInicio.Location = new System.Drawing.Point(9, 157);
-            this.muestraCapturaFechaPuestoInicio.Mes = 12;
-            this.muestraCapturaFechaPuestoInicio.Name = "muestraCapturaFechaPuestoInicio";
-            this.muestraCapturaFechaPuestoInicio.Size = new System.Drawing.Size(211, 59);
-            this.muestraCapturaFechaPuestoInicio.TabIndex = 29;
-            // 
             // tabPageIdentificate
             // 
             this.tabPageIdentificate.Controls.Add(this.buttonVerificaOK);
@@ -2029,37 +2029,15 @@
             this.tabPageIdentificate.Text = "Identificate";
             this.tabPageIdentificate.UseVisualStyleBackColor = true;
             // 
-            // tabPageDesconectate
+            // buttonVerificaOK
             // 
-            this.tabPageDesconectate.Location = new System.Drawing.Point(4, 25);
-            this.tabPageDesconectate.Name = "tabPageDesconectate";
-            this.tabPageDesconectate.Size = new System.Drawing.Size(1466, 638);
-            this.tabPageDesconectate.TabIndex = 4;
-            this.tabPageDesconectate.Text = "Desconectate";
-            this.tabPageDesconectate.UseVisualStyleBackColor = true;
-            // 
-            // textBoxAbogadoIrresponsable
-            // 
-            this.textBoxAbogadoIrresponsable.Location = new System.Drawing.Point(305, 69);
-            this.textBoxAbogadoIrresponsable.Name = "textBoxAbogadoIrresponsable";
-            this.textBoxAbogadoIrresponsable.Size = new System.Drawing.Size(180, 22);
-            this.textBoxAbogadoIrresponsable.TabIndex = 0;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(305, 22);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(399, 17);
-            this.label29.TabIndex = 1;
-            this.label29.Text = "Abogado Responsable de la información que se va a capturar";
-            // 
-            // textBoxPassword
-            // 
-            this.textBoxPassword.Location = new System.Drawing.Point(308, 154);
-            this.textBoxPassword.Name = "textBoxPassword";
-            this.textBoxPassword.Size = new System.Drawing.Size(100, 22);
-            this.textBoxPassword.TabIndex = 2;
+            this.buttonVerificaOK.Location = new System.Drawing.Point(550, 154);
+            this.buttonVerificaOK.Name = "buttonVerificaOK";
+            this.buttonVerificaOK.Size = new System.Drawing.Size(75, 23);
+            this.buttonVerificaOK.TabIndex = 4;
+            this.buttonVerificaOK.Text = "Verifica";
+            this.buttonVerificaOK.UseVisualStyleBackColor = true;
+            this.buttonVerificaOK.Click += new System.EventHandler(this.buttonVerificaOK_Click);
             // 
             // label31
             // 
@@ -2070,15 +2048,37 @@
             this.label31.TabIndex = 3;
             this.label31.Text = "Password";
             // 
-            // buttonVerificaOK
+            // textBoxPassword
             // 
-            this.buttonVerificaOK.Location = new System.Drawing.Point(550, 154);
-            this.buttonVerificaOK.Name = "buttonVerificaOK";
-            this.buttonVerificaOK.Size = new System.Drawing.Size(75, 23);
-            this.buttonVerificaOK.TabIndex = 4;
-            this.buttonVerificaOK.Text = "Verifica";
-            this.buttonVerificaOK.UseVisualStyleBackColor = true;
-            this.buttonVerificaOK.Click += new System.EventHandler(this.buttonVerificaOK_Click);
+            this.textBoxPassword.Location = new System.Drawing.Point(308, 154);
+            this.textBoxPassword.Name = "textBoxPassword";
+            this.textBoxPassword.Size = new System.Drawing.Size(100, 22);
+            this.textBoxPassword.TabIndex = 2;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(305, 22);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(399, 17);
+            this.label29.TabIndex = 1;
+            this.label29.Text = "Abogado Responsable de la información que se va a capturar";
+            // 
+            // textBoxAbogadoIrresponsable
+            // 
+            this.textBoxAbogadoIrresponsable.Location = new System.Drawing.Point(305, 69);
+            this.textBoxAbogadoIrresponsable.Name = "textBoxAbogadoIrresponsable";
+            this.textBoxAbogadoIrresponsable.Size = new System.Drawing.Size(180, 22);
+            this.textBoxAbogadoIrresponsable.TabIndex = 0;
+            // 
+            // tabPageDesconectate
+            // 
+            this.tabPageDesconectate.Location = new System.Drawing.Point(4, 25);
+            this.tabPageDesconectate.Name = "tabPageDesconectate";
+            this.tabPageDesconectate.Size = new System.Drawing.Size(1466, 638);
+            this.tabPageDesconectate.TabIndex = 4;
+            this.tabPageDesconectate.Text = "Desconectate";
+            this.tabPageDesconectate.UseVisualStyleBackColor = true;
             // 
             // AdminForm
             // 
@@ -2257,7 +2257,7 @@
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.TabPage tabPageCirculoCerrado;
         private System.Windows.Forms.TabPage tabPageDatosContacto;
-        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label labelOrgAbogadoIrresponsable;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.CheckedListBox checkedListBoxTipoInformacion;
         private System.Windows.Forms.Label labelCirculoCercanoAbogadoResp;

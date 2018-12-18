@@ -65,9 +65,9 @@ namespace UpLoadImagesToMsAccess
                         {
                             // Add file info into DB
                             string sql = "INSERT INTO Fotos "
-                                  + " ( ID, Foto, PhotoType ) "
+                                  + " ( ID, Foto, PhotoType, Abogado ) "
                                   + " VALUES "
-                                  + " ( @ID, @FotoData, @tipoFoto ) ";
+                                  + " ( @ID, @FotoData, @tipoFoto, 'Luis' ) ";
 
                             using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                             {

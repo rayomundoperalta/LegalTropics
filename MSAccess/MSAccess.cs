@@ -618,13 +618,13 @@ namespace MSAccess
             }
         }
 
-        static public void UpdateFuncionario(string ID, string PrimerNombre, string SegundoNombre, string ApellidoPaterno, string ApellidoMaterno, string Nacionalidad, string FechaDeNacimiento)
+        static public void UpdateFuncionario(string ID, string PrimerNombre, string SegundoNombre, string ApellidoPaterno, string ApellidoMaterno, string Nacionalidad, string AñoNacimiento, string MesNacimiento, string DiaNacimiento, string Abogado)
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
-                var sql = "UPDATE Funcionarios set ApellidoPaterno = @ApellidoPaterno, ApellidoMaterno = @ApellidoMaterno, PrimerNombre = @PrimerNombre, SegundoNombre = @SegundoNombre, Nacionalidad = @Nacionalidad, FechaDeNacimiento = @FechaDeNacimiento WHERE ID = @ID;";
+                var sql = "UPDATE Funcionarios set ApellidoPaterno = @ApellidoPaterno, ApellidoMaterno = @ApellidoMaterno, PrimerNombre = @PrimerNombre, SegundoNombre = @SegundoNombre, Nacionalidad = @Nacionalidad, AñoNacimiento = @AñoNacimiento, MesNacimiento = @MesNacimiento, DiaNacimiento = @DiaNacimiento, Abogado = @Abogado WHERE ID = @ID;";
                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                 {
                     cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
@@ -633,7 +633,10 @@ namespace MSAccess
                     cmd.Parameters.Add("@PrimerNombre", OleDbType.VarChar, 80).Value = PrimerNombre;
                     cmd.Parameters.Add("@SegundoNombre", OleDbType.VarChar, 80).Value = SegundoNombre;
                     cmd.Parameters.Add("@Nacionalidad", OleDbType.VarChar, 80).Value = Nacionalidad;
-                    cmd.Parameters.Add("@FechaDeNacimiento", OleDbType.DBDate, 80).Value = FechaDeNacimiento;
+                    cmd.Parameters.Add("@AñoNacimiento", OleDbType.DBDate, 80).Value = AñoNacimiento;
+                    cmd.Parameters.Add("@AñoNacimiento", OleDbType.DBDate, 80).Value = AñoNacimiento;
+                    cmd.Parameters.Add("@AñoNacimiento", OleDbType.DBDate, 80).Value = AñoNacimiento;
+                    cmd.Parameters.Add("@Abogado", OleDbType.DBDate, 80).Value = Abogado;
                     cn.Open();
                     cmd.ExecuteNonQuery();
                     cn.Close();
@@ -641,13 +644,13 @@ namespace MSAccess
             }
         }
 
-        static public void InsertFuncionario(string ID, string PrimerNombre, string SegundoNombre, string ApellidoPaterno, string ApellidoMaterno, string Nacionalidad, string FechaDeNacimiento)
+        static public void InsertFuncionario(string ID, string PrimerNombre, string SegundoNombre, string ApellidoPaterno, string ApellidoMaterno, string Nacionalidad, string AñoNacimiento, string MesNacimiento, string DiaNacimiento, string AbogadoIrresponsable)
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
-                var sql = "INSERT INTO Funcionarios (ID, ApellidoPaterno, ApellidoMaterno, PrimerNombre, SegundoNombre, Nacionalidad, FechaDeNacimiento) VALUES (@ID, @ApellidoPaterno, @ApellidoMaterno, @PrimerNombre, @SegundoNombre, @Nacionalidad, @FechaDeNacimiento);";
+                var sql = "INSERT INTO Funcionarios (ID, ApellidoPaterno, ApellidoMaterno, PrimerNombre, SegundoNombre, Nacionalidad, AñoNacimiento, MesNacimiento, DiaNacimiento, Abogado) VALUES (@ID, @ApellidoPaterno, @ApellidoMaterno, @PrimerNombre, @SegundoNombre, @Nacionalidad, @AñoNacimiento, @MesNacimiento, @DiaNacimiento, @Abogado);";
                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                 {
                     cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
@@ -656,7 +659,10 @@ namespace MSAccess
                     cmd.Parameters.Add("@PrimerNombre", OleDbType.VarChar, 80).Value = PrimerNombre;
                     cmd.Parameters.Add("@SegundoNombre", OleDbType.VarChar, 80).Value = SegundoNombre;
                     cmd.Parameters.Add("@Nacionalidad", OleDbType.VarChar, 80).Value = Nacionalidad;
-                    cmd.Parameters.Add("@FechaDeNacimiento", OleDbType.DBDate, 80).Value = FechaDeNacimiento;
+                    cmd.Parameters.Add("@AñoNocimiento", OleDbType.DBDate, 80).Value = AñoNacimiento;
+                    cmd.Parameters.Add("@MesNocimiento", OleDbType.DBDate, 80).Value = MesNacimiento;
+                    cmd.Parameters.Add("@DiaNocimiento", OleDbType.DBDate, 80).Value = DiaNacimiento;
+                    cmd.Parameters.Add("@Abogado", OleDbType.DBDate, 80).Value = AbogadoIrresponsable;
                     cn.Open();
                     cmd.ExecuteNonQuery();
                     cn.Close();
@@ -785,13 +791,14 @@ namespace MSAccess
             }
         }
 
-        static public void InsertRegistroOrganigrama(string TipoRegistro, string NombrePuesto, string ID, int Sec, Func<string, int> Print)
+        static public void InsertRegistroOrganigrama(string TipoRegistro, string NombrePuesto, string ID, string AbogadoIrresponsable, int Sec, Func<string, int> Print)
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
-                var sql = "INSERT INTO OrganigramaFederal (TipoRegistro, NombrePuesto, ID, Sec) VALUES ('" + TipoRegistro + "', '" + NombrePuesto + "', '" + ID + "', '" + Sec.ToString() + "');";
+                var sql = "INSERT INTO OrganigramaFederal (TipoRegistro, NombrePuesto, Abogado, ID, Sec) VALUES ('" + TipoRegistro + "', '" + NombrePuesto + "', '" + AbogadoIrresponsable + "', '" +
+                    ID + "', '" + Sec.ToString() + "');";
                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                 {
                     Print(cmd.CommandText);

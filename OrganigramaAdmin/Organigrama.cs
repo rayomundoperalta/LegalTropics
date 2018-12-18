@@ -33,7 +33,7 @@ namespace OrganigramaAdmin
 
         public void PrintTreeAPF(Node<Registro> APF, Func<string, int> Print)
         {
-            Print(APF.Data.TipoRegistro + " " + APF.Data.NombrePuesto + " " + APF.Data.ID);
+            Print(APF.Data.TipoRegistro + " " + APF.Data.NombrePuesto + " " + APF.Data.ID + " " + APF.Data.AbogadoIrresponsable);
             foreach(Node<Registro> hijo in APF.Sons)
             {
                 PrintTreeAPF(hijo, Print);
@@ -47,7 +47,7 @@ namespace OrganigramaAdmin
 
             if (NoFirstTime)
             {
-                AccessUtility.InsertRegistroOrganigrama(APF.Data.TipoRegistro, APF.Data.NombrePuesto, APF.Data.ID, i++, Print);
+                AccessUtility.InsertRegistroOrganigrama(APF.Data.TipoRegistro, APF.Data.NombrePuesto, APF.Data.ID, APF.Data.AbogadoIrresponsable, i++, Print);
             }
             else
             {

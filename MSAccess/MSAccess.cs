@@ -77,7 +77,7 @@ namespace MSAccess
             return name;
         }
 
-        static public DataRow[] GetDatosDeContacto(string ID)
+        static public DataRow[] GetDatosContacto(string ID)
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
@@ -381,13 +381,13 @@ namespace MSAccess
             return IDs;
         }
 
-        static public void InsertRegistroEscolaridad(string ID, string FechaDeInicio, string FechaDeFin, string Universidad, string Grado)
+        static public void InsertRegistroEscolaridad(string ID, string FechaDeInicio, string FechaDeFin, string Universidad, string Grado, string AbogadoResp )
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
-                var sql = "INSERT INTO Escolaridad (ID,FechaDeInicio,FechaDeFin,Universidad,Grado)  VALUES (@ID, @FechaDeInicio, @FechaDeFin, @Universidad, @Grado);";
+                var sql = "INSERT INTO Escolaridad (ID,FechaDeInicio,FechaDeFin,Universidad,Grado, Abogado)  VALUES (@ID, @FechaDeInicio, @FechaDeFin, @Universidad, @Grado, @Abogado);";
                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                 {
                     cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
@@ -395,6 +395,7 @@ namespace MSAccess
                     cmd.Parameters.Add("@FechaDeFin", OleDbType.Numeric, 80).Value = FechaDeFin;
                     cmd.Parameters.Add("@Universidad", OleDbType.VarChar, 80).Value = Universidad;
                     cmd.Parameters.Add("@Grado", OleDbType.VarChar, 80).Value = Grado;
+                    cmd.Parameters.Add("@Abogado", OleDbType.VarChar, 80).Value = AbogadoResp;
                     cn.Open();
                     cmd.ExecuteNonQuery();
                     cn.Close();
@@ -411,7 +412,7 @@ namespace MSAccess
                 var sql = "DELETE FROM Escolaridad WHERE Id1 = @Id1;";
                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                 {
-                    cmd.Parameters.Add("@ID", OleDbType.Numeric, 80).Value = Id1;
+                    cmd.Parameters.Add("@Id1", OleDbType.Numeric, 80).Value = Id1;
                     
                     cn.Open();
                     cmd.ExecuteNonQuery();
@@ -420,19 +421,20 @@ namespace MSAccess
             }
         }
 
-        static public void InsertRegistroAP(string ID, string FechaDeInicio, string FechaDeFin, string NombreDelPartido)
+        static public void InsertRegistroAP(string ID, string FechaDeInicio, string FechaDeFin, string NombreDelPartido, string Abogado)
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
-                var sql = "INSERT INTO AdscripciónPolítica (ID,FechaDeInicio,FechaDeFin,NombreDelPartido)  VALUES (@ID, @FechaDeInicio, @FechaDeFin, @NombreDelPartido);";
+                var sql = "INSERT INTO AdscripciónPolítica (ID,FechaDeInicio,FechaDeFin,NombreDelPartido,Abogado)  VALUES (@ID, @FechaDeInicio, @FechaDeFin, @NombreDelPartido,@Abogado);";
                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                 {
                     cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
                     cmd.Parameters.Add("@FechaDeInicio", OleDbType.Numeric, 80).Value = FechaDeInicio;
                     cmd.Parameters.Add("@FechaDeFin", OleDbType.VarChar, 80).Value = FechaDeFin;
                     cmd.Parameters.Add("@NombreDelPartido", OleDbType.VarChar, 80).Value = NombreDelPartido;
+                    cmd.Parameters.Add("@Abogado", OleDbType.VarChar, 80).Value = Abogado;
                     cn.Open();
                     cmd.ExecuteNonQuery();
                     cn.Close();
@@ -449,7 +451,7 @@ namespace MSAccess
                 var sql = "DELETE FROM AdscripciónPolítica WHERE Id1 = @Id1;";
                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                 {
-                    cmd.Parameters.Add("@ID", OleDbType.Numeric, 80).Value = Id1;
+                    cmd.Parameters.Add("@Id1", OleDbType.Numeric, 80).Value = Id1;
 
                     cn.Open();
                     cmd.ExecuteNonQuery();
@@ -458,19 +460,19 @@ namespace MSAccess
             }
         }
 
-        static public void InsertRegistroINFO(string ID, string TipoDeInformación, string Referencia)
+        static public void InsertRegistroINFO(string ID, string TipoDeInformación, string Referencia, string AbogadoResp)
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
-                var sql = "INSERT INTO InformaciónGeneral (ID,TipoDeInformación,Referencia)  VALUES (@ID, @TipoDeInformación, @Referencia);";
+                var sql = "INSERT INTO InformaciónGeneral (ID,TipoDeInformación,Referencia,Abogado)  VALUES (@ID, @TipoDeInformación, @Referencia, @Abogado);";
                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                 {
                     cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
                     cmd.Parameters.Add("@TipoDeInformación", OleDbType.VarChar, 80).Value = TipoDeInformación;
                     cmd.Parameters.Add("@Referencia", OleDbType.VarChar, 100000).Value = Referencia;
-                    
+                    cmd.Parameters.Add("@Abogados", OleDbType.VarChar, 100000).Value = AbogadoResp;
                     cn.Open();
                     cmd.ExecuteNonQuery();
                     cn.Close();
@@ -487,7 +489,7 @@ namespace MSAccess
                 var sql = "DELETE FROM InformaciónGeneral WHERE Id1 = @Id1;";
                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                 {
-                    cmd.Parameters.Add("@ID", OleDbType.Numeric, 80).Value = Id1;
+                    cmd.Parameters.Add("@Id1", OleDbType.Numeric, 80).Value = Id1;
 
                     cn.Open();
                     cmd.ExecuteNonQuery();
@@ -496,13 +498,14 @@ namespace MSAccess
             }
         }
 
-        static public void InsertRegistroPuestos(string ID, string FechaDeInicio, string FechaDeFin, string DependenciaEntidad, string Puesto, string JefeInmediantoSuperior)
+        static public void InsertRegistroPuestos(string ID, string FechaDeInicio, string FechaDeFin, string DependenciaEntidad,
+            string Puesto, string JefeInmediantoSuperior, string CargoActual, string Abogado)
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
-                var sql = "INSERT INTO Puestos (ID,FechaDeInicio,FechaDeFin,DependenciaEntidad,Puesto,JefeInmediantoSuperior,CurrículumVitae)  VALUES (@ID, @FechaDeInicio, @FechaDeFin, @DependenciaEntidad, @Puesto, @JefeInmediantoSuperior, @CurrículumVitae);";
+                var sql = "INSERT INTO Puestos (ID,FechaDeInicio,FechaDeFin,DependenciaEntidad,Puesto,JefeInmediantoSuperior,CurrículumVitae,CargoActual,Abogado)  VALUES (@ID, @FechaDeInicio, @FechaDeFin, @DependenciaEntidad, @Puesto, @JefeInmediantoSuperior, @CurrículumVitae, @CargoActual, @Abogado);";
                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                 {
                     cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
@@ -512,6 +515,8 @@ namespace MSAccess
                     cmd.Parameters.Add("@Puesto", OleDbType.VarChar, 80).Value = Puesto;
                     cmd.Parameters.Add("@JefeInmediantoSuperior", OleDbType.VarChar, 80).Value = JefeInmediantoSuperior;
                     cmd.Parameters.Add("@CurrículumVitae", OleDbType.VarChar, 80).Value = "No";
+                    cmd.Parameters.Add("@CargoActual", OleDbType.VarChar, 80).Value = CargoActual;
+                    cmd.Parameters.Add("@Abogado", OleDbType.VarChar, 80).Value = Abogado;
                     cn.Open();
                     cmd.ExecuteNonQuery();
                     cn.Close();
@@ -528,7 +533,83 @@ namespace MSAccess
                 var sql = "DELETE FROM Puestos WHERE Id1 = @Id1;";
                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                 {
-                    cmd.Parameters.Add("@ID", OleDbType.Numeric, 80).Value = Id1;
+                    cmd.Parameters.Add("@Id1", OleDbType.Numeric, 80).Value = Id1;
+
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+        }
+
+        static public void InsertRegistroDatosContacto(string ID, string Tipo, string dato, string AbogadoResp)
+        {
+            Builder.Provider = Defines.StringAccessProvider;
+            Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+            using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+            {
+                var sql = "INSERT INTO DatosContacto (ID, Tipo, dato, Abogado)  VALUES (@ID, @Tipo, @Dato, @Abogado);";
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
+                    cmd.Parameters.Add("@Tipo", OleDbType.Numeric, 80).Value = Tipo;
+                    cmd.Parameters.Add("@dato", OleDbType.Numeric, 80).Value = dato;
+                    cmd.Parameters.Add("@Abogado", OleDbType.VarChar, 80).Value = AbogadoResp;
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+        }
+
+        static public void DeleteRegistroDatosContacto(string Id1)
+        {
+            Builder.Provider = Defines.StringAccessProvider;
+            Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+            using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+            {
+                var sql = "DELETE FROM DatosContacto WHERE Id1 = @Id1;";
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    cmd.Parameters.Add("@Id1", OleDbType.Numeric, 80).Value = Id1;
+
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+        }
+
+        static public void InsertRegistroCirculoCercano(string ID, string Nombre, string Información, string AbogadoResp)
+        {
+            Builder.Provider = Defines.StringAccessProvider;
+            Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+            using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+            {
+                var sql = "INSERT INTO CirculoCercano (ID, Nombre, Información, Abogado)  VALUES (@ID, @Nombre, @Información, @Abogado);";
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
+                    cmd.Parameters.Add("@Nombre", OleDbType.Numeric, 80).Value = Nombre;
+                    cmd.Parameters.Add("@Información", OleDbType.Numeric, 80).Value = Información;
+                    cmd.Parameters.Add("@Abogado", OleDbType.VarChar, 80).Value = AbogadoResp;
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+        }
+
+        static public void DeleteRegistroCirculoCercano(string Id1)
+        {
+            Builder.Provider = Defines.StringAccessProvider;
+            Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+            using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+            {
+                var sql = "DELETE FROM CirculoCercano WHERE Id1 = @Id1;";
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    cmd.Parameters.Add("@Id1", OleDbType.Numeric, 80).Value = Id1;
 
                     cn.Open();
                     cmd.ExecuteNonQuery();
@@ -720,5 +801,66 @@ namespace MSAccess
                 }
             }
         }
+
+        static public bool VerificaAbogadoIrresponsable(string AbogadoIrresponsable, string Password)
+        {
+            Builder.Provider = Defines.StringAccessProvider;
+            Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+            tablaDeDatos = new System.Data.DataTable();
+            using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+            {
+                var sql = "SELECT Clave FROM Abogados where Nombre = @Nombre";
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    cmd.Parameters.Add("@Nombre", OleDbType.VarChar, 80).Value = AbogadoIrresponsable;
+                    cn.Open();
+                    tablaDeDatos.Load(cmd.ExecuteReader());
+                    cn.Close();
+                }
+                DataRow[] password = tablaDeDatos.Select();
+                if ((password.Length > 0) && (password[0]["Clave"].ToString().Equals(Password)))
+                {
+                    // el user y el password coinciden
+                    return true;
+                }
+                return false;
+            }
+        }
     }
 }
+/*
+            DataRow[] foto = tablaDeDatos.Select();
+            
+            if (foto.Length > 0)
+            {
+                int tamaño = ((byte[])foto[0]["Foto"]).Length;
+                if (tamaño > 0)
+                {
+                    string FullName;
+                    Guid guid;
+                    FileInfo fi;
+                    do
+                    {
+                        guid = Guid.NewGuid();
+                        string UniqueFileName = guid.ToString();
+                        FullName = Defines.FotoTempBasePath + UniqueFileName + foto[0]["PhotoType"].ToString();
+                        fi = new FileInfo(FullName);
+                    } while (fi.Exists);
+                    
+                    //Create the file.
+                    using (FileStream fs = fi.Create())
+                    {
+                        fs.Write((byte[])foto[0]["Foto"], 0, tamaño);
+                    }
+                    return FullName;
+                }
+                else
+                {
+                    return Defines.DefaultPhoto();
+                }
+            }
+            else
+            {
+                return Defines.DefaultPhoto();
+            }
+ */

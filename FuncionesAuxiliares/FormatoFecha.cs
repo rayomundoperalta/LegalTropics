@@ -10,7 +10,7 @@ namespace FuncionesAuxiliares
     {
         static public string FechaString(string año, string mes, string dia, string PorDefecto)
         {
-            if (año.Equals(string.Empty) || año.Equals("0"))
+            if (año.Equals(string.Empty) || año.Equals("0") || año.Equals("1900"))
             {
                 return PorDefecto;
             }

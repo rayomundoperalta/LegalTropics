@@ -30,9 +30,10 @@
         {
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.buttonTraeID = new System.Windows.Forms.Button();
             this.labelAbogadoResponsable = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxRecuperaID = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
             this.buttonCargaBD = new System.Windows.Forms.Button();
             this.buttonNuevo = new System.Windows.Forms.Button();
@@ -92,7 +93,8 @@
             this.textBoxAPPartido = new System.Windows.Forms.TextBox();
             this.textBoxAPID = new System.Windows.Forms.TextBox();
             this.tabPageINFO = new System.Windows.Forms.TabPage();
-            this.labelAbogadoRespINFO = new System.Windows.Forms.Label();
+            this.checkedListBoxTipoInformacion = new System.Windows.Forms.CheckedListBox();
+            this.labelAbogadoRespInfoGral = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.buttonINFOElimina = new System.Windows.Forms.Button();
             this.buttonINFOLimpia = new System.Windows.Forms.Button();
@@ -107,9 +109,9 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.textBoxINFOReferencia = new System.Windows.Forms.TextBox();
-            this.textBoxINFOTipoDeInformacion = new System.Windows.Forms.TextBox();
             this.textBoxINFOID = new System.Windows.Forms.TextBox();
             this.tabPagePuestos = new System.Windows.Forms.TabPage();
+            this.checkBoxPuestosCargoActual = new System.Windows.Forms.CheckBox();
             this.labelAbogadoRespPuesto = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.buttonPuestosElimina = new System.Windows.Forms.Button();
@@ -132,7 +134,41 @@
             this.textBoxPuestosDependencia = new System.Windows.Forms.TextBox();
             this.textBoxPuestosID = new System.Windows.Forms.TextBox();
             this.tabPageCirculoCerrado = new System.Windows.Forms.TabPage();
+            this.labelCirculoCercanoAbogadoResp = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.buttonCirculoCercanoElimina = new System.Windows.Forms.Button();
+            this.buttonCurculoCercanoLimpia = new System.Windows.Forms.Button();
+            this.buttonCirculoCercanoInserta = new System.Windows.Forms.Button();
+            this.buttonCirculoCercanoFinal = new System.Windows.Forms.Button();
+            this.buttonCirculoCercanoSIguiente = new System.Windows.Forms.Button();
+            this.labelCirculoCercanoCuantos = new System.Windows.Forms.Label();
+            this.labelCirculoCercanoPos = new System.Windows.Forms.Label();
+            this.buttonCirculoCercanoPrevio = new System.Windows.Forms.Button();
+            this.buttonCirculoCercanoInicial = new System.Windows.Forms.Button();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
+            this.textBoxCirculoCercanoInformación = new System.Windows.Forms.TextBox();
+            this.textBoxCirculoCercanoNombre = new System.Windows.Forms.TextBox();
+            this.textBoxCirculoCercanoID = new System.Windows.Forms.TextBox();
             this.tabPageDatosContacto = new System.Windows.Forms.TabPage();
+            this.checkedListBoxTipoINFO = new System.Windows.Forms.CheckedListBox();
+            this.labelDatosContactoAbogadoResp = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
+            this.buttonDatosContactoElimina = new System.Windows.Forms.Button();
+            this.buttonDatosContactoLimpia = new System.Windows.Forms.Button();
+            this.buttonDatosContactoInserta = new System.Windows.Forms.Button();
+            this.buttonDatosContactoFinal = new System.Windows.Forms.Button();
+            this.buttonDatosContactoSiguiente = new System.Windows.Forms.Button();
+            this.labelDatosContactoLength = new System.Windows.Forms.Label();
+            this.labelDatosContactoPos = new System.Windows.Forms.Label();
+            this.buttonDatosContactoPrevio = new System.Windows.Forms.Button();
+            this.buttonDatosContactoInicial = new System.Windows.Forms.Button();
+            this.label40 = new System.Windows.Forms.Label();
+            this.label41 = new System.Windows.Forms.Label();
+            this.label42 = new System.Windows.Forms.Label();
+            this.textBoxDatosContactoDato = new System.Windows.Forms.TextBox();
+            this.textBoxDatosContactoID = new System.Windows.Forms.TextBox();
             this.tabControlAdministracionBaseDatos = new System.Windows.Forms.TabControl();
             this.tabPageFichas = new System.Windows.Forms.TabPage();
             this.tabPageOrganigrama = new System.Windows.Forms.TabPage();
@@ -158,41 +194,6 @@
             this.tabPagePublica = new System.Windows.Forms.TabPage();
             this.labelSTATUS = new System.Windows.Forms.Label();
             this.openFileDialogFoto = new System.Windows.Forms.OpenFileDialog();
-            this.checkedListBoxTipoInformacion = new System.Windows.Forms.CheckedListBox();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.label31 = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.label33 = new System.Windows.Forms.Label();
-            this.label34 = new System.Windows.Forms.Label();
-            this.label35 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.label36 = new System.Windows.Forms.Label();
-            this.label37 = new System.Windows.Forms.Label();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.label38 = new System.Windows.Forms.Label();
-            this.label39 = new System.Windows.Forms.Label();
-            this.button13 = new System.Windows.Forms.Button();
-            this.button14 = new System.Windows.Forms.Button();
-            this.label40 = new System.Windows.Forms.Label();
-            this.label41 = new System.Windows.Forms.Label();
-            this.label42 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.checkedListBoxTipoINFO = new System.Windows.Forms.CheckedListBox();
             this.muestraCapturaFechaNacimiento = new ActualizaBaseDatos.MuestraCapturaFecha();
             this.muestraCapturaFechaFin = new ActualizaBaseDatos.MuestraCapturaFecha();
             this.muestraCapturaFechaInicio = new ActualizaBaseDatos.MuestraCapturaFecha();
@@ -200,6 +201,13 @@
             this.muestraCapturaFechaAPInicio = new ActualizaBaseDatos.MuestraCapturaFecha();
             this.muestraCapturaFechaPuestoFin = new ActualizaBaseDatos.MuestraCapturaFecha();
             this.muestraCapturaFechaPuestoInicio = new ActualizaBaseDatos.MuestraCapturaFecha();
+            this.tabPageIdentificate = new System.Windows.Forms.TabPage();
+            this.tabPageDesconectate = new System.Windows.Forms.TabPage();
+            this.textBoxAbogadoIrresponsable = new System.Windows.Forms.TextBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.textBoxPassword = new System.Windows.Forms.TextBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.buttonVerificaOK = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tabControlInformación.SuspendLayout();
@@ -215,6 +223,7 @@
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabPagePublica.SuspendLayout();
+            this.tabPageIdentificate.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -228,9 +237,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.buttonTraeID);
             this.groupBox1.Controls.Add(this.labelAbogadoResponsable);
             this.groupBox1.Controls.Add(this.label22);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.textBoxRecuperaID);
             this.groupBox1.Controls.Add(this.label21);
             this.groupBox1.Controls.Add(this.muestraCapturaFechaNacimiento);
             this.groupBox1.Controls.Add(this.buttonCargaBD);
@@ -259,6 +269,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos Personales";
             // 
+            // buttonTraeID
+            // 
+            this.buttonTraeID.Location = new System.Drawing.Point(733, 183);
+            this.buttonTraeID.Name = "buttonTraeID";
+            this.buttonTraeID.Size = new System.Drawing.Size(75, 23);
+            this.buttonTraeID.TabIndex = 25;
+            this.buttonTraeID.Text = "Trae ID";
+            this.buttonTraeID.UseVisualStyleBackColor = true;
+            this.buttonTraeID.Click += new System.EventHandler(this.buttonTraeID_Click);
+            // 
             // labelAbogadoResponsable
             // 
             this.labelAbogadoResponsable.AutoSize = true;
@@ -278,12 +298,13 @@
             this.label22.TabIndex = 23;
             this.label22.Text = "Responsable";
             // 
-            // textBox1
+            // textBoxRecuperaID
             // 
-            this.textBox1.Location = new System.Drawing.Point(570, 180);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 22);
-            this.textBox1.TabIndex = 22;
+            this.textBoxRecuperaID.Location = new System.Drawing.Point(570, 180);
+            this.textBoxRecuperaID.Name = "textBoxRecuperaID";
+            this.textBoxRecuperaID.Size = new System.Drawing.Size(100, 22);
+            this.textBoxRecuperaID.TabIndex = 22;
+            this.textBoxRecuperaID.TextChanged += new System.EventHandler(this.textBoxRecuperaID_TextChanged);
             // 
             // label21
             // 
@@ -869,7 +890,7 @@
             // tabPageINFO
             // 
             this.tabPageINFO.Controls.Add(this.checkedListBoxTipoInformacion);
-            this.tabPageINFO.Controls.Add(this.labelAbogadoRespINFO);
+            this.tabPageINFO.Controls.Add(this.labelAbogadoRespInfoGral);
             this.tabPageINFO.Controls.Add(this.label26);
             this.tabPageINFO.Controls.Add(this.buttonINFOElimina);
             this.tabPageINFO.Controls.Add(this.buttonINFOLimpia);
@@ -884,7 +905,6 @@
             this.tabPageINFO.Controls.Add(this.label17);
             this.tabPageINFO.Controls.Add(this.label16);
             this.tabPageINFO.Controls.Add(this.textBoxINFOReferencia);
-            this.tabPageINFO.Controls.Add(this.textBoxINFOTipoDeInformacion);
             this.tabPageINFO.Controls.Add(this.textBoxINFOID);
             this.tabPageINFO.Location = new System.Drawing.Point(4, 25);
             this.tabPageINFO.Name = "tabPageINFO";
@@ -894,14 +914,29 @@
             this.tabPageINFO.Text = "Información General";
             this.tabPageINFO.UseVisualStyleBackColor = true;
             // 
-            // labelAbogadoRespINFO
+            // checkedListBoxTipoInformacion
             // 
-            this.labelAbogadoRespINFO.AutoSize = true;
-            this.labelAbogadoRespINFO.Location = new System.Drawing.Point(958, 9);
-            this.labelAbogadoRespINFO.Name = "labelAbogadoRespINFO";
-            this.labelAbogadoRespINFO.Size = new System.Drawing.Size(71, 17);
-            this.labelAbogadoRespINFO.TabIndex = 30;
-            this.labelAbogadoRespINFO.Text = "el sistema";
+            this.checkedListBoxTipoInformacion.CheckOnClick = true;
+            this.checkedListBoxTipoInformacion.FormattingEnabled = true;
+            this.checkedListBoxTipoInformacion.Items.AddRange(new object[] {
+            "Información Gral.",
+            "Información Relevante",
+            "Nota Relevante",
+            "Vacio"});
+            this.checkedListBoxTipoInformacion.Location = new System.Drawing.Point(108, 61);
+            this.checkedListBoxTipoInformacion.Name = "checkedListBoxTipoInformacion";
+            this.checkedListBoxTipoInformacion.Size = new System.Drawing.Size(171, 72);
+            this.checkedListBoxTipoInformacion.TabIndex = 31;
+            this.checkedListBoxTipoInformacion.SelectedIndexChanged += new System.EventHandler(this.checkedListBoxTipoInformacion_SelectedIndexChanged);
+            // 
+            // labelAbogadoRespInfoGral
+            // 
+            this.labelAbogadoRespInfoGral.AutoSize = true;
+            this.labelAbogadoRespInfoGral.Location = new System.Drawing.Point(958, 9);
+            this.labelAbogadoRespInfoGral.Name = "labelAbogadoRespInfoGral";
+            this.labelAbogadoRespInfoGral.Size = new System.Drawing.Size(71, 17);
+            this.labelAbogadoRespInfoGral.TabIndex = 30;
+            this.labelAbogadoRespInfoGral.Text = "el sistema";
             // 
             // label26
             // 
@@ -1036,13 +1071,6 @@
             this.textBoxINFOReferencia.Size = new System.Drawing.Size(1140, 260);
             this.textBoxINFOReferencia.TabIndex = 3;
             // 
-            // textBoxINFOTipoDeInformacion
-            // 
-            this.textBoxINFOTipoDeInformacion.Location = new System.Drawing.Point(13, 299);
-            this.textBoxINFOTipoDeInformacion.Name = "textBoxINFOTipoDeInformacion";
-            this.textBoxINFOTipoDeInformacion.Size = new System.Drawing.Size(171, 22);
-            this.textBoxINFOTipoDeInformacion.TabIndex = 2;
-            // 
             // textBoxINFOID
             // 
             this.textBoxINFOID.Location = new System.Drawing.Point(2, 61);
@@ -1053,6 +1081,7 @@
             // 
             // tabPagePuestos
             // 
+            this.tabPagePuestos.Controls.Add(this.checkBoxPuestosCargoActual);
             this.tabPagePuestos.Controls.Add(this.labelAbogadoRespPuesto);
             this.tabPagePuestos.Controls.Add(this.label28);
             this.tabPagePuestos.Controls.Add(this.buttonPuestosElimina);
@@ -1083,6 +1112,16 @@
             this.tabPagePuestos.TabIndex = 3;
             this.tabPagePuestos.Text = "Puestos";
             this.tabPagePuestos.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxPuestosCargoActual
+            // 
+            this.checkBoxPuestosCargoActual.AutoSize = true;
+            this.checkBoxPuestosCargoActual.Location = new System.Drawing.Point(535, 164);
+            this.checkBoxPuestosCargoActual.Name = "checkBoxPuestosCargoActual";
+            this.checkBoxPuestosCargoActual.Size = new System.Drawing.Size(111, 21);
+            this.checkBoxPuestosCargoActual.TabIndex = 33;
+            this.checkBoxPuestosCargoActual.Text = "Cargo Actual";
+            this.checkBoxPuestosCargoActual.UseVisualStyleBackColor = true;
             // 
             // labelAbogadoRespPuesto
             // 
@@ -1276,23 +1315,23 @@
             // 
             // tabPageCirculoCerrado
             // 
-            this.tabPageCirculoCerrado.Controls.Add(this.label29);
+            this.tabPageCirculoCerrado.Controls.Add(this.labelCirculoCercanoAbogadoResp);
             this.tabPageCirculoCerrado.Controls.Add(this.label30);
-            this.tabPageCirculoCerrado.Controls.Add(this.button1);
-            this.tabPageCirculoCerrado.Controls.Add(this.button2);
-            this.tabPageCirculoCerrado.Controls.Add(this.button3);
-            this.tabPageCirculoCerrado.Controls.Add(this.button4);
-            this.tabPageCirculoCerrado.Controls.Add(this.button5);
-            this.tabPageCirculoCerrado.Controls.Add(this.label31);
-            this.tabPageCirculoCerrado.Controls.Add(this.label32);
-            this.tabPageCirculoCerrado.Controls.Add(this.button6);
-            this.tabPageCirculoCerrado.Controls.Add(this.button7);
+            this.tabPageCirculoCerrado.Controls.Add(this.buttonCirculoCercanoElimina);
+            this.tabPageCirculoCerrado.Controls.Add(this.buttonCurculoCercanoLimpia);
+            this.tabPageCirculoCerrado.Controls.Add(this.buttonCirculoCercanoInserta);
+            this.tabPageCirculoCerrado.Controls.Add(this.buttonCirculoCercanoFinal);
+            this.tabPageCirculoCerrado.Controls.Add(this.buttonCirculoCercanoSIguiente);
+            this.tabPageCirculoCerrado.Controls.Add(this.labelCirculoCercanoCuantos);
+            this.tabPageCirculoCerrado.Controls.Add(this.labelCirculoCercanoPos);
+            this.tabPageCirculoCerrado.Controls.Add(this.buttonCirculoCercanoPrevio);
+            this.tabPageCirculoCerrado.Controls.Add(this.buttonCirculoCercanoInicial);
             this.tabPageCirculoCerrado.Controls.Add(this.label33);
             this.tabPageCirculoCerrado.Controls.Add(this.label34);
             this.tabPageCirculoCerrado.Controls.Add(this.label35);
-            this.tabPageCirculoCerrado.Controls.Add(this.textBox2);
-            this.tabPageCirculoCerrado.Controls.Add(this.textBox3);
-            this.tabPageCirculoCerrado.Controls.Add(this.textBox4);
+            this.tabPageCirculoCerrado.Controls.Add(this.textBoxCirculoCercanoInformación);
+            this.tabPageCirculoCerrado.Controls.Add(this.textBoxCirculoCercanoNombre);
+            this.tabPageCirculoCerrado.Controls.Add(this.textBoxCirculoCercanoID);
             this.tabPageCirculoCerrado.Location = new System.Drawing.Point(4, 25);
             this.tabPageCirculoCerrado.Name = "tabPageCirculoCerrado";
             this.tabPageCirculoCerrado.Padding = new System.Windows.Forms.Padding(3);
@@ -1301,25 +1340,180 @@
             this.tabPageCirculoCerrado.Text = "Circulo Cerrado";
             this.tabPageCirculoCerrado.UseVisualStyleBackColor = true;
             // 
+            // labelCirculoCercanoAbogadoResp
+            // 
+            this.labelCirculoCercanoAbogadoResp.AutoSize = true;
+            this.labelCirculoCercanoAbogadoResp.Location = new System.Drawing.Point(998, 18);
+            this.labelCirculoCercanoAbogadoResp.Name = "labelCirculoCercanoAbogadoResp";
+            this.labelCirculoCercanoAbogadoResp.Size = new System.Drawing.Size(71, 17);
+            this.labelCirculoCercanoAbogadoResp.TabIndex = 49;
+            this.labelCirculoCercanoAbogadoResp.Text = "el sistema";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(894, 18);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(91, 17);
+            this.label30.TabIndex = 48;
+            this.label30.Text = "Responsable";
+            // 
+            // buttonCirculoCercanoElimina
+            // 
+            this.buttonCirculoCercanoElimina.Location = new System.Drawing.Point(616, 15);
+            this.buttonCirculoCercanoElimina.Name = "buttonCirculoCercanoElimina";
+            this.buttonCirculoCercanoElimina.Size = new System.Drawing.Size(75, 23);
+            this.buttonCirculoCercanoElimina.TabIndex = 47;
+            this.buttonCirculoCercanoElimina.Text = "Elimina";
+            this.buttonCirculoCercanoElimina.UseVisualStyleBackColor = true;
+            this.buttonCirculoCercanoElimina.Click += new System.EventHandler(this.buttonCirculoCercanoElimina_Click);
+            // 
+            // buttonCurculoCercanoLimpia
+            // 
+            this.buttonCurculoCercanoLimpia.Location = new System.Drawing.Point(535, 15);
+            this.buttonCurculoCercanoLimpia.Name = "buttonCurculoCercanoLimpia";
+            this.buttonCurculoCercanoLimpia.Size = new System.Drawing.Size(75, 23);
+            this.buttonCurculoCercanoLimpia.TabIndex = 46;
+            this.buttonCurculoCercanoLimpia.Text = "Limpia";
+            this.buttonCurculoCercanoLimpia.UseVisualStyleBackColor = true;
+            this.buttonCurculoCercanoLimpia.Click += new System.EventHandler(this.buttonCurculoCercanoLimpia_Click);
+            // 
+            // buttonCirculoCercanoInserta
+            // 
+            this.buttonCirculoCercanoInserta.Location = new System.Drawing.Point(454, 15);
+            this.buttonCirculoCercanoInserta.Name = "buttonCirculoCercanoInserta";
+            this.buttonCirculoCercanoInserta.Size = new System.Drawing.Size(75, 23);
+            this.buttonCirculoCercanoInserta.TabIndex = 45;
+            this.buttonCirculoCercanoInserta.Text = "Inserta";
+            this.buttonCirculoCercanoInserta.UseVisualStyleBackColor = true;
+            this.buttonCirculoCercanoInserta.Click += new System.EventHandler(this.buttonCirculoCercanoInserta_Click);
+            // 
+            // buttonCirculoCercanoFinal
+            // 
+            this.buttonCirculoCercanoFinal.Location = new System.Drawing.Point(373, 15);
+            this.buttonCirculoCercanoFinal.Name = "buttonCirculoCercanoFinal";
+            this.buttonCirculoCercanoFinal.Size = new System.Drawing.Size(75, 23);
+            this.buttonCirculoCercanoFinal.TabIndex = 44;
+            this.buttonCirculoCercanoFinal.Text = "Final";
+            this.buttonCirculoCercanoFinal.UseVisualStyleBackColor = true;
+            this.buttonCirculoCercanoFinal.Click += new System.EventHandler(this.buttonCirculoCercanoFinal_Click);
+            // 
+            // buttonCirculoCercanoSIguiente
+            // 
+            this.buttonCirculoCercanoSIguiente.Location = new System.Drawing.Point(276, 15);
+            this.buttonCirculoCercanoSIguiente.Name = "buttonCirculoCercanoSIguiente";
+            this.buttonCirculoCercanoSIguiente.Size = new System.Drawing.Size(91, 23);
+            this.buttonCirculoCercanoSIguiente.TabIndex = 43;
+            this.buttonCirculoCercanoSIguiente.Text = "Siguiente";
+            this.buttonCirculoCercanoSIguiente.UseVisualStyleBackColor = true;
+            this.buttonCirculoCercanoSIguiente.Click += new System.EventHandler(this.buttonCirculoCercanoSIguiente_Click);
+            // 
+            // labelCirculoCercanoCuantos
+            // 
+            this.labelCirculoCercanoCuantos.AutoSize = true;
+            this.labelCirculoCercanoCuantos.Location = new System.Drawing.Point(232, 18);
+            this.labelCirculoCercanoCuantos.Name = "labelCirculoCercanoCuantos";
+            this.labelCirculoCercanoCuantos.Size = new System.Drawing.Size(38, 17);
+            this.labelCirculoCercanoCuantos.TabIndex = 42;
+            this.labelCirculoCercanoCuantos.Text = "de N";
+            // 
+            // labelCirculoCercanoPos
+            // 
+            this.labelCirculoCercanoPos.AutoSize = true;
+            this.labelCirculoCercanoPos.Location = new System.Drawing.Point(168, 18);
+            this.labelCirculoCercanoPos.Name = "labelCirculoCercanoPos";
+            this.labelCirculoCercanoPos.Size = new System.Drawing.Size(16, 17);
+            this.labelCirculoCercanoPos.TabIndex = 41;
+            this.labelCirculoCercanoPos.Text = "0";
+            // 
+            // buttonCirculoCercanoPrevio
+            // 
+            this.buttonCirculoCercanoPrevio.Location = new System.Drawing.Point(87, 15);
+            this.buttonCirculoCercanoPrevio.Name = "buttonCirculoCercanoPrevio";
+            this.buttonCirculoCercanoPrevio.Size = new System.Drawing.Size(75, 23);
+            this.buttonCirculoCercanoPrevio.TabIndex = 40;
+            this.buttonCirculoCercanoPrevio.Text = "Previo";
+            this.buttonCirculoCercanoPrevio.UseVisualStyleBackColor = true;
+            this.buttonCirculoCercanoPrevio.Click += new System.EventHandler(this.buttonCirculoCercanoPrevio_Click);
+            // 
+            // buttonCirculoCercanoInicial
+            // 
+            this.buttonCirculoCercanoInicial.Location = new System.Drawing.Point(6, 15);
+            this.buttonCirculoCercanoInicial.Name = "buttonCirculoCercanoInicial";
+            this.buttonCirculoCercanoInicial.Size = new System.Drawing.Size(75, 23);
+            this.buttonCirculoCercanoInicial.TabIndex = 39;
+            this.buttonCirculoCercanoInicial.Text = "Inicial";
+            this.buttonCirculoCercanoInicial.UseVisualStyleBackColor = true;
+            this.buttonCirculoCercanoInicial.Click += new System.EventHandler(this.buttonCirculoCercanoInicial_Click);
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(324, 54);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(81, 17);
+            this.label33.TabIndex = 38;
+            this.label33.Text = "Información";
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(112, 54);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(58, 17);
+            this.label34.TabIndex = 37;
+            this.label34.Text = "Nombre";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(6, 54);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(21, 17);
+            this.label35.TabIndex = 36;
+            this.label35.Text = "ID";
+            // 
+            // textBoxCirculoCercanoInformación
+            // 
+            this.textBoxCirculoCercanoInformación.Location = new System.Drawing.Point(324, 74);
+            this.textBoxCirculoCercanoInformación.Name = "textBoxCirculoCercanoInformación";
+            this.textBoxCirculoCercanoInformación.Size = new System.Drawing.Size(770, 22);
+            this.textBoxCirculoCercanoInformación.TabIndex = 35;
+            // 
+            // textBoxCirculoCercanoNombre
+            // 
+            this.textBoxCirculoCercanoNombre.Location = new System.Drawing.Point(112, 74);
+            this.textBoxCirculoCercanoNombre.Name = "textBoxCirculoCercanoNombre";
+            this.textBoxCirculoCercanoNombre.Size = new System.Drawing.Size(204, 22);
+            this.textBoxCirculoCercanoNombre.TabIndex = 34;
+            // 
+            // textBoxCirculoCercanoID
+            // 
+            this.textBoxCirculoCercanoID.Location = new System.Drawing.Point(6, 74);
+            this.textBoxCirculoCercanoID.Name = "textBoxCirculoCercanoID";
+            this.textBoxCirculoCercanoID.ReadOnly = true;
+            this.textBoxCirculoCercanoID.Size = new System.Drawing.Size(100, 22);
+            this.textBoxCirculoCercanoID.TabIndex = 33;
+            // 
             // tabPageDatosContacto
             // 
             this.tabPageDatosContacto.Controls.Add(this.checkedListBoxTipoINFO);
-            this.tabPageDatosContacto.Controls.Add(this.label36);
+            this.tabPageDatosContacto.Controls.Add(this.labelDatosContactoAbogadoResp);
             this.tabPageDatosContacto.Controls.Add(this.label37);
-            this.tabPageDatosContacto.Controls.Add(this.button8);
-            this.tabPageDatosContacto.Controls.Add(this.button9);
-            this.tabPageDatosContacto.Controls.Add(this.button10);
-            this.tabPageDatosContacto.Controls.Add(this.button11);
-            this.tabPageDatosContacto.Controls.Add(this.button12);
-            this.tabPageDatosContacto.Controls.Add(this.label38);
-            this.tabPageDatosContacto.Controls.Add(this.label39);
-            this.tabPageDatosContacto.Controls.Add(this.button13);
-            this.tabPageDatosContacto.Controls.Add(this.button14);
+            this.tabPageDatosContacto.Controls.Add(this.buttonDatosContactoElimina);
+            this.tabPageDatosContacto.Controls.Add(this.buttonDatosContactoLimpia);
+            this.tabPageDatosContacto.Controls.Add(this.buttonDatosContactoInserta);
+            this.tabPageDatosContacto.Controls.Add(this.buttonDatosContactoFinal);
+            this.tabPageDatosContacto.Controls.Add(this.buttonDatosContactoSiguiente);
+            this.tabPageDatosContacto.Controls.Add(this.labelDatosContactoLength);
+            this.tabPageDatosContacto.Controls.Add(this.labelDatosContactoPos);
+            this.tabPageDatosContacto.Controls.Add(this.buttonDatosContactoPrevio);
+            this.tabPageDatosContacto.Controls.Add(this.buttonDatosContactoInicial);
             this.tabPageDatosContacto.Controls.Add(this.label40);
             this.tabPageDatosContacto.Controls.Add(this.label41);
             this.tabPageDatosContacto.Controls.Add(this.label42);
-            this.tabPageDatosContacto.Controls.Add(this.textBox5);
-            this.tabPageDatosContacto.Controls.Add(this.textBox7);
+            this.tabPageDatosContacto.Controls.Add(this.textBoxDatosContactoDato);
+            this.tabPageDatosContacto.Controls.Add(this.textBoxDatosContactoID);
             this.tabPageDatosContacto.Location = new System.Drawing.Point(4, 25);
             this.tabPageDatosContacto.Name = "tabPageDatosContacto";
             this.tabPageDatosContacto.Padding = new System.Windows.Forms.Padding(3);
@@ -1328,11 +1522,180 @@
             this.tabPageDatosContacto.Text = "Datos de Contacto";
             this.tabPageDatosContacto.UseVisualStyleBackColor = true;
             // 
+            // checkedListBoxTipoINFO
+            // 
+            this.checkedListBoxTipoINFO.CheckOnClick = true;
+            this.checkedListBoxTipoINFO.FormattingEnabled = true;
+            this.checkedListBoxTipoINFO.Items.AddRange(new object[] {
+            "e-mail",
+            "Facebook",
+            "Twiter",
+            "Tel.",
+            "Domicilio",
+            "LinkedIn",
+            "Vacio"});
+            this.checkedListBoxTipoINFO.Location = new System.Drawing.Point(118, 66);
+            this.checkedListBoxTipoINFO.Name = "checkedListBoxTipoINFO";
+            this.checkedListBoxTipoINFO.Size = new System.Drawing.Size(157, 123);
+            this.checkedListBoxTipoINFO.TabIndex = 50;
+            this.checkedListBoxTipoINFO.SelectedIndexChanged += new System.EventHandler(this.checkedListBoxTipoINFO_SelectedIndexChanged);
+            // 
+            // labelDatosContactoAbogadoResp
+            // 
+            this.labelDatosContactoAbogadoResp.AutoSize = true;
+            this.labelDatosContactoAbogadoResp.Location = new System.Drawing.Point(1003, 9);
+            this.labelDatosContactoAbogadoResp.Name = "labelDatosContactoAbogadoResp";
+            this.labelDatosContactoAbogadoResp.Size = new System.Drawing.Size(71, 17);
+            this.labelDatosContactoAbogadoResp.TabIndex = 49;
+            this.labelDatosContactoAbogadoResp.Text = "el sistema";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(899, 9);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(91, 17);
+            this.label37.TabIndex = 48;
+            this.label37.Text = "Responsable";
+            // 
+            // buttonDatosContactoElimina
+            // 
+            this.buttonDatosContactoElimina.Location = new System.Drawing.Point(621, 6);
+            this.buttonDatosContactoElimina.Name = "buttonDatosContactoElimina";
+            this.buttonDatosContactoElimina.Size = new System.Drawing.Size(75, 23);
+            this.buttonDatosContactoElimina.TabIndex = 47;
+            this.buttonDatosContactoElimina.Text = "Elimina";
+            this.buttonDatosContactoElimina.UseVisualStyleBackColor = true;
+            this.buttonDatosContactoElimina.Click += new System.EventHandler(this.buttonDatosContactoElimina_Click);
+            // 
+            // buttonDatosContactoLimpia
+            // 
+            this.buttonDatosContactoLimpia.Location = new System.Drawing.Point(540, 6);
+            this.buttonDatosContactoLimpia.Name = "buttonDatosContactoLimpia";
+            this.buttonDatosContactoLimpia.Size = new System.Drawing.Size(75, 23);
+            this.buttonDatosContactoLimpia.TabIndex = 46;
+            this.buttonDatosContactoLimpia.Text = "Limpia";
+            this.buttonDatosContactoLimpia.UseVisualStyleBackColor = true;
+            this.buttonDatosContactoLimpia.Click += new System.EventHandler(this.buttonDatosContactoLimpia_Click);
+            // 
+            // buttonDatosContactoInserta
+            // 
+            this.buttonDatosContactoInserta.Location = new System.Drawing.Point(459, 6);
+            this.buttonDatosContactoInserta.Name = "buttonDatosContactoInserta";
+            this.buttonDatosContactoInserta.Size = new System.Drawing.Size(75, 23);
+            this.buttonDatosContactoInserta.TabIndex = 45;
+            this.buttonDatosContactoInserta.Text = "Inserta";
+            this.buttonDatosContactoInserta.UseVisualStyleBackColor = true;
+            this.buttonDatosContactoInserta.Click += new System.EventHandler(this.buttonDatosContactoInserta_Click);
+            // 
+            // buttonDatosContactoFinal
+            // 
+            this.buttonDatosContactoFinal.Location = new System.Drawing.Point(378, 6);
+            this.buttonDatosContactoFinal.Name = "buttonDatosContactoFinal";
+            this.buttonDatosContactoFinal.Size = new System.Drawing.Size(75, 23);
+            this.buttonDatosContactoFinal.TabIndex = 44;
+            this.buttonDatosContactoFinal.Text = "Final";
+            this.buttonDatosContactoFinal.UseVisualStyleBackColor = true;
+            this.buttonDatosContactoFinal.Click += new System.EventHandler(this.buttonDatosContactoFinal_Click);
+            // 
+            // buttonDatosContactoSiguiente
+            // 
+            this.buttonDatosContactoSiguiente.Location = new System.Drawing.Point(281, 6);
+            this.buttonDatosContactoSiguiente.Name = "buttonDatosContactoSiguiente";
+            this.buttonDatosContactoSiguiente.Size = new System.Drawing.Size(91, 23);
+            this.buttonDatosContactoSiguiente.TabIndex = 43;
+            this.buttonDatosContactoSiguiente.Text = "Siguiente";
+            this.buttonDatosContactoSiguiente.UseVisualStyleBackColor = true;
+            this.buttonDatosContactoSiguiente.Click += new System.EventHandler(this.buttonDatosContactoSiguiente_Click);
+            // 
+            // labelDatosContactoLength
+            // 
+            this.labelDatosContactoLength.AutoSize = true;
+            this.labelDatosContactoLength.Location = new System.Drawing.Point(237, 9);
+            this.labelDatosContactoLength.Name = "labelDatosContactoLength";
+            this.labelDatosContactoLength.Size = new System.Drawing.Size(38, 17);
+            this.labelDatosContactoLength.TabIndex = 42;
+            this.labelDatosContactoLength.Text = "de N";
+            // 
+            // labelDatosContactoPos
+            // 
+            this.labelDatosContactoPos.AutoSize = true;
+            this.labelDatosContactoPos.Location = new System.Drawing.Point(173, 9);
+            this.labelDatosContactoPos.Name = "labelDatosContactoPos";
+            this.labelDatosContactoPos.Size = new System.Drawing.Size(16, 17);
+            this.labelDatosContactoPos.TabIndex = 41;
+            this.labelDatosContactoPos.Text = "0";
+            // 
+            // buttonDatosContactoPrevio
+            // 
+            this.buttonDatosContactoPrevio.Location = new System.Drawing.Point(92, 6);
+            this.buttonDatosContactoPrevio.Name = "buttonDatosContactoPrevio";
+            this.buttonDatosContactoPrevio.Size = new System.Drawing.Size(75, 23);
+            this.buttonDatosContactoPrevio.TabIndex = 40;
+            this.buttonDatosContactoPrevio.Text = "Previo";
+            this.buttonDatosContactoPrevio.UseVisualStyleBackColor = true;
+            this.buttonDatosContactoPrevio.Click += new System.EventHandler(this.buttonDatosContactoPrevio_Click);
+            // 
+            // buttonDatosContactoInicial
+            // 
+            this.buttonDatosContactoInicial.Location = new System.Drawing.Point(11, 6);
+            this.buttonDatosContactoInicial.Name = "buttonDatosContactoInicial";
+            this.buttonDatosContactoInicial.Size = new System.Drawing.Size(75, 23);
+            this.buttonDatosContactoInicial.TabIndex = 39;
+            this.buttonDatosContactoInicial.Text = "Inicial";
+            this.buttonDatosContactoInicial.UseVisualStyleBackColor = true;
+            this.buttonDatosContactoInicial.Click += new System.EventHandler(this.buttonDatosContactoInicial_Click);
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(278, 45);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(38, 17);
+            this.label40.TabIndex = 38;
+            this.label40.Text = "Dato";
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(115, 45);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(113, 17);
+            this.label41.TabIndex = 37;
+            this.label41.Text = "Tipo Información";
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(11, 45);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(21, 17);
+            this.label42.TabIndex = 36;
+            this.label42.Text = "ID";
+            // 
+            // textBoxDatosContactoDato
+            // 
+            this.textBoxDatosContactoDato.Location = new System.Drawing.Point(280, 66);
+            this.textBoxDatosContactoDato.Name = "textBoxDatosContactoDato";
+            this.textBoxDatosContactoDato.Size = new System.Drawing.Size(1093, 22);
+            this.textBoxDatosContactoDato.TabIndex = 35;
+            this.textBoxDatosContactoDato.TextChanged += new System.EventHandler(this.textBoxDatosContactoDato_TextChanged);
+            // 
+            // textBoxDatosContactoID
+            // 
+            this.textBoxDatosContactoID.Location = new System.Drawing.Point(11, 65);
+            this.textBoxDatosContactoID.Name = "textBoxDatosContactoID";
+            this.textBoxDatosContactoID.ReadOnly = true;
+            this.textBoxDatosContactoID.Size = new System.Drawing.Size(100, 22);
+            this.textBoxDatosContactoID.TabIndex = 33;
+            // 
             // tabControlAdministracionBaseDatos
             // 
             this.tabControlAdministracionBaseDatos.Controls.Add(this.tabPageFichas);
             this.tabControlAdministracionBaseDatos.Controls.Add(this.tabPageOrganigrama);
             this.tabControlAdministracionBaseDatos.Controls.Add(this.tabPagePublica);
+            this.tabControlAdministracionBaseDatos.Controls.Add(this.tabPageIdentificate);
+            this.tabControlAdministracionBaseDatos.Controls.Add(this.tabPageDesconectate);
             this.tabControlAdministracionBaseDatos.Location = new System.Drawing.Point(12, 12);
             this.tabControlAdministracionBaseDatos.Name = "tabControlAdministracionBaseDatos";
             this.tabControlAdministracionBaseDatos.SelectedIndex = 0;
@@ -1580,330 +1943,10 @@
             this.labelSTATUS.TabIndex = 0;
             this.labelSTATUS.Text = "Trabajando";
             // 
-            // checkedListBoxTipoInformacion
-            // 
-            this.checkedListBoxTipoInformacion.CheckOnClick = true;
-            this.checkedListBoxTipoInformacion.FormattingEnabled = true;
-            this.checkedListBoxTipoInformacion.Items.AddRange(new object[] {
-            "Información Gral.",
-            "Información Relevante",
-            "Nota Relevante"});
-            this.checkedListBoxTipoInformacion.Location = new System.Drawing.Point(108, 61);
-            this.checkedListBoxTipoInformacion.Name = "checkedListBoxTipoInformacion";
-            this.checkedListBoxTipoInformacion.Size = new System.Drawing.Size(171, 208);
-            this.checkedListBoxTipoInformacion.TabIndex = 31;
-            this.checkedListBoxTipoInformacion.SelectedIndexChanged += new System.EventHandler(this.checkedListBoxTipoInformacion_SelectedIndexChanged);
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(998, 18);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(71, 17);
-            this.label29.TabIndex = 49;
-            this.label29.Text = "el sistema";
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(894, 18);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(91, 17);
-            this.label30.TabIndex = 48;
-            this.label30.Text = "Responsable";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(616, 15);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 47;
-            this.button1.Text = "Elimina";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(535, 15);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 46;
-            this.button2.Text = "Limpia";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(454, 15);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 45;
-            this.button3.Text = "Inserta";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(373, 15);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 44;
-            this.button4.Text = "Final";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(276, 15);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(91, 23);
-            this.button5.TabIndex = 43;
-            this.button5.Text = "Siguiente";
-            this.button5.UseVisualStyleBackColor = true;
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(232, 18);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(38, 17);
-            this.label31.TabIndex = 42;
-            this.label31.Text = "de N";
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(168, 18);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(16, 17);
-            this.label32.TabIndex = 41;
-            this.label32.Text = "0";
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(87, 15);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 40;
-            this.button6.Text = "Previo";
-            this.button6.UseVisualStyleBackColor = true;
-            // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(6, 15);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(75, 23);
-            this.button7.TabIndex = 39;
-            this.button7.Text = "Inicial";
-            this.button7.UseVisualStyleBackColor = true;
-            // 
-            // label33
-            // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(321, 54);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(52, 17);
-            this.label33.TabIndex = 38;
-            this.label33.Text = "Puesto";
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(109, 54);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(92, 17);
-            this.label34.TabIndex = 37;
-            this.label34.Text = "Dependencia";
-            // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(6, 54);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(21, 17);
-            this.label35.TabIndex = 36;
-            this.label35.Text = "ID";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(324, 74);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(770, 22);
-            this.textBox2.TabIndex = 35;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(112, 74);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(204, 22);
-            this.textBox3.TabIndex = 34;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(6, 74);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.ReadOnly = true;
-            this.textBox4.Size = new System.Drawing.Size(100, 22);
-            this.textBox4.TabIndex = 33;
-            // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(1003, 9);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(71, 17);
-            this.label36.TabIndex = 49;
-            this.label36.Text = "el sistema";
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(899, 9);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(91, 17);
-            this.label37.TabIndex = 48;
-            this.label37.Text = "Responsable";
-            // 
-            // button8
-            // 
-            this.button8.Location = new System.Drawing.Point(621, 6);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(75, 23);
-            this.button8.TabIndex = 47;
-            this.button8.Text = "Elimina";
-            this.button8.UseVisualStyleBackColor = true;
-            // 
-            // button9
-            // 
-            this.button9.Location = new System.Drawing.Point(540, 6);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(75, 23);
-            this.button9.TabIndex = 46;
-            this.button9.Text = "Limpia";
-            this.button9.UseVisualStyleBackColor = true;
-            // 
-            // button10
-            // 
-            this.button10.Location = new System.Drawing.Point(459, 6);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(75, 23);
-            this.button10.TabIndex = 45;
-            this.button10.Text = "Inserta";
-            this.button10.UseVisualStyleBackColor = true;
-            // 
-            // button11
-            // 
-            this.button11.Location = new System.Drawing.Point(378, 6);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(75, 23);
-            this.button11.TabIndex = 44;
-            this.button11.Text = "Final";
-            this.button11.UseVisualStyleBackColor = true;
-            // 
-            // button12
-            // 
-            this.button12.Location = new System.Drawing.Point(281, 6);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(91, 23);
-            this.button12.TabIndex = 43;
-            this.button12.Text = "Siguiente";
-            this.button12.UseVisualStyleBackColor = true;
-            // 
-            // label38
-            // 
-            this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(237, 9);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(38, 17);
-            this.label38.TabIndex = 42;
-            this.label38.Text = "de N";
-            // 
-            // label39
-            // 
-            this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(173, 9);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(16, 17);
-            this.label39.TabIndex = 41;
-            this.label39.Text = "0";
-            // 
-            // button13
-            // 
-            this.button13.Location = new System.Drawing.Point(92, 6);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(75, 23);
-            this.button13.TabIndex = 40;
-            this.button13.Text = "Previo";
-            this.button13.UseVisualStyleBackColor = true;
-            // 
-            // button14
-            // 
-            this.button14.Location = new System.Drawing.Point(11, 6);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(75, 23);
-            this.button14.TabIndex = 39;
-            this.button14.Text = "Inicial";
-            this.button14.UseVisualStyleBackColor = true;
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(278, 45);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(38, 17);
-            this.label40.TabIndex = 38;
-            this.label40.Text = "Dato";
-            // 
-            // label41
-            // 
-            this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(115, 45);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(113, 17);
-            this.label41.TabIndex = 37;
-            this.label41.Text = "Tipo Información";
-            // 
-            // label42
-            // 
-            this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(11, 45);
-            this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(21, 17);
-            this.label42.TabIndex = 36;
-            this.label42.Text = "ID";
-            // 
-            // textBox5
-            // 
-            this.textBox5.Location = new System.Drawing.Point(280, 66);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(1093, 22);
-            this.textBox5.TabIndex = 35;
-            // 
-            // textBox7
-            // 
-            this.textBox7.Location = new System.Drawing.Point(11, 65);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.ReadOnly = true;
-            this.textBox7.Size = new System.Drawing.Size(100, 22);
-            this.textBox7.TabIndex = 33;
-            // 
-            // checkedListBoxTipoINFO
-            // 
-            this.checkedListBoxTipoINFO.CheckOnClick = true;
-            this.checkedListBoxTipoINFO.FormattingEnabled = true;
-            this.checkedListBoxTipoINFO.Items.AddRange(new object[] {
-            "e-mail",
-            "Facebook",
-            "Twiter",
-            "Tel.",
-            "Domicilio",
-            "LinkedIn"});
-            this.checkedListBoxTipoINFO.Location = new System.Drawing.Point(118, 66);
-            this.checkedListBoxTipoINFO.Name = "checkedListBoxTipoINFO";
-            this.checkedListBoxTipoINFO.Size = new System.Drawing.Size(157, 123);
-            this.checkedListBoxTipoINFO.TabIndex = 50;
-            this.checkedListBoxTipoINFO.SelectedIndexChanged += new System.EventHandler(this.checkedListBoxTipoINFO_SelectedIndexChanged);
-            // 
             // muestraCapturaFechaNacimiento
             // 
             this.muestraCapturaFechaNacimiento.Año = 2018;
-            this.muestraCapturaFechaNacimiento.Dia = 14;
+            this.muestraCapturaFechaNacimiento.Dia = 17;
             this.muestraCapturaFechaNacimiento.Location = new System.Drawing.Point(899, 133);
             this.muestraCapturaFechaNacimiento.Mes = 12;
             this.muestraCapturaFechaNacimiento.Name = "muestraCapturaFechaNacimiento";
@@ -1914,7 +1957,7 @@
             // muestraCapturaFechaFin
             // 
             this.muestraCapturaFechaFin.Año = 2018;
-            this.muestraCapturaFechaFin.Dia = 14;
+            this.muestraCapturaFechaFin.Dia = 17;
             this.muestraCapturaFechaFin.Location = new System.Drawing.Point(288, 125);
             this.muestraCapturaFechaFin.Mes = 12;
             this.muestraCapturaFechaFin.Name = "muestraCapturaFechaFin";
@@ -1924,7 +1967,7 @@
             // muestraCapturaFechaInicio
             // 
             this.muestraCapturaFechaInicio.Año = 2018;
-            this.muestraCapturaFechaInicio.Dia = 14;
+            this.muestraCapturaFechaInicio.Dia = 17;
             this.muestraCapturaFechaInicio.Location = new System.Drawing.Point(6, 125);
             this.muestraCapturaFechaInicio.Mes = 12;
             this.muestraCapturaFechaInicio.Name = "muestraCapturaFechaInicio";
@@ -1934,7 +1977,7 @@
             // muestraCapturaFechaAPFin
             // 
             this.muestraCapturaFechaAPFin.Año = 2018;
-            this.muestraCapturaFechaAPFin.Dia = 14;
+            this.muestraCapturaFechaAPFin.Dia = 17;
             this.muestraCapturaFechaAPFin.Location = new System.Drawing.Point(276, 135);
             this.muestraCapturaFechaAPFin.Mes = 12;
             this.muestraCapturaFechaAPFin.Name = "muestraCapturaFechaAPFin";
@@ -1944,7 +1987,7 @@
             // muestraCapturaFechaAPInicio
             // 
             this.muestraCapturaFechaAPInicio.Año = 2018;
-            this.muestraCapturaFechaAPInicio.Dia = 14;
+            this.muestraCapturaFechaAPInicio.Dia = 17;
             this.muestraCapturaFechaAPInicio.Location = new System.Drawing.Point(3, 135);
             this.muestraCapturaFechaAPInicio.Mes = 12;
             this.muestraCapturaFechaAPInicio.Name = "muestraCapturaFechaAPInicio";
@@ -1954,7 +1997,7 @@
             // muestraCapturaFechaPuestoFin
             // 
             this.muestraCapturaFechaPuestoFin.Año = 2018;
-            this.muestraCapturaFechaPuestoFin.Dia = 14;
+            this.muestraCapturaFechaPuestoFin.Dia = 17;
             this.muestraCapturaFechaPuestoFin.Location = new System.Drawing.Point(276, 157);
             this.muestraCapturaFechaPuestoFin.Mes = 12;
             this.muestraCapturaFechaPuestoFin.Name = "muestraCapturaFechaPuestoFin";
@@ -1964,12 +2007,78 @@
             // muestraCapturaFechaPuestoInicio
             // 
             this.muestraCapturaFechaPuestoInicio.Año = 2018;
-            this.muestraCapturaFechaPuestoInicio.Dia = 14;
+            this.muestraCapturaFechaPuestoInicio.Dia = 17;
             this.muestraCapturaFechaPuestoInicio.Location = new System.Drawing.Point(9, 157);
             this.muestraCapturaFechaPuestoInicio.Mes = 12;
             this.muestraCapturaFechaPuestoInicio.Name = "muestraCapturaFechaPuestoInicio";
             this.muestraCapturaFechaPuestoInicio.Size = new System.Drawing.Size(211, 59);
             this.muestraCapturaFechaPuestoInicio.TabIndex = 29;
+            // 
+            // tabPageIdentificate
+            // 
+            this.tabPageIdentificate.Controls.Add(this.buttonVerificaOK);
+            this.tabPageIdentificate.Controls.Add(this.label31);
+            this.tabPageIdentificate.Controls.Add(this.textBoxPassword);
+            this.tabPageIdentificate.Controls.Add(this.label29);
+            this.tabPageIdentificate.Controls.Add(this.textBoxAbogadoIrresponsable);
+            this.tabPageIdentificate.Location = new System.Drawing.Point(4, 25);
+            this.tabPageIdentificate.Name = "tabPageIdentificate";
+            this.tabPageIdentificate.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageIdentificate.Size = new System.Drawing.Size(1466, 638);
+            this.tabPageIdentificate.TabIndex = 3;
+            this.tabPageIdentificate.Text = "Identificate";
+            this.tabPageIdentificate.UseVisualStyleBackColor = true;
+            // 
+            // tabPageDesconectate
+            // 
+            this.tabPageDesconectate.Location = new System.Drawing.Point(4, 25);
+            this.tabPageDesconectate.Name = "tabPageDesconectate";
+            this.tabPageDesconectate.Size = new System.Drawing.Size(1466, 638);
+            this.tabPageDesconectate.TabIndex = 4;
+            this.tabPageDesconectate.Text = "Desconectate";
+            this.tabPageDesconectate.UseVisualStyleBackColor = true;
+            // 
+            // textBoxAbogadoIrresponsable
+            // 
+            this.textBoxAbogadoIrresponsable.Location = new System.Drawing.Point(305, 69);
+            this.textBoxAbogadoIrresponsable.Name = "textBoxAbogadoIrresponsable";
+            this.textBoxAbogadoIrresponsable.Size = new System.Drawing.Size(180, 22);
+            this.textBoxAbogadoIrresponsable.TabIndex = 0;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(305, 22);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(399, 17);
+            this.label29.TabIndex = 1;
+            this.label29.Text = "Abogado Responsable de la información que se va a capturar";
+            // 
+            // textBoxPassword
+            // 
+            this.textBoxPassword.Location = new System.Drawing.Point(308, 154);
+            this.textBoxPassword.Name = "textBoxPassword";
+            this.textBoxPassword.Size = new System.Drawing.Size(100, 22);
+            this.textBoxPassword.TabIndex = 2;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(308, 110);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(69, 17);
+            this.label31.TabIndex = 3;
+            this.label31.Text = "Password";
+            // 
+            // buttonVerificaOK
+            // 
+            this.buttonVerificaOK.Location = new System.Drawing.Point(550, 154);
+            this.buttonVerificaOK.Name = "buttonVerificaOK";
+            this.buttonVerificaOK.Size = new System.Drawing.Size(75, 23);
+            this.buttonVerificaOK.TabIndex = 4;
+            this.buttonVerificaOK.Text = "Verifica";
+            this.buttonVerificaOK.UseVisualStyleBackColor = true;
+            this.buttonVerificaOK.Click += new System.EventHandler(this.buttonVerificaOK_Click);
             // 
             // AdminForm
             // 
@@ -2006,6 +2115,8 @@
             this.groupBox2.PerformLayout();
             this.tabPagePublica.ResumeLayout(false);
             this.tabPagePublica.PerformLayout();
+            this.tabPageIdentificate.ResumeLayout(false);
+            this.tabPageIdentificate.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2044,7 +2155,6 @@
         private System.Windows.Forms.TextBox textBoxAPPartido;
         private System.Windows.Forms.TextBox textBoxAPID;
         private System.Windows.Forms.TextBox textBoxINFOReferencia;
-        private System.Windows.Forms.TextBox textBoxINFOTipoDeInformacion;
         private System.Windows.Forms.TextBox textBoxINFOID;
         private System.Windows.Forms.TabPage tabPagePuestos;
         private System.Windows.Forms.Label label6;
@@ -2135,13 +2245,13 @@
         private MuestraCapturaFecha muestraCapturaFechaPuestoInicio;
         private System.Windows.Forms.Label labelAbogadoResponsable;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxRecuperaID;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label labelAbogadoRespEsc;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label labelAbogadoRespAP;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Label labelAbogadoRespINFO;
+        private System.Windows.Forms.Label labelAbogadoRespInfoGral;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label labelAbogadoRespPuesto;
         private System.Windows.Forms.Label label28;
@@ -2150,40 +2260,49 @@
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.CheckedListBox checkedListBoxTipoInformacion;
-        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label labelCirculoCercanoAbogadoResp;
         private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.Label label32;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button buttonCirculoCercanoElimina;
+        private System.Windows.Forms.Button buttonCurculoCercanoLimpia;
+        private System.Windows.Forms.Button buttonCirculoCercanoInserta;
+        private System.Windows.Forms.Button buttonCirculoCercanoFinal;
+        private System.Windows.Forms.Button buttonCirculoCercanoSIguiente;
+        private System.Windows.Forms.Label labelCirculoCercanoCuantos;
+        private System.Windows.Forms.Label labelCirculoCercanoPos;
+        private System.Windows.Forms.Button buttonCirculoCercanoPrevio;
+        private System.Windows.Forms.Button buttonCirculoCercanoInicial;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox textBoxCirculoCercanoInformación;
+        private System.Windows.Forms.TextBox textBoxCirculoCercanoNombre;
+        private System.Windows.Forms.TextBox textBoxCirculoCercanoID;
         private System.Windows.Forms.CheckedListBox checkedListBoxTipoINFO;
-        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Label labelDatosContactoAbogadoResp;
         private System.Windows.Forms.Label label37;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.Label label38;
-        private System.Windows.Forms.Label label39;
-        private System.Windows.Forms.Button button13;
-        private System.Windows.Forms.Button button14;
+        private System.Windows.Forms.Button buttonDatosContactoElimina;
+        private System.Windows.Forms.Button buttonDatosContactoLimpia;
+        private System.Windows.Forms.Button buttonDatosContactoInserta;
+        private System.Windows.Forms.Button buttonDatosContactoFinal;
+        private System.Windows.Forms.Button buttonDatosContactoSiguiente;
+        private System.Windows.Forms.Label labelDatosContactoLength;
+        private System.Windows.Forms.Label labelDatosContactoPos;
+        private System.Windows.Forms.Button buttonDatosContactoPrevio;
+        private System.Windows.Forms.Button buttonDatosContactoInicial;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Label label41;
         private System.Windows.Forms.Label label42;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox textBoxDatosContactoDato;
+        private System.Windows.Forms.TextBox textBoxDatosContactoID;
+        private System.Windows.Forms.CheckBox checkBoxPuestosCargoActual;
+        private System.Windows.Forms.Button buttonTraeID;
+        private System.Windows.Forms.TabPage tabPageIdentificate;
+        private System.Windows.Forms.TabPage tabPageDesconectate;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.TextBox textBoxPassword;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.TextBox textBoxAbogadoIrresponsable;
+        private System.Windows.Forms.Button buttonVerificaOK;
     }
 }
 

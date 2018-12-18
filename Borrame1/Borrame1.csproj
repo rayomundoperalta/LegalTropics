@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0365E5A2-C233-4090-AC0A-1B9AC833BE16}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Arboles</RootNamespace>
-    <AssemblyName>Arboles</AssemblyName>
+    <ProjectGuid>{921D7DF2-733D-4949-A692-3906B28826E1}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Borrame1</RootNamespace>
+    <AssemblyName>Borrame1</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -32,13 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,18 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IndiceBD.cs" />
-    <Compile Include="Node.cs" />
-    <Compile Include="NodeList.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Globales\Globales.csproj">
-      <Project>{9875d5fc-5821-4cd5-a9e0-2a18db463db9}</Project>
-      <Name>Globales</Name>
+    <ProjectReference Include="..\CifradoPeta\CifradoPeta.csproj">
+      <Project>{3d6bb4c5-a330-483f-a41a-e7c5632e6ad0}</Project>
+      <Name>CifradoPeta</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

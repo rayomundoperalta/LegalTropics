@@ -30,6 +30,8 @@
         {
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.labelLoginAs1 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
             this.buttonTraeID = new System.Windows.Forms.Button();
             this.labelAbogadoResponsable = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
@@ -179,6 +181,8 @@
             this.tabControlAdministracionBaseDatos = new System.Windows.Forms.TabControl();
             this.tabPageFichas = new System.Windows.Forms.TabPage();
             this.tabPageOrganigrama = new System.Windows.Forms.TabPage();
+            this.labelLoginAs2 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
             this.buttonOrgInserta = new System.Windows.Forms.Button();
             this.buttonOrgElimina = new System.Windows.Forms.Button();
             this.labelOrgAbogadoIrresponsable = new System.Windows.Forms.Label();
@@ -241,6 +245,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.labelLoginAs1);
+            this.groupBox1.Controls.Add(this.label27);
             this.groupBox1.Controls.Add(this.buttonTraeID);
             this.groupBox1.Controls.Add(this.labelAbogadoResponsable);
             this.groupBox1.Controls.Add(this.label22);
@@ -272,6 +278,24 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos Personales";
+            // 
+            // labelLoginAs1
+            // 
+            this.labelLoginAs1.AutoSize = true;
+            this.labelLoginAs1.Location = new System.Drawing.Point(1284, 239);
+            this.labelLoginAs1.Name = "labelLoginAs1";
+            this.labelLoginAs1.Size = new System.Drawing.Size(112, 17);
+            this.labelLoginAs1.TabIndex = 27;
+            this.labelLoginAs1.Text = "sin identificación";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(1204, 239);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(62, 17);
+            this.label27.TabIndex = 26;
+            this.label27.Text = "Login as";
             // 
             // buttonTraeID
             // 
@@ -1791,6 +1815,8 @@
             // 
             // tabPageOrganigrama
             // 
+            this.tabPageOrganigrama.Controls.Add(this.labelLoginAs2);
+            this.tabPageOrganigrama.Controls.Add(this.label32);
             this.tabPageOrganigrama.Controls.Add(this.buttonOrgInserta);
             this.tabPageOrganigrama.Controls.Add(this.buttonOrgElimina);
             this.tabPageOrganigrama.Controls.Add(this.labelOrgAbogadoIrresponsable);
@@ -1814,6 +1840,24 @@
             this.tabPageOrganigrama.Text = "Organigrama APF";
             this.tabPageOrganigrama.UseVisualStyleBackColor = true;
             this.tabPageOrganigrama.Click += new System.EventHandler(this.tabPageOrganigrama_Click);
+            // 
+            // labelLoginAs2
+            // 
+            this.labelLoginAs2.AutoSize = true;
+            this.labelLoginAs2.Location = new System.Drawing.Point(1229, 527);
+            this.labelLoginAs2.Name = "labelLoginAs2";
+            this.labelLoginAs2.Size = new System.Drawing.Size(112, 17);
+            this.labelLoginAs2.TabIndex = 22;
+            this.labelLoginAs2.Text = "sin identificación";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(1141, 527);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(62, 17);
+            this.label32.TabIndex = 21;
+            this.label32.Text = "Login as";
             // 
             // buttonOrgInserta
             // 
@@ -2355,6 +2399,10 @@
         private System.Windows.Forms.CheckBox checkBoxAgrupacionCrear;
         private System.Windows.Forms.Button buttonOrgElimina;
         private System.Windows.Forms.Button buttonOrgInserta;
+        private System.Windows.Forms.Label labelLoginAs1;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label labelLoginAs2;
+        private System.Windows.Forms.Label label32;
     }
 }
 

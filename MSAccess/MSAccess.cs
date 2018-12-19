@@ -381,18 +381,23 @@ namespace MSAccess
             return IDs;
         }
 
-        static public void InsertRegistroEscolaridad(string ID, string FechaDeInicio, string FechaDeFin, string Universidad, string Grado, string AbogadoResp )
+        static public void InsertRegistroEscolaridad(string ID, string AñoInicial, string MesInicial, string DiaInicial, string AñoFinal, string MesFinal, string DiaFinal, string Universidad, string Grado, string AbogadoResp )
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
-                var sql = "INSERT INTO Escolaridad (ID,FechaDeInicio,FechaDeFin,Universidad,Grado, Abogado)  VALUES (@ID, @FechaDeInicio, @FechaDeFin, @Universidad, @Grado, @Abogado);";
+                var sql = "INSERT INTO Escolaridad (ID, AñoInicial, MesInicial, DiaInicial, AñoFinal, MesFinal, DiaFinal,Universidad,Grado, Abogado)  VALUES " +
+                    "(@ID, @AñoInicial, @MesInicial, @DiaInicial, @AñoFinal, @MesFinal, @DiaFinal, @Universidad, @Grado, @Abogado);";
                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                 {
                     cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
-                    cmd.Parameters.Add("@FechaDeInicio", OleDbType.Numeric, 80).Value = FechaDeInicio;
-                    cmd.Parameters.Add("@FechaDeFin", OleDbType.Numeric, 80).Value = FechaDeFin;
+                    cmd.Parameters.Add("@AñoInicial", OleDbType.Numeric, 80).Value = AñoInicial;
+                    cmd.Parameters.Add("@MesInicial", OleDbType.Numeric, 80).Value = MesInicial;
+                    cmd.Parameters.Add("@DiaInicial", OleDbType.Numeric, 80).Value = DiaInicial;
+                    cmd.Parameters.Add("@AñoFinal", OleDbType.Numeric, 80).Value = AñoFinal;
+                    cmd.Parameters.Add("@MesFinal", OleDbType.Numeric, 80).Value = MesFinal;
+                    cmd.Parameters.Add("@DiaFinal", OleDbType.Numeric, 80).Value = DiaFinal;
                     cmd.Parameters.Add("@Universidad", OleDbType.VarChar, 80).Value = Universidad;
                     cmd.Parameters.Add("@Grado", OleDbType.VarChar, 80).Value = Grado;
                     cmd.Parameters.Add("@Abogado", OleDbType.VarChar, 80).Value = AbogadoResp;
@@ -498,19 +503,24 @@ namespace MSAccess
             }
         }
 
-        static public void InsertRegistroPuestos(string ID, string FechaDeInicio, string FechaDeFin, string DependenciaEntidad,
+        static public void InsertRegistroPuestos(string ID, string AñoInicio, string MesInicio, string DiaInicio, string AñoFin, string MesFin, string DiaFin, string DependenciaEntidad,
             string Puesto, string JefeInmediantoSuperior, string CargoActual, string Abogado)
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
-                var sql = "INSERT INTO Puestos (ID,FechaDeInicio,FechaDeFin,DependenciaEntidad,Puesto,JefeInmediantoSuperior,CurrículumVitae,CargoActual,Abogado)  VALUES (@ID, @FechaDeInicio, @FechaDeFin, @DependenciaEntidad, @Puesto, @JefeInmediantoSuperior, @CurrículumVitae, @CargoActual, @Abogado);";
+                var sql = "INSERT INTO Puestos (ID,AñoInicial,MesInicial,DiaInicial,AñoFinal,MesFinal,DiaFinal,DependenciaEntidad,Puesto,JefeInmediantoSuperior,CurrículumVitae,CargoActual,Abogado)  VALUES " + 
+                    "(@ID, @AñoInicio, @MesInicio, @DiaInicio, @AñoFin, @MesFin, @DiaFin, @DependenciaEntidad, @Puesto, @JefeInmediantoSuperior, @CurrículumVitae, @CargoActual, @Abogado);";
                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                 {
                     cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
-                    cmd.Parameters.Add("@FechaDeInicio", OleDbType.Numeric, 80).Value = FechaDeInicio;
-                    cmd.Parameters.Add("@FechaDeFin", OleDbType.Numeric, 80).Value = FechaDeFin;
+                    cmd.Parameters.Add("@AñoInicio", OleDbType.Numeric, 80).Value = AñoInicio;
+                    cmd.Parameters.Add("@MesInicio", OleDbType.Numeric, 80).Value = MesInicio;
+                    cmd.Parameters.Add("@DiaInicio", OleDbType.Numeric, 80).Value = DiaInicio;
+                    cmd.Parameters.Add("@AñoFin", OleDbType.Numeric, 80).Value = AñoFin;
+                    cmd.Parameters.Add("@MesFin", OleDbType.Numeric, 80).Value = MesFin;
+                    cmd.Parameters.Add("@DiaFin", OleDbType.Numeric, 80).Value = DiaFin;
                     cmd.Parameters.Add("@DependenciaEntidad", OleDbType.VarChar, 80).Value = DependenciaEntidad;
                     cmd.Parameters.Add("@Puesto", OleDbType.VarChar, 80).Value = Puesto;
                     cmd.Parameters.Add("@JefeInmediantoSuperior", OleDbType.VarChar, 80).Value = JefeInmediantoSuperior;
@@ -634,8 +644,8 @@ namespace MSAccess
                     cmd.Parameters.Add("@SegundoNombre", OleDbType.VarChar, 80).Value = SegundoNombre;
                     cmd.Parameters.Add("@Nacionalidad", OleDbType.VarChar, 80).Value = Nacionalidad;
                     cmd.Parameters.Add("@AñoNacimiento", OleDbType.Integer, 80).Value = AñoNacimiento;
-                    cmd.Parameters.Add("@AñoNacimiento", OleDbType.Integer, 80).Value = AñoNacimiento;
-                    cmd.Parameters.Add("@AñoNacimiento", OleDbType.Integer, 80).Value = AñoNacimiento;
+                    cmd.Parameters.Add("@MesNacimiento", OleDbType.Integer, 80).Value = MesNacimiento;
+                    cmd.Parameters.Add("@DiaNacimiento", OleDbType.Integer, 80).Value = DiaNacimiento;
                     cmd.Parameters.Add("@Abogado", OleDbType.VarChar, 80).Value = Abogado;
                     cn.Open();
                     cmd.ExecuteNonQuery();

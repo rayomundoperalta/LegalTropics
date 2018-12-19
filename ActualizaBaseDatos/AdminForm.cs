@@ -45,7 +45,21 @@ namespace ActualizaBaseDatos
         public Node<Registro> nodoSeleccionado = null;
         TreeNode NodoDeArbolMostrado = null;
         Parser p;
-        string AbogadoIrresponsable = string.Empty;
+        string Layer = string.Empty;
+
+        string AbogadoIrresponsable
+        {
+            get
+            {
+                return Layer;
+            }
+            set
+            {
+                Layer = value;
+                labelLoginAs1.Text = Layer;
+                labelLoginAs2.Text = Layer;
+            }
+        }
 
         System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
 
@@ -797,7 +811,8 @@ namespace ActualizaBaseDatos
         {
             if (!AbogadoIrresponsable.Equals(string.Empty))
             {
-                AccessUtility.InsertRegistroEscolaridad(textBoxID.Text, muestraCapturaFechaInicio.StringFecha, muestraCapturaFechaFin.StringFecha,
+                AccessUtility.InsertRegistroEscolaridad(textBoxID.Text, muestraCapturaFechaInicio.Año.ToString(), muestraCapturaFechaInicio.Mes.ToString(), muestraCapturaFechaInicio.Dia.ToString(),
+                    muestraCapturaFechaFin.Año.ToString(), muestraCapturaFechaFin.Mes.ToString(), muestraCapturaFechaFin.Dia.ToString(),
                     textBoxUniversidad.Text, textBoxGrado.Text, AbogadoIrresponsable);
                 escolaridad = AccessUtility.GetEscolaridad(IDFuncionario);
                 indexEscolaridad = new IndiceBD(escolaridad.Length);
@@ -844,7 +859,8 @@ namespace ActualizaBaseDatos
         {
             if (!AbogadoIrresponsable.Equals(string.Empty))
             {
-                AccessUtility.InsertRegistroAP(textBoxAPID.Text, muestraCapturaFechaAPInicio.StringFecha, muestraCapturaFechaAPFin.StringFecha,
+                AccessUtility.InsertRegistroAP(textBoxAPID.Text, muestraCapturaFechaAPInicio.Año.ToString(),
+                    muestraCapturaFechaAPFin.Año.ToString(),
                 textBoxAPPartido.Text, AbogadoIrresponsable);
                 AP = AccessUtility.GetAdscripcionPolitica(IDFuncionario);
                 indexAP = new IndiceBD(AP.Length);
@@ -949,15 +965,16 @@ namespace ActualizaBaseDatos
         {
             if (!AbogadoIrresponsable.Equals(""))
             {
-                AccessUtility.InsertRegistroPuestos(textBoxPuestosID.Text, muestraCapturaFechaPuestoInicio.StringFecha,
-                muestraCapturaFechaPuestoFin.StringFecha, textBoxPuestosDependencia.Text, textBoxPuestosPuesto.Text,
+                AccessUtility.InsertRegistroPuestos(textBoxPuestosID.Text, muestraCapturaFechaPuestoInicio.Año.ToString(), muestraCapturaFechaPuestoInicio.Mes.ToString(), muestraCapturaFechaPuestoInicio.Dia.ToString(),
+                muestraCapturaFechaPuestoFin.Año.ToString(), muestraCapturaFechaPuestoFin.Mes.ToString(), muestraCapturaFechaPuestoFin.Dia.ToString(), textBoxPuestosDependencia.Text, textBoxPuestosPuesto.Text,
                 textBoxPuestosSuperior.Text, checkBoxPuestosCargoActual.CheckState == CheckState.Checked ? "actual" :
                 string.Empty, AbogadoIrresponsable);
                 Puestos = AccessUtility.GetPuestos(IDFuncionario);
                 indexPuestos = new IndiceBD(Puestos.Length);
                 LlenaPuestos(IDFuncionario);
             }
-            MessageBox.Show("Tienes que identificarte primero");
+            else
+                MessageBox.Show("Tienes que identificarte primero");
         }
 
         private void buttonPuestosLimpia_Click(object sender, EventArgs e)
@@ -1071,6 +1088,7 @@ namespace ActualizaBaseDatos
                 DatosPersonalesModificados = false;
                 FotoModificada = false;
                 BusquedaEnProceso = false;
+                CargaBD();
             }
             else
             {
@@ -1089,12 +1107,13 @@ namespace ActualizaBaseDatos
                 DatosPersonalesModificados = false;
                 FotoModificada = false;
                 BusquedaEnProceso = false;
+                CargaBD();
             }
             else
                 MessageBox.Show("Tienes que identificarte primero");
         }
 
-        private void buttonCargaBD_Click(object sender, EventArgs e)
+        private void CargaBD()
         {
             funcionarios = AccessUtility.GetFuncionarios();
             funcionarioMostrado = new IndiceBD(funcionarios.Length);
@@ -1114,6 +1133,11 @@ namespace ActualizaBaseDatos
             }
             DatosPersonalesModificados = false;
             FotoModificada = false;
+        }
+
+        private void buttonCargaBD_Click(object sender, EventArgs e)
+        {
+            CargaBD();
         }
 
         private void treeViewOrganigramaAPF_AfterSelect(object sender, TreeViewEventArgs e)

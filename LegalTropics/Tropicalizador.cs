@@ -70,7 +70,7 @@ namespace LegalTropics
         private void LoadDataBaseAPF()
         {
             Parser parser = new Parser(ImprimeConsola);
-            Registro Presidente = new Registro("P", "Presidencia", "A0");
+            Registro Presidente = new Registro("P", "Presidencia", "A0", "El Sistema");
             APF = new Node<Registro>(Presidente);
             parser.Parsea(APF, 0, ListaDeNodosPorID);
             // Console.WriteLine("Imprimimos arbol");

@@ -528,8 +528,12 @@ namespace ActualizaBaseDatos
             muestraCapturaFechaPuestoFin.SetFecha(1900, 1, 1);
             labelPuestosPos.Text = string.Empty;
             labelPuestosLength.Text = string.Empty;
-            checkBoxPuestosCargoActual.Checked = Puestos[indexPuestos.Pos]["CargoActual"].ToString().Equals("1");
-            labelAbogadoRespPuesto.Text = Puestos[indexPuestos.Pos]["Abogado"].ToString().Equals("")?"     ": Puestos[indexPuestos.Pos]["Abogado"].ToString();
+            if (Puestos.Length > 0)
+            {
+                checkBoxPuestosCargoActual.Checked = Puestos[indexPuestos.Pos]["CargoActual"].ToString().Equals("1");
+                labelAbogadoRespPuesto.Text = Puestos[indexPuestos.Pos]["Abogado"].ToString().Equals("") ? "     " : Puestos[indexPuestos.Pos]["Abogado"].ToString();
+            }
+            
         }
 
         private void TabControlInformación_Selected(object sender, TabControlEventArgs e)
@@ -1120,7 +1124,7 @@ namespace ActualizaBaseDatos
             {
                 NodoSeleccionado = ListaDeNodosPorID[ID];
                 NodoDeArbolMostrado = treeViewOrganigramaAPF.SelectedNode;
-                labelOrgAbogadoIrresponsable.Text = NodoSeleccionado.Data.AbogadoIrresponsable.Equals("")?"     ": NodoSeleccionado.Data.AbogadoIrresponsable;
+                labelOrgAbogadoIrresponsable.Text = NodoSeleccionado.Data.AbogadoIrresponsable.Equals("") ? "     " : NodoSeleccionado.Data.AbogadoIrresponsable;
                 //ImprimeConsola("-->  " + NodoSeleccionado.Data.ToString() + " # " + e.Node.Text);
             }
             else
@@ -1166,11 +1170,33 @@ namespace ActualizaBaseDatos
             if (!AbogadoIrresponsable.Equals(""))
             {
                 String IDMostrado = NodoSeleccionado.Data.ID;
-                string ID = funcionarios[funcionarioMostrado.Pos]["ID"].ToString();
+                string ID;
+                if (checkBoxAgrupaciónModifica.Checked)
+                {
+                    Random rnd = new Random();
+                    ID = "O" + rnd.Next(1, 100000).ToString();
+                    while (ListaDeNodosPorID.ContainsKey(ID))
+                    {
+                        ID = "O" + rnd.Next(1, 100000).ToString();
+                    }
+                }
+                else
+                {
+                    ID = funcionarios[funcionarioMostrado.Pos]["ID"].ToString();
+                }
+                
                 if (!(NodoSeleccionado == null) && !ListaDeNodosPorID.ContainsKey(IDMostrado))
                 {
-                    NodoDeArbolMostrado.Text = textBoxOrgNombrePuestoModificado.Text + " - " + AccessUtility.GetNombreFuncionario(ID) + "_" + ID;
-                    Registro NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, textBoxOrgNombrePuestoModificado.Text, AbogadoIrresponsable, ID);
+                    if (checkBoxAgrupaciónModifica.Checked)
+                    {
+                        NodoDeArbolMostrado.Text = textBoxOrgNombrePuestoModificado.Text + "_" + ID;
+                    }
+                    else
+                    {
+                        NodoDeArbolMostrado.Text = textBoxOrgNombrePuestoModificado.Text + " - " + AccessUtility.GetNombreFuncionario(ID) + "_" + ID;
+                    }
+                    
+                    Registro NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, textBoxOrgNombrePuestoModificado.Text, ID, AbogadoIrresponsable);
                     MessageBox.Show(NuevoRegistro.ToString());
                     Node<Registro> NuevoNode = new Node<Registro>(NuevoRegistro, NodoSeleccionado.Sons, NodoSeleccionado.Padre);
                     ListaDeNodosPorID.Add(ID, NuevoNode);
@@ -1192,7 +1218,21 @@ namespace ActualizaBaseDatos
         {
             if (!AbogadoIrresponsable.Equals(""))
             {
-                string ID = funcionarios[funcionarioMostrado.Pos]["ID"].ToString();
+                string ID;
+                if (checkBoxAgrupacionCrear.Checked)
+                {
+                    Random rnd = new Random();
+                    ID = "O" + rnd.Next(1,100000).ToString();
+                    while (ListaDeNodosPorID.ContainsKey(ID))
+                    {
+                        ID = "O" + rnd.Next(1, 100000).ToString();
+                    }
+                }
+                else
+                {
+                    ID = funcionarios[funcionarioMostrado.Pos]["ID"].ToString();
+                }
+                
                 if (NodoSeleccionado == null)
                 {
                     MessageBox.Show("Nodo Selecccionado es nulo");
@@ -1202,13 +1242,21 @@ namespace ActualizaBaseDatos
                     // Hay que modificar APF y ListadeNodosPorID
                     // siempre vamos a inserta el nuevo registro como un hijo, y el único nodo que no puedo borrar es el raiz (el presidente)
                     NodeList<Registro> SinHijos = new NodeList<Registro>();
-                    Registro NuevoRegistro = new Registro(NivelSIguiente[NodoSeleccionado.Data.TipoRegistro], textBoxOrgNombrePuesto.Text, AbogadoIrresponsable, ID);
+                    Registro NuevoRegistro = new Registro(NivelSIguiente[NodoSeleccionado.Data.TipoRegistro], textBoxOrgNombrePuesto.Text, ID, AbogadoIrresponsable);
                     Node<Registro> NuevoPuesto = new Node<Registro>(NuevoRegistro, SinHijos, NodoSeleccionado);
                     ListaDeNodosPorID.Add(ID, NuevoPuesto);
                     //ImprimeConsola("+-> Contenido nodo insertado: " + NodoSeleccionado.Data.ToString());
                     NodoSeleccionado.Sons.InsertaHijo(NuevoPuesto);
                     // Actualizamos el TreeView
-                    TreeNode newNode = new TreeNode(textBoxOrgNombrePuesto.Text + " - " + AccessUtility.GetNombreFuncionario(ID) + "_" + ID);
+                    TreeNode newNode;
+                    if (checkBoxAgrupacionCrear.Checked)
+                    {
+                        newNode = new TreeNode(textBoxOrgNombrePuesto.Text + "_" + ID);
+                    }
+                    else
+                    {
+                        newNode = new TreeNode(textBoxOrgNombrePuesto.Text + " - " + AccessUtility.GetNombreFuncionario(ID) + "_" + ID);
+                    }
                     NodoDeArbolMostrado.Nodes.Add(newNode);
                     NodoDeArbolMostrado.Expand();
 
@@ -1266,30 +1314,6 @@ namespace ActualizaBaseDatos
             }
         }
 
-        private void buttonOrgCortar_Click(object sender, EventArgs e)
-        {
-            String IDMostrado = NodoSeleccionado.Data.ID;
-            if (!(NodoSeleccionado == null) && ListaDeNodosPorID.ContainsKey(IDMostrado))
-            {
-                // quitamos el nodo del arbol de la APF
-                NodoCortado = NodoSeleccionado;
-                // Hay que quitar el nodo y todos sus hijos
-                if (NodoSeleccionado.Padre != null)
-                {
-                    NodoSeleccionado.Padre.Sons.Remove(NodoSeleccionado);
-                    LimpiaListaDeNodosPorID(NodoSeleccionado);
-                    //quitamos el nodo del TreeView mostrado
-                    treeViewOrganigramaAPF.Nodes.Remove(treeViewOrganigramaAPF.SelectedNode);
-                }
-                else
-                {
-                    MessageBox.Show("No se puede remover la Presidencia");
-                }
-            }
-            else
-                MessageBox.Show("Se debe seleccionar el puesto que se va a cortar");
-        }
-
         private int NivelGerarquico(Node<Registro> nodo)
         {
             //ImprimeConsola("--->  " + nodo.Data.TipoRegistro);
@@ -1317,7 +1341,31 @@ namespace ActualizaBaseDatos
             }
         }
 
-        private void buttonOrgPegar_Click(object sender, EventArgs e)
+        private void buttonOrgElimina_Click(object sender, EventArgs e)
+        {
+            String IDMostrado = NodoSeleccionado.Data.ID;
+            if (!(NodoSeleccionado == null) && ListaDeNodosPorID.ContainsKey(IDMostrado))
+            {
+                // quitamos el nodo del arbol de la APF
+                NodoCortado = NodoSeleccionado;
+                // Hay que quitar el nodo y todos sus hijos
+                if (NodoSeleccionado.Padre != null)
+                {
+                    NodoSeleccionado.Padre.Sons.Remove(NodoSeleccionado);
+                    LimpiaListaDeNodosPorID(NodoSeleccionado);
+                    //quitamos el nodo del TreeView mostrado
+                    treeViewOrganigramaAPF.Nodes.Remove(treeViewOrganigramaAPF.SelectedNode);
+                }
+                else
+                {
+                    MessageBox.Show("No se puede remover la Presidencia");
+                }
+            }
+            else
+                MessageBox.Show("Se debe seleccionar el puesto que se va a cortar");
+        }
+
+        private void buttonOrgInserta_Click(object sender, EventArgs e)
         {
             int NivelDelJefe;
             String IDMostrado = NodoSeleccionado.Data.ID;
@@ -1350,7 +1398,7 @@ namespace ActualizaBaseDatos
 
         }
 
-        private void MoveUp(TreeNode node)
+        private int MoveUp(TreeNode node)
         {
             TreeNode parent = node.Parent;
             TreeView view = node.TreeView;
@@ -1361,6 +1409,7 @@ namespace ActualizaBaseDatos
                 {
                     parent.Nodes.RemoveAt(index);
                     parent.Nodes.Insert(index - 1, node);
+                    return index - 1;
                 }
             }
             else if (node.TreeView.Nodes.Contains(node)) //root node
@@ -1370,11 +1419,13 @@ namespace ActualizaBaseDatos
                 {
                     view.Nodes.RemoveAt(index);
                     view.Nodes.Insert(index - 1, node);
+                    return index - 1;
                 }
             }
+            return -1;
         }
 
-        private void MoveDown(TreeNode node)
+        private int MoveDown(TreeNode node)
         {
             TreeNode parent = node.Parent;
             TreeView view = node.TreeView;
@@ -1385,6 +1436,7 @@ namespace ActualizaBaseDatos
                 {
                     parent.Nodes.RemoveAt(index);
                     parent.Nodes.Insert(index + 1, node);
+                    return index + 1;
                 }
             }
             else if (view != null && view.Nodes.Contains(node)) //root node
@@ -1394,8 +1446,10 @@ namespace ActualizaBaseDatos
                 {
                     view.Nodes.RemoveAt(index);
                     view.Nodes.Insert(index + 1, node);
+                    return index + 1;
                 }
             }
+            return -1;
         }
 
         private void buttonOrgSubir_Click(object sender, EventArgs e)
@@ -1408,8 +1462,8 @@ namespace ActualizaBaseDatos
                     NodoSeleccionado.Padre.Sons.RemoveAt(IndiceSeleccionado);
                     NodoSeleccionado.Padre.Sons.Insert(IndiceSeleccionado - 1, NodoSeleccionado);
 
-                    MoveUp(NodoDeArbolMostrado);
-                    
+                    int i = MoveUp(NodoDeArbolMostrado);
+                    treeViewOrganigramaAPF.SelectedNode = NodoDeArbolMostrado.Parent.Nodes[i];
                 }
             }
         }
@@ -1424,8 +1478,8 @@ namespace ActualizaBaseDatos
                     NodoSeleccionado.Padre.Sons.RemoveAt(IndiceSeleccionado);
                     NodoSeleccionado.Padre.Sons.Insert(IndiceSeleccionado + 1, NodoSeleccionado);
 
-                    MoveDown(NodoDeArbolMostrado);
-                    treeViewOrganigramaAPF.SelectedNode = NodoDeArbolMostrado;
+                    int i = MoveDown(NodoDeArbolMostrado);
+                    treeViewOrganigramaAPF.SelectedNode = NodoDeArbolMostrado.Parent.Nodes[i];
                 }
             }
         }
@@ -1435,7 +1489,7 @@ namespace ActualizaBaseDatos
             System.IO.File.Copy(Defines.DataBasePath + Defines.BackupDataBaseFileName, Defines.DataBasePath + Defines.DataBaseFileName, true);
             treeViewOrganigramaAPF.Nodes.Remove(RaizTreeView);
             ListaDeNodosPorID.Clear();
-            Registro Presidente = new Registro("Presidencia", "Presidencia", "El Sistema", "A0");
+            Registro Presidente = new Registro("Presidencia", "Presidencia", "A0", "El Sistema");
             APF = new Node<Registro>(Presidente);
             ListaDeNodosPorID.Add("A0", APF);
             p.InitTokens();

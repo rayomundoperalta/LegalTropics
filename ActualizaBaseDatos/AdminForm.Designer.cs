@@ -179,6 +179,8 @@
             this.tabControlAdministracionBaseDatos = new System.Windows.Forms.TabControl();
             this.tabPageFichas = new System.Windows.Forms.TabPage();
             this.tabPageOrganigrama = new System.Windows.Forms.TabPage();
+            this.buttonOrgInserta = new System.Windows.Forms.Button();
+            this.buttonOrgElimina = new System.Windows.Forms.Button();
             this.labelOrgAbogadoIrresponsable = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.buttonOrgBajar = new System.Windows.Forms.Button();
@@ -186,6 +188,7 @@
             this.buttonListaDeNodosPorID = new System.Windows.Forms.Button();
             this.buttonPrintTree = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkBoxAgrupaciónModifica = new System.Windows.Forms.CheckBox();
             this.textBoxOrgNombrePuestoModificado = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.buttonOrgActualizaFuncionario = new System.Windows.Forms.Button();
@@ -193,6 +196,7 @@
             this.buttonOrgGuardar = new System.Windows.Forms.Button();
             this.buttonOrgAtras = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.checkBoxAgrupacionCrear = new System.Windows.Forms.CheckBox();
             this.buttonOrgInsertaPuesto = new System.Windows.Forms.Button();
             this.textBoxOrgNombrePuesto = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
@@ -318,7 +322,7 @@
             // muestraCapturaFechaNacimiento
             // 
             this.muestraCapturaFechaNacimiento.Año = 2018;
-            this.muestraCapturaFechaNacimiento.Dia = 18;
+            this.muestraCapturaFechaNacimiento.Dia = 19;
             this.muestraCapturaFechaNacimiento.Location = new System.Drawing.Point(899, 133);
             this.muestraCapturaFechaNacimiento.Mes = 12;
             this.muestraCapturaFechaNacimiento.Name = "muestraCapturaFechaNacimiento";
@@ -559,7 +563,7 @@
             // muestraCapturaFechaFin
             // 
             this.muestraCapturaFechaFin.Año = 2018;
-            this.muestraCapturaFechaFin.Dia = 18;
+            this.muestraCapturaFechaFin.Dia = 19;
             this.muestraCapturaFechaFin.Location = new System.Drawing.Point(288, 125);
             this.muestraCapturaFechaFin.Mes = 12;
             this.muestraCapturaFechaFin.Name = "muestraCapturaFechaFin";
@@ -569,7 +573,7 @@
             // muestraCapturaFechaInicio
             // 
             this.muestraCapturaFechaInicio.Año = 2018;
-            this.muestraCapturaFechaInicio.Dia = 18;
+            this.muestraCapturaFechaInicio.Dia = 19;
             this.muestraCapturaFechaInicio.Location = new System.Drawing.Point(6, 125);
             this.muestraCapturaFechaInicio.Mes = 12;
             this.muestraCapturaFechaInicio.Name = "muestraCapturaFechaInicio";
@@ -921,7 +925,7 @@
             // muestraCapturaFechaAPFin
             // 
             this.muestraCapturaFechaAPFin.Año = 2018;
-            this.muestraCapturaFechaAPFin.Dia = 18;
+            this.muestraCapturaFechaAPFin.Dia = 19;
             this.muestraCapturaFechaAPFin.Location = new System.Drawing.Point(276, 135);
             this.muestraCapturaFechaAPFin.Mes = 12;
             this.muestraCapturaFechaAPFin.Name = "muestraCapturaFechaAPFin";
@@ -931,7 +935,7 @@
             // muestraCapturaFechaAPInicio
             // 
             this.muestraCapturaFechaAPInicio.Año = 2018;
-            this.muestraCapturaFechaAPInicio.Dia = 18;
+            this.muestraCapturaFechaAPInicio.Dia = 19;
             this.muestraCapturaFechaAPInicio.Location = new System.Drawing.Point(3, 135);
             this.muestraCapturaFechaAPInicio.Mes = 12;
             this.muestraCapturaFechaAPInicio.Name = "muestraCapturaFechaAPInicio";
@@ -1367,7 +1371,7 @@
             // muestraCapturaFechaPuestoFin
             // 
             this.muestraCapturaFechaPuestoFin.Año = 2018;
-            this.muestraCapturaFechaPuestoFin.Dia = 18;
+            this.muestraCapturaFechaPuestoFin.Dia = 19;
             this.muestraCapturaFechaPuestoFin.Location = new System.Drawing.Point(276, 157);
             this.muestraCapturaFechaPuestoFin.Mes = 12;
             this.muestraCapturaFechaPuestoFin.Name = "muestraCapturaFechaPuestoFin";
@@ -1377,7 +1381,7 @@
             // muestraCapturaFechaPuestoInicio
             // 
             this.muestraCapturaFechaPuestoInicio.Año = 2018;
-            this.muestraCapturaFechaPuestoInicio.Dia = 18;
+            this.muestraCapturaFechaPuestoInicio.Dia = 19;
             this.muestraCapturaFechaPuestoInicio.Location = new System.Drawing.Point(9, 157);
             this.muestraCapturaFechaPuestoInicio.Mes = 12;
             this.muestraCapturaFechaPuestoInicio.Name = "muestraCapturaFechaPuestoInicio";
@@ -1787,6 +1791,8 @@
             // 
             // tabPageOrganigrama
             // 
+            this.tabPageOrganigrama.Controls.Add(this.buttonOrgInserta);
+            this.tabPageOrganigrama.Controls.Add(this.buttonOrgElimina);
             this.tabPageOrganigrama.Controls.Add(this.labelOrgAbogadoIrresponsable);
             this.tabPageOrganigrama.Controls.Add(this.label25);
             this.tabPageOrganigrama.Controls.Add(this.buttonOrgBajar);
@@ -1809,11 +1815,31 @@
             this.tabPageOrganigrama.UseVisualStyleBackColor = true;
             this.tabPageOrganigrama.Click += new System.EventHandler(this.tabPageOrganigrama_Click);
             // 
+            // buttonOrgInserta
+            // 
+            this.buttonOrgInserta.Location = new System.Drawing.Point(1263, 64);
+            this.buttonOrgInserta.Name = "buttonOrgInserta";
+            this.buttonOrgInserta.Size = new System.Drawing.Size(122, 33);
+            this.buttonOrgInserta.TabIndex = 20;
+            this.buttonOrgInserta.Text = "Inserta subarbol";
+            this.buttonOrgInserta.UseVisualStyleBackColor = true;
+            this.buttonOrgInserta.Click += new System.EventHandler(this.buttonOrgInserta_Click);
+            // 
+            // buttonOrgElimina
+            // 
+            this.buttonOrgElimina.Location = new System.Drawing.Point(1123, 64);
+            this.buttonOrgElimina.Name = "buttonOrgElimina";
+            this.buttonOrgElimina.Size = new System.Drawing.Size(134, 33);
+            this.buttonOrgElimina.TabIndex = 19;
+            this.buttonOrgElimina.Text = "Elimina subarbol";
+            this.buttonOrgElimina.UseVisualStyleBackColor = true;
+            this.buttonOrgElimina.Click += new System.EventHandler(this.buttonOrgElimina_Click);
+            // 
             // labelOrgAbogadoIrresponsable
             // 
             this.labelOrgAbogadoIrresponsable.AutoSize = true;
             this.labelOrgAbogadoIrresponsable.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelOrgAbogadoIrresponsable.Location = new System.Drawing.Point(1023, 512);
+            this.labelOrgAbogadoIrresponsable.Location = new System.Drawing.Point(1027, 525);
             this.labelOrgAbogadoIrresponsable.Name = "labelOrgAbogadoIrresponsable";
             this.labelOrgAbogadoIrresponsable.Size = new System.Drawing.Size(73, 19);
             this.labelOrgAbogadoIrresponsable.TabIndex = 18;
@@ -1822,7 +1848,7 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(758, 512);
+            this.label25.Location = new System.Drawing.Point(755, 525);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(213, 17);
             this.label25.TabIndex = 17;
@@ -1830,9 +1856,9 @@
             // 
             // buttonOrgBajar
             // 
-            this.buttonOrgBajar.Location = new System.Drawing.Point(1260, 75);
+            this.buttonOrgBajar.Location = new System.Drawing.Point(899, 64);
             this.buttonOrgBajar.Name = "buttonOrgBajar";
-            this.buttonOrgBajar.Size = new System.Drawing.Size(126, 33);
+            this.buttonOrgBajar.Size = new System.Drawing.Size(69, 33);
             this.buttonOrgBajar.TabIndex = 16;
             this.buttonOrgBajar.Text = "Bajar";
             this.buttonOrgBajar.UseVisualStyleBackColor = true;
@@ -1840,9 +1866,9 @@
             // 
             // buttonOrgSubir
             // 
-            this.buttonOrgSubir.Location = new System.Drawing.Point(785, 75);
+            this.buttonOrgSubir.Location = new System.Drawing.Point(784, 64);
             this.buttonOrgSubir.Name = "buttonOrgSubir";
-            this.buttonOrgSubir.Size = new System.Drawing.Size(126, 33);
+            this.buttonOrgSubir.Size = new System.Drawing.Size(75, 33);
             this.buttonOrgSubir.TabIndex = 15;
             this.buttonOrgSubir.Text = "Subir";
             this.buttonOrgSubir.UseVisualStyleBackColor = true;
@@ -1870,15 +1896,26 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.checkBoxAgrupaciónModifica);
             this.groupBox3.Controls.Add(this.textBoxOrgNombrePuestoModificado);
             this.groupBox3.Controls.Add(this.label20);
             this.groupBox3.Controls.Add(this.buttonOrgActualizaFuncionario);
-            this.groupBox3.Location = new System.Drawing.Point(758, 343);
+            this.groupBox3.Location = new System.Drawing.Point(758, 345);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(652, 137);
+            this.groupBox3.Size = new System.Drawing.Size(652, 161);
             this.groupBox3.TabIndex = 10;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Modica Registro del Organigrama";
+            // 
+            // checkBoxAgrupaciónModifica
+            // 
+            this.checkBoxAgrupaciónModifica.AutoSize = true;
+            this.checkBoxAgrupaciónModifica.Location = new System.Drawing.Point(27, 79);
+            this.checkBoxAgrupaciónModifica.Name = "checkBoxAgrupaciónModifica";
+            this.checkBoxAgrupaciónModifica.Size = new System.Drawing.Size(160, 21);
+            this.checkBoxAgrupaciónModifica.TabIndex = 4;
+            this.checkBoxAgrupaciónModifica.Text = "Nodo de Agrupación";
+            this.checkBoxAgrupaciónModifica.UseVisualStyleBackColor = true;
             // 
             // textBoxOrgNombrePuestoModificado
             // 
@@ -1898,7 +1935,7 @@
             // 
             // buttonOrgActualizaFuncionario
             // 
-            this.buttonOrgActualizaFuncionario.Location = new System.Drawing.Point(27, 83);
+            this.buttonOrgActualizaFuncionario.Location = new System.Drawing.Point(27, 106);
             this.buttonOrgActualizaFuncionario.Name = "buttonOrgActualizaFuncionario";
             this.buttonOrgActualizaFuncionario.Size = new System.Drawing.Size(601, 33);
             this.buttonOrgActualizaFuncionario.TabIndex = 1;
@@ -1908,7 +1945,7 @@
             // 
             // buttonOrgBackup
             // 
-            this.buttonOrgBackup.Location = new System.Drawing.Point(1311, 126);
+            this.buttonOrgBackup.Location = new System.Drawing.Point(1311, 110);
             this.buttonOrgBackup.Name = "buttonOrgBackup";
             this.buttonOrgBackup.Size = new System.Drawing.Size(75, 40);
             this.buttonOrgBackup.TabIndex = 9;
@@ -1918,7 +1955,7 @@
             // 
             // buttonOrgGuardar
             // 
-            this.buttonOrgGuardar.Location = new System.Drawing.Point(785, 127);
+            this.buttonOrgGuardar.Location = new System.Drawing.Point(784, 111);
             this.buttonOrgGuardar.Name = "buttonOrgGuardar";
             this.buttonOrgGuardar.Size = new System.Drawing.Size(184, 39);
             this.buttonOrgGuardar.TabIndex = 8;
@@ -1928,7 +1965,7 @@
             // 
             // buttonOrgAtras
             // 
-            this.buttonOrgAtras.Location = new System.Drawing.Point(1197, 127);
+            this.buttonOrgAtras.Location = new System.Drawing.Point(1123, 111);
             this.buttonOrgAtras.Name = "buttonOrgAtras";
             this.buttonOrgAtras.Size = new System.Drawing.Size(75, 39);
             this.buttonOrgAtras.TabIndex = 7;
@@ -1938,19 +1975,30 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.checkBoxAgrupacionCrear);
             this.groupBox2.Controls.Add(this.buttonOrgInsertaPuesto);
             this.groupBox2.Controls.Add(this.textBoxOrgNombrePuesto);
             this.groupBox2.Controls.Add(this.label19);
-            this.groupBox2.Location = new System.Drawing.Point(758, 184);
+            this.groupBox2.Location = new System.Drawing.Point(758, 169);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(652, 132);
+            this.groupBox2.Size = new System.Drawing.Size(652, 150);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Crear Entrada en el Organigrama";
             // 
+            // checkBoxAgrupacionCrear
+            // 
+            this.checkBoxAgrupacionCrear.AutoSize = true;
+            this.checkBoxAgrupacionCrear.Location = new System.Drawing.Point(27, 69);
+            this.checkBoxAgrupacionCrear.Name = "checkBoxAgrupacionCrear";
+            this.checkBoxAgrupacionCrear.Size = new System.Drawing.Size(160, 21);
+            this.checkBoxAgrupacionCrear.TabIndex = 7;
+            this.checkBoxAgrupacionCrear.Text = "Nodo de Agrupación";
+            this.checkBoxAgrupacionCrear.UseVisualStyleBackColor = true;
+            // 
             // buttonOrgInsertaPuesto
             // 
-            this.buttonOrgInsertaPuesto.Location = new System.Drawing.Point(26, 75);
+            this.buttonOrgInsertaPuesto.Location = new System.Drawing.Point(27, 96);
             this.buttonOrgInsertaPuesto.Name = "buttonOrgInsertaPuesto";
             this.buttonOrgInsertaPuesto.Size = new System.Drawing.Size(601, 41);
             this.buttonOrgInsertaPuesto.TabIndex = 6;
@@ -1968,7 +2016,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(24, 37);
+            this.label19.Location = new System.Drawing.Point(24, 34);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(129, 17);
             this.label19.TabIndex = 4;
@@ -2303,6 +2351,10 @@
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.TextBox textBoxAbogadoIrresponsable;
         private System.Windows.Forms.Button buttonVerificaOK;
+        private System.Windows.Forms.CheckBox checkBoxAgrupaciónModifica;
+        private System.Windows.Forms.CheckBox checkBoxAgrupacionCrear;
+        private System.Windows.Forms.Button buttonOrgElimina;
+        private System.Windows.Forms.Button buttonOrgInserta;
     }
 }
 

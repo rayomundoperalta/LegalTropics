@@ -8,7 +8,7 @@ namespace APFInfo
     {
         Func<string, int> Print;
         public Tokens RT;
-        public string[] pila = new string[] { "Presidencia", "S", "SS", "DG", "Dir" };
+        public string[] pila = new string[] { "Presidencia", "S", "SS", "DG", "Dir", "D1", "D2", "D3", "D4", "D5", "D6" };
 
         public Parser(Func<string, int> print)
         {

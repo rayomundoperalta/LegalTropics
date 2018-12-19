@@ -17,7 +17,7 @@ namespace Pruebaarbol
 
         static void Main(string[] args)
         {
-            Registro Presidente = new Registro("P", "Presidencia", "A0");
+            Registro Presidente = new Registro("P", "Presidencia", "A0", "El Sistema");
             Node<Registro> APF = new Node<Registro>(Presidente);
             Console.WriteLine("Parseamos");
             Parser parser = new Parser(ImprimeConsola);

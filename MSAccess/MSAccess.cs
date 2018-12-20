@@ -634,7 +634,16 @@ namespace MSAccess
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
-                var sql = "UPDATE Funcionarios set ApellidoPaterno = @ApellidoPaterno, ApellidoMaterno = @ApellidoMaterno, PrimerNombre = @PrimerNombre, SegundoNombre = @SegundoNombre, Nacionalidad = @Nacionalidad, AñoNacimiento = @AñoNacimiento, MesNacimiento = @MesNacimiento, DiaNacimiento = @DiaNacimiento, Abogado = @Abogado WHERE ID = @ID;";
+                var sql = "DELETE FROM Funcionarios WHERE ID = @ID;";
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+                }
+                sql = "INSERT INTO Funcionarios (ID, ApellidoPaterno, ApellidoMaterno, PrimerNombre, SegundoNombre, Nacionalidad, AñoNacimiento, MesNacimiento, DiaNacimiento, Abogado) " + 
+                    "Values (@ID, @ApellidoPaterno, @ApellidoMaterno, @PrimerNombre, @SegundoNombre, @Nacionalidad, @AñoNacimiento, @MesNacimiento, @DiaNacimiento, @Abogado);";
                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                 {
                     cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
@@ -843,41 +852,24 @@ namespace MSAccess
                 return false;
             }
         }
+        
+        static public DataRow[] GetDatosDeContacto(string ID)
+        {
+            Builder.Provider = Defines.StringAccessProvider;
+            Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+            tablaDeDatos = new System.Data.DataTable();
+            using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+            {
+                var sql = "SELECT * FROM DatosContacto where ID = @ID;";
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
+                    cn.Open();
+                    tablaDeDatos.Load(cmd.ExecuteReader());
+                    cn.Close();
+                }
+            }
+            return (tablaDeDatos.Select());
+        }
     }
 }
-/*
-            DataRow[] foto = tablaDeDatos.Select();
-            
-            if (foto.Length > 0)
-            {
-                int tamaño = ((byte[])foto[0]["Foto"]).Length;
-                if (tamaño > 0)
-                {
-                    string FullName;
-                    Guid guid;
-                    FileInfo fi;
-                    do
-                    {
-                        guid = Guid.NewGuid();
-                        string UniqueFileName = guid.ToString();
-                        FullName = Defines.FotoTempBasePath + UniqueFileName + foto[0]["PhotoType"].ToString();
-                        fi = new FileInfo(FullName);
-                    } while (fi.Exists);
-                    
-                    //Create the file.
-                    using (FileStream fs = fi.Create())
-                    {
-                        fs.Write((byte[])foto[0]["Foto"], 0, tamaño);
-                    }
-                    return FullName;
-                }
-                else
-                {
-                    return Defines.DefaultPhoto();
-                }
-            }
-            else
-            {
-                return Defines.DefaultPhoto();
-            }
- */

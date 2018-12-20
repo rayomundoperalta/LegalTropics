@@ -105,7 +105,6 @@ namespace LegalTropics
 
             StringPuestos.Sort();
 
-
             for (int i = 0; i < StringPuestos.Count; i++)
             {
                 item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();

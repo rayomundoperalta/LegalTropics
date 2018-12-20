@@ -61,6 +61,26 @@ namespace ActualizaBaseDatos
             }
         }
 
+        int indiceModificación = 0;
+
+        int IndiceModificación
+        {
+            get
+            {
+                return indiceModificación;
+            }
+            set
+            {
+                if (value == 0)
+                {
+                    checkBoxAgrupaciónModifica.Checked = false;
+                    checkBoxActualizaPuesto.Checked = false;
+                    checkBoxActualizeFuncionario.Checked = false;
+                }
+                indiceModificación = value;
+            }
+        }
+
         System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
 
         public Node<Registro> NodoSeleccionado
@@ -587,6 +607,7 @@ namespace ActualizaBaseDatos
                 case "Fichas":
                 case "Organigrama APF":
                     NodoSeleccionado = null;
+                    IndiceModificación = 0;
                     break;
                 case "Publica Info":
                     PetaSecure cipher = new PetaSecure();
@@ -1150,6 +1171,8 @@ namespace ActualizaBaseDatos
                 NodoDeArbolMostrado = treeViewOrganigramaAPF.SelectedNode;
                 labelOrgAbogadoIrresponsable.Text = NodoSeleccionado.Data.AbogadoIrresponsable.Equals("") ? "     " : NodoSeleccionado.Data.AbogadoIrresponsable;
                 //ImprimeConsola("-->  " + NodoSeleccionado.Data.ToString() + " # " + e.Node.Text);
+                int gion = e.Node.Text.IndexOf('-');
+                textBoxOrgNombrePuestoModificado.Text = e.Node.Text.Substring(0, gion - 1);
             }
             else
             {
@@ -1193,40 +1216,53 @@ namespace ActualizaBaseDatos
         {
             if (!AbogadoIrresponsable.Equals(""))
             {
-                String IDMostrado = NodoSeleccionado.Data.ID;
-                string ID;
-                if (checkBoxAgrupaciónModifica.Checked)
+                String IDMostrado = NodoSeleccionado.Data.ID; // ID del Nodo del Arbol que estamos viendo
+                string ID; // ID de la ficha seleccionada
+                Registro NuevoRegistro = null;
+                Node<Registro> NuevoNode = null;
+                if (!(NodoSeleccionado == null) && ListaDeNodosPorID.ContainsKey(IDMostrado))
                 {
-                    Random rnd = new Random();
-                    ID = "O" + rnd.Next(1, 100000).ToString();
-                    while (ListaDeNodosPorID.ContainsKey(ID))
-                    {
-                        ID = "O" + rnd.Next(1, 100000).ToString();
-                    }
-                }
-                else
-                {
-                    ID = funcionarios[funcionarioMostrado.Pos]["ID"].ToString();
-                }
-                
-                if (!(NodoSeleccionado == null) && !ListaDeNodosPorID.ContainsKey(IDMostrado))
-                {
-                    if (checkBoxAgrupaciónModifica.Checked)
-                    {
-                        NodoDeArbolMostrado.Text = textBoxOrgNombrePuestoModificado.Text + "_" + ID;
-                    }
-                    else
-                    {
-                        NodoDeArbolMostrado.Text = textBoxOrgNombrePuestoModificado.Text + " - " + AccessUtility.GetNombreFuncionario(ID) + "_" + ID;
-                    }
                     
-                    Registro NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, textBoxOrgNombrePuestoModificado.Text, ID, AbogadoIrresponsable);
-                    MessageBox.Show(NuevoRegistro.ToString());
-                    Node<Registro> NuevoNode = new Node<Registro>(NuevoRegistro, NodoSeleccionado.Sons, NodoSeleccionado.Padre);
-                    ListaDeNodosPorID.Add(ID, NuevoNode);
-                    // tengo que actualizar APF
-                    ListaDeNodosPorID[IDMostrado].Data = NuevoRegistro;
-                    ListaDeNodosPorID.Remove(IDMostrado);
+                    switch (IndiceModificación)
+                    {
+                        case 1: // Modificamos un nodo de agrupación
+                            Random rnd = new Random();
+                            ID = "O" + rnd.Next(1, 100000).ToString();
+                            while (ListaDeNodosPorID.ContainsKey(ID))
+                            {
+                                ID = "O" + rnd.Next(1, 100000).ToString();
+                            }
+                            NodoDeArbolMostrado.Text = textBoxOrgNombrePuestoModificado.Text + "_" + ID;
+                            NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, textBoxOrgNombrePuestoModificado.Text, ID, AbogadoIrresponsable);
+                            NuevoNode = new Node<Registro>(NuevoRegistro, NodoSeleccionado.Sons, NodoSeleccionado.Padre);
+                            ListaDeNodosPorID.Add(ID, NuevoNode);
+                            // tengo que actualizar APF
+                            ListaDeNodosPorID[IDMostrado].Data = NuevoRegistro;
+                            ListaDeNodosPorID.Remove(IDMostrado);
+                            break;
+                        case 2:  // Modificamos un Puesto
+                            NodoDeArbolMostrado.Text = textBoxOrgNombrePuestoModificado.Text + " - " + AccessUtility.GetNombreFuncionario(IDMostrado) + "_" + IDMostrado;
+                            NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, textBoxOrgNombrePuestoModificado.Text, IDMostrado, AbogadoIrresponsable);
+                            NuevoNode = new Node<Registro>(NuevoRegistro, NodoSeleccionado.Sons, NodoSeleccionado.Padre);
+                            // tengo que actualizar APF
+                            ListaDeNodosPorID[IDMostrado].Data = NuevoRegistro;
+                            ListaDeNodosPorID[IDMostrado] =  NuevoNode;
+                            break;
+                        case 3: // Modificamos un fucionario
+                            ID = funcionarios[funcionarioMostrado.Pos]["ID"].ToString();
+                            int gion = NodoDeArbolMostrado.Text.IndexOf('-');
+                            NodoDeArbolMostrado.Text = NodoDeArbolMostrado.Text.Substring(0, gion - 1) + " - " + AccessUtility.GetNombreFuncionario(ID) + "_" + ID;
+                            NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, NodoDeArbolMostrado.Text.Substring(0, gion - 1), ID, AbogadoIrresponsable);
+                            NuevoNode = new Node<Registro>(NuevoRegistro, NodoSeleccionado.Sons, NodoSeleccionado.Padre);
+                            ListaDeNodosPorID.Add(ID, NuevoNode);
+                            // tengo que actualizar APF
+                            ListaDeNodosPorID[IDMostrado].Data = NuevoRegistro;
+                            ListaDeNodosPorID.Remove(IDMostrado);
+                            break;
+                        default:
+                            MessageBox.Show("Se debe escoger alguna opción de modificación");
+                            break;
+                    }
                     treeViewOrganigramaAPF.SelectedNode = null;
                     NodoDeArbolMostrado = null;
                     NodoSeleccionado = null;
@@ -1234,7 +1270,8 @@ namespace ActualizaBaseDatos
                     textBoxOrgNombrePuestoModificado.Text = string.Empty;
                 }
             }
-            
+            else
+                MessageBox.Show("Es necesario identificarse primero");
         }
 
         // Inserta
@@ -1774,6 +1811,32 @@ namespace ActualizaBaseDatos
                 textBoxPassword.Text = string.Empty;
                 MessageBox.Show("Abogado Responsable / Clave invalidos, intente de nuevo");
             }
+        }
+
+        
+
+        private void checkBoxAgrupaciónModifica_CheckedChanged(object sender, EventArgs e)
+        {
+            checkBoxAgrupaciónModifica.Checked = true;
+            checkBoxActualizaPuesto.Checked = false;
+            checkBoxActualizeFuncionario.Checked = false;
+            IndiceModificación = 1;
+        }
+
+        private void checkBoxActualizaPuesto_CheckedChanged(object sender, EventArgs e)
+        {
+            checkBoxAgrupaciónModifica.Checked = false;
+            checkBoxActualizaPuesto.Checked = true;
+            checkBoxActualizeFuncionario.Checked = false;
+            IndiceModificación = 2;
+        }
+
+        private void checkBoxActualizeFuncionario_CheckedChanged(object sender, EventArgs e)
+        {
+            checkBoxAgrupaciónModifica.Checked = false;
+            checkBoxActualizaPuesto.Checked = false;
+            checkBoxActualizeFuncionario.Checked = true;
+            IndiceModificación = 3;
         }
     }
 }

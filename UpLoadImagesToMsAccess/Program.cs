@@ -128,13 +128,17 @@ namespace UpLoadImagesToMsAccess
 
         static void Main(string[] args)
         {
-            //limpiaDataBase("AdscripciónPolítica");
-            //limpiaDataBase("Escolaridad");
+            limpiaDataBase("AdscripciónPolítica");
+            limpiaDataBase("Escolaridad");
             limpiaDataBase("Fotos");
-            //limpiaDataBase("Funcionarios");
-            //limpiaDataBase("InformaciónGeneral");
-            //limpiaDataBase("OrganigramaFederal");
-            //limpiaDataBase("Puestos");
+            limpiaDataBase("Funcionarios");
+            limpiaDataBase("InformaciónGeneral");
+            limpiaDataBase("OrganigramaFederal");
+            limpiaDataBase("Puestos");
+            limpiaDataBase("CirculoCercano");
+            limpiaDataBase("DatosContacto");
+            Console.WriteLine("Bases limpias");
+            Console.ReadKey();
 
 
             string[] PhotoFiles = Directory.GetFiles(Defines.FotoBasePath, "*.*");

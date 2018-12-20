@@ -84,6 +84,8 @@ namespace LegalTropics
             InicializaDatosIP();
             Globals.Ribbons.Tropicalizador.buttonParrafos.Enabled = false;
             Globals.Ribbons.Tropicalizador.buttonAnalyzer.Enabled = false;
+            // TODO: Checar que existan los directorios de fotos y de la base de datos, sino existen crearlos
+            // TODO: Checar que exista la base de datos si no existe descargarla
             
         }
 

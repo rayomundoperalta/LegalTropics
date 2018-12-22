@@ -49,6 +49,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CifradoPeta\CifradoPeta.csproj">
+      <Project>{3d6bb4c5-a330-483f-a41a-e7c5632e6ad0}</Project>
+      <Name>CifradoPeta</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Globales\Globales.csproj">
       <Project>{9875d5fc-5821-4cd5-a9e0-2a18db463db9}</Project>
       <Name>Globales</Name>

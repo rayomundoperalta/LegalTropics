@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <configSections>
+    </configSections>
+    <connectionStrings>
+        <add name="LegalTropics.Properties.Settings.AMLOTeamConnectionString"
+            connectionString="Data Source=REPH-NITRO-5;Initial Catalog=AMLOTeam;User ID=sa;Password=Samahil14200;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False"
+            providerName="System.Data.SqlClient" />
+    </connectionStrings>
+</configuration>

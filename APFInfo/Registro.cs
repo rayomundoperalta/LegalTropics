@@ -1,4 +1,4 @@
-﻿using Arboles;
+﻿using System.Windows.Forms;
 
 namespace APFInfo
 {
@@ -8,6 +8,7 @@ namespace APFInfo
         string nombrePuesto;
         string id;
         string abogadoIrresponsable;
+        TreeNode nodoDelTreeView;
 
         //Node<Registro> AutoApuntador;
 
@@ -28,6 +29,7 @@ namespace APFInfo
         public string NombrePuesto { get { return nombrePuesto; } }
         public string ID { get { return id; } }
         public string AbogadoIrresponsable { get { return abogadoIrresponsable; } }
+        public TreeNode NodoDelTreeView { get { return nodoDelTreeView; } set { nodoDelTreeView = value; } }
         //public Node<Registro> AlterEGO { get { return AutoApuntador; } set { AutoApuntador = value; } }
     }
 }

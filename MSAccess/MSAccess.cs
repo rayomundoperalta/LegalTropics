@@ -6,6 +6,7 @@ using System.IO;
 using Globales;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using CifradoPeta;
 
 namespace MSAccess
 {
@@ -71,7 +72,7 @@ namespace MSAccess
             String name = string.Empty;
             for (int i = 0; i < funcionarios.Length; i++)
             {
-                name = funcionarios[i]["PrimerNombre"] + " " + funcionarios[i]["ApellidoPaterno"];
+                name = funcionarios[i]["PrimerNombre"] + " " + funcionarios[i]["SegundoNombre"] + " " + funcionarios[i]["ApellidoPaterno"] + " " + funcionarios[i]["ApellidoMaterno"];
                 return name;
             }
             return name;
@@ -844,7 +845,7 @@ namespace MSAccess
                     cn.Close();
                 }
                 DataRow[] password = tablaDeDatos.Select();
-                if ((password.Length > 0) && (password[0]["Clave"].ToString().Equals(Password)))
+                if ((password.Length > 0) && (password[0]["Clave"].ToString().Equals(PetaSecure.ComputeSha256Hash(Password))))
                 {
                     // el user y el password coinciden
                     return true;
@@ -870,6 +871,32 @@ namespace MSAccess
                 }
             }
             return (tablaDeDatos.Select());
+        }
+
+        static public void AltaUserPassword(string Nombre, string Clave)
+        {
+            Builder.Provider = Defines.StringAccessProvider;
+            Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+            using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+            {
+                var sql = "DELETE FROM Abogados where Nombre = @Nombre;";
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    cmd.Parameters.Add("@Nombre", OleDbType.VarChar, 80).Value = Nombre;
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+                }
+                sql = "INSERT INTO Abogados (Nombre, Clave) values (@Nombre, @Clave);";
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    cmd.Parameters.Add("@Nombre", OleDbType.VarChar, 80).Value = Nombre;
+                    cmd.Parameters.Add("@Clave", OleDbType.VarChar, 80).Value = Clave;
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
         }
     }
 }

@@ -11,6 +11,7 @@ namespace OrganigramaAdmin
         public void LlenaTreeAPF(TreeNodeCollection APFtreeNodes, Node<Registro> APF, int i, bool IsTheFirstTime, ref TreeNode raiz)
         {
             TreeNode newNode = new TreeNode(APF.Data.NombrePuesto + " - " + AccessUtility.GetNombreFuncionario(APF.Data.ID) + "_" + APF.Data.ID);
+            APF.Data.NodoDelTreeView = newNode;
             if (IsTheFirstTime)
             {
                 raiz = newNode;

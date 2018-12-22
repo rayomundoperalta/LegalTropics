@@ -22,7 +22,7 @@ namespace ActualizaBaseDatos
         {
             get
             {
-                return dateTimePickerPeta.Value.Year;
+                return año;
             }
             set
             {
@@ -37,7 +37,7 @@ namespace ActualizaBaseDatos
         {
             get
             {
-                return dateTimePickerPeta.Value.Month;
+                return mes;
             }
             set
             {
@@ -52,7 +52,7 @@ namespace ActualizaBaseDatos
         {
             get
             {
-                return dateTimePickerPeta.Value.Day;
+                return dia;
             }
             set
             {
@@ -76,6 +76,9 @@ namespace ActualizaBaseDatos
             this.Año = Año;
             this.Mes = Mes;
             this.Dia = Dia;
+            labelFecha.Text = FormatoFecha.FechaString(año.ToString(),
+                mes.ToString(),
+                dia.ToString(), "Fecha: no disponible");
         }
 
         private void MuestraCapturaFecha_Load(object sender, EventArgs e)

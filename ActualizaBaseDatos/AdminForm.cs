@@ -121,11 +121,10 @@ namespace ActualizaBaseDatos
             treeViewOrganigramaAPF.ItemDrag += TreeViewOrganigramaAPF_ItemDrag;
             treeViewOrganigramaAPF.DragEnter += TreeViewOrganigramaAPF_DragEnter;
             treeViewOrganigramaAPF.DragDrop += TreeViewOrganigramaAPF_DragDrop;
-            NivelSIguiente.Add("Presidencia", "S");
-            NivelSIguiente.Add("S", "SS");
-            NivelSIguiente.Add("SS", "DG");
-            NivelSIguiente.Add("DG", "Dir");
-            NivelSIguiente.Add("Dir", "nadie");
+            int niveles = 0;
+            for (niveles = 0; niveles < p.pila.Length - 1; niveles++)
+                NivelSIguiente.Add(p.pila[niveles], p.pila[niveles + 1]);
+            NivelSIguiente.Add(p.pila[niveles], "nadie");
             checkedListBoxTipoINFO.ItemCheck += checkedListBoxTipoINFO_ItemCheck;
             checkedListBoxTipoInformacion.ItemCheck += CheckedListBoxTipoInformacion_ItemCheck;
         }
@@ -610,12 +609,16 @@ namespace ActualizaBaseDatos
                     IndiceModificación = 0;
                     break;
                 case "Publica Info":
-                    PetaSecure cipher = new PetaSecure();
-                    labelSTATUS.Text = "Trabajando";
-                    cipher.FileEncrypt(Defines.DataBasePath + Defines.DataBaseFileName, Defines.DataBasePath + Defines.DataBaseFileNameEncriptado,
-                        System.Text.Encoding.UTF8.GetString(Defines.ImagenDefault).Substring(Defines.PosInicial, Defines.PosFinal));
-                    PetaPublish.Publisher.UploadInfoAPFDB(Defines.DataBasePath, Defines.DataBaseFileNameEncriptado);
-                    labelSTATUS.Text = "Terminado";
+                    if (AbogadoIrresponsable.Equals("Alfredo") || AbogadoIrresponsable.Equals("rayo"))
+                    {
+                        PetaSecure cipher = new PetaSecure();
+                        cipher.FileEncrypt(Defines.DataBasePath + Defines.DataBaseFileName, Defines.DataBasePath + Defines.DataBaseFileNameEncriptado,
+                            System.Text.Encoding.UTF8.GetString(Defines.ImagenDefault).Substring(Defines.PosInicial, Defines.PosFinal));
+                        PetaPublish.Publisher.UploadInfoAPFDB(Defines.DataBasePath, Defines.DataBaseFileNameEncriptado);
+                        labelSTATUS.Text = "Terminado";
+                    }
+                    else
+                        MessageBox.Show("No tiene autorización para publicar la base de datos");
                     break;
                 case "Identificate":
                     textBoxPassword.Text = string.Empty;
@@ -1109,7 +1112,7 @@ namespace ActualizaBaseDatos
                 DatosPersonalesModificados = false;
                 FotoModificada = false;
                 BusquedaEnProceso = false;
-                CargaBD();
+                //CargaBD();
             }
             else
             {
@@ -1128,7 +1131,7 @@ namespace ActualizaBaseDatos
                 DatosPersonalesModificados = false;
                 FotoModificada = false;
                 BusquedaEnProceso = false;
-                CargaBD();
+                //CargaBD();
             }
             else
                 MessageBox.Show("Tienes que identificarte primero");
@@ -1214,7 +1217,7 @@ namespace ActualizaBaseDatos
         // Modifica
         private void buttonOrgActualizaFuncionario_Click(object sender, EventArgs e)
         {
-            if (!AbogadoIrresponsable.Equals(""))
+            if (!AbogadoIrresponsable.Equals("") && NodoSeleccionado != null)
             {
                 String IDMostrado = NodoSeleccionado.Data.ID; // ID del Nodo del Arbol que estamos viendo
                 string ID; // ID de la ficha seleccionada
@@ -1232,7 +1235,7 @@ namespace ActualizaBaseDatos
                             {
                                 ID = "O" + rnd.Next(1, 100000).ToString();
                             }
-                            NodoDeArbolMostrado.Text = textBoxOrgNombrePuestoModificado.Text + "_" + ID;
+                            NodoDeArbolMostrado.Text = textBoxOrgNombrePuestoModificado.Text + "- _" + ID;
                             NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, textBoxOrgNombrePuestoModificado.Text, ID, AbogadoIrresponsable);
                             NuevoNode = new Node<Registro>(NuevoRegistro, NodoSeleccionado.Sons, NodoSeleccionado.Padre);
                             ListaDeNodosPorID.Add(ID, NuevoNode);
@@ -1263,6 +1266,7 @@ namespace ActualizaBaseDatos
                             MessageBox.Show("Se debe escoger alguna opción de modificación");
                             break;
                     }
+                    NuevoRegistro.NodoDelTreeView = NodoDeArbolMostrado;
                     treeViewOrganigramaAPF.SelectedNode = null;
                     NodoDeArbolMostrado = null;
                     NodoSeleccionado = null;
@@ -1277,6 +1281,7 @@ namespace ActualizaBaseDatos
         // Inserta
         private void buttonOrgInsertaPuesto_Click(object sender, EventArgs e)
         {
+
             if (!AbogadoIrresponsable.Equals(""))
             {
                 string ID;
@@ -1298,6 +1303,7 @@ namespace ActualizaBaseDatos
                 {
                     MessageBox.Show("Nodo Selecccionado es nulo");
                 }
+
                 if (!textBoxOrgNombrePuesto.Text.Equals(string.Empty) && !ListaDeNodosPorID.ContainsKey(ID) && !(NodoSeleccionado == null))
                 {
                     // Hay que modificar APF y ListadeNodosPorID
@@ -1312,12 +1318,13 @@ namespace ActualizaBaseDatos
                     TreeNode newNode;
                     if (checkBoxAgrupacionCrear.Checked)
                     {
-                        newNode = new TreeNode(textBoxOrgNombrePuesto.Text + "_" + ID);
+                        newNode = new TreeNode(textBoxOrgNombrePuesto.Text + "-_" + ID);
                     }
                     else
                     {
                         newNode = new TreeNode(textBoxOrgNombrePuesto.Text + " - " + AccessUtility.GetNombreFuncionario(ID) + "_" + ID);
                     }
+                    NuevoPuesto.Data.NodoDelTreeView = newNode;
                     NodoDeArbolMostrado.Nodes.Add(newNode);
                     NodoDeArbolMostrado.Expand();
 
@@ -1326,6 +1333,16 @@ namespace ActualizaBaseDatos
                     NodoSeleccionado = null;
                     organigrama.PrintTreeAPF(APF, ImprimeConsola);
                     textBoxOrgNombrePuesto.Text = string.Empty;
+                }
+                else
+                {
+                    if (ListaDeNodosPorID.ContainsKey(ID))
+                    {
+                        MessageBox.Show("El funcionario tiene otro puesto en la APF");
+                        treeViewOrganigramaAPF.SelectedNode = ListaDeNodosPorID[ID].Data.NodoDelTreeView;
+                        treeViewOrganigramaAPF.SelectedNode.Expand();
+                        treeViewOrganigramaAPF.SelectedNode.BackColor = Color.CadetBlue;
+                    }
                 }
             }
             else
@@ -1525,6 +1542,7 @@ namespace ActualizaBaseDatos
 
                     int i = MoveUp(NodoDeArbolMostrado);
                     treeViewOrganigramaAPF.SelectedNode = NodoDeArbolMostrado.Parent.Nodes[i];
+                    treeViewOrganigramaAPF.SelectedNode.BackColor = Color.CadetBlue;
                 }
             }
         }
@@ -1541,6 +1559,7 @@ namespace ActualizaBaseDatos
 
                     int i = MoveDown(NodoDeArbolMostrado);
                     treeViewOrganigramaAPF.SelectedNode = NodoDeArbolMostrado.Parent.Nodes[i];
+                    treeViewOrganigramaAPF.SelectedNode.BackColor = Color.CadetBlue;
                 }
             }
         }
@@ -1813,8 +1832,6 @@ namespace ActualizaBaseDatos
             }
         }
 
-        
-
         private void checkBoxAgrupaciónModifica_CheckedChanged(object sender, EventArgs e)
         {
             checkBoxAgrupaciónModifica.Checked = true;
@@ -1837,6 +1854,41 @@ namespace ActualizaBaseDatos
             checkBoxActualizaPuesto.Checked = false;
             checkBoxActualizeFuncionario.Checked = true;
             IndiceModificación = 3;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            openFileDialogDataBase.Filter = "Base de Datos APF|*.accdb";
+            openFileDialogDataBase.ShowDialog();
+            if (File.Exists(openFileDialogDataBase.FileName) && !openFileDialogDataBase.FileName.Equals(Defines.DataBasePath + Defines.DataBaseFileName))
+            {
+                string nombreARchivo = Defines.DataBasePath + "F" + DateTime.Now.ToString("yyyyMMddTHHmmss") + Defines.BackupDataBaseFileName;
+                System.IO.File.Move(Defines.DataBasePath + Defines.DataBaseFileName, nombreARchivo);
+                System.IO.File.Move(openFileDialogDataBase.FileName, Defines.DataBasePath + Defines.DataBaseFileName);
+                treeViewOrganigramaAPF.Nodes.Remove(RaizTreeView);
+                ListaDeNodosPorID.Clear();
+                Registro Presidente = new Registro("Presidencia", "Presidencia", "A0", "El Sistema");
+                APF = new Node<Registro>(Presidente);
+                ListaDeNodosPorID.Add("A0", APF);
+                p.InitTokens();
+                p.Parsea(APF, 0, ListaDeNodosPorID);
+                ImprimeConsola("---------- ATRAS --------------");
+                organigrama.PrintTreeAPF(APF, ImprimeConsola);
+                organigrama.LlenaTreeAPF(treeViewOrganigramaAPF.Nodes, APF, 0, true, ref RaizTreeView);
+            }
+        }
+
+        private void textBoxPassword_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonBuscaFunSeleccionado_Click(object sender, EventArgs e)
+        {
+            string ID = funcionarios[funcionarioMostrado.Pos]["ID"].ToString();
+            treeViewOrganigramaAPF.SelectedNode = ListaDeNodosPorID[ID].Data.NodoDelTreeView;
+            treeViewOrganigramaAPF.SelectedNode.Expand();
+            treeViewOrganigramaAPF.SelectedNode.BackColor = Color.CadetBlue;
         }
     }
 }

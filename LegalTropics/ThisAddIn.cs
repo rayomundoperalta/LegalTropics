@@ -1,7 +1,5 @@
 ﻿using System;
 using Word = Microsoft.Office.Interop.Word;
-using Office = Microsoft.Office.Core;
-using Microsoft.Office.Tools.Word;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Net;
@@ -84,8 +82,6 @@ namespace LegalTropics
             InicializaDatosIP();
             Globals.Ribbons.Tropicalizador.buttonParrafos.Enabled = false;
             Globals.Ribbons.Tropicalizador.buttonAnalyzer.Enabled = false;
-            // TODO: Checar que existan los directorios de fotos y de la base de datos, sino existen crearlos
-            // TODO: Checar que exista la base de datos si no existe descargarla
             
         }
 

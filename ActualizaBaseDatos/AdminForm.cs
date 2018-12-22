@@ -121,12 +121,19 @@ namespace ActualizaBaseDatos
             treeViewOrganigramaAPF.ItemDrag += TreeViewOrganigramaAPF_ItemDrag;
             treeViewOrganigramaAPF.DragEnter += TreeViewOrganigramaAPF_DragEnter;
             treeViewOrganigramaAPF.DragDrop += TreeViewOrganigramaAPF_DragDrop;
+            treeViewOrganigramaAPF.BeforeSelect += TreeViewOrganigramaAPF_BeforeSelect;
             int niveles = 0;
             for (niveles = 0; niveles < p.pila.Length - 1; niveles++)
                 NivelSIguiente.Add(p.pila[niveles], p.pila[niveles + 1]);
             NivelSIguiente.Add(p.pila[niveles], "nadie");
             checkedListBoxTipoINFO.ItemCheck += checkedListBoxTipoINFO_ItemCheck;
             checkedListBoxTipoInformacion.ItemCheck += CheckedListBoxTipoInformacion_ItemCheck;
+        }
+
+        private void TreeViewOrganigramaAPF_BeforeSelect(object sender, TreeViewCancelEventArgs e)
+        {
+            if (treeViewOrganigramaAPF.SelectedNode != null) 
+                treeViewOrganigramaAPF.SelectedNode.BackColor = Color.White;
         }
 
         private void TreeViewOrganigramaAPF_DragDrop(object sender, DragEventArgs e)
@@ -1172,6 +1179,7 @@ namespace ActualizaBaseDatos
             {
                 NodoSeleccionado = ListaDeNodosPorID[ID];
                 NodoDeArbolMostrado = treeViewOrganigramaAPF.SelectedNode;
+                
                 labelOrgAbogadoIrresponsable.Text = NodoSeleccionado.Data.AbogadoIrresponsable.Equals("") ? "     " : NodoSeleccionado.Data.AbogadoIrresponsable;
                 //ImprimeConsola("-->  " + NodoSeleccionado.Data.ToString() + " # " + e.Node.Text);
                 int gion = e.Node.Text.IndexOf('-');

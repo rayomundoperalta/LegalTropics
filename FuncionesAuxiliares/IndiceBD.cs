@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace ActualizaBaseDatos
+namespace FuncionesAuxiliares
 {
-    class IndiceBD
+    public class IndiceBD
     {
         int pos;
         int length;
@@ -48,6 +46,6 @@ namespace ActualizaBaseDatos
 
         public int Pos { get { return pos; } set { pos = value; } }
 
-        public int Length {  get { return length; } }
+        public int Length { get { return length; } }
     }
 }

@@ -3,6 +3,7 @@ using APFInfo;
 using MSAccess;
 using System.Windows.Forms;
 using System;
+using OrgBusqueda;
 
 namespace OrganigramaAdmin
 {
@@ -57,6 +58,15 @@ namespace OrganigramaAdmin
             foreach (Node<Registro> hijo in APF.Sons)
             {
                 SalvaTreeAPF(hijo, Print, true);
+            }
+        }
+
+        public void ListaDeNodosAPF(Node<Registro> APF, ListaNombreNodo ListaSecNodos)
+        {
+            ListaSecNodos.Add(APF);
+            foreach (Node<Registro> hijo in APF.Sons)
+            {
+                ListaDeNodosAPF(hijo, ListaSecNodos);
             }
         }
     }

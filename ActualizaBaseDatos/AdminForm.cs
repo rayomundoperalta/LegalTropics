@@ -275,9 +275,9 @@ namespace ActualizaBaseDatos
             textBoxApellidoPaterno.Text = funcionarios[index]["ApellidoPaterno"].ToString();
             textBoxApellidoMaterno.Text = funcionarios[index]["ApellidoMaterno"].ToString();
             textBoxNacionalidad.Text = funcionarios[index]["Nacionalidad"].ToString();
-            muestraCapturaFechaNacimiento.SetFecha(IntParse.Numero(funcionarios[index]["AñoNacimiento"].ToString()),
-                IntParse.Numero(funcionarios[index]["MesNacimiento"].ToString()),
-                IntParse.Numero(funcionarios[index]["DiaNacimiento"].ToString()));
+            muestraCapturaFechaNacimiento.SetFecha(Ut.Numero(funcionarios[index]["AñoNacimiento"].ToString()),
+                Ut.Numero(funcionarios[index]["MesNacimiento"].ToString()),
+                Ut.Numero(funcionarios[index]["DiaNacimiento"].ToString()));
 
             IDFuncionario = funcionarios[index]["ID"].ToString();
             labelAbogadoResponsable.Text = funcionarios[index]["Abogado"].ToString().Equals("")?"     ": funcionarios[index]["Abogado"].ToString();
@@ -443,12 +443,12 @@ namespace ActualizaBaseDatos
             else
             {
                 textBoxID.Text = escolaridad[indexEscolaridad.Pos]["ID"].ToString();
-                muestraCapturaFechaInicio.SetFecha(IntParse.Numero(escolaridad[indexEscolaridad.Pos]["AñoInicial"].ToString()),
-                    IntParse.Numero(escolaridad[indexEscolaridad.Pos]["MesInicial"].ToString()),
-                    IntParse.Numero(escolaridad[indexEscolaridad.Pos]["DiaInicial"].ToString()));
-                muestraCapturaFechaFin.SetFecha(IntParse.Numero(escolaridad[indexEscolaridad.Pos]["AñoFinal"].ToString()),
-                    IntParse.Numero(escolaridad[indexEscolaridad.Pos]["MesFinal"].ToString()),
-                    IntParse.Numero(escolaridad[indexEscolaridad.Pos]["DiaFinal"].ToString()));
+                muestraCapturaFechaInicio.SetFecha(Ut.Numero(escolaridad[indexEscolaridad.Pos]["AñoInicial"].ToString()),
+                    Ut.Numero(escolaridad[indexEscolaridad.Pos]["MesInicial"].ToString()),
+                    Ut.Numero(escolaridad[indexEscolaridad.Pos]["DiaInicial"].ToString()));
+                muestraCapturaFechaFin.SetFecha(Ut.Numero(escolaridad[indexEscolaridad.Pos]["AñoFinal"].ToString()),
+                    Ut.Numero(escolaridad[indexEscolaridad.Pos]["MesFinal"].ToString()),
+                    Ut.Numero(escolaridad[indexEscolaridad.Pos]["DiaFinal"].ToString()));
                 textBoxUniversidad.Text = escolaridad[indexEscolaridad.Pos]["Universidad"].ToString();
                 textBoxGrado.Text = escolaridad[indexEscolaridad.Pos]["Grado"].ToString();
                 labelEscolaridadPos.Text = (indexEscolaridad.Pos + 1).ToString();
@@ -480,8 +480,8 @@ namespace ActualizaBaseDatos
             {
                 textBoxAPID.Text = AP[indexAP.Pos]["ID"].ToString();
                 // adscripción politica solo tiene año no maneja mes y día
-                muestraCapturaFechaAPInicio.SetFecha(IntParse.Numero(AP[indexAP.Pos]["FechaDeInicio"].ToString()), 1, 1);
-                muestraCapturaFechaAPFin.SetFecha(IntParse.Numero(AP[indexAP.Pos]["FechaDeFin"].ToString()), 1, 1);
+                muestraCapturaFechaAPInicio.SetFecha(Ut.Numero(AP[indexAP.Pos]["FechaDeInicio"].ToString()), 1, 1);
+                muestraCapturaFechaAPFin.SetFecha(Ut.Numero(AP[indexAP.Pos]["FechaDeFin"].ToString()), 1, 1);
                 textBoxAPPartido.Text = AP[indexAP.Pos]["NombreDelPartido"].ToString();
                 labelAPPos.Text = (indexAP.Pos + 1).ToString();
                 labelAPLength.Text = "de " + indexAP.Length.ToString();
@@ -544,12 +544,12 @@ namespace ActualizaBaseDatos
                 textBoxPuestosDependencia.Text = Puestos[indexPuestos.Pos]["DependenciaEntidad"].ToString();
                 textBoxPuestosPuesto.Text = Puestos[indexPuestos.Pos]["Puesto"].ToString();
                 textBoxPuestosSuperior.Text = Puestos[indexPuestos.Pos]["JefeInmediantoSuperior"].ToString();
-                muestraCapturaFechaPuestoInicio.SetFecha(IntParse.Numero(Puestos[indexPuestos.Pos]["AñoInicial"].ToString()),
-                    IntParse.Numero(Puestos[indexPuestos.Pos]["MesInicial"].ToString()),
-                    IntParse.Numero(Puestos[indexPuestos.Pos]["DiaInicial"].ToString()));
-                muestraCapturaFechaPuestoFin.SetFecha(IntParse.Numero(Puestos[indexPuestos.Pos]["AñoFinal"].ToString()),
-                    IntParse.Numero(Puestos[indexPuestos.Pos]["MesFinal"].ToString()),
-                    IntParse.Numero(Puestos[indexPuestos.Pos]["DiaFinal"].ToString()));
+                muestraCapturaFechaPuestoInicio.SetFecha(Ut.Numero(Puestos[indexPuestos.Pos]["AñoInicial"].ToString()),
+                    Ut.Numero(Puestos[indexPuestos.Pos]["MesInicial"].ToString()),
+                    Ut.Numero(Puestos[indexPuestos.Pos]["DiaInicial"].ToString()));
+                muestraCapturaFechaPuestoFin.SetFecha(Ut.Numero(Puestos[indexPuestos.Pos]["AñoFinal"].ToString()),
+                    Ut.Numero(Puestos[indexPuestos.Pos]["MesFinal"].ToString()),
+                    Ut.Numero(Puestos[indexPuestos.Pos]["DiaFinal"].ToString()));
 
                 labelPuestosPos.Text = (indexPuestos.Pos + 1).ToString();
                 labelPuestosLength.Text = "de " + indexPuestos.Length.ToString();
@@ -642,12 +642,6 @@ namespace ActualizaBaseDatos
             }
         }
 
-        private string SinA(string Cadena)
-        {
-            return Cadena.ToLower().Replace("á", "a").Replace("é", "e").Replace("í", "i").Replace("ó", "o").Replace("ú", "u").Replace("ü", "u")
-                .Replace(" ", string.Empty).Replace("\n", string.Empty).Replace("\t", string.Empty);
-        }
-
         Busqueda BusquedaActiva;
 
         private void buttonBusca_Click(object sender, EventArgs e)
@@ -662,18 +656,18 @@ namespace ActualizaBaseDatos
                 BusquedaActiva = new Busqueda();
                 DatosPersonalesModificados = false;
                 FotoModificada = false;
-                if (!SinA(textBoxApellidoPaterno.Text).Equals(string.Empty)) BusquedaActiva.Add(textBoxApellidoPaterno.Text);
-                if (!SinA(textBoxApellidoMaterno.Text).Equals(string.Empty)) BusquedaActiva.Add(textBoxApellidoMaterno.Text);
-                if (!SinA(textBoxPrimerNombre.Text).Equals(string.Empty)) BusquedaActiva.Add(textBoxPrimerNombre.Text);
-                if (!SinA(textBoxSegundoNombre.Text).Equals(string.Empty)) BusquedaActiva.Add(textBoxSegundoNombre.Text);
-                if (!SinA(textBoxNacionalidad.Text).Equals(string.Empty)) BusquedaActiva.Add(textBoxNacionalidad.Text);
+                if (!Ut.SinA(textBoxApellidoPaterno.Text).Replace(" ", string.Empty).Equals(string.Empty)) BusquedaActiva.Add(textBoxApellidoPaterno.Text);
+                if (!Ut.SinA(textBoxApellidoMaterno.Text).Replace(" ", string.Empty).Equals(string.Empty)) BusquedaActiva.Add(textBoxApellidoMaterno.Text);
+                if (!Ut.SinA(textBoxPrimerNombre.Text).Replace(" ", string.Empty).Equals(string.Empty)) BusquedaActiva.Add(textBoxPrimerNombre.Text);
+                if (!Ut.SinA(textBoxSegundoNombre.Text).Replace(" ", string.Empty).Equals(string.Empty)) BusquedaActiva.Add(textBoxSegundoNombre.Text);
+                if (!Ut.SinA(textBoxNacionalidad.Text).Replace(" ", string.Empty).Equals(string.Empty)) BusquedaActiva.Add(textBoxNacionalidad.Text);
             }
             while (i < funcionarioMostrado.Length &&
-                    !BusquedaActiva.SatisfaceCriterio(SinA(funcionarios[i]["PrimerNombre"].ToString()) + " " +
-                        SinA(funcionarios[i]["SegundoNombre"].ToString()) + " " +
-                        SinA(funcionarios[i]["ApellidoPaterno"].ToString()) + " " +
-                        SinA(funcionarios[i]["ApellidoMaterno"].ToString()) + " " +
-                        SinA(funcionarios[i]["Nacionalidad"].ToString()))) i++;
+                    !BusquedaActiva.SatisfaceCriterio(Ut.SinA(funcionarios[i]["PrimerNombre"].ToString()).Replace(" ", string.Empty) + " " +
+                        Ut.SinA(funcionarios[i]["SegundoNombre"].ToString().Replace(" ", string.Empty)) + " " +
+                        Ut.SinA(funcionarios[i]["ApellidoPaterno"].ToString().Replace(" ", string.Empty)) + " " +
+                        Ut.SinA(funcionarios[i]["ApellidoMaterno"].ToString().Replace(" ", string.Empty)) + " " +
+                        Ut.SinA(funcionarios[i]["Nacionalidad"].ToString().Replace(" ", string.Empty)))) i++;
             if (i < funcionarioMostrado.Length)
             {
                 funcionarioMostrado.Pos = i;
@@ -1102,6 +1096,16 @@ namespace ActualizaBaseDatos
             BusquedaEnProceso = false;
         }
 
+        private int DespliegaInformacionDelID(string ID)
+        {
+            for (int i = 0; i < funcionarios.Length; i++)
+            {
+                if (funcionarios[i]["ID"].ToString().Equals(ID))
+                    return i;
+            }
+            return 0;
+        }
+
         private void buttonInserta_Click(object sender, EventArgs e)
         {
             if (!AbogadoIrresponsable.Equals(""))
@@ -1119,7 +1123,7 @@ namespace ActualizaBaseDatos
                 DatosPersonalesModificados = false;
                 FotoModificada = false;
                 BusquedaEnProceso = false;
-                //CargaBD();
+                CargaBD(ID);
             }
             else
             {
@@ -1131,6 +1135,7 @@ namespace ActualizaBaseDatos
         {
             if (!AbogadoIrresponsable.Equals(""))
             {
+                string IDMemoryRecall = textBoxID.Text;
                 AccessUtility.UpdateFuncionario(textBoxID.Text, textBoxPrimerNombre.Text, textBoxSegundoNombre.Text, textBoxApellidoPaterno.Text, textBoxApellidoMaterno.Text, textBoxNacionalidad.Text,
                     muestraCapturaFechaNacimiento.Año.ToString(), muestraCapturaFechaNacimiento.Mes.ToString(), muestraCapturaFechaNacimiento.Dia.ToString(), AbogadoIrresponsable);
                 if (FotoModificada) AccessUtility.SubeFoto(textBoxID.Text, NewFotoFileName);
@@ -1138,16 +1143,17 @@ namespace ActualizaBaseDatos
                 DatosPersonalesModificados = false;
                 FotoModificada = false;
                 BusquedaEnProceso = false;
-                //CargaBD();
+                CargaBD(IDMemoryRecall);
             }
             else
                 MessageBox.Show("Tienes que identificarte primero");
         }
 
-        private void CargaBD()
+        private void CargaBD(String ID)
         {
             funcionarios = AccessUtility.GetFuncionarios();
             funcionarioMostrado = new IndiceBD(funcionarios.Length);
+            funcionarioMostrado.Pos = DespliegaInformacionDelID(ID);
             if (funcionarioMostrado.Length > 0)
             {
                 DespliegaInformación(funcionarioMostrado.Pos);
@@ -1168,7 +1174,7 @@ namespace ActualizaBaseDatos
 
         private void buttonCargaBD_Click(object sender, EventArgs e)
         {
-            CargaBD();
+            CargaBD("A0");
         }
 
         private void treeViewOrganigramaAPF_AfterSelect(object sender, TreeViewEventArgs e)

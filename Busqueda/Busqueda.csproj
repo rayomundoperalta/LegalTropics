@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0D4B448C-A406-49BE-89EE-FC3875D57DA5}</ProjectGuid>
+    <ProjectGuid>{7C36EDB4-8E20-4ED8-A762-EDE5EA1A4CD7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OrganigramaAdmin</RootNamespace>
-    <AssemblyName>OrganigramaAdmin</AssemblyName>
+    <RootNamespace>Buscar</RootNamespace>
+    <AssemblyName>Buscar</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -42,29 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Organigrama.cs" />
+    <Compile Include="Busqueda.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\APFInfo\APFInfo.csproj">
-      <Project>{78e95583-3d1a-4b69-a3e2-734756f80145}</Project>
-      <Name>APFInfo</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Arboles\Arboles.csproj">
-      <Project>{0365e5a2-c233-4090-ac0a-1b9ac833be16}</Project>
-      <Name>Arboles</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Buscar\Buscar.csproj">
-      <Project>{295a5418-8989-4fde-8464-d6645fdd354e}</Project>
-      <Name>Buscar</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MSAccess\MSAccess.csproj">
-      <Project>{4887b47f-4a46-487e-ae56-782ae53c39d7}</Project>
-      <Name>MSAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OrgBusqueda\OrgBusqueda.csproj">
-      <Project>{c57a13ea-c816-4575-b35c-2a3828547514}</Project>
-      <Name>OrgBusqueda</Name>
+    <ProjectReference Include="..\FuncionesAuxiliares\FuncionesAuxiliares.csproj">
+      <Project>{67844adb-37ea-49e2-8db2-59c1cfa5ac1f}</Project>
+      <Name>FuncionesAuxiliares</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

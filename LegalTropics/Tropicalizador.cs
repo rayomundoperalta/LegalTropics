@@ -16,6 +16,7 @@ using MSAccess;
 using CifradoPeta;
 using PetaPublish;
 using FuncionesAuxiliares;
+using OrganigramaAdmin;
 
 
 namespace LegalTropics
@@ -30,7 +31,7 @@ namespace LegalTropics
         public ImageScroll AparadorDeFotografias;
         public PuestosAPF VentanaPuestos;
         public FuncionariosAPF VentanaFuncionarios;
-
+        
         enum Formato
         {
             Justificado = 0,

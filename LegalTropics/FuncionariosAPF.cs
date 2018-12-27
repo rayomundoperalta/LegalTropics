@@ -5,18 +5,13 @@ using System.Drawing;
 using System.Windows.Forms;
 using APFInfo;
 using System.Data;
+using FuncionesAuxiliares;
 
 namespace LegalTropics
 {
     public partial class FuncionariosAPF : Form
     {
         List<Registro> ListaFuncionarios;
-
-        private string SinA(string Cadena)
-        {
-            return Cadena.ToLower().Replace("á", "a").Replace("é", "e").Replace("í", "i").Replace("ó", "o").Replace("ú", "u").Replace("ü", "u")
-                .Replace(" ", string.Empty).Replace("\n", string.Empty).Replace("\t", string.Empty);
-        }
 
         public FuncionariosAPF()
         {
@@ -56,7 +51,7 @@ namespace LegalTropics
                 treeViewFuncionarios.Nodes.Add(new TreeNode(rangos[i].IniMayuscula + " - " + rangos[i].FinMayuscula));
                 /* O J O   CON EL ORDEN DE LOS OPERANDOS */
                 //MessageBox.Show(nombres[j]);
-                while ((j < nombres.Count) && EnRango(rangos[i], SinA(nombres[j]))) // Cuidado el orden de las condiciones es importante
+                while ((j < nombres.Count) && EnRango(rangos[i], Ut.SinA(nombres[j]).Replace(" ", string.Empty))) // Cuidado el orden de las condiciones es importante
                 {
                     //MessageBox.Show(nombres[j]);
                     treeViewFuncionarios.Nodes[i].Nodes.Add(new TreeNode(nombres[j].Substring(1, nombres[j].Length - 1)));

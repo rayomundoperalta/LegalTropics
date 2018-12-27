@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0D4B448C-A406-49BE-89EE-FC3875D57DA5}</ProjectGuid>
+    <ProjectGuid>{C57A13EA-C816-4575-B35C-2A3828547514}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OrganigramaAdmin</RootNamespace>
-    <AssemblyName>OrganigramaAdmin</AssemblyName>
+    <RootNamespace>OrgBusqueda</RootNamespace>
+    <AssemblyName>OrgBusqueda</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -33,7 +33,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,7 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Organigrama.cs" />
+    <Compile Include="ListaNombreNodo.cs" />
+    <Compile Include="NombreNodo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -54,17 +54,9 @@
       <Project>{0365e5a2-c233-4090-ac0a-1b9ac833be16}</Project>
       <Name>Arboles</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Buscar\Buscar.csproj">
-      <Project>{295a5418-8989-4fde-8464-d6645fdd354e}</Project>
-      <Name>Buscar</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MSAccess\MSAccess.csproj">
       <Project>{4887b47f-4a46-487e-ae56-782ae53c39d7}</Project>
       <Name>MSAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OrgBusqueda\OrgBusqueda.csproj">
-      <Project>{c57a13ea-c816-4575-b35c-2a3828547514}</Project>
-      <Name>OrgBusqueda</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

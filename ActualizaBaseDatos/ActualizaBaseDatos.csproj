@@ -83,11 +83,9 @@
     <Compile Include="AdminForm.Designer.cs">
       <DependentUpon>AdminForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Busqueda.cs" />
     <Compile Include="controlFlotante.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="IndiceBD.cs" />
     <Compile Include="MuestraCapturaFecha.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -133,6 +131,10 @@
     <ProjectReference Include="..\Arboles\Arboles.csproj">
       <Project>{0365e5a2-c233-4090-ac0a-1b9ac833be16}</Project>
       <Name>Arboles</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Buscar\Buscar.csproj">
+      <Project>{295a5418-8989-4fde-8464-d6645fdd354e}</Project>
+      <Name>Buscar</Name>
     </ProjectReference>
     <ProjectReference Include="..\CifradoPeta\CifradoPeta.csproj">
       <Project>{3d6bb4c5-a330-483f-a41a-e7c5632e6ad0}</Project>

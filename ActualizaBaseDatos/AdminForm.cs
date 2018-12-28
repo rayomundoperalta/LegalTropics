@@ -5,13 +5,21 @@ using System.Windows.Forms;
 using MSAccess;
 using Globales;
 using System.Text.RegularExpressions;
-using System.Drawing;
-using CifradoPeta;
+
 using OrganigramaAdmin;
 using Arboles;
 using APFInfo;
 using System.Collections.Generic;
 using FuncionesAuxiliares;
+using System.Drawing;
+using CifradoPeta;
+using iText.Forms;
+using iText.IO;
+using iText.Kernel;
+using iText.Pdfa;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
 
 namespace ActualizaBaseDatos
 {
@@ -73,29 +81,28 @@ namespace ActualizaBaseDatos
             {
                 if (value == 0)
                 {
-                    checkBoxAgrupaciónModifica.Checked = false;
-                    checkBoxActualizaPuesto.Checked = false;
-                    checkBoxActualizeFuncionario.Checked = false;
+                    for (int ix = 0; ix < checkedListBoxTipoModificacion.Items.Count; ++ix)
+                        checkedListBoxTipoModificacion.SetItemChecked(ix, false);
                 }
                 indiceModificación = value;
             }
         }
 
-        System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
+        //System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
 
         public Node<Registro> NodoSeleccionado
         {
             get
             {
-                if (nodoSeleccionado == null)
-                {
-                    t.ToString();
-                }
+                //if (nodoSeleccionado == null)
+                //{
+                //    t.ToString();
+                //}
                 return nodoSeleccionado;
             }
             set
             {
-                t.ToString();
+                //t.ToString();
                 nodoSeleccionado = value;
             }
         }
@@ -128,6 +135,20 @@ namespace ActualizaBaseDatos
             NivelSIguiente.Add(p.pila[niveles], "nadie");
             checkedListBoxTipoINFO.ItemCheck += checkedListBoxTipoINFO_ItemCheck;
             checkedListBoxTipoInformacion.ItemCheck += CheckedListBoxTipoInformacion_ItemCheck;
+            checkedListBoxTipoModificacion.ItemCheck += CheckedListBoxTipoModificacion_ItemCheck;
+            checkedListBoxTipoModificacion.SelectedIndexChanged += CheckedListBoxTipoModificacion_SelectedIndexChanged;
+        }
+
+        private void CheckedListBoxTipoModificacion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            IndiceModificación = checkedListBoxTipoModificacion.SelectedIndex + 1;
+        }
+
+        private void CheckedListBoxTipoModificacion_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            if (e.NewValue == CheckState.Checked)
+                for (int ix = 0; ix < checkedListBoxTipoModificacion.Items.Count; ++ix)
+                    if (e.Index != ix) checkedListBoxTipoModificacion.SetItemChecked(ix, false);
         }
 
         private void TreeViewOrganigramaAPF_BeforeSelect(object sender, TreeViewCancelEventArgs e)
@@ -223,7 +244,7 @@ namespace ActualizaBaseDatos
 
         private int ImprimeConsola(string line)
         {
-            Console.WriteLine(line);
+            //Console.WriteLine(line);
             return 0;
         }
 
@@ -362,7 +383,7 @@ namespace ActualizaBaseDatos
 
             using (var ms = new MemoryStream(Defines.ImagenDefault))
             {
-                pictureBox1.Image = Image.FromStream(ms);
+                pictureBox1.Image = System.Drawing.Image.FromStream(ms);
             }
 
             NewFotoFileName = string.Empty;
@@ -612,7 +633,6 @@ namespace ActualizaBaseDatos
             {
                 case "Fichas":
                 case "Organigrama APF":
-                    NodoSeleccionado = null;
                     IndiceModificación = 0;
                     break;
                 case "Publica Info":
@@ -1231,13 +1251,14 @@ namespace ActualizaBaseDatos
         // Modifica
         private void buttonOrgActualizaFuncionario_Click(object sender, EventArgs e)
         {
-            if (!AbogadoIrresponsable.Equals("") && NodoSeleccionado != null)
+            if (NodoSeleccionado == null) MessageBox.Show("Error NodoSeleccionado null " + AbogadoIrresponsable);
+            if (!AbogadoIrresponsable.Equals(""))
             {
                 String IDMostrado = NodoSeleccionado.Data.ID; // ID del Nodo del Arbol que estamos viendo
                 string ID; // ID de la ficha seleccionada
                 Registro NuevoRegistro = null;
                 Node<Registro> NuevoNode = null;
-                if (!(NodoSeleccionado == null) && ListaDeNodosPorID.ContainsKey(IDMostrado))
+                if (ListaDeNodosPorID.ContainsKey(IDMostrado))
                 {
                     
                     switch (IndiceModificación)
@@ -1278,7 +1299,7 @@ namespace ActualizaBaseDatos
                             break;
                         default:
                             MessageBox.Show("Se debe escoger alguna opción de modificación");
-                            break;
+                            return;
                     }
                     NuevoRegistro.NodoDelTreeView = NodoDeArbolMostrado;
                     treeViewOrganigramaAPF.SelectedNode = null;
@@ -1286,6 +1307,7 @@ namespace ActualizaBaseDatos
                     NodoSeleccionado = null;
                     organigrama.PrintTreeAPF(APF, ImprimeConsola);
                     textBoxOrgNombrePuestoModificado.Text = string.Empty;
+                    IndiceModificación = 0;
                 }
             }
             else
@@ -1365,20 +1387,50 @@ namespace ActualizaBaseDatos
 
         private void buttonPrintTree_Click(object sender, EventArgs e)
         {
-            ImprimeConsola("=================================");
-            organigrama.PrintTreeAPF(APF, ImprimeConsola);
-            ImprimeConsola(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><");
+            saveFileDialogTreeAPF.DefaultExt = "pdf";
+            saveFileDialogTreeAPF.ShowDialog();
+            if (!saveFileDialogTreeAPF.FileName.Equals(string.Empty))
+            {
+                var writer = new PdfWriter(saveFileDialogTreeAPF.FileName);
+                var pdf = new PdfDocument(writer);
+                var document = new Document(pdf);
+                int ImprimePDF(string line)
+                {
+                    document.Add(new Paragraph(line));
+                    return 0;
+                }
+                organigrama.PrintTreeAPF(APF, ImprimePDF);
+                document.Close();
+                pdf.Close();
+                writer.Close();
+                System.Diagnostics.Process.Start(saveFileDialogTreeAPF.FileName);
+            }
         }
 
         private void buttonListaDeNodosPorID_Click(object sender, EventArgs e)
         {
-            ImprimeConsola("-------------------------------------------------");
-            ImprimeConsola("Tamaño de la lista: " + ListaDeNodosPorID.Count);
-            foreach (var entry in ListaDeNodosPorID)
+            saveFileDialogTreeAPF.DefaultExt = "pdf";
+            saveFileDialogTreeAPF.ShowDialog();
+            if (!saveFileDialogTreeAPF.FileName.Equals(string.Empty))
             {
-                ImprimeConsola(entry.Key + " -- " + entry.Value.Data.ToString());
+                var writer = new PdfWriter(saveFileDialogTreeAPF.FileName);
+                var pdf = new PdfDocument(writer);
+                var document = new Document(pdf);
+                int ImprimePDF(string line)
+                {
+                    document.Add(new Paragraph(line));
+                    return 0;
+                }
+                ImprimePDF("Tamaño de la lista: " + ListaDeNodosPorID.Count);
+                foreach (var entry in ListaDeNodosPorID)
+                {
+                    ImprimePDF(entry.Key + " -- " + entry.Value.Data.ToString());
+                }
+                document.Close();
+                pdf.Close();
+                writer.Close();
+                System.Diagnostics.Process.Start(saveFileDialogTreeAPF.FileName);
             }
-            ImprimeConsola("///////////////////////////////////////////////////////");
         }
 
         private void buttonOrgBorraEntrada_Click(object sender, EventArgs e)
@@ -1846,30 +1898,6 @@ namespace ActualizaBaseDatos
             }
         }
 
-        private void checkBoxAgrupaciónModifica_CheckedChanged(object sender, EventArgs e)
-        {
-            checkBoxAgrupaciónModifica.Checked = true;
-            checkBoxActualizaPuesto.Checked = false;
-            checkBoxActualizeFuncionario.Checked = false;
-            IndiceModificación = 1;
-        }
-
-        private void checkBoxActualizaPuesto_CheckedChanged(object sender, EventArgs e)
-        {
-            checkBoxAgrupaciónModifica.Checked = false;
-            checkBoxActualizaPuesto.Checked = true;
-            checkBoxActualizeFuncionario.Checked = false;
-            IndiceModificación = 2;
-        }
-
-        private void checkBoxActualizeFuncionario_CheckedChanged(object sender, EventArgs e)
-        {
-            checkBoxAgrupaciónModifica.Checked = false;
-            checkBoxActualizaPuesto.Checked = false;
-            checkBoxActualizeFuncionario.Checked = true;
-            IndiceModificación = 3;
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             openFileDialogDataBase.Filter = "Base de Datos APF|*.accdb";
@@ -1903,6 +1931,11 @@ namespace ActualizaBaseDatos
             treeViewOrganigramaAPF.SelectedNode = ListaDeNodosPorID[ID].Data.NodoDelTreeView;
             treeViewOrganigramaAPF.SelectedNode.Expand();
             treeViewOrganigramaAPF.SelectedNode.BackColor = Color.CadetBlue;
+        }
+
+        private void saveFileDialogTreeAPF_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
         }
     }
 }

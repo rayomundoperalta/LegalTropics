@@ -102,6 +102,7 @@
             this.Controls.Add(this.buttonOrgBuscarFuncionario);
             this.Controls.Add(this.textBoxOrgCadenaBusqueda);
             this.Controls.Add(this.treeViewAPF);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "NavegaciónAPF";
             this.Text = "Organigrama de la APF";
             this.ResumeLayout(false);

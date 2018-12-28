@@ -37,7 +37,6 @@
             this.label22 = new System.Windows.Forms.Label();
             this.textBoxRecuperaID = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.muestraCapturaFechaNacimiento = new ActualizaBaseDatos.MuestraCapturaFecha();
             this.buttonCargaBD = new System.Windows.Forms.Button();
             this.buttonNuevo = new System.Windows.Forms.Button();
             this.buttonModifica = new System.Windows.Forms.Button();
@@ -60,8 +59,6 @@
             this.tabPageEscolaridad = new System.Windows.Forms.TabPage();
             this.labelAbogadoRespEsc = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
-            this.muestraCapturaFechaFin = new ActualizaBaseDatos.MuestraCapturaFecha();
-            this.muestraCapturaFechaInicio = new ActualizaBaseDatos.MuestraCapturaFecha();
             this.buttonEscolaridadElimina = new System.Windows.Forms.Button();
             this.buttonEscolaridadLimpia = new System.Windows.Forms.Button();
             this.buttonEscolaridadInserta = new System.Windows.Forms.Button();
@@ -97,8 +94,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.textBoxAPPartido = new System.Windows.Forms.TextBox();
             this.textBoxAPID = new System.Windows.Forms.TextBox();
-            this.muestraCapturaFechaAPFin = new ActualizaBaseDatos.MuestraCapturaFecha();
-            this.muestraCapturaFechaAPInicio = new ActualizaBaseDatos.MuestraCapturaFecha();
             this.tabPageINFO = new System.Windows.Forms.TabPage();
             this.checkedListBoxTipoInformacion = new System.Windows.Forms.CheckedListBox();
             this.labelAbogadoRespInfoGral = new System.Windows.Forms.Label();
@@ -140,8 +135,6 @@
             this.textBoxPuestosPuesto = new System.Windows.Forms.TextBox();
             this.textBoxPuestosDependencia = new System.Windows.Forms.TextBox();
             this.textBoxPuestosID = new System.Windows.Forms.TextBox();
-            this.muestraCapturaFechaPuestoFin = new ActualizaBaseDatos.MuestraCapturaFecha();
-            this.muestraCapturaFechaPuestoInicio = new ActualizaBaseDatos.MuestraCapturaFecha();
             this.tabPageCirculoCerrado = new System.Windows.Forms.TabPage();
             this.labelCirculoCercanoAbogadoResp = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
@@ -181,6 +174,8 @@
             this.tabControlAdministracionBaseDatos = new System.Windows.Forms.TabControl();
             this.tabPageFichas = new System.Windows.Forms.TabPage();
             this.tabPageOrganigrama = new System.Windows.Forms.TabPage();
+            this.buttonBuscaFunSeleccionado = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.labelLoginAs2 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.buttonOrgInserta = new System.Windows.Forms.Button();
@@ -192,10 +187,8 @@
             this.buttonListaDeNodosPorID = new System.Windows.Forms.Button();
             this.buttonPrintTree = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.checkBoxActualizeFuncionario = new System.Windows.Forms.CheckBox();
-            this.checkBoxActualizaPuesto = new System.Windows.Forms.CheckBox();
-            this.checkBoxAgrupaciónModifica = new System.Windows.Forms.CheckBox();
             this.textBoxOrgNombrePuestoModificado = new System.Windows.Forms.TextBox();
+            this.checkedListBoxTipoModificacion = new System.Windows.Forms.CheckedListBox();
             this.label20 = new System.Windows.Forms.Label();
             this.buttonOrgActualizaFuncionario = new System.Windows.Forms.Button();
             this.buttonOrgBackup = new System.Windows.Forms.Button();
@@ -218,9 +211,15 @@
             this.textBoxAbogadoIrresponsable = new System.Windows.Forms.TextBox();
             this.tabPageDesconectate = new System.Windows.Forms.TabPage();
             this.openFileDialogFoto = new System.Windows.Forms.OpenFileDialog();
-            this.button1 = new System.Windows.Forms.Button();
             this.openFileDialogDataBase = new System.Windows.Forms.OpenFileDialog();
-            this.buttonBuscaFunSeleccionado = new System.Windows.Forms.Button();
+            this.saveFileDialogTreeAPF = new System.Windows.Forms.SaveFileDialog();
+            this.muestraCapturaFechaNacimiento = new ActualizaBaseDatos.MuestraCapturaFecha();
+            this.muestraCapturaFechaFin = new ActualizaBaseDatos.MuestraCapturaFecha();
+            this.muestraCapturaFechaInicio = new ActualizaBaseDatos.MuestraCapturaFecha();
+            this.muestraCapturaFechaAPFin = new ActualizaBaseDatos.MuestraCapturaFecha();
+            this.muestraCapturaFechaAPInicio = new ActualizaBaseDatos.MuestraCapturaFecha();
+            this.muestraCapturaFechaPuestoFin = new ActualizaBaseDatos.MuestraCapturaFecha();
+            this.muestraCapturaFechaPuestoInicio = new ActualizaBaseDatos.MuestraCapturaFecha();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tabControlInformación.SuspendLayout();
@@ -347,17 +346,6 @@
             this.label21.Size = new System.Drawing.Size(21, 17);
             this.label21.TabIndex = 21;
             this.label21.Text = "ID";
-            // 
-            // muestraCapturaFechaNacimiento
-            // 
-            this.muestraCapturaFechaNacimiento.Año = 2018;
-            this.muestraCapturaFechaNacimiento.Dia = 19;
-            this.muestraCapturaFechaNacimiento.Location = new System.Drawing.Point(899, 133);
-            this.muestraCapturaFechaNacimiento.Mes = 12;
-            this.muestraCapturaFechaNacimiento.Name = "muestraCapturaFechaNacimiento";
-            this.muestraCapturaFechaNacimiento.Size = new System.Drawing.Size(211, 59);
-            this.muestraCapturaFechaNacimiento.TabIndex = 20;
-            this.muestraCapturaFechaNacimiento.Load += new System.EventHandler(this.muestraCapturaFechaNacimiento_Load);
             // 
             // buttonCargaBD
             // 
@@ -588,26 +576,6 @@
             this.label23.Size = new System.Drawing.Size(91, 17);
             this.label23.TabIndex = 22;
             this.label23.Text = "Responsable";
-            // 
-            // muestraCapturaFechaFin
-            // 
-            this.muestraCapturaFechaFin.Año = 2018;
-            this.muestraCapturaFechaFin.Dia = 19;
-            this.muestraCapturaFechaFin.Location = new System.Drawing.Point(288, 125);
-            this.muestraCapturaFechaFin.Mes = 12;
-            this.muestraCapturaFechaFin.Name = "muestraCapturaFechaFin";
-            this.muestraCapturaFechaFin.Size = new System.Drawing.Size(211, 59);
-            this.muestraCapturaFechaFin.TabIndex = 21;
-            // 
-            // muestraCapturaFechaInicio
-            // 
-            this.muestraCapturaFechaInicio.Año = 2018;
-            this.muestraCapturaFechaInicio.Dia = 19;
-            this.muestraCapturaFechaInicio.Location = new System.Drawing.Point(6, 125);
-            this.muestraCapturaFechaInicio.Mes = 12;
-            this.muestraCapturaFechaInicio.Name = "muestraCapturaFechaInicio";
-            this.muestraCapturaFechaInicio.Size = new System.Drawing.Size(211, 59);
-            this.muestraCapturaFechaInicio.TabIndex = 20;
             // 
             // buttonEscolaridadElimina
             // 
@@ -950,26 +918,6 @@
             this.textBoxAPID.ReadOnly = true;
             this.textBoxAPID.Size = new System.Drawing.Size(100, 22);
             this.textBoxAPID.TabIndex = 1;
-            // 
-            // muestraCapturaFechaAPFin
-            // 
-            this.muestraCapturaFechaAPFin.Año = 2018;
-            this.muestraCapturaFechaAPFin.Dia = 19;
-            this.muestraCapturaFechaAPFin.Location = new System.Drawing.Point(276, 135);
-            this.muestraCapturaFechaAPFin.Mes = 12;
-            this.muestraCapturaFechaAPFin.Name = "muestraCapturaFechaAPFin";
-            this.muestraCapturaFechaAPFin.Size = new System.Drawing.Size(211, 59);
-            this.muestraCapturaFechaAPFin.TabIndex = 30;
-            // 
-            // muestraCapturaFechaAPInicio
-            // 
-            this.muestraCapturaFechaAPInicio.Año = 2018;
-            this.muestraCapturaFechaAPInicio.Dia = 19;
-            this.muestraCapturaFechaAPInicio.Location = new System.Drawing.Point(3, 135);
-            this.muestraCapturaFechaAPInicio.Mes = 12;
-            this.muestraCapturaFechaAPInicio.Name = "muestraCapturaFechaAPInicio";
-            this.muestraCapturaFechaAPInicio.Size = new System.Drawing.Size(211, 59);
-            this.muestraCapturaFechaAPInicio.TabIndex = 29;
             // 
             // tabPageINFO
             // 
@@ -1397,26 +1345,6 @@
             this.textBoxPuestosID.Size = new System.Drawing.Size(100, 22);
             this.textBoxPuestosID.TabIndex = 1;
             // 
-            // muestraCapturaFechaPuestoFin
-            // 
-            this.muestraCapturaFechaPuestoFin.Año = 2018;
-            this.muestraCapturaFechaPuestoFin.Dia = 19;
-            this.muestraCapturaFechaPuestoFin.Location = new System.Drawing.Point(276, 157);
-            this.muestraCapturaFechaPuestoFin.Mes = 12;
-            this.muestraCapturaFechaPuestoFin.Name = "muestraCapturaFechaPuestoFin";
-            this.muestraCapturaFechaPuestoFin.Size = new System.Drawing.Size(211, 59);
-            this.muestraCapturaFechaPuestoFin.TabIndex = 30;
-            // 
-            // muestraCapturaFechaPuestoInicio
-            // 
-            this.muestraCapturaFechaPuestoInicio.Año = 2018;
-            this.muestraCapturaFechaPuestoInicio.Dia = 19;
-            this.muestraCapturaFechaPuestoInicio.Location = new System.Drawing.Point(9, 157);
-            this.muestraCapturaFechaPuestoInicio.Mes = 12;
-            this.muestraCapturaFechaPuestoInicio.Name = "muestraCapturaFechaPuestoInicio";
-            this.muestraCapturaFechaPuestoInicio.Size = new System.Drawing.Size(211, 59);
-            this.muestraCapturaFechaPuestoInicio.TabIndex = 29;
-            // 
             // tabPageCirculoCerrado
             // 
             this.tabPageCirculoCerrado.Controls.Add(this.labelCirculoCercanoAbogadoResp);
@@ -1820,6 +1748,7 @@
             // 
             // tabPageOrganigrama
             // 
+            this.tabPageOrganigrama.BackColor = System.Drawing.SystemColors.Window;
             this.tabPageOrganigrama.Controls.Add(this.buttonBuscaFunSeleccionado);
             this.tabPageOrganigrama.Controls.Add(this.button1);
             this.tabPageOrganigrama.Controls.Add(this.labelLoginAs2);
@@ -1845,8 +1774,27 @@
             this.tabPageOrganigrama.Size = new System.Drawing.Size(1466, 638);
             this.tabPageOrganigrama.TabIndex = 1;
             this.tabPageOrganigrama.Text = "Organigrama APF";
-            this.tabPageOrganigrama.UseVisualStyleBackColor = true;
             this.tabPageOrganigrama.Click += new System.EventHandler(this.tabPageOrganigrama_Click);
+            // 
+            // buttonBuscaFunSeleccionado
+            // 
+            this.buttonBuscaFunSeleccionado.Location = new System.Drawing.Point(940, 64);
+            this.buttonBuscaFunSeleccionado.Name = "buttonBuscaFunSeleccionado";
+            this.buttonBuscaFunSeleccionado.Size = new System.Drawing.Size(189, 33);
+            this.buttonBuscaFunSeleccionado.TabIndex = 24;
+            this.buttonBuscaFunSeleccionado.Text = "Busca Fun Seleccionado";
+            this.buttonBuscaFunSeleccionado.UseVisualStyleBackColor = true;
+            this.buttonBuscaFunSeleccionado.Click += new System.EventHandler(this.buttonBuscaFunSeleccionado_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1145, 111);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(112, 39);
+            this.button1.TabIndex = 23;
+            this.button1.Text = "Carga Base";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // labelLoginAs2
             // 
@@ -1947,10 +1895,8 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.checkBoxActualizeFuncionario);
-            this.groupBox3.Controls.Add(this.checkBoxActualizaPuesto);
-            this.groupBox3.Controls.Add(this.checkBoxAgrupaciónModifica);
             this.groupBox3.Controls.Add(this.textBoxOrgNombrePuestoModificado);
+            this.groupBox3.Controls.Add(this.checkedListBoxTipoModificacion);
             this.groupBox3.Controls.Add(this.label20);
             this.groupBox3.Controls.Add(this.buttonOrgActualizaFuncionario);
             this.groupBox3.Location = new System.Drawing.Point(758, 345);
@@ -1960,45 +1906,28 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Modica Registro del Organigrama";
             // 
-            // checkBoxActualizeFuncionario
-            // 
-            this.checkBoxActualizeFuncionario.AutoSize = true;
-            this.checkBoxActualizeFuncionario.Location = new System.Drawing.Point(459, 79);
-            this.checkBoxActualizeFuncionario.Name = "checkBoxActualizeFuncionario";
-            this.checkBoxActualizeFuncionario.Size = new System.Drawing.Size(165, 21);
-            this.checkBoxActualizeFuncionario.TabIndex = 6;
-            this.checkBoxActualizeFuncionario.Text = "Actualiza Funcionario";
-            this.checkBoxActualizeFuncionario.UseVisualStyleBackColor = true;
-            this.checkBoxActualizeFuncionario.CheckedChanged += new System.EventHandler(this.checkBoxActualizeFuncionario_CheckedChanged);
-            // 
-            // checkBoxActualizaPuesto
-            // 
-            this.checkBoxActualizaPuesto.AutoSize = true;
-            this.checkBoxActualizaPuesto.Location = new System.Drawing.Point(242, 79);
-            this.checkBoxActualizaPuesto.Name = "checkBoxActualizaPuesto";
-            this.checkBoxActualizaPuesto.Size = new System.Drawing.Size(135, 21);
-            this.checkBoxActualizaPuesto.TabIndex = 5;
-            this.checkBoxActualizaPuesto.Text = "Actualiza Puesto";
-            this.checkBoxActualizaPuesto.UseVisualStyleBackColor = true;
-            this.checkBoxActualizaPuesto.CheckedChanged += new System.EventHandler(this.checkBoxActualizaPuesto_CheckedChanged);
-            // 
-            // checkBoxAgrupaciónModifica
-            // 
-            this.checkBoxAgrupaciónModifica.AutoSize = true;
-            this.checkBoxAgrupaciónModifica.Location = new System.Drawing.Point(27, 79);
-            this.checkBoxAgrupaciónModifica.Name = "checkBoxAgrupaciónModifica";
-            this.checkBoxAgrupaciónModifica.Size = new System.Drawing.Size(160, 21);
-            this.checkBoxAgrupaciónModifica.TabIndex = 4;
-            this.checkBoxAgrupaciónModifica.Text = "Nodo de Agrupación";
-            this.checkBoxAgrupaciónModifica.UseVisualStyleBackColor = true;
-            this.checkBoxAgrupaciónModifica.CheckedChanged += new System.EventHandler(this.checkBoxAgrupaciónModifica_CheckedChanged);
-            // 
             // textBoxOrgNombrePuestoModificado
             // 
             this.textBoxOrgNombrePuestoModificado.Location = new System.Drawing.Point(159, 38);
             this.textBoxOrgNombrePuestoModificado.Name = "textBoxOrgNombrePuestoModificado";
             this.textBoxOrgNombrePuestoModificado.Size = new System.Drawing.Size(468, 22);
             this.textBoxOrgNombrePuestoModificado.TabIndex = 3;
+            // 
+            // checkedListBoxTipoModificacion
+            // 
+            this.checkedListBoxTipoModificacion.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.checkedListBoxTipoModificacion.CheckOnClick = true;
+            this.checkedListBoxTipoModificacion.ColumnWidth = 170;
+            this.checkedListBoxTipoModificacion.FormattingEnabled = true;
+            this.checkedListBoxTipoModificacion.Items.AddRange(new object[] {
+            "Nodo de Agrupación",
+            "Actualiza Puesto",
+            "Actualiza Funcionario"});
+            this.checkedListBoxTipoModificacion.Location = new System.Drawing.Point(70, 73);
+            this.checkedListBoxTipoModificacion.MultiColumn = true;
+            this.checkedListBoxTipoModificacion.Name = "checkedListBoxTipoModificacion";
+            this.checkedListBoxTipoModificacion.Size = new System.Drawing.Size(519, 17);
+            this.checkedListBoxTipoModificacion.TabIndex = 25;
             // 
             // label20
             // 
@@ -2205,29 +2134,87 @@
             this.tabPageDesconectate.Text = "Desconectate";
             this.tabPageDesconectate.UseVisualStyleBackColor = true;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(1145, 111);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(112, 39);
-            this.button1.TabIndex = 23;
-            this.button1.Text = "Carga Base";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // openFileDialogDataBase
             // 
             this.openFileDialogDataBase.FileName = "BaseDeDatosAPF";
             // 
-            // buttonBuscaFunSeleccionado
+            // saveFileDialogTreeAPF
             // 
-            this.buttonBuscaFunSeleccionado.Location = new System.Drawing.Point(940, 64);
-            this.buttonBuscaFunSeleccionado.Name = "buttonBuscaFunSeleccionado";
-            this.buttonBuscaFunSeleccionado.Size = new System.Drawing.Size(189, 33);
-            this.buttonBuscaFunSeleccionado.TabIndex = 24;
-            this.buttonBuscaFunSeleccionado.Text = "Busca Fun Seleccionado";
-            this.buttonBuscaFunSeleccionado.UseVisualStyleBackColor = true;
-            this.buttonBuscaFunSeleccionado.Click += new System.EventHandler(this.buttonBuscaFunSeleccionado_Click);
+            this.saveFileDialogTreeAPF.DefaultExt = "*.pdf";
+            this.saveFileDialogTreeAPF.Filter = "APF Tree  | *.pdf";
+            this.saveFileDialogTreeAPF.Title = "APF Tree";
+            this.saveFileDialogTreeAPF.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialogTreeAPF_FileOk);
+            // 
+            // muestraCapturaFechaNacimiento
+            // 
+            this.muestraCapturaFechaNacimiento.Año = 2018;
+            this.muestraCapturaFechaNacimiento.Dia = 19;
+            this.muestraCapturaFechaNacimiento.Location = new System.Drawing.Point(899, 133);
+            this.muestraCapturaFechaNacimiento.Mes = 12;
+            this.muestraCapturaFechaNacimiento.Name = "muestraCapturaFechaNacimiento";
+            this.muestraCapturaFechaNacimiento.Size = new System.Drawing.Size(211, 59);
+            this.muestraCapturaFechaNacimiento.TabIndex = 20;
+            this.muestraCapturaFechaNacimiento.Load += new System.EventHandler(this.muestraCapturaFechaNacimiento_Load);
+            // 
+            // muestraCapturaFechaFin
+            // 
+            this.muestraCapturaFechaFin.Año = 2018;
+            this.muestraCapturaFechaFin.Dia = 19;
+            this.muestraCapturaFechaFin.Location = new System.Drawing.Point(288, 125);
+            this.muestraCapturaFechaFin.Mes = 12;
+            this.muestraCapturaFechaFin.Name = "muestraCapturaFechaFin";
+            this.muestraCapturaFechaFin.Size = new System.Drawing.Size(211, 59);
+            this.muestraCapturaFechaFin.TabIndex = 21;
+            // 
+            // muestraCapturaFechaInicio
+            // 
+            this.muestraCapturaFechaInicio.Año = 2018;
+            this.muestraCapturaFechaInicio.Dia = 19;
+            this.muestraCapturaFechaInicio.Location = new System.Drawing.Point(6, 125);
+            this.muestraCapturaFechaInicio.Mes = 12;
+            this.muestraCapturaFechaInicio.Name = "muestraCapturaFechaInicio";
+            this.muestraCapturaFechaInicio.Size = new System.Drawing.Size(211, 59);
+            this.muestraCapturaFechaInicio.TabIndex = 20;
+            // 
+            // muestraCapturaFechaAPFin
+            // 
+            this.muestraCapturaFechaAPFin.Año = 2018;
+            this.muestraCapturaFechaAPFin.Dia = 19;
+            this.muestraCapturaFechaAPFin.Location = new System.Drawing.Point(276, 135);
+            this.muestraCapturaFechaAPFin.Mes = 12;
+            this.muestraCapturaFechaAPFin.Name = "muestraCapturaFechaAPFin";
+            this.muestraCapturaFechaAPFin.Size = new System.Drawing.Size(211, 59);
+            this.muestraCapturaFechaAPFin.TabIndex = 30;
+            // 
+            // muestraCapturaFechaAPInicio
+            // 
+            this.muestraCapturaFechaAPInicio.Año = 2018;
+            this.muestraCapturaFechaAPInicio.Dia = 19;
+            this.muestraCapturaFechaAPInicio.Location = new System.Drawing.Point(3, 135);
+            this.muestraCapturaFechaAPInicio.Mes = 12;
+            this.muestraCapturaFechaAPInicio.Name = "muestraCapturaFechaAPInicio";
+            this.muestraCapturaFechaAPInicio.Size = new System.Drawing.Size(211, 59);
+            this.muestraCapturaFechaAPInicio.TabIndex = 29;
+            // 
+            // muestraCapturaFechaPuestoFin
+            // 
+            this.muestraCapturaFechaPuestoFin.Año = 2018;
+            this.muestraCapturaFechaPuestoFin.Dia = 19;
+            this.muestraCapturaFechaPuestoFin.Location = new System.Drawing.Point(276, 157);
+            this.muestraCapturaFechaPuestoFin.Mes = 12;
+            this.muestraCapturaFechaPuestoFin.Name = "muestraCapturaFechaPuestoFin";
+            this.muestraCapturaFechaPuestoFin.Size = new System.Drawing.Size(211, 59);
+            this.muestraCapturaFechaPuestoFin.TabIndex = 30;
+            // 
+            // muestraCapturaFechaPuestoInicio
+            // 
+            this.muestraCapturaFechaPuestoInicio.Año = 2018;
+            this.muestraCapturaFechaPuestoInicio.Dia = 19;
+            this.muestraCapturaFechaPuestoInicio.Location = new System.Drawing.Point(9, 157);
+            this.muestraCapturaFechaPuestoInicio.Mes = 12;
+            this.muestraCapturaFechaPuestoInicio.Name = "muestraCapturaFechaPuestoInicio";
+            this.muestraCapturaFechaPuestoInicio.Size = new System.Drawing.Size(211, 59);
+            this.muestraCapturaFechaPuestoInicio.TabIndex = 29;
             // 
             // AdminForm
             // 
@@ -2235,6 +2222,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1516, 679);
             this.Controls.Add(this.tabControlAdministracionBaseDatos);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "AdminForm";
             this.Text = "Administración de la Administración la Base de Datos";
             this.Load += new System.EventHandler(this.AdminForm_Load);
@@ -2452,7 +2440,6 @@
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.TextBox textBoxAbogadoIrresponsable;
         private System.Windows.Forms.Button buttonVerificaOK;
-        private System.Windows.Forms.CheckBox checkBoxAgrupaciónModifica;
         private System.Windows.Forms.CheckBox checkBoxAgrupacionCrear;
         private System.Windows.Forms.Button buttonOrgElimina;
         private System.Windows.Forms.Button buttonOrgInserta;
@@ -2460,11 +2447,11 @@
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label labelLoginAs2;
         private System.Windows.Forms.Label label32;
-        private System.Windows.Forms.CheckBox checkBoxActualizeFuncionario;
-        private System.Windows.Forms.CheckBox checkBoxActualizaPuesto;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.OpenFileDialog openFileDialogDataBase;
         private System.Windows.Forms.Button buttonBuscaFunSeleccionado;
+        private System.Windows.Forms.CheckedListBox checkedListBoxTipoModificacion;
+        private System.Windows.Forms.SaveFileDialog saveFileDialogTreeAPF;
     }
 }
 

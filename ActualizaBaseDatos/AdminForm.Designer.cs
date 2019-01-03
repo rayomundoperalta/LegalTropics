@@ -187,8 +187,11 @@
             this.buttonListaDeNodosPorID = new System.Windows.Forms.Button();
             this.buttonPrintTree = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.labelFuncionario = new System.Windows.Forms.Label();
+            this.labelPuesto = new System.Windows.Forms.Label();
+            this.labelNodoAgrupación = new System.Windows.Forms.Label();
+            this.buttonSelect = new System.Windows.Forms.Button();
             this.textBoxOrgNombrePuestoModificado = new System.Windows.Forms.TextBox();
-            this.checkedListBoxTipoModificacion = new System.Windows.Forms.CheckedListBox();
             this.label20 = new System.Windows.Forms.Label();
             this.buttonOrgActualizaFuncionario = new System.Windows.Forms.Button();
             this.buttonOrgBackup = new System.Windows.Forms.Button();
@@ -1895,8 +1898,11 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.labelFuncionario);
+            this.groupBox3.Controls.Add(this.labelPuesto);
+            this.groupBox3.Controls.Add(this.labelNodoAgrupación);
+            this.groupBox3.Controls.Add(this.buttonSelect);
             this.groupBox3.Controls.Add(this.textBoxOrgNombrePuestoModificado);
-            this.groupBox3.Controls.Add(this.checkedListBoxTipoModificacion);
             this.groupBox3.Controls.Add(this.label20);
             this.groupBox3.Controls.Add(this.buttonOrgActualizaFuncionario);
             this.groupBox3.Location = new System.Drawing.Point(758, 345);
@@ -1906,28 +1912,50 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Modica Registro del Organigrama";
             // 
+            // labelFuncionario
+            // 
+            this.labelFuncionario.AutoSize = true;
+            this.labelFuncionario.Location = new System.Drawing.Point(545, 81);
+            this.labelFuncionario.Name = "labelFuncionario";
+            this.labelFuncionario.Size = new System.Drawing.Size(82, 17);
+            this.labelFuncionario.TabIndex = 7;
+            this.labelFuncionario.Text = "Funcionario";
+            // 
+            // labelPuesto
+            // 
+            this.labelPuesto.AutoSize = true;
+            this.labelPuesto.Location = new System.Drawing.Point(383, 81);
+            this.labelPuesto.Name = "labelPuesto";
+            this.labelPuesto.Size = new System.Drawing.Size(52, 17);
+            this.labelPuesto.TabIndex = 6;
+            this.labelPuesto.Text = "Puesto";
+            this.labelPuesto.Click += new System.EventHandler(this.label38_Click);
+            // 
+            // labelNodoAgrupación
+            // 
+            this.labelNodoAgrupación.AutoSize = true;
+            this.labelNodoAgrupación.Location = new System.Drawing.Point(165, 81);
+            this.labelNodoAgrupación.Name = "labelNodoAgrupación";
+            this.labelNodoAgrupación.Size = new System.Drawing.Size(138, 17);
+            this.labelNodoAgrupación.TabIndex = 5;
+            this.labelNodoAgrupación.Text = "Nodo de Agrupación";
+            // 
+            // buttonSelect
+            // 
+            this.buttonSelect.Location = new System.Drawing.Point(37, 78);
+            this.buttonSelect.Name = "buttonSelect";
+            this.buttonSelect.Size = new System.Drawing.Size(87, 23);
+            this.buttonSelect.TabIndex = 4;
+            this.buttonSelect.Text = "Selecciona";
+            this.buttonSelect.UseVisualStyleBackColor = true;
+            this.buttonSelect.Click += new System.EventHandler(this.buttonSelect_Click);
+            // 
             // textBoxOrgNombrePuestoModificado
             // 
             this.textBoxOrgNombrePuestoModificado.Location = new System.Drawing.Point(159, 38);
             this.textBoxOrgNombrePuestoModificado.Name = "textBoxOrgNombrePuestoModificado";
             this.textBoxOrgNombrePuestoModificado.Size = new System.Drawing.Size(468, 22);
             this.textBoxOrgNombrePuestoModificado.TabIndex = 3;
-            // 
-            // checkedListBoxTipoModificacion
-            // 
-            this.checkedListBoxTipoModificacion.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.checkedListBoxTipoModificacion.CheckOnClick = true;
-            this.checkedListBoxTipoModificacion.ColumnWidth = 170;
-            this.checkedListBoxTipoModificacion.FormattingEnabled = true;
-            this.checkedListBoxTipoModificacion.Items.AddRange(new object[] {
-            "Nodo de Agrupación",
-            "Actualiza Puesto",
-            "Actualiza Funcionario"});
-            this.checkedListBoxTipoModificacion.Location = new System.Drawing.Point(70, 73);
-            this.checkedListBoxTipoModificacion.MultiColumn = true;
-            this.checkedListBoxTipoModificacion.Name = "checkedListBoxTipoModificacion";
-            this.checkedListBoxTipoModificacion.Size = new System.Drawing.Size(519, 17);
-            this.checkedListBoxTipoModificacion.TabIndex = 25;
             // 
             // label20
             // 
@@ -2220,9 +2248,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1516, 679);
+            this.ClientSize = new System.Drawing.Size(1567, 734);
             this.Controls.Add(this.tabControlAdministracionBaseDatos);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "AdminForm";
             this.Text = "Administración de la Administración la Base de Datos";
             this.Load += new System.EventHandler(this.AdminForm_Load);
@@ -2450,8 +2477,11 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.OpenFileDialog openFileDialogDataBase;
         private System.Windows.Forms.Button buttonBuscaFunSeleccionado;
-        private System.Windows.Forms.CheckedListBox checkedListBoxTipoModificacion;
         private System.Windows.Forms.SaveFileDialog saveFileDialogTreeAPF;
+        private System.Windows.Forms.Label labelFuncionario;
+        private System.Windows.Forms.Label labelPuesto;
+        private System.Windows.Forms.Label labelNodoAgrupación;
+        private System.Windows.Forms.Button buttonSelect;
     }
 }
 

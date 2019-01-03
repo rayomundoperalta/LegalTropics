@@ -21,6 +21,9 @@ using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 
+// In case of installation problems:  Solo indicar que borrando todas las claves del registro 
+// HKEY_CURRENT_USER\Software\Classes\Software\Microsoft\Windows\CurrentVersion\PackageMetadata
+
 namespace ActualizaBaseDatos
 {
     public partial class AdminForm : Form
@@ -43,6 +46,7 @@ namespace ActualizaBaseDatos
         DataRow[] Puestos;
         DataRow[] CirculoCercano;
         DataRow[] DatosContacto;
+        const int NumeroDeBotones = 3;
 
         string NewFotoFileName = string.Empty;
 
@@ -79,12 +83,31 @@ namespace ActualizaBaseDatos
             }
             set
             {
-                if (value == 0)
+                indiceModificación = (value % (NumeroDeBotones + 1)); // 1 posición para que no haya nada seleccionado
+
+                switch( indiceModificación)
                 {
-                    for (int ix = 0; ix < checkedListBoxTipoModificacion.Items.Count; ++ix)
-                        checkedListBoxTipoModificacion.SetItemChecked(ix, false);
+                    case 1:
+                        labelFuncionario.BackColor = Color.White;
+                        labelPuesto.BackColor = Color.White;
+                        labelNodoAgrupación.BackColor = Color.Aquamarine;
+                        break;
+                    case 2:
+                        labelNodoAgrupación.BackColor = Color.White;
+                        labelFuncionario.BackColor = Color.White;
+                        labelPuesto.BackColor = Color.Aquamarine;
+                        break;
+                    case 3:
+                        labelPuesto.BackColor = Color.White;
+                        labelNodoAgrupación.BackColor = Color.White;
+                        labelFuncionario.BackColor = Color.Aquamarine;
+                        break;
+                    default:
+                        labelFuncionario.BackColor = Color.White;
+                        labelPuesto.BackColor = Color.White;
+                        labelNodoAgrupación.BackColor = Color.White;
+                        break;
                 }
-                indiceModificación = value;
             }
         }
 
@@ -135,20 +158,6 @@ namespace ActualizaBaseDatos
             NivelSIguiente.Add(p.pila[niveles], "nadie");
             checkedListBoxTipoINFO.ItemCheck += checkedListBoxTipoINFO_ItemCheck;
             checkedListBoxTipoInformacion.ItemCheck += CheckedListBoxTipoInformacion_ItemCheck;
-            checkedListBoxTipoModificacion.ItemCheck += CheckedListBoxTipoModificacion_ItemCheck;
-            checkedListBoxTipoModificacion.SelectedIndexChanged += CheckedListBoxTipoModificacion_SelectedIndexChanged;
-        }
-
-        private void CheckedListBoxTipoModificacion_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            IndiceModificación = checkedListBoxTipoModificacion.SelectedIndex + 1;
-        }
-
-        private void CheckedListBoxTipoModificacion_ItemCheck(object sender, ItemCheckEventArgs e)
-        {
-            if (e.NewValue == CheckState.Checked)
-                for (int ix = 0; ix < checkedListBoxTipoModificacion.Items.Count; ++ix)
-                    if (e.Index != ix) checkedListBoxTipoModificacion.SetItemChecked(ix, false);
         }
 
         private void TreeViewOrganigramaAPF_BeforeSelect(object sender, TreeViewCancelEventArgs e)
@@ -1251,7 +1260,10 @@ namespace ActualizaBaseDatos
         // Modifica
         private void buttonOrgActualizaFuncionario_Click(object sender, EventArgs e)
         {
+            bool NodoDeAgrupación = false;
             if (NodoSeleccionado == null) MessageBox.Show("Error NodoSeleccionado null " + AbogadoIrresponsable);
+            int PosiciónTipoID = NodoDeArbolMostrado.Text.IndexOf('_');
+            if (NodoDeArbolMostrado.Text[PosiciónTipoID + 1] == 'O') NodoDeAgrupación = true;
             if (!AbogadoIrresponsable.Equals(""))
             {
                 String IDMostrado = NodoSeleccionado.Data.ID; // ID del Nodo del Arbol que estamos viendo
@@ -1260,42 +1272,65 @@ namespace ActualizaBaseDatos
                 Node<Registro> NuevoNode = null;
                 if (ListaDeNodosPorID.ContainsKey(IDMostrado))
                 {
-                    
                     switch (IndiceModificación)
                     {
                         case 1: // Modificamos un nodo de agrupación
-                            Random rnd = new Random();
-                            ID = "O" + rnd.Next(1, 100000).ToString();
-                            while (ListaDeNodosPorID.ContainsKey(ID))
+                            if (NodoDeAgrupación)
                             {
+                                Random rnd = new Random();
                                 ID = "O" + rnd.Next(1, 100000).ToString();
+                                while (ListaDeNodosPorID.ContainsKey(ID))
+                                {
+                                    ID = "O" + rnd.Next(1, 100000).ToString();
+                                }
+                                NodoDeArbolMostrado.Text = textBoxOrgNombrePuestoModificado.Text + "- _" + ID;
+                                NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, textBoxOrgNombrePuestoModificado.Text, ID, AbogadoIrresponsable);
+                                NuevoNode = new Node<Registro>(NuevoRegistro, NodoSeleccionado.Sons, NodoSeleccionado.Padre);
+                                ListaDeNodosPorID.Add(ID, NuevoNode);
+                                // tengo que actualizar APF
+                                ListaDeNodosPorID[IDMostrado].Data = NuevoRegistro;
+                                ListaDeNodosPorID.Remove(IDMostrado);
                             }
-                            NodoDeArbolMostrado.Text = textBoxOrgNombrePuestoModificado.Text + "- _" + ID;
-                            NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, textBoxOrgNombrePuestoModificado.Text, ID, AbogadoIrresponsable);
-                            NuevoNode = new Node<Registro>(NuevoRegistro, NodoSeleccionado.Sons, NodoSeleccionado.Padre);
-                            ListaDeNodosPorID.Add(ID, NuevoNode);
-                            // tengo que actualizar APF
-                            ListaDeNodosPorID[IDMostrado].Data = NuevoRegistro;
-                            ListaDeNodosPorID.Remove(IDMostrado);
+                            else
+                            {
+                                MessageBox.Show("Esta opción solo se aplica a los nodos de agrupación");
+                                return;
+                            }  
                             break;
                         case 2:  // Modificamos un Puesto
-                            NodoDeArbolMostrado.Text = textBoxOrgNombrePuestoModificado.Text + " - " + AccessUtility.GetNombreFuncionario(IDMostrado) + "_" + IDMostrado;
-                            NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, textBoxOrgNombrePuestoModificado.Text, IDMostrado, AbogadoIrresponsable);
-                            NuevoNode = new Node<Registro>(NuevoRegistro, NodoSeleccionado.Sons, NodoSeleccionado.Padre);
-                            // tengo que actualizar APF
-                            ListaDeNodosPorID[IDMostrado].Data = NuevoRegistro;
-                            ListaDeNodosPorID[IDMostrado] =  NuevoNode;
+                            if (!NodoDeAgrupación)
+                            {
+                                NodoDeArbolMostrado.Text = textBoxOrgNombrePuestoModificado.Text + " - " + AccessUtility.GetNombreFuncionario(IDMostrado) + "_" + IDMostrado;
+                                NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, textBoxOrgNombrePuestoModificado.Text, IDMostrado, AbogadoIrresponsable);
+                                NuevoNode = new Node<Registro>(NuevoRegistro, NodoSeleccionado.Sons, NodoSeleccionado.Padre);
+                                // tengo que actualizar APF
+                                ListaDeNodosPorID[IDMostrado].Data = NuevoRegistro;
+                                ListaDeNodosPorID[IDMostrado] = NuevoNode;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Esta opción no se puede aplicar a un nodo de agrupación");
+                                return;
+                            }
                             break;
                         case 3: // Modificamos un fucionario
-                            ID = funcionarios[funcionarioMostrado.Pos]["ID"].ToString();
-                            int gion = NodoDeArbolMostrado.Text.IndexOf('-');
-                            NodoDeArbolMostrado.Text = NodoDeArbolMostrado.Text.Substring(0, gion - 1) + " - " + AccessUtility.GetNombreFuncionario(ID) + "_" + ID;
-                            NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, NodoDeArbolMostrado.Text.Substring(0, gion - 1), ID, AbogadoIrresponsable);
-                            NuevoNode = new Node<Registro>(NuevoRegistro, NodoSeleccionado.Sons, NodoSeleccionado.Padre);
-                            ListaDeNodosPorID.Add(ID, NuevoNode);
-                            // tengo que actualizar APF
-                            ListaDeNodosPorID[IDMostrado].Data = NuevoRegistro;
-                            ListaDeNodosPorID.Remove(IDMostrado);
+                            if (!NodoDeAgrupación)
+                            {
+                                ID = funcionarios[funcionarioMostrado.Pos]["ID"].ToString();
+                                int gion = NodoDeArbolMostrado.Text.IndexOf('-');
+                                NodoDeArbolMostrado.Text = NodoDeArbolMostrado.Text.Substring(0, gion - 1) + " - " + AccessUtility.GetNombreFuncionario(ID) + "_" + ID;
+                                NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, NodoDeArbolMostrado.Text.Substring(0, gion - 1), ID, AbogadoIrresponsable);
+                                NuevoNode = new Node<Registro>(NuevoRegistro, NodoSeleccionado.Sons, NodoSeleccionado.Padre);
+                                ListaDeNodosPorID.Add(ID, NuevoNode);
+                                // tengo que actualizar APF
+                                ListaDeNodosPorID[IDMostrado].Data = NuevoRegistro;
+                                ListaDeNodosPorID.Remove(IDMostrado);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Esta opción no se puede aplicar a un nodo de agrupación");
+                                return;
+                            }  
                             break;
                         default:
                             MessageBox.Show("Se debe escoger alguna opción de modificación");
@@ -1934,6 +1969,21 @@ namespace ActualizaBaseDatos
         }
 
         private void saveFileDialogTreeAPF_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
+
+        private void label38_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonSelect_Click(object sender, EventArgs e)
+        {
+            IndiceModificación++;
+        }
+
+        private void checkedListBoxTipoModificacion_SelectedIndexChanged_1(object sender, EventArgs e)
         {
 
         }

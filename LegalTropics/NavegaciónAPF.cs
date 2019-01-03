@@ -56,7 +56,7 @@ namespace LegalTropics
 
         private void NavegaciónAPF_Resize(object sender, EventArgs e)
         {
-            treeViewAPF.Size = new Size(this.Width - 42, this.Height - 71);
+            // treeViewAPF.Size = new Size(this.Width - 42, this.Height - 71);
         }
 
         private void treeViewAPF_AfterSelect(object sender, TreeViewEventArgs e)

@@ -22,14 +22,14 @@ namespace ActualizaBaseDatos
         {
             get
             {
-                return año;
+                return this.año;
             }
             set
             {
                 this.año = value;
-                labelFecha.Text = FormatoFecha.FechaString(año.ToString(),
-                mes.ToString(),
-                dia.ToString(), "Fecha: no disponible");
+                labelFecha.Text = FormatoFecha.FechaString(this.año.ToString(),
+                this.mes.ToString(),
+                this.dia.ToString(), "Fecha: no disponible");
             }
         }
 
@@ -37,14 +37,14 @@ namespace ActualizaBaseDatos
         {
             get
             {
-                return mes;
+                return this.mes;
             }
             set
             {
                 this.mes = value;
-                labelFecha.Text = FormatoFecha.FechaString(año.ToString(),
-                mes.ToString(),
-                dia.ToString(), "Fecha: no disponible");
+                labelFecha.Text = FormatoFecha.FechaString(this.año.ToString(),
+                this.mes.ToString(),
+                this.dia.ToString(), "Fecha: no disponible");
             }
         }
 
@@ -52,14 +52,14 @@ namespace ActualizaBaseDatos
         {
             get
             {
-                return dia;
+                return this.dia;
             }
             set
             {
                 this.dia = value;
                 labelFecha.Text = FormatoFecha.FechaString(año.ToString(),
-                mes.ToString(),
-                dia.ToString(), "Fecha: no disponible");
+                this.mes.ToString(),
+                this.dia.ToString(), "Fecha: no disponible");
             }
         }
         public MuestraCapturaFecha()
@@ -73,12 +73,12 @@ namespace ActualizaBaseDatos
 
         public void SetFecha(int Año, int Mes, int Dia)
         {
-            this.Año = Año;
-            this.Mes = Mes;
-            this.Dia = Dia;
-            labelFecha.Text = FormatoFecha.FechaString(año.ToString(),
-                mes.ToString(),
-                dia.ToString(), "Fecha: no disponible");
+            this.año = Año;
+            this.mes = Mes;
+            this.dia = Dia;
+            labelFecha.Text = FormatoFecha.FechaString(this.año.ToString(),
+                this.mes.ToString(),
+                this.dia.ToString(), "Fecha: no disponible");
         }
 
         private void MuestraCapturaFecha_Load(object sender, EventArgs e)
@@ -87,6 +87,7 @@ namespace ActualizaBaseDatos
             dateTimePickerPeta.MaxDate = new DateTime(2100, 1, 1);
             dateTimePickerPeta.CustomFormat = "yyyy-MMM-dd";
             dateTimePickerPeta.Format = DateTimePickerFormat.Custom;
+            
             labelFecha.Text = FormatoFecha.FechaString(dateTimePickerPeta.Value.Year.ToString(),
                 dateTimePickerPeta.Value.Month.ToString(),
                 dateTimePickerPeta.Value.Day.ToString(), "Fecha: no disponible");
@@ -102,6 +103,9 @@ namespace ActualizaBaseDatos
 
         private void dateTimePickerPeta_ValueChanged(object sender, EventArgs e)
         {
+            this.año = dateTimePickerPeta.Value.Year;
+            this.mes = dateTimePickerPeta.Value.Month;
+            this.dia = dateTimePickerPeta.Value.Day;
             labelFecha.Text = FormatoFecha.FechaString(dateTimePickerPeta.Value.Year.ToString(),
                 dateTimePickerPeta.Value.Month.ToString(),
                 dateTimePickerPeta.Value.Day.ToString(), "Fecha: no disponible");

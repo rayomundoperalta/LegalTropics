@@ -94,7 +94,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(958, 695);
+            this.ClientSize = new System.Drawing.Size(991, 713);
             this.ControlBox = false;
             this.Controls.Add(this.buttonOrgBuscaPuesto);
             this.Controls.Add(this.buttonOrgTraeID);
@@ -102,7 +102,7 @@
             this.Controls.Add(this.buttonOrgBuscarFuncionario);
             this.Controls.Add(this.textBoxOrgCadenaBusqueda);
             this.Controls.Add(this.treeViewAPF);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "NavegaciónAPF";
             this.Text = "Organigrama de la APF";
             this.ResumeLayout(false);

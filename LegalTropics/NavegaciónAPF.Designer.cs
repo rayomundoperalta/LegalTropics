@@ -40,13 +40,13 @@
             // 
             this.treeViewAPF.Location = new System.Drawing.Point(12, 12);
             this.treeViewAPF.Name = "treeViewAPF";
-            this.treeViewAPF.Size = new System.Drawing.Size(936, 642);
+            this.treeViewAPF.Size = new System.Drawing.Size(936, 608);
             this.treeViewAPF.TabIndex = 1;
             this.treeViewAPF.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewAPF_AfterSelect);
             // 
             // textBoxOrgCadenaBusqueda
             // 
-            this.textBoxOrgCadenaBusqueda.Location = new System.Drawing.Point(12, 661);
+            this.textBoxOrgCadenaBusqueda.Location = new System.Drawing.Point(12, 627);
             this.textBoxOrgCadenaBusqueda.Name = "textBoxOrgCadenaBusqueda";
             this.textBoxOrgCadenaBusqueda.Size = new System.Drawing.Size(350, 22);
             this.textBoxOrgCadenaBusqueda.TabIndex = 2;
@@ -54,7 +54,7 @@
             // 
             // buttonOrgBuscarFuncionario
             // 
-            this.buttonOrgBuscarFuncionario.Location = new System.Drawing.Point(368, 661);
+            this.buttonOrgBuscarFuncionario.Location = new System.Drawing.Point(368, 627);
             this.buttonOrgBuscarFuncionario.Name = "buttonOrgBuscarFuncionario";
             this.buttonOrgBuscarFuncionario.Size = new System.Drawing.Size(142, 23);
             this.buttonOrgBuscarFuncionario.TabIndex = 3;
@@ -64,7 +64,7 @@
             // 
             // textBoxOrgBuscaID
             // 
-            this.textBoxOrgBuscaID.Location = new System.Drawing.Point(658, 660);
+            this.textBoxOrgBuscaID.Location = new System.Drawing.Point(658, 626);
             this.textBoxOrgBuscaID.Name = "textBoxOrgBuscaID";
             this.textBoxOrgBuscaID.Size = new System.Drawing.Size(142, 22);
             this.textBoxOrgBuscaID.TabIndex = 4;
@@ -72,7 +72,7 @@
             // 
             // buttonOrgTraeID
             // 
-            this.buttonOrgTraeID.Location = new System.Drawing.Point(806, 661);
+            this.buttonOrgTraeID.Location = new System.Drawing.Point(806, 627);
             this.buttonOrgTraeID.Name = "buttonOrgTraeID";
             this.buttonOrgTraeID.Size = new System.Drawing.Size(142, 23);
             this.buttonOrgTraeID.TabIndex = 5;
@@ -82,7 +82,7 @@
             // 
             // buttonOrgBuscaPuesto
             // 
-            this.buttonOrgBuscaPuesto.Location = new System.Drawing.Point(516, 660);
+            this.buttonOrgBuscaPuesto.Location = new System.Drawing.Point(516, 626);
             this.buttonOrgBuscaPuesto.Name = "buttonOrgBuscaPuesto";
             this.buttonOrgBuscaPuesto.Size = new System.Drawing.Size(136, 23);
             this.buttonOrgBuscaPuesto.TabIndex = 6;

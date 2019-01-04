@@ -563,8 +563,8 @@ namespace MSAccess
                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                 {
                     cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
-                    cmd.Parameters.Add("@Tipo", OleDbType.Numeric, 80).Value = Tipo;
-                    cmd.Parameters.Add("@dato", OleDbType.Numeric, 80).Value = dato;
+                    cmd.Parameters.Add("@Tipo", OleDbType.VarChar, 80).Value = Tipo;
+                    cmd.Parameters.Add("@dato", OleDbType.VarChar, 80).Value = dato;
                     cmd.Parameters.Add("@Abogado", OleDbType.VarChar, 80).Value = AbogadoResp;
                     cn.Open();
                     cmd.ExecuteNonQuery();
@@ -601,8 +601,8 @@ namespace MSAccess
                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                 {
                     cmd.Parameters.Add("@ID", OleDbType.VarChar, 80).Value = ID;
-                    cmd.Parameters.Add("@Nombre", OleDbType.Numeric, 80).Value = Nombre;
-                    cmd.Parameters.Add("@Información", OleDbType.Numeric, 80).Value = Información;
+                    cmd.Parameters.Add("@Nombre", OleDbType.VarChar, 80).Value = Nombre;
+                    cmd.Parameters.Add("@Información", OleDbType.VarChar, 80).Value = Información;
                     cmd.Parameters.Add("@Abogado", OleDbType.VarChar, 80).Value = AbogadoResp;
                     cn.Open();
                     cmd.ExecuteNonQuery();

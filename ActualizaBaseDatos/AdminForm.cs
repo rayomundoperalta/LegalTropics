@@ -1745,9 +1745,9 @@ namespace ActualizaBaseDatos
             if ((checkedListBoxTipoINFO.SelectedIndex > -1) && (checkedListBoxTipoINFO.SelectedIndex < checkedListBoxTipoINFO.Items.Count))
             {
                 AccessUtility.InsertRegistroDatosContacto(textBoxDatosContactoID.Text, checkedListBoxTipoINFO.Text, textBoxDatosContactoDato.Text, labelDatosContactoAbogadoResp.Text);
-                DatosContacto = AccessUtility.GetDatosContacto(IDFuncionario);
-                indexDatosContacto = new IndiceBD(INFO.Length);
-                LlenaDatosContacto(IDFuncionario);
+                DatosContacto = AccessUtility.GetDatosContacto(textBoxDatosContactoID.Text);
+                indexDatosContacto = new IndiceBD(DatosContacto.Length);
+                LlenaDatosContacto(textBoxDatosContactoID.Text);
             }
         }
 
@@ -1830,7 +1830,7 @@ namespace ActualizaBaseDatos
         {
             for (int i = 0; i < funcionarios.Length; i++)
             {
-                if (funcionarios[i]["ID"].ToString().Equals(textBoxRecuperaID.Text))
+                if (funcionarios[i]["ID"].ToString().Equals(textBoxRecuperaID.Text.ToUpper()))
                 {
                     funcionarioMostrado.Pos = i;
                     DespliegaInformación(funcionarioMostrado.Pos);
@@ -1898,9 +1898,9 @@ namespace ActualizaBaseDatos
         {
             AccessUtility.InsertRegistroCirculoCercano(textBoxCirculoCercanoID.Text, textBoxCirculoCercanoNombre.Text,
                     textBoxCirculoCercanoInformación.Text, labelCirculoCercanoAbogadoResp.Text);
-            DatosContacto = AccessUtility.GetCirculoCercano(IDFuncionario);
-            indexCirculoCercano = new IndiceBD(INFO.Length);
-            LlenaCirculoCercano(IDFuncionario);
+            CirculoCercano = AccessUtility.GetCirculoCercano(textBoxCirculoCercanoID.Text);
+            indexCirculoCercano = new IndiceBD(CirculoCercano.Length);
+            LlenaCirculoCercano(textBoxCirculoCercanoID.Text);
         }
 
         private void buttonCurculoCercanoLimpia_Click(object sender, EventArgs e)

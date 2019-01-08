@@ -17,7 +17,7 @@ using CifradoPeta;
 using PetaPublish;
 using FuncionesAuxiliares;
 using OrganigramaAdmin;
-
+using System.Threading;
 
 namespace LegalTropics
 {
@@ -61,6 +61,9 @@ namespace LegalTropics
             return 0;
         }
 
+        Thread InicialicaBaseDeDatosThread;
+        bool DataBaseInicializada = false;
+
         private void Tropicalizador_Load(object sender, RibbonUIEventArgs e)
         {
             VerificaDirectorios();
@@ -68,7 +71,8 @@ namespace LegalTropics
             {
                 DescargaBaseDeDatos();
             }
-            LoadDataBaseAPF();
+            InicialicaBaseDeDatosThread = new Thread(new ThreadStart(LoadDataBaseAPF));
+            InicialicaBaseDeDatosThread.Start();
         }
 
         Dictionary<string, Node<Registro>> ListaDeNodosPorID = new Dictionary<string, Node<Registro>>();
@@ -98,7 +102,6 @@ namespace LegalTropics
                 comboBoxFuncionarios.Items.Add(item);
             }
 
-
             //List<Registro> Puestos = APF.ListPuestos();
             DataRow[] Puestos = AccessUtility.GetDistinctPuestos();
             List<string> StringPuestos = new List<string>();
@@ -122,6 +125,8 @@ namespace LegalTropics
             AparadorDeFotografias = new ImageScroll();
             VentanaPuestos = new PuestosAPF();
             VentanaFuncionarios = new FuncionariosAPF();
+
+            DataBaseInicializada = true;
         }
 
         private IPAddress parse(string ipAddress)
@@ -740,12 +745,14 @@ namespace LegalTropics
 
         private void buttonGeneraReporte_Click(object sender, RibbonControlEventArgs e)
         {
-            DataRow[] funcionarios = AccessUtility.GetFuncionarios();
-            //Range rng = Globals.ThisAddIn.Application.ActiveDocument.Range(0, 0);
-            Range rng = Globals.ThisAddIn.Application.Selection.Range;
-            ImprimeDatosFuncionarios(rng, funcionarios);
-            DelteBlankPages();
-            
+            if (DataBaseInicializada)
+            {
+                DataRow[] funcionarios = AccessUtility.GetFuncionarios();
+                //Range rng = Globals.ThisAddIn.Application.ActiveDocument.Range(0, 0);
+                Range rng = Globals.ThisAddIn.Application.Selection.Range;
+                ImprimeDatosFuncionarios(rng, funcionarios);
+                DelteBlankPages();
+            }
         }
 
         public void GeneraReporte(string ID)
@@ -765,17 +772,23 @@ namespace LegalTropics
 
         private void comboBoxFuncionarios_TextChanged(object sender, RibbonControlEventArgs e)
         {
-            int pos = comboBoxFuncionarios.Text.IndexOf('_');
-            string ID = comboBoxFuncionarios.Text.Substring(pos + 1, comboBoxFuncionarios.Text.Length - pos - 1);
-            GeneraReporte(ID);
+            if (DataBaseInicializada)
+            {
+                int pos = comboBoxFuncionarios.Text.IndexOf('_');
+                string ID = comboBoxFuncionarios.Text.Substring(pos + 1, comboBoxFuncionarios.Text.Length - pos - 1);
+                GeneraReporte(ID);
+            }
         }
 
         private void comboBoxPuestos_TextChanged(object sender, RibbonControlEventArgs e)
         {
-            DataRow[] IDs = AccessUtility.GetIDPuestos(comboBoxPuestos.Text);
-            for (int i = 0; i < IDs.Length; i++)
+            if (DataBaseInicializada)
             {
-                GeneraReporte(IDs[i]["ID"].ToString());
+                DataRow[] IDs = AccessUtility.GetIDPuestos(comboBoxPuestos.Text);
+                for (int i = 0; i < IDs.Length; i++)
+                {
+                    GeneraReporte(IDs[i]["ID"].ToString());
+                }
             }
         }
 
@@ -798,10 +811,13 @@ namespace LegalTropics
 
         private void buttonOrganigrama_Click(object sender, RibbonControlEventArgs e)
         {
-            VentanaNavegación.Deactivate += VentanaNavegación_Deactivate;
-            VentanaNavegación.treeViewAPF.Enabled = false;
-            VentanaNavegación.Show();
-            VentanaNavegación.treeViewAPF.Enabled = true;
+            if (DataBaseInicializada)
+            {
+                VentanaNavegación.Deactivate += VentanaNavegación_Deactivate;
+                VentanaNavegación.treeViewAPF.Enabled = false;
+                VentanaNavegación.Show();
+                VentanaNavegación.treeViewAPF.Enabled = true;
+            }
         }
 
 
@@ -812,9 +828,11 @@ namespace LegalTropics
 
         private void buttonCatalogoFotos_Click(object sender, RibbonControlEventArgs e)
         {
-            
-            AparadorDeFotografias.Deactivate += AparadorDeFotografias_Deactivate;
-            AparadorDeFotografias.Show();
+            if (DataBaseInicializada)
+            {
+                AparadorDeFotografias.Deactivate += AparadorDeFotografias_Deactivate;
+                AparadorDeFotografias.Show();
+            }
         }
 
         // TODO: Checar que existan los directorios de fotos y de la base de datos, sino existen crearlos
@@ -857,25 +875,37 @@ namespace LegalTropics
 
         private void buttonActualizaBaseDeDatos_Click(object sender, RibbonControlEventArgs e)
         {
-            DescargaBaseDeDatos();
-            LoadDataBaseAPF();
-            MessageBox.Show("Base de Datos descargada");
+            if (DataBaseInicializada)
+            {
+                DataBaseInicializada = false;
+                DescargaBaseDeDatos();
+                InicialicaBaseDeDatosThread = new Thread(new ThreadStart(LoadDataBaseAPF));
+                InicialicaBaseDeDatosThread.Start();
+                MessageBox.Show("Base de Datos descargada");
+            }
+            
         }
 
         private void buttonPuestos_Click(object sender, RibbonControlEventArgs e)
         {
-            VentanaPuestos.Deactivate += VentanaPuestos_Deactivate;
-            VentanaPuestos.treeViewPuestos.Enabled = false;
-            VentanaPuestos.Show();
-            VentanaPuestos.treeViewPuestos.Enabled = true;
+            if (DataBaseInicializada)
+            {
+                VentanaPuestos.Deactivate += VentanaPuestos_Deactivate;
+                VentanaPuestos.treeViewPuestos.Enabled = false;
+                VentanaPuestos.Show();
+                VentanaPuestos.treeViewPuestos.Enabled = true;
+            }
         }
 
         private void buttonFuncionarios_Click(object sender, RibbonControlEventArgs e)
         {
-            VentanaFuncionarios.Deactivate += VentanaFuncionarios_Deactivate;
-            VentanaFuncionarios.treeViewFuncionarios.Enabled = false;
-            VentanaFuncionarios.Show();
-            VentanaFuncionarios.treeViewFuncionarios.Enabled = true;
+            if (DataBaseInicializada)
+            {
+                VentanaFuncionarios.Deactivate += VentanaFuncionarios_Deactivate;
+                VentanaFuncionarios.treeViewFuncionarios.Enabled = false;
+                VentanaFuncionarios.Show();
+                VentanaFuncionarios.treeViewFuncionarios.Enabled = true;
+            }
         }
     }
 }

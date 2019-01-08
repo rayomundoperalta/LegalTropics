@@ -2139,7 +2139,7 @@
             // treeViewOrganigramaAPF
             // 
             this.treeViewOrganigramaAPF.AllowDrop = true;
-            this.treeViewOrganigramaAPF.Location = new System.Drawing.Point(7, 7);
+            this.treeViewOrganigramaAPF.Location = new System.Drawing.Point(3, 3);
             this.treeViewOrganigramaAPF.Name = "treeViewOrganigramaAPF";
             this.treeViewOrganigramaAPF.Size = new System.Drawing.Size(715, 598);
             this.treeViewOrganigramaAPF.TabIndex = 0;

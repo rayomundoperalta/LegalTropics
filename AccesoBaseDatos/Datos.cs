@@ -7,6 +7,7 @@ using System.Data.OleDb;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 
 /*
 bool	System.Boolean
@@ -262,7 +263,69 @@ namespace AccesoBaseDatos
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
+        private DataTable MakeFuncionariosTable()
+        {
+            DataTable Funcionarios = new DataTable("Funcionarios");
+
+            DataColumn Id1 = new DataColumn();
+            Id1.DataType = System.Type.GetType("System.Int64");
+            Id1.ColumnName = "Id1";
+            Id1.AutoIncrement = true;
+            Funcionarios.Columns.Add(Id1);
+
+            DataColumn ID = new DataColumn();
+            ID.DataType = System.Type.GetType("System.String");
+            ID.ColumnName = "ID";
+            Funcionarios.Columns.Add(ID);
+
+            DataColumn ApellidoPaterno = new DataColumn();
+            ApellidoPaterno.DataType = System.Type.GetType("System.String");
+            ApellidoPaterno.ColumnName = "ApellidoPaterno";
+            Funcionarios.Columns.Add(ApellidoPaterno);
+
+            DataColumn ApellidoMaterno = new DataColumn();
+            ApellidoMaterno.DataType = System.Type.GetType("System.String");
+            ApellidoMaterno.ColumnName = "ApellidoMaterno";
+            Funcionarios.Columns.Add(ApellidoMaterno);
+
+            DataColumn PrimerNombre = new DataColumn();
+            PrimerNombre.DataType = System.Type.GetType("System.String");
+            PrimerNombre.ColumnName = "PrimerNombre";
+            Funcionarios.Columns.Add(PrimerNombre);
+
+            DataColumn SegundoNombre = new DataColumn();
+            SegundoNombre.DataType = System.Type.GetType("System.String");
+            SegundoNombre.ColumnName = "SegundoNombre";
+            Funcionarios.Columns.Add(SegundoNombre);
+
+            DataColumn Nacionalidad = new DataColumn();
+            Nacionalidad.DataType = System.Type.GetType("System.String");
+            Nacionalidad.ColumnName = "Nacionalidad";
+            Funcionarios.Columns.Add(Nacionalidad);
+
+            DataColumn AñoNacimiento = new DataColumn();
+            AñoNacimiento.DataType = System.Type.GetType("System.Int32");
+            AñoNacimiento.ColumnName = "AñoNacimiento";
+            Funcionarios.Columns.Add(AñoNacimiento);
+
+            DataColumn MesNacimiento = new DataColumn();
+            MesNacimiento.DataType = System.Type.GetType("System.Int32");
+            MesNacimiento.ColumnName = "MesNacimiento";
+            Funcionarios.Columns.Add(MesNacimiento);
+
+            DataColumn DiaNacimiento = new DataColumn();
+            DiaNacimiento.DataType = System.Type.GetType("System.Int32");
+            DiaNacimiento.ColumnName = "DiaNacimiento";
+            Funcionarios.Columns.Add(DiaNacimiento);
+
+            DataColumn Abogado = new DataColumn();
+            Abogado.DataType = System.Type.GetType("System.String");
+            Abogado.ColumnName = "Abogado";
+            Funcionarios.Columns.Add(Abogado);
+
+            return Funcionarios;
+        }
 
         public DataRow[] GetFuncionarios()
         {
@@ -282,11 +345,24 @@ namespace AccesoBaseDatos
                 boolFuncionarios = true;
             }
             var renglón = DataTableFuncionarios.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID));
-            DataTable renglones = new DataTable();
+            DataTable renglones = MakeFuncionariosTable();
             int i = 0;
             foreach (DataRow ren in renglón)
             {
-                renglones.Rows.InsertAt(ren, i++);
+                DataRow row = renglones.NewRow();
+                row["Id1"] = ren["Id1"];
+                row["ID"] = ren["ID"];
+                row["ApellidoPaterno"] = ren["ApellidoPaterno"];
+                row["ApellidoMaterno"] = ren["ApellidoMaterno"];
+                row["PrimerNombre"] = ren["PrimerNombre"];
+                row["SegundoNombre"] = ren["SegundoNombre"];
+                row["Nacionalidad"] = ren["Nacionalidad"];
+                row["AñoNacimiento"] = ren["AñoNacimiento"];
+                row["MesNacimiento"] = ren["MesNacimiento"];
+                row["DiaNacimiento"] = ren["DiaNacimiento"];
+                row["Abogado"] = ren["Abogado"];
+                renglones.Rows.Add(row);
+                i++;
             }
             if (i > 1)
             {
@@ -314,6 +390,39 @@ namespace AccesoBaseDatos
             return name;
         }
 
+        private DataTable MakeDatosContactoTable()
+        {
+            DataTable DatosContacto = new DataTable("DatosContacto");
+
+            DataColumn Id1 = new DataColumn();
+            Id1.DataType = System.Type.GetType("System.Int64");
+            Id1.ColumnName = "Id1";
+            Id1.AutoIncrement = true;
+            DatosContacto.Columns.Add(Id1);
+
+            DataColumn ID = new DataColumn();
+            ID.DataType = System.Type.GetType("System.String");
+            ID.ColumnName = "ID";
+            DatosContacto.Columns.Add(ID);
+
+            DataColumn Tipo = new DataColumn();
+            Tipo.DataType = System.Type.GetType("System.String");
+            Tipo.ColumnName = "Tipo";
+            DatosContacto.Columns.Add(Tipo);
+
+            DataColumn Dato = new DataColumn();
+            Dato.DataType = System.Type.GetType("System.String");
+            Dato.ColumnName = "Dato";
+            DatosContacto.Columns.Add(Dato);
+
+            DataColumn Abogado = new DataColumn();
+            Abogado.DataType = System.Type.GetType("System.String");
+            Abogado.ColumnName = "Abogado";
+            DatosContacto.Columns.Add(Abogado);
+
+            return DatosContacto;
+        }
+
         public DataRow[] GetDatosContacto(string ID)
         {
             if (!boolDatosContacto)
@@ -323,17 +432,57 @@ namespace AccesoBaseDatos
             }
             // return (DataTableDatosContacto.Select("ID = " + ID));
             var renglón = DataTableDatosContacto.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID));
-            DataTable renglones = new DataTable();
+            DataTable renglones = MakeDatosContactoTable();
             int i = 0;
             foreach (DataRow ren in renglón)
             {
-                renglones.Rows.InsertAt(ren, i++);
+                DataRow row = renglones.NewRow();
+                row["Id1"] = ren["Id1"];
+                row["ID"] = ren["ID"];
+                row["Tipo"] = ren["Tipo"];
+                row["Dato"] = ren["Dato"];
+                row["Abogado"] = ren["Abogado"];
+                renglones.Rows.Add(row);
+                i++;
             }
             if (i > 1)
             {
                 MessageBox.Show("Problema de Linq en GetDatosContacto(string ID)");
             }
             return renglones.Select();
+        }
+
+        private DataTable MakeCirculoCercanoTable()
+        {
+            DataTable CirculoCercano = new DataTable("CirculoCercano");
+
+            DataColumn Id1 = new DataColumn();
+            Id1.DataType = System.Type.GetType("System.Int64");
+            Id1.ColumnName = "Id1";
+            Id1.AutoIncrement = true;
+            CirculoCercano.Columns.Add(Id1);
+
+            DataColumn ID = new DataColumn();
+            ID.DataType = System.Type.GetType("System.String");
+            ID.ColumnName = "ID";
+            CirculoCercano.Columns.Add(ID);
+
+            DataColumn Nombre = new DataColumn();
+            Nombre.DataType = System.Type.GetType("System.String");
+            Nombre.ColumnName = "Nombre";
+            CirculoCercano.Columns.Add(Nombre);
+
+            DataColumn Información = new DataColumn();
+            Información.DataType = System.Type.GetType("System.String");
+            Información.ColumnName = "Información";
+            CirculoCercano.Columns.Add(Información);
+
+            DataColumn Abogado = new DataColumn();
+            Abogado.DataType = System.Type.GetType("System.String");
+            Abogado.ColumnName = "Abogado";
+            CirculoCercano.Columns.Add(Abogado);
+
+            return CirculoCercano;
         }
 
         public DataRow[] GetCirculoCercano(string ID)
@@ -345,11 +494,18 @@ namespace AccesoBaseDatos
             }
             //return (DataTableCirculoCercano.Select("ID = " + ID));
             var renglón = DataTableCirculoCercano.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID));
-            DataTable renglones = new DataTable();
+            DataTable renglones = MakeCirculoCercanoTable();
             int i = 0;
             foreach (DataRow ren in renglón)
             {
-                renglones.Rows.InsertAt(ren, i++);
+                DataRow row = renglones.NewRow();
+                row["Id1"] = ren["Id1"];
+                row["ID"] = ren["ID"];
+                row["Nombre"] = ren["Nombre"];
+                row["Información"] = ren["Información"];
+                row["Abogado"] = ren["Abogado"];
+                renglones.Rows.Add(row);
+                i++;
             }
             if (i > 1)
             {
@@ -732,7 +888,7 @@ namespace AccesoBaseDatos
             return renglones.Select();
         }
 
-        public string[] GetDistinctPuestos()
+        public List<string> GetDistinctPuestos()
         {
             if (!boolPuestos)
             {
@@ -740,7 +896,13 @@ namespace AccesoBaseDatos
                 boolPuestos = true;
             }
             //return (DataTablePuestos.Select("distinct(Puesto)"));
-            return (string[]) DataTablePuestos.AsEnumerable().Select(x => x.Field<string>("Puesto")).Distinct();
+            var listaPuestos = DataTablePuestos.AsEnumerable().Select(x => x.Field<string>("Puesto")).Distinct();
+            List<string> result = new List<string>();
+            foreach (string puesto in listaPuestos)
+            {
+                result.Add(puesto);
+            }
+            return result;
         }
 
         public string[] GetDistinctDependencias()

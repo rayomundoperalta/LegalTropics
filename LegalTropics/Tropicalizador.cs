@@ -135,12 +135,7 @@ namespace LegalTropics
             }
 
             //List<Registro> Puestos = APF.ListPuestos();
-            DataRow[] Puestos = Datos.Instance.GetDistinctPuestos();
-            List<string> StringPuestos = new List<string>();
-            for (int i = 0; i < Puestos.Length; i++)
-            {
-                StringPuestos.Add(Puestos[i]["Puesto"].ToString());
-            }
+            List<string> StringPuestos = Datos.Instance.GetDistinctPuestos();
 
             StringPuestos.Sort((x, y) => x.CompareTo(y));
 

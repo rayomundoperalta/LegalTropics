@@ -2,21 +2,15 @@
 using System.Data;
 using System.IO;
 using System.Windows.Forms;
-using MSAccess;
+using AccesoBaseDatos;
 using Globales;
 using System.Text.RegularExpressions;
 
 using OrganigramaAdmin;
-using Arboles;
+using Peta;
 using APFInfo;
 using System.Collections.Generic;
-using FuncionesAuxiliares;
 using System.Drawing;
-using CifradoPeta;
-using iText.Forms;
-using iText.IO;
-using iText.Kernel;
-using iText.Pdfa;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
@@ -28,6 +22,8 @@ namespace ActualizaBaseDatos
 {
     public partial class AdminForm : Form
     {
+        Organigrama organigrama = new Organigrama();
+
         string IDFuncionario;
         IndiceBD funcionarioMostrado;
         IndiceBD indexEscolaridad;
@@ -134,7 +130,7 @@ namespace ActualizaBaseDatos
 
         public AdminForm()
         {
-
+            
             string[] PhotoFiles = Directory.GetFiles(Defines.FotoTempBasePath, "*.*");
 
             for (int i = 0; i < PhotoFiles.Length; i++)
@@ -257,7 +253,6 @@ namespace ActualizaBaseDatos
             return 0;
         }
 
-        Organigrama organigrama = new Organigrama();
         TreeNode RaizTreeView = null;
 
         private void InicializaDS()
@@ -267,7 +262,7 @@ namespace ActualizaBaseDatos
             ListaDeNodosPorID.Add("A0", APF);
             p.Parsea(APF, 0, ListaDeNodosPorID);
 
-            funcionarios = AccessUtility.GetFuncionarios();
+            funcionarios = Datos.Instance.GetFuncionarios();
             funcionarioMostrado = new IndiceBD(funcionarios.Length);
             if (funcionarioMostrado.Length > 0)
             {
@@ -305,36 +300,36 @@ namespace ActualizaBaseDatos
             textBoxApellidoPaterno.Text = funcionarios[index]["ApellidoPaterno"].ToString();
             textBoxApellidoMaterno.Text = funcionarios[index]["ApellidoMaterno"].ToString();
             textBoxNacionalidad.Text = funcionarios[index]["Nacionalidad"].ToString();
-            muestraCapturaFechaNacimiento.SetFecha(Ut.Numero(funcionarios[index]["AñoNacimiento"].ToString()),
-                Ut.Numero(funcionarios[index]["MesNacimiento"].ToString()),
-                Ut.Numero(funcionarios[index]["DiaNacimiento"].ToString()));
+            muestraCapturaFechaNacimiento.SetFecha(U.Numero(funcionarios[index]["AñoNacimiento"].ToString()),
+                U.Numero(funcionarios[index]["MesNacimiento"].ToString()),
+                U.Numero(funcionarios[index]["DiaNacimiento"].ToString()));
 
             IDFuncionario = funcionarios[index]["ID"].ToString();
             labelAbogadoResponsable.Text = funcionarios[index]["Abogado"].ToString().Equals("")?"     ": funcionarios[index]["Abogado"].ToString();
 
-            LoadPhoto(AccessUtility.GetFoto(IDFuncionario));
+            LoadPhoto(Datos.Instance.GetFoto(IDFuncionario));
 
-            escolaridad = AccessUtility.GetEscolaridad(IDFuncionario);
+            escolaridad = Datos.Instance.GetEscolaridad(IDFuncionario);
             indexEscolaridad = new IndiceBD(escolaridad.Length);
             LlenaEscolaridad(IDFuncionario);
 
-            AP = AccessUtility.GetAdscripcionPolitica(IDFuncionario);
+            AP = Datos.Instance.GetAdscripcionPolitica(IDFuncionario);
             indexAP = new IndiceBD(AP.Length);
             LlenaAP(IDFuncionario);
 
-            INFO = AccessUtility.GetNotasRelevantes(IDFuncionario);
+            INFO = Datos.Instance.GetNotasRelevantes(IDFuncionario);
             indexINFO = new IndiceBD(INFO.Length);
             LlenaINFO(IDFuncionario);
 
-            Puestos = AccessUtility.GetPuestos(IDFuncionario);
+            Puestos = Datos.Instance.GetPuestos(IDFuncionario);
             indexPuestos = new IndiceBD(Puestos.Length);
             LlenaPuestos(IDFuncionario);
 
-            CirculoCercano = AccessUtility.GetCirculoCercano(IDFuncionario);
+            CirculoCercano = Datos.Instance.GetCirculoCercano(IDFuncionario);
             indexCirculoCercano = new IndiceBD(CirculoCercano.Length);
             LlenaCirculoCercano(IDFuncionario);
 
-            DatosContacto = AccessUtility.GetDatosContacto(IDFuncionario);
+            DatosContacto = Datos.Instance.GetDatosContacto(IDFuncionario);
             indexDatosContacto = new IndiceBD(DatosContacto.Length);
             LlenaDatosContacto(IDFuncionario);
 
@@ -473,12 +468,12 @@ namespace ActualizaBaseDatos
             else
             {
                 textBoxID.Text = escolaridad[indexEscolaridad.Pos]["ID"].ToString();
-                muestraCapturaFechaInicio.SetFecha(Ut.Numero(escolaridad[indexEscolaridad.Pos]["AñoInicial"].ToString()),
-                    Ut.Numero(escolaridad[indexEscolaridad.Pos]["MesInicial"].ToString()),
-                    Ut.Numero(escolaridad[indexEscolaridad.Pos]["DiaInicial"].ToString()));
-                muestraCapturaFechaFin.SetFecha(Ut.Numero(escolaridad[indexEscolaridad.Pos]["AñoFinal"].ToString()),
-                    Ut.Numero(escolaridad[indexEscolaridad.Pos]["MesFinal"].ToString()),
-                    Ut.Numero(escolaridad[indexEscolaridad.Pos]["DiaFinal"].ToString()));
+                muestraCapturaFechaInicio.SetFecha(U.Numero(escolaridad[indexEscolaridad.Pos]["AñoInicial"].ToString()),
+                    U.Numero(escolaridad[indexEscolaridad.Pos]["MesInicial"].ToString()),
+                    U.Numero(escolaridad[indexEscolaridad.Pos]["DiaInicial"].ToString()));
+                muestraCapturaFechaFin.SetFecha(U.Numero(escolaridad[indexEscolaridad.Pos]["AñoFinal"].ToString()),
+                    U.Numero(escolaridad[indexEscolaridad.Pos]["MesFinal"].ToString()),
+                    U.Numero(escolaridad[indexEscolaridad.Pos]["DiaFinal"].ToString()));
                 textBoxUniversidad.Text = escolaridad[indexEscolaridad.Pos]["Universidad"].ToString();
                 textBoxGrado.Text = escolaridad[indexEscolaridad.Pos]["Grado"].ToString();
                 labelEscolaridadPos.Text = (indexEscolaridad.Pos + 1).ToString();
@@ -510,8 +505,8 @@ namespace ActualizaBaseDatos
             {
                 textBoxAPID.Text = AP[indexAP.Pos]["ID"].ToString();
                 // adscripción politica solo tiene año no maneja mes y día
-                muestraCapturaFechaAPInicio.SetFecha(Ut.Numero(AP[indexAP.Pos]["FechaDeInicio"].ToString()), 1, 1);
-                muestraCapturaFechaAPFin.SetFecha(Ut.Numero(AP[indexAP.Pos]["FechaDeFin"].ToString()), 1, 1);
+                muestraCapturaFechaAPInicio.SetFecha(U.Numero(AP[indexAP.Pos]["FechaDeInicio"].ToString()), 1, 1);
+                muestraCapturaFechaAPFin.SetFecha(U.Numero(AP[indexAP.Pos]["FechaDeFin"].ToString()), 1, 1);
                 textBoxAPPartido.Text = AP[indexAP.Pos]["NombreDelPartido"].ToString();
                 labelAPPos.Text = (indexAP.Pos + 1).ToString();
                 labelAPLength.Text = "de " + indexAP.Length.ToString();
@@ -573,13 +568,13 @@ namespace ActualizaBaseDatos
                 textBoxPuestosID.Text = Puestos[indexPuestos.Pos]["ID"].ToString();
                 textBoxPuestosDependencia.Text = Puestos[indexPuestos.Pos]["DependenciaEntidad"].ToString();
                 textBoxPuestosPuesto.Text = Puestos[indexPuestos.Pos]["Puesto"].ToString();
-                textBoxPuestosSuperior.Text = Puestos[indexPuestos.Pos]["JefeInmediantoSuperior"].ToString();
-                muestraCapturaFechaPuestoInicio.SetFecha(Ut.Numero(Puestos[indexPuestos.Pos]["AñoInicial"].ToString()),
-                    Ut.Numero(Puestos[indexPuestos.Pos]["MesInicial"].ToString()),
-                    Ut.Numero(Puestos[indexPuestos.Pos]["DiaInicial"].ToString()));
-                muestraCapturaFechaPuestoFin.SetFecha(Ut.Numero(Puestos[indexPuestos.Pos]["AñoFinal"].ToString()),
-                    Ut.Numero(Puestos[indexPuestos.Pos]["MesFinal"].ToString()),
-                    Ut.Numero(Puestos[indexPuestos.Pos]["DiaFinal"].ToString()));
+                textBoxPuestosSuperior.Text = Puestos[indexPuestos.Pos]["JefeInmediatoSuperior"].ToString();
+                muestraCapturaFechaPuestoInicio.SetFecha(U.Numero(Puestos[indexPuestos.Pos]["AñoInicial"].ToString()),
+                    U.Numero(Puestos[indexPuestos.Pos]["MesInicial"].ToString()),
+                    U.Numero(Puestos[indexPuestos.Pos]["DiaInicial"].ToString()));
+                muestraCapturaFechaPuestoFin.SetFecha(U.Numero(Puestos[indexPuestos.Pos]["AñoFinal"].ToString()),
+                    U.Numero(Puestos[indexPuestos.Pos]["MesFinal"].ToString()),
+                    U.Numero(Puestos[indexPuestos.Pos]["DiaFinal"].ToString()));
 
                 labelPuestosPos.Text = (indexPuestos.Pos + 1).ToString();
                 labelPuestosLength.Text = "de " + indexPuestos.Length.ToString();
@@ -650,7 +645,7 @@ namespace ActualizaBaseDatos
                         PetaSecure cipher = new PetaSecure();
                         cipher.FileEncrypt(Defines.DataBasePath + Defines.DataBaseFileName, Defines.DataBasePath + Defines.DataBaseFileNameEncriptado,
                             System.Text.Encoding.UTF8.GetString(Defines.ImagenDefault).Substring(Defines.PosInicial, Defines.PosFinal));
-                        PetaPublish.Publisher.UploadInfoAPFDB(Defines.DataBasePath, Defines.DataBaseFileNameEncriptado);
+                        Peta.Publisher.UploadInfoAPFDB(Defines.DataBasePath, Defines.DataBaseFileNameEncriptado);
                         labelSTATUS.Text = "Terminado";
                     }
                     else
@@ -685,18 +680,18 @@ namespace ActualizaBaseDatos
                 BusquedaActiva = new Busqueda();
                 DatosPersonalesModificados = false;
                 FotoModificada = false;
-                if (!Ut.SinA(textBoxApellidoPaterno.Text).Replace(" ", string.Empty).Equals(string.Empty)) BusquedaActiva.Add(textBoxApellidoPaterno.Text);
-                if (!Ut.SinA(textBoxApellidoMaterno.Text).Replace(" ", string.Empty).Equals(string.Empty)) BusquedaActiva.Add(textBoxApellidoMaterno.Text);
-                if (!Ut.SinA(textBoxPrimerNombre.Text).Replace(" ", string.Empty).Equals(string.Empty)) BusquedaActiva.Add(textBoxPrimerNombre.Text);
-                if (!Ut.SinA(textBoxSegundoNombre.Text).Replace(" ", string.Empty).Equals(string.Empty)) BusquedaActiva.Add(textBoxSegundoNombre.Text);
-                if (!Ut.SinA(textBoxNacionalidad.Text).Replace(" ", string.Empty).Equals(string.Empty)) BusquedaActiva.Add(textBoxNacionalidad.Text);
+                if (!U.SinA(textBoxApellidoPaterno.Text).Replace(" ", string.Empty).Equals(string.Empty)) BusquedaActiva.Add(textBoxApellidoPaterno.Text);
+                if (!U.SinA(textBoxApellidoMaterno.Text).Replace(" ", string.Empty).Equals(string.Empty)) BusquedaActiva.Add(textBoxApellidoMaterno.Text);
+                if (!U.SinA(textBoxPrimerNombre.Text).Replace(" ", string.Empty).Equals(string.Empty)) BusquedaActiva.Add(textBoxPrimerNombre.Text);
+                if (!U.SinA(textBoxSegundoNombre.Text).Replace(" ", string.Empty).Equals(string.Empty)) BusquedaActiva.Add(textBoxSegundoNombre.Text);
+                if (!U.SinA(textBoxNacionalidad.Text).Replace(" ", string.Empty).Equals(string.Empty)) BusquedaActiva.Add(textBoxNacionalidad.Text);
             }
             while (i < funcionarioMostrado.Length &&
-                    !BusquedaActiva.SatisfaceCriterio(Ut.SinA(funcionarios[i]["PrimerNombre"].ToString()).Replace(" ", string.Empty) + " " +
-                        Ut.SinA(funcionarios[i]["SegundoNombre"].ToString().Replace(" ", string.Empty)) + " " +
-                        Ut.SinA(funcionarios[i]["ApellidoPaterno"].ToString().Replace(" ", string.Empty)) + " " +
-                        Ut.SinA(funcionarios[i]["ApellidoMaterno"].ToString().Replace(" ", string.Empty)) + " " +
-                        Ut.SinA(funcionarios[i]["Nacionalidad"].ToString().Replace(" ", string.Empty)))) i++;
+                    !BusquedaActiva.SatisfaceCriterio(U.SinA(funcionarios[i]["PrimerNombre"].ToString()).Replace(" ", string.Empty) + " " +
+                        U.SinA(funcionarios[i]["SegundoNombre"].ToString().Replace(" ", string.Empty)) + " " +
+                        U.SinA(funcionarios[i]["ApellidoPaterno"].ToString().Replace(" ", string.Empty)) + " " +
+                        U.SinA(funcionarios[i]["ApellidoMaterno"].ToString().Replace(" ", string.Empty)) + " " +
+                        U.SinA(funcionarios[i]["Nacionalidad"].ToString().Replace(" ", string.Empty)))) i++;
             if (i < funcionarioMostrado.Length)
             {
                 funcionarioMostrado.Pos = i;
@@ -865,10 +860,10 @@ namespace ActualizaBaseDatos
         {
             if (!AbogadoIrresponsable.Equals(string.Empty))
             {
-                AccessUtility.InsertRegistroEscolaridad(textBoxID.Text, muestraCapturaFechaInicio.Año.ToString(), muestraCapturaFechaInicio.Mes.ToString(), muestraCapturaFechaInicio.Dia.ToString(),
+                Datos.Instance.InsertRegistroEscolaridad(textBoxID.Text, muestraCapturaFechaInicio.Año.ToString(), muestraCapturaFechaInicio.Mes.ToString(), muestraCapturaFechaInicio.Dia.ToString(),
                     muestraCapturaFechaFin.Año.ToString(), muestraCapturaFechaFin.Mes.ToString(), muestraCapturaFechaFin.Dia.ToString(),
                     textBoxUniversidad.Text, textBoxGrado.Text, AbogadoIrresponsable);
-                escolaridad = AccessUtility.GetEscolaridad(IDFuncionario);
+                escolaridad = Datos.Instance.GetEscolaridad(IDFuncionario);
                 indexEscolaridad = new IndiceBD(escolaridad.Length);
                 LlenaEscolaridad(IDFuncionario);
             }
@@ -879,8 +874,8 @@ namespace ActualizaBaseDatos
 
         private void buttonEscolaridadElimina_Click(object sender, EventArgs e)
         {
-            AccessUtility.DeleteRegistroEscolaridad(escolaridad[indexEscolaridad.Pos]["Id1"].ToString());
-            escolaridad = AccessUtility.GetEscolaridad(IDFuncionario);
+            Datos.Instance.DeleteRegistroEscolaridad(escolaridad[indexEscolaridad.Pos]["Id1"].ToString());
+            escolaridad = Datos.Instance.GetEscolaridad(IDFuncionario);
             indexEscolaridad = new IndiceBD(escolaridad.Length);
             LlenaEscolaridad(IDFuncionario);
         }
@@ -913,10 +908,10 @@ namespace ActualizaBaseDatos
         {
             if (!AbogadoIrresponsable.Equals(string.Empty))
             {
-                AccessUtility.InsertRegistroAP(textBoxAPID.Text, muestraCapturaFechaAPInicio.Año.ToString(),
+                Datos.Instance.InsertRegistroAP(textBoxAPID.Text, muestraCapturaFechaAPInicio.Año.ToString(),
                     muestraCapturaFechaAPFin.Año.ToString(),
                 textBoxAPPartido.Text, AbogadoIrresponsable);
-                AP = AccessUtility.GetAdscripcionPolitica(IDFuncionario);
+                AP = Datos.Instance.GetAdscripcionPolitica(IDFuncionario);
                 indexAP = new IndiceBD(AP.Length);
                 LlenaAP(IDFuncionario);
             }
@@ -931,8 +926,8 @@ namespace ActualizaBaseDatos
 
         private void buttonAPElimina_Click(object sender, EventArgs e)
         {
-            AccessUtility.DeleteRegistroAP(AP[indexAP.Pos]["Id1"].ToString());
-            AP = AccessUtility.GetAdscripcionPolitica(IDFuncionario);
+            Datos.Instance.DeleteRegistroAP(AP[indexAP.Pos]["Id1"].ToString());
+            AP = Datos.Instance.GetAdscripcionPolitica(IDFuncionario);
             indexAP = new IndiceBD(AP.Length);
             LlenaAP(IDFuncionario);
         }
@@ -967,9 +962,9 @@ namespace ActualizaBaseDatos
             {
                 if ((checkedListBoxTipoInformacion.SelectedIndex > -1) && (checkedListBoxTipoInformacion.SelectedIndex < checkedListBoxTipoInformacion.Items.Count))
                 {
-                    AccessUtility.InsertRegistroINFO(textBoxINFOID.Text, checkedListBoxTipoInformacion.Text, textBoxINFOReferencia.Text,
+                    Datos.Instance.InsertRegistroINFO(textBoxINFOID.Text, checkedListBoxTipoInformacion.Text, textBoxINFOReferencia.Text,
                             AbogadoIrresponsable);
-                    INFO = AccessUtility.GetNotasRelevantes(IDFuncionario);
+                    INFO = Datos.Instance.GetNotasRelevantes(IDFuncionario);
                     indexINFO = new IndiceBD(INFO.Length);
                     LlenaINFO(IDFuncionario);
                 }
@@ -985,8 +980,8 @@ namespace ActualizaBaseDatos
 
         private void buttonINFOElimina_Click(object sender, EventArgs e)
         {
-            AccessUtility.DeleteRegistroINFO(INFO[indexINFO.Pos]["Id1"].ToString());
-            INFO = AccessUtility.GetNotasRelevantes(IDFuncionario);
+            Datos.Instance.DeleteRegistroINFO(INFO[indexINFO.Pos]["Id1"].ToString());
+            INFO = Datos.Instance.GetNotasRelevantes(IDFuncionario);
             indexINFO = new IndiceBD(INFO.Length);
             LlenaINFO(IDFuncionario);
         }
@@ -1019,11 +1014,11 @@ namespace ActualizaBaseDatos
         {
             if (!AbogadoIrresponsable.Equals(""))
             {
-                AccessUtility.InsertRegistroPuestos(textBoxPuestosID.Text, muestraCapturaFechaPuestoInicio.Año.ToString(), muestraCapturaFechaPuestoInicio.Mes.ToString(), muestraCapturaFechaPuestoInicio.Dia.ToString(),
+                Datos.Instance.InsertRegistroPuestos(textBoxPuestosID.Text, muestraCapturaFechaPuestoInicio.Año.ToString(), muestraCapturaFechaPuestoInicio.Mes.ToString(), muestraCapturaFechaPuestoInicio.Dia.ToString(),
                 muestraCapturaFechaPuestoFin.Año.ToString(), muestraCapturaFechaPuestoFin.Mes.ToString(), muestraCapturaFechaPuestoFin.Dia.ToString(), textBoxPuestosDependencia.Text, textBoxPuestosPuesto.Text,
                 textBoxPuestosSuperior.Text, checkBoxPuestosCargoActual.CheckState == CheckState.Checked ? "actual" :
                 string.Empty, AbogadoIrresponsable);
-                Puestos = AccessUtility.GetPuestos(IDFuncionario);
+                Puestos = Datos.Instance.GetPuestos(IDFuncionario);
                 indexPuestos = new IndiceBD(Puestos.Length);
                 LlenaPuestos(IDFuncionario);
             }
@@ -1038,8 +1033,8 @@ namespace ActualizaBaseDatos
 
         private void buttonPuestosElimina_Click(object sender, EventArgs e)
         {
-            AccessUtility.DeleteRegistroPuestos(Puestos[indexPuestos.Pos]["Id1"].ToString());
-            Puestos = AccessUtility.GetPuestos(IDFuncionario);
+            Datos.Instance.DeleteRegistroPuestos(Puestos[indexPuestos.Pos]["Id1"].ToString());
+            Puestos = Datos.Instance.GetPuestos(IDFuncionario);
             indexPuestos = new IndiceBD(Puestos.Length);
             LlenaPuestos(IDFuncionario);
         }
@@ -1140,12 +1135,12 @@ namespace ActualizaBaseDatos
             if (!AbogadoIrresponsable.Equals(""))
             {
                 string ID = GetNextUsableID();
-                AccessUtility.InsertFuncionario(ID, textBoxPrimerNombre.Text, textBoxSegundoNombre.Text, textBoxApellidoPaterno.Text, textBoxApellidoMaterno.Text,
+                Datos.Instance.InsertFuncionario(ID, textBoxPrimerNombre.Text, textBoxSegundoNombre.Text, textBoxApellidoPaterno.Text, textBoxApellidoMaterno.Text,
                     textBoxNacionalidad.Text, muestraCapturaFechaNacimiento.Año.ToString(), muestraCapturaFechaNacimiento.Mes.ToString(),
                     muestraCapturaFechaNacimiento.Dia.ToString(), AbogadoIrresponsable);
                 if (!NewFotoFileName.Equals(string.Empty))
                 {
-                    AccessUtility.SubeFoto(ID, NewFotoFileName);
+                    Datos.Instance.SubeFoto(ID, NewFotoFileName);
                 }
                 buttonInserta.Enabled = false;
                 buttonModifica.Enabled = true;
@@ -1165,9 +1160,9 @@ namespace ActualizaBaseDatos
             if (!AbogadoIrresponsable.Equals(""))
             {
                 string IDMemoryRecall = textBoxID.Text;
-                AccessUtility.UpdateFuncionario(textBoxID.Text, textBoxPrimerNombre.Text, textBoxSegundoNombre.Text, textBoxApellidoPaterno.Text, textBoxApellidoMaterno.Text, textBoxNacionalidad.Text,
+                Datos.Instance.UpdateFuncionario(textBoxID.Text, textBoxPrimerNombre.Text, textBoxSegundoNombre.Text, textBoxApellidoPaterno.Text, textBoxApellidoMaterno.Text, textBoxNacionalidad.Text,
                     muestraCapturaFechaNacimiento.Año.ToString(), muestraCapturaFechaNacimiento.Mes.ToString(), muestraCapturaFechaNacimiento.Dia.ToString(), AbogadoIrresponsable);
-                if (FotoModificada) AccessUtility.SubeFoto(textBoxID.Text, NewFotoFileName);
+                if (FotoModificada) Datos.Instance.SubeFoto(textBoxID.Text, NewFotoFileName);
                 buttonModifica.Enabled = false;
                 DatosPersonalesModificados = false;
                 FotoModificada = false;
@@ -1180,7 +1175,7 @@ namespace ActualizaBaseDatos
 
         private void CargaBD(String ID)
         {
-            funcionarios = AccessUtility.GetFuncionarios();
+            funcionarios = Datos.Instance.GetFuncionarios();
             funcionarioMostrado = new IndiceBD(funcionarios.Length);
             funcionarioMostrado.Pos = DespliegaInformacionDelID(ID);
             if (funcionarioMostrado.Length > 0)
@@ -1300,7 +1295,7 @@ namespace ActualizaBaseDatos
                         case 2:  // Modificamos un Puesto
                             if (!NodoDeAgrupación)
                             {
-                                NodoDeArbolMostrado.Text = textBoxOrgNombrePuestoModificado.Text + " - " + AccessUtility.GetNombreFuncionario(IDMostrado) + "_" + IDMostrado;
+                                NodoDeArbolMostrado.Text = textBoxOrgNombrePuestoModificado.Text + " - " + Datos.Instance.GetNombreFuncionario(IDMostrado) + "_" + IDMostrado;
                                 NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, textBoxOrgNombrePuestoModificado.Text, IDMostrado, AbogadoIrresponsable);
                                 NuevoNode = new Node<Registro>(NuevoRegistro, NodoSeleccionado.Sons, NodoSeleccionado.Padre);
                                 // tengo que actualizar APF
@@ -1318,7 +1313,7 @@ namespace ActualizaBaseDatos
                             {
                                 ID = funcionarios[funcionarioMostrado.Pos]["ID"].ToString();
                                 int gion = NodoDeArbolMostrado.Text.IndexOf('-');
-                                NodoDeArbolMostrado.Text = NodoDeArbolMostrado.Text.Substring(0, gion - 1) + " - " + AccessUtility.GetNombreFuncionario(ID) + "_" + ID;
+                                NodoDeArbolMostrado.Text = NodoDeArbolMostrado.Text.Substring(0, gion - 1) + " - " + Datos.Instance.GetNombreFuncionario(ID) + "_" + ID;
                                 NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, NodoDeArbolMostrado.Text.Substring(0, gion - 1), ID, AbogadoIrresponsable);
                                 NuevoNode = new Node<Registro>(NuevoRegistro, NodoSeleccionado.Sons, NodoSeleccionado.Padre);
                                 ListaDeNodosPorID.Add(ID, NuevoNode);
@@ -1393,7 +1388,7 @@ namespace ActualizaBaseDatos
                     }
                     else
                     {
-                        newNode = new TreeNode(textBoxOrgNombrePuesto.Text + " - " + AccessUtility.GetNombreFuncionario(ID) + "_" + ID);
+                        newNode = new TreeNode(textBoxOrgNombrePuesto.Text + " - " + Datos.Instance.GetNombreFuncionario(ID) + "_" + ID);
                     }
                     NuevoPuesto.Data.NodoDelTreeView = newNode;
                     NodoDeArbolMostrado.Nodes.Add(newNode);
@@ -1690,9 +1685,9 @@ namespace ActualizaBaseDatos
             if (!AbogadoIrresponsable.Equals(""))
             {
                 ImprimeConsola("Guardamos el Organigrama");
-                string MaxId1 = AccessUtility.OrganigramaMaxId1();
+                string MaxId1 = Datos.Instance.OrganigramaMaxId1();
                 organigrama.SalvaTreeAPF(APF, ImprimeConsola, false);
-                AccessUtility.DeleteOrganigrama(MaxId1);
+                Datos.Instance.DeleteOrganigrama(MaxId1);
             }
             else
                 MessageBox.Show("Tienes que identificarte primero");
@@ -1744,8 +1739,8 @@ namespace ActualizaBaseDatos
         {
             if ((checkedListBoxTipoINFO.SelectedIndex > -1) && (checkedListBoxTipoINFO.SelectedIndex < checkedListBoxTipoINFO.Items.Count))
             {
-                AccessUtility.InsertRegistroDatosContacto(textBoxDatosContactoID.Text, checkedListBoxTipoINFO.Text, textBoxDatosContactoDato.Text, labelDatosContactoAbogadoResp.Text);
-                DatosContacto = AccessUtility.GetDatosContacto(textBoxDatosContactoID.Text);
+                Datos.Instance.InsertRegistroDatosContacto(textBoxDatosContactoID.Text, checkedListBoxTipoINFO.Text, textBoxDatosContactoDato.Text, labelDatosContactoAbogadoResp.Text);
+                DatosContacto = Datos.Instance.GetDatosContacto(textBoxDatosContactoID.Text);
                 indexDatosContacto = new IndiceBD(DatosContacto.Length);
                 LlenaDatosContacto(textBoxDatosContactoID.Text);
             }
@@ -1782,8 +1777,8 @@ namespace ActualizaBaseDatos
 
         private void buttonDatosContactoElimina_Click(object sender, EventArgs e)
         {
-            AccessUtility.DeleteRegistroDatosContacto(DatosContacto[indexDatosContacto.Pos]["Id1"].ToString());
-            DatosContacto = AccessUtility.GetDatosContacto(IDFuncionario);
+            Datos.Instance.DeleteRegistroDatosContacto(DatosContacto[indexDatosContacto.Pos]["Id1"].ToString());
+            DatosContacto = Datos.Instance.GetDatosContacto(IDFuncionario);
             indexDatosContacto = new IndiceBD(DatosContacto.Length);
             LlenaDatosContacto(IDFuncionario);
         }
@@ -1896,9 +1891,9 @@ namespace ActualizaBaseDatos
 
         private void buttonCirculoCercanoInserta_Click(object sender, EventArgs e)
         {
-            AccessUtility.InsertRegistroCirculoCercano(textBoxCirculoCercanoID.Text, textBoxCirculoCercanoNombre.Text,
+            Datos.Instance.InsertRegistroCirculoCercano(textBoxCirculoCercanoID.Text, textBoxCirculoCercanoNombre.Text,
                     textBoxCirculoCercanoInformación.Text, labelCirculoCercanoAbogadoResp.Text);
-            CirculoCercano = AccessUtility.GetCirculoCercano(textBoxCirculoCercanoID.Text);
+            CirculoCercano = Datos.Instance.GetCirculoCercano(textBoxCirculoCercanoID.Text);
             indexCirculoCercano = new IndiceBD(CirculoCercano.Length);
             LlenaCirculoCercano(textBoxCirculoCercanoID.Text);
         }
@@ -1910,15 +1905,15 @@ namespace ActualizaBaseDatos
 
         private void buttonCirculoCercanoElimina_Click(object sender, EventArgs e)
         {
-            AccessUtility.DeleteRegistroCirculoCercano(CirculoCercano[indexCirculoCercano.Pos]["Id1"].ToString());
-            CirculoCercano = AccessUtility.GetCirculoCercano(IDFuncionario);
+            Datos.Instance.DeleteRegistroCirculoCercano(CirculoCercano[indexCirculoCercano.Pos]["Id1"].ToString());
+            CirculoCercano = Datos.Instance.GetCirculoCercano(IDFuncionario);
             indexCirculoCercano = new IndiceBD(CirculoCercano.Length);
             LlenaCirculoCercano(IDFuncionario);
         }
 
         private void buttonVerificaOK_Click(object sender, EventArgs e)
         {
-            if (AccessUtility.VerificaAbogadoIrresponsable(textBoxAbogadoIrresponsable.Text, textBoxPassword.Text))
+            if (Datos.Instance.VerificaAbogadoIrresponsable(textBoxAbogadoIrresponsable.Text, textBoxPassword.Text))
             {
                 AbogadoIrresponsable = textBoxAbogadoIrresponsable.Text;
                 buttonVerificaOK.Text = "OK";

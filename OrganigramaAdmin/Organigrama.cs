@@ -1,6 +1,6 @@
-﻿using Arboles;
+﻿using Peta;
 using APFInfo;
-using MSAccess;
+using AccesoBaseDatos;
 using System.Windows.Forms;
 using System;
 using OrgBusqueda;
@@ -11,7 +11,7 @@ namespace OrganigramaAdmin
     {
         public void LlenaTreeAPF(TreeNodeCollection APFtreeNodes, Node<Registro> APF, int i, bool IsTheFirstTime, ref TreeNode raiz)
         {
-            TreeNode newNode = new TreeNode(APF.Data.NombrePuesto + " - " + AccessUtility.GetNombreFuncionario(APF.Data.ID) + "_" + APF.Data.ID);
+            TreeNode newNode = new TreeNode(APF.Data.NombrePuesto + " - " + Datos.Instance.GetNombreFuncionario(APF.Data.ID) + "_" + APF.Data.ID);
             APF.Data.NodoDelTreeView = newNode;
             if (IsTheFirstTime)
             {
@@ -49,7 +49,7 @@ namespace OrganigramaAdmin
 
             if (NoFirstTime)
             {
-                AccessUtility.InsertRegistroOrganigrama(APF.Data.TipoRegistro, APF.Data.NombrePuesto, APF.Data.ID, APF.Data.AbogadoIrresponsable, i++, Print);
+                Datos.Instance.InsertRegistroOrganigrama(APF.Data.TipoRegistro, APF.Data.NombrePuesto, APF.Data.ID, APF.Data.AbogadoIrresponsable, i++, Print);
             }
             else
             {

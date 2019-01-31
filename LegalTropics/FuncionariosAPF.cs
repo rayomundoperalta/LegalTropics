@@ -1,11 +1,11 @@
-﻿using MSAccess;
+﻿using AccesoBaseDatos;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using APFInfo;
 using System.Data;
-using FuncionesAuxiliares;
+using Peta;
 
 namespace LegalTropics
 {
@@ -21,7 +21,7 @@ namespace LegalTropics
             List<string> nombres = new List<string>();
             for (int i = 0; i < ListaFuncionarios.Count; i++)
             {
-                DataRow[] fun = AccessUtility.GetFuncionario(ListaFuncionarios[i].ID);
+                DataRow[] fun = Datos.Instance.GetFuncionario(ListaFuncionarios[i].ID);
                 // throw new System.IndexOutOfRangeException("No hay funcionario para el ID " + ListaFuncionarios[i].ID);
                 if (fun.Length > 0)
                 {
@@ -51,7 +51,7 @@ namespace LegalTropics
                 treeViewFuncionarios.Nodes.Add(new TreeNode(rangos[i].IniMayuscula + " - " + rangos[i].FinMayuscula));
                 /* O J O   CON EL ORDEN DE LOS OPERANDOS */
                 //MessageBox.Show(nombres[j]);
-                while ((j < nombres.Count) && EnRango(rangos[i], Ut.SinA(nombres[j]).Replace(" ", string.Empty))) // Cuidado el orden de las condiciones es importante
+                while ((j < nombres.Count) && EnRango(rangos[i], U.SinA(nombres[j]).Replace(" ", string.Empty))) // Cuidado el orden de las condiciones es importante
                 {
                     //MessageBox.Show(nombres[j]);
                     treeViewFuncionarios.Nodes[i].Nodes.Add(new TreeNode(nombres[j].Substring(1, nombres[j].Length - 1)));

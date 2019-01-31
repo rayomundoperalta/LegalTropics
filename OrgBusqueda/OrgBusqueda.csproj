@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AccesoBaseDatos">
+      <HintPath>..\AccesoBaseDatos\bin\Debug\AccesoBaseDatos.dll</HintPath>
+    </Reference>
+    <Reference Include="Peta">
+      <HintPath>..\..\Peta\Peta\bin\Debug\Peta.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,14 +55,6 @@
     <ProjectReference Include="..\APFInfo\APFInfo.csproj">
       <Project>{78e95583-3d1a-4b69-a3e2-734756f80145}</Project>
       <Name>APFInfo</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Arboles\Arboles.csproj">
-      <Project>{0365e5a2-c233-4090-ac0a-1b9ac833be16}</Project>
-      <Name>Arboles</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MSAccess\MSAccess.csproj">
-      <Project>{4887b47f-4a46-487e-ae56-782ae53c39d7}</Project>
-      <Name>MSAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

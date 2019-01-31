@@ -1,23 +1,22 @@
-﻿using Arboles;
+﻿using Peta;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using APFInfo;
-using System.Globalization;
 
 namespace LegalTropics
 {
     public partial class PuestosAPF : Form
     {
         List<Registro> ListaPuestos;
-
+        /*
         private string SinA(string Cadena)
         {
             return Cadena.ToLower().Replace("á", "a").Replace("é", "e").Replace("í", "i").Replace("ó", "o").Replace("ú", "u").Replace("ü", "u")
                 .Replace(" ", string.Empty).Replace("\n", string.Empty).Replace("\t", string.Empty);
         }
-
+        */
         public PuestosAPF()
         {
             InitializeComponent();
@@ -31,7 +30,7 @@ namespace LegalTropics
             }
             StringPuestos.Sort(delegate (string x, string y)
             {
-                return SinA(x).CompareTo(SinA(y));
+                return U.SinA(x).CompareTo(U.SinA(y));
             });
 
             StringPuestos.Sort();
@@ -52,7 +51,7 @@ namespace LegalTropics
             {
                 treeViewPuestos.Nodes.Add(new TreeNode(rangos[i].IniMayuscula + " - " + rangos[i].FinMayuscula));
                 /* O J O   CON EL ORDEN DE LOS OPERANDOS */
-                while ((j < ListaPuestos.Count) && EnRango(rangos[i], StringPuestos[j])) // Cuidado el orden de las condiciones es importante
+                while ((j < ListaPuestos.Count) && EnRango(rangos[i], U.SinA(StringPuestos[j]))) // Cuidado el orden de las condiciones es importante
                 {
                     treeViewPuestos.Nodes[i].Nodes.Add(new TreeNode(StringPuestos[j]));
                     j++;
@@ -85,14 +84,14 @@ namespace LegalTropics
             c3 = rangos.IniMayuscula <= IniChar;
             c4 = IniChar <= rangos.FinMayuscula;
 
-            r1 = c1 && c2;
-            r2 = c3 && c4;
+            r1 = c1 & c2;
+            r2 = c3 & c4;
             //MessageBox.Show("char = " + IniChar +
             //    "\nIniMinuscula = " + rangos.IniMinuscula + ", FinMinuscula = " + rangos.FinMinuscula +
             //    "\nIniMayuscula = " + rangos.IniMayuscula + ", FinMayuscula = " + rangos.FinMayuscula +
             //    "\nc1 = " + c1 + ", c2 = " + c2 + ", c3 = " + c3 + ", c4 = " + c4 +
             //    "\nEnRango: r1 = " + r1 + ", r2 = " + r2);
-            if (r1 || r2) return true;
+            if (r1 | r2) return true;
             return false;
         }
 

@@ -9,14 +9,10 @@ using Microsoft.Office.Interop.Word;
 using Traductor;
 using System.Data;
 using System.IO;
-using Arboles;
+using Peta;
 using Globales;
 using APFInfo;
-using MSAccess;
-using CifradoPeta;
-using PetaPublish;
-using FuncionesAuxiliares;
-using OrganigramaAdmin;
+using AccesoBaseDatos;
 using System.Threading;
 
 namespace LegalTropics
@@ -27,7 +23,7 @@ namespace LegalTropics
         Socket sender1;
         Dictionary<string, string> dicFuncionarios = new Dictionary<string, string>();
         public Node<Registro> APF;
-        public NavegaciónAPF VentanaNavegación;
+        public OrganigramaAPF VentanaNavegación;
         public ImageScroll AparadorDeFotografias;
         public PuestosAPF VentanaPuestos;
         public FuncionariosAPF VentanaFuncionarios;
@@ -62,10 +58,45 @@ namespace LegalTropics
         }
 
         Thread InicialicaBaseDeDatosThread;
-        bool DataBaseInicializada = false;
+        bool DBInicializada;
+
+        bool DataBaseInicializada
+        {
+            get { return DBInicializada; }
+            set
+            {
+                switch (value)
+                {
+                    case true:
+                        buttonOrganigrama.Enabled = true;
+                        buttonPuestos.Enabled = true;
+                        buttonFuncionarios.Enabled = true;
+                        buttonCatalogoFotos.Enabled = true;
+                        buttonGeneraReporte.Enabled = true;
+                        buttonActualizaBaseDeDatos.Enabled = true;
+                        comboBoxFuncionarios.Enabled = true;
+                        comboBoxPuestos.Enabled = true;
+                        break;
+                    case false:
+                        buttonOrganigrama.Enabled = false;
+                        buttonPuestos.Enabled = false;
+                        buttonFuncionarios.Enabled = false;
+                        buttonCatalogoFotos.Enabled = false;
+                        buttonGeneraReporte.Enabled = false;
+                        buttonActualizaBaseDeDatos.Enabled = false;
+                        comboBoxFuncionarios.Enabled = false;
+                        comboBoxPuestos.Enabled = false;
+                        break;
+                    default:
+                        break;
+                }
+                DBInicializada = value;
+            }
+        }
 
         private void Tropicalizador_Load(object sender, RibbonUIEventArgs e)
         {
+            DataBaseInicializada = false;
             VerificaDirectorios();
             if (!File.Exists(Defines.DataBasePath + Defines.DataBaseFileName))
             {
@@ -75,10 +106,11 @@ namespace LegalTropics
             InicialicaBaseDeDatosThread.Start();
         }
 
-        Dictionary<string, Node<Registro>> ListaDeNodosPorID = new Dictionary<string, Node<Registro>>();
+        Dictionary<string, Node<Registro>> ListaDeNodosPorID;
 
         private void LoadDataBaseAPF()
         {
+            ListaDeNodosPorID = new Dictionary<string, Node<Registro>>();
             Parser parser = new Parser(ImprimeConsola);
             Registro Presidente = new Registro("P", "Presidencia", "A0", "El Sistema");
             APF = new Node<Registro>(Presidente);
@@ -93,7 +125,7 @@ namespace LegalTropics
             // }
 
             RibbonDropDownItem item;
-            DataRow[] funcionarios = AccessUtility.GetFuncionarios();
+            DataRow[] funcionarios = Datos.Instance.GetFuncionarios();
             for (int i = 0; i < funcionarios.Length; i++)
             {
                 item = Globals.Factory.GetRibbonFactory().CreateRibbonDropDownItem();
@@ -103,7 +135,7 @@ namespace LegalTropics
             }
 
             //List<Registro> Puestos = APF.ListPuestos();
-            DataRow[] Puestos = AccessUtility.GetDistinctPuestos();
+            DataRow[] Puestos = Datos.Instance.GetDistinctPuestos();
             List<string> StringPuestos = new List<string>();
             for (int i = 0; i < Puestos.Length; i++)
             {
@@ -121,7 +153,7 @@ namespace LegalTropics
                 comboBoxPuestos.Items.Add(item);
             }
 
-            VentanaNavegación = new NavegaciónAPF();
+            VentanaNavegación = new OrganigramaAPF();
             AparadorDeFotografias = new ImageScroll();
             VentanaPuestos = new PuestosAPF();
             VentanaFuncionarios = new FuncionariosAPF();
@@ -399,7 +431,7 @@ namespace LegalTropics
             {
                 for (int i = 0; i < puestos.Length; i++)
                 {
-                    if (puestos[i]["CargoActual"].ToString().Equals("1")) return puestos[i]["Puesto"].ToString();
+                    if (puestos[i]["CargoActual"].ToString().Equals("actual")) return puestos[i]["Puesto"].ToString();
                 }
             }
             return string.Empty;
@@ -414,7 +446,7 @@ namespace LegalTropics
                 float PageWidthPoints = Globals.ThisAddIn.Application.ActiveDocument.PageSetup.PageWidth;
                 string nombre = funcionarios[i]["PrimerNombre"] + " " + funcionarios[i]["SegundoNombre"] + " " + funcionarios[i]["ApellidoPaterno"] + " " + funcionarios[i]["ApellidoMaterno"];
                 WriteLine(rng, nombre, (float)16, Italic.NoItalicas, "Century Gothic", Formato.Centrado, Bold.Bold, ALaLinea.NewLine);
-                DataRow[] puestos = AccessUtility.GetPuestos(funcionarios[i]["ID"].ToString());
+                DataRow[] puestos = Datos.Instance.GetPuestos(funcionarios[i]["ID"].ToString());
                 if (puestos.Length > 0)
                 {
                     //WriteLine(rng, puestos[puestos.Length - 1]["Puesto"].ToString(), (float)10.5, Italic.NoItalicas, "Century Gothic", Formato.Centrado, Bold.NoBold, ALaLinea.NewLine);
@@ -423,7 +455,7 @@ namespace LegalTropics
 
                 /* Poner la foto aquí */
                 WriteLine(rng, "\n", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
-                string FullName = AccessUtility.GetFoto(funcionarios[i]["ID"].ToString());
+                string FullName = Datos.Instance.GetFoto(funcionarios[i]["ID"].ToString());
                 if (FullName != String.Empty)
                 {
                     object PhotoPos = rng;
@@ -466,7 +498,7 @@ namespace LegalTropics
                 tabla1.PreferredWidth = PageWidthPoints;
                 tabla1.Columns[1].SetWidth(PageWidthPoints * (float) (0.15), WdRulerStyle.wdAdjustSameWidth);
 
-                tabla1.Cell(1, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
+                //tabla1.Cell(1, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
                 //WriteLine(tabla1.Cell(1, 1).Range, "Nombre Completo", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
                 //string nombreCompleto = funcionarios[i]["PrimerNombre"] + " " + funcionarios[i]["SegundoNombre"] + " " + funcionarios[i]["ApellidoPaterno"] + " " + funcionarios[i]["ApellidoMaterno"];
                 //WriteLine(tabla1.Cell(1, 2).Range, nombreCompleto, (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
@@ -474,50 +506,63 @@ namespace LegalTropics
                 tabla1.Cell(1, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
                 WriteLine(tabla1.Cell(1, 1).Range, "Fecha de nacimiento", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
                 WriteLine(tabla1.Cell(1, 2).Range,
-                    FormatoFecha.FechaString(funcionarios[i]["AñoNacimiento"].ToString(),
-                        funcionarios[i]["MesNacimiento"].ToString(),
-                        funcionarios[i]["DiaNacimiento"].ToString(), "Fecha: no disponible"),
+                    Fecha.FechaString(funcionarios[i]["AñoNacimiento"].ToString().Replace("\n", string.Empty),
+                        funcionarios[i]["MesNacimiento"].ToString().Replace("\n", string.Empty),
+                        funcionarios[i]["DiaNacimiento"].ToString().Replace("\n", string.Empty), " "),
                     (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
 
                 //         Adscripción Política
                 tabla1.Cell(2, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
                 WriteLine(tabla1.Cell(2, 1).Range, "Partido", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
-                DataRow[] adscripcionPolitica = AccessUtility.GetAdscripcionPolitica(funcionarios[i]["ID"].ToString());
+                DataRow[] adscripcionPolitica = Datos.Instance.GetAdscripcionPolitica(funcionarios[i]["ID"].ToString());
                 string HistoriaPartidista = "";
-                for (int j = adscripcionPolitica.Length - 1; j >= 0; j--)
+                for (int j = 0; j < adscripcionPolitica.Length; j++)
                 {
-                    HistoriaPartidista += adscripcionPolitica[j]["NombreDelPartido"].ToString().Replace("\n", string.Empty) + " " +
-                        adscripcionPolitica[j]["FechaDeInicio"].ToString() + " " +
-                        adscripcionPolitica[j]["FechaDeFin"].ToString();
-                    HistoriaPartidista += (j == 0) ? string.Empty : "\n";
+                    if (!adscripcionPolitica[j]["NombreDelPartido"].ToString().Equals("No Disponible"))
+                    {
+                        HistoriaPartidista += adscripcionPolitica[j]["NombreDelPartido"].ToString().Replace("\n", string.Empty) + " ";
+                        if (!adscripcionPolitica[j]["FechaDeInicio"].ToString().Equals("1900") &
+                            !adscripcionPolitica[j]["FechaDeInicio"].ToString().Equals("") &
+                            !adscripcionPolitica[j]["FechaDeFin"].ToString().Equals("1900") &
+                            !adscripcionPolitica[j]["FechaDeFin"].ToString().Equals(""))
+                        {
+                            HistoriaPartidista += adscripcionPolitica[j]["FechaDeInicio"].ToString().Replace("\n", string.Empty) + " a " +
+                                adscripcionPolitica[j]["FechaDeFin"].ToString().Replace("\n", string.Empty) + "\n\n";
+                        }   
+                        //HistoriaPartidista += (j == 0) ? string.Empty : "\n";
+                    }
                 }
-                tabla1.Cell(2, 2).Range.ListFormat.ApplyNumberDefault(ref oMissing);
-                ListTemplate lt1 = tabla1.Cell(2, 2).Range.ListFormat.ListTemplate;
-                tabla1.Cell(2, 2).Range.ListFormat.ApplyListTemplate(lt1, false);
+                //tabla1.Cell(2, 2).Range.ListFormat.ApplyNumberDefault(ref oMissing);
+                //ListTemplate lt1 = tabla1.Cell(2, 2).Range.ListFormat.ListTemplate;
+                //tabla1.Cell(2, 2).Range.ListFormat.ApplyListTemplate(lt1, false);
 
-                WriteLine(tabla1.Cell(2, 2).Range, HistoriaPartidista, (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                WriteLine(tabla1.Cell(2, 2).Range, HistoriaPartidista, (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NewLine);
 
                 //      Cargo Actual
                 tabla1.Cell(3, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
                 WriteLine(tabla1.Cell(3, 1).Range, "Cargo Actual", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
-                WriteLine(tabla1.Cell(3, 2).Range, PuestoActual(puestos), (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
+                WriteLine(tabla1.Cell(3, 2).Range, PuestoActual(puestos).Replace("\n", string.Empty) + "\n", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NewLine);
 
                 //     Datos de Contacto
                 tabla1.Cell(4, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
                 WriteLine(tabla1.Cell(4, 1).Range, "Datos de Contacto", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
-                DataRow[] DatosContacto = AccessUtility.GetDatosDeContacto(funcionarios[i]["ID"].ToString());
+                DataRow[] DatosContacto = Datos.Instance.GetDatosDeContacto(funcionarios[i]["ID"].ToString());
                 string StringDatosContacto = "";
-                for (int j = 0; j < DatosContacto.Length; j--)
+                for (int j = 0; j < DatosContacto.Length; j++)
                 {
                     StringDatosContacto += DatosContacto[j]["Tipo"].ToString().Replace("\n", string.Empty) + ": " +
-                        DatosContacto[j]["dato"].ToString();
-                    StringDatosContacto += (j == 0) ? string.Empty : "\n";
+                        DatosContacto[j]["dato"].ToString().Replace("\n", string.Empty) + "\n\n";
+                    //StringDatosContacto += (DatosContacto.Length > 1) ? "\n" : string.Empty;
                 }
+                //if (DatosContacto.Length > 1)
+                //{
+                //    StringDatosContacto = StringDatosContacto.Remove(StringDatosContacto.Length - 1);
+                //}
                 if (DatosContacto.Length > 0 )
                 {
-                    tabla1.Cell(4, 2).Range.ListFormat.ApplyNumberDefault(ref oMissing);
-                    ListTemplate lt2 = tabla1.Cell(4, 2).Range.ListFormat.ListTemplate;
-                    tabla1.Cell(4, 2).Range.ListFormat.ApplyListTemplate(lt2, false);
+                    //tabla1.Cell(4, 2).Range.ListFormat.ApplyNumberDefault(ref oMissing);
+                    //ListTemplate lt2 = tabla1.Cell(4, 2).Range.ListFormat.ListTemplate;
+                    //tabla1.Cell(4, 2).Range.ListFormat.ApplyListTemplate(lt2, false);
                     WriteLine(tabla1.Cell(4, 2).Range, StringDatosContacto, (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
                 }
                    
@@ -529,30 +574,29 @@ namespace LegalTropics
                 //     Circulo Cercano
                 tabla1.Cell(5, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
                 WriteLine(tabla1.Cell(5, 1).Range, "Circulo Cercano", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
-                DataRow[] CirculoCercano = AccessUtility.GetCirculoCercano(funcionarios[i]["ID"].ToString());
+                DataRow[] CirculoCercano = Datos.Instance.GetCirculoCercano(funcionarios[i]["ID"].ToString());
                 string StringCirculoCercano = "";
-                for (int j = 0; j < CirculoCercano.Length; j--)
+                for (int j = 0; j < CirculoCercano.Length; j++)
                 {
                     StringCirculoCercano += CirculoCercano [j]["Nombre"].ToString().Replace("\n", string.Empty) + ": " +
-                        CirculoCercano[j]["Información"].ToString();
-                    StringCirculoCercano += (j == 0) ? string.Empty : "\n";
+                        CirculoCercano[j]["Información"].ToString().Replace("\n", string.Empty) + "\n\n";
+                    //StringCirculoCercano += (j == 0) ? string.Empty : "\n";
                 }
                 if (CirculoCercano.Length > 0)
                 {
-                    tabla1.Cell(5, 2).Range.ListFormat.ApplyNumberDefault(ref oMissing);
-                    ListTemplate lt3 = tabla1.Cell(5, 2).Range.ListFormat.ListTemplate;
-                    tabla1.Cell(5, 2).Range.ListFormat.ApplyListTemplate(lt3, false);
+                    //tabla1.Cell(5, 2).Range.ListFormat.ApplyNumberDefault(ref oMissing);
+                    //ListTemplate lt3 = tabla1.Cell(5, 2).Range.ListFormat.ListTemplate;
+                    //tabla1.Cell(5, 2).Range.ListFormat.ApplyListTemplate(lt3, false);
                     WriteLine(tabla1.Cell(5, 2).Range, StringCirculoCercano, (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
                 }
                     
-
                 //tabla1.Cell(5, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
                 //WriteLine(tabla1.Cell(5, 1).Range, "Circulo Cercano", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
                 //WriteLine(tabla1.Cell(5, 2).Range, "", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
 
                 rng = Globals.ThisAddIn.Application.ActiveDocument.Range(Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1, Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1);
 
-                DataRow[] escolaridad = AccessUtility.GetEscolaridad(funcionarios[i]["ID"].ToString());
+                DataRow[] escolaridad = Datos.Instance.GetEscolaridad(funcionarios[i]["ID"].ToString());
                 if (escolaridad.Length > 0)
                 {
                     rng.Select();
@@ -574,13 +618,13 @@ namespace LegalTropics
                     string datosEscolares = "";
                     for (int j = 0; j < escolaridad.Length; j++)
                     {
-                        datosEscolares += escolaridad[j]["Universidad"] + "  " + escolaridad[j]["Grado"] + " - " + 
-                            FormatoFecha.FechaString(escolaridad[j]["AñoFinal"].ToString(),
-                                escolaridad[j]["MesFinal"].ToString(),
-                                escolaridad[j]["DiaFinal"].ToString(), "Fecha: no disponible");
-                        datosEscolares += (j == escolaridad.Length - 1) ? string.Empty : "\n";
+                        datosEscolares += escolaridad[j]["Universidad"].ToString().Replace("\n", string.Empty) + "  " + escolaridad[j]["Grado"].ToString().Replace("\n", string.Empty) + " - " + 
+                            Fecha.FechaString(escolaridad[j]["AñoFinal"].ToString().Replace("\n", string.Empty),
+                                escolaridad[j]["MesFinal"].ToString().Replace("\n", string.Empty),
+                                escolaridad[j]["DiaFinal"].ToString().Replace("\n", string.Empty), " ") + "\n\n";
+                        //datosEscolares += (j == escolaridad.Length - 1) ? string.Empty : "\n";
                     }
-                    tabla2.Cell(1, 2).Range.ListFormat.ApplyBulletDefault(ref oMissing);
+                    //tabla2.Cell(1, 2).Range.ListFormat.ApplyBulletDefault(ref oMissing);
                     WriteLine(tabla2.Cell(1, 2).Range, datosEscolares, (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
                     rng = Globals.ThisAddIn.Application.ActiveDocument.Range(Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1, Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1);
                 }
@@ -605,21 +649,24 @@ namespace LegalTropics
                     string trayectoria = "";
                     for (int j = 0; j < puestos.Length; j++)
                     {
-                        trayectoria += puestos[j]["Puesto"] + " - " + puestos[j]["DependenciaEntidad"] + " - " +
-                            FormatoFecha.FechaString(puestos[j]["AñoInicial"].ToString(),
-                                puestos[j]["MesInicial"].ToString(),
-                                puestos[j]["DiaInicial"].ToString(), string.Empty) + "   " +
-                            FormatoFecha.FechaString(puestos[j]["AñoFinal"].ToString(),
-                                puestos[j]["MesFinal"].ToString(),
-                                puestos[j]["DiaFinal"].ToString(), "Fecha: no disponible");
-                        trayectoria += (j == puestos.Length - 1) ? string.Empty : "\n";
+                        if (!puestos[j]["CargoActual"].ToString().Equals("actual"))
+                        {
+                            trayectoria += puestos[j]["Puesto"].ToString().Replace("\n", string.Empty) + " - " + puestos[j]["DependenciaEntidad"].ToString().Replace("\n", string.Empty) + " - " +
+                            Fecha.FechaString(puestos[j]["AñoInicial"].ToString().Replace("\n", string.Empty),
+                                puestos[j]["MesInicial"].ToString().Replace("\n", string.Empty),
+                                puestos[j]["DiaInicial"].ToString().Replace("\n", string.Empty), string.Empty) + "   " +
+                            Fecha.FechaString(puestos[j]["AñoFinal"].ToString().Replace("\n", string.Empty),
+                                puestos[j]["MesFinal"].ToString().Replace("\n", string.Empty),
+                                puestos[j]["DiaFinal"].ToString().Replace("\n", string.Empty), " ") + "\n\n";
+                            //trayectoria += (j == puestos.Length - 1) ? string.Empty : "\n";
+                        }
                     }
-                    tabla3.Cell(1, 2).Range.ListFormat.ApplyBulletDefault(ref oMissing);
+                    //tabla3.Cell(1, 2).Range.ListFormat.ApplyBulletDefault(ref oMissing);
                     WriteLine(tabla3.Cell(1, 2).Range, trayectoria, (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
                     rng = Globals.ThisAddIn.Application.ActiveDocument.Range(Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1, Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1);
                 }
 
-                DataRow[] notas = AccessUtility.GetNotasRelevantes(funcionarios[i]["ID"].ToString());
+                DataRow[] notas = Datos.Instance.GetNotasRelevantes(funcionarios[i]["ID"].ToString());
                 if (notas.Length > 0)
                 {
                     rng.Select();
@@ -641,18 +688,18 @@ namespace LegalTropics
                     string notasRelevantes = "";
                     for (int j = 0; j < notas.Length; j++)
                     {
-                        notasRelevantes += notas[j]["Referencia"].ToString().Replace("\n\n", "\n");
-                        notasRelevantes += (j == notas.Length - 1) ? string.Empty : "\n";
+                        notasRelevantes += notas[j]["Referencia"].ToString().Replace("\n\n", "\n") + "\n\n";
+                        //notasRelevantes += (j == notas.Length - 1) ? string.Empty : "\n";
                     }
-                    tabla4.Cell(1, 2).Range.ListFormat.ApplyNumberDefault(ref oMissing);
-                    ListTemplate lt = tabla4.Cell(1, 2).Range.ListFormat.ListTemplate;
-                    tabla4.Cell(1, 2).Range.ListFormat.ApplyListTemplate(lt , false);
+                    //tabla4.Cell(1, 2).Range.ListFormat.ApplyNumberDefault(ref oMissing);
+                    //ListTemplate lt = tabla4.Cell(1, 2).Range.ListFormat.ListTemplate;
+                    //tabla4.Cell(1, 2).Range.ListFormat.ApplyListTemplate(lt , false);
                     WriteLine(tabla4.Cell(1, 2).Range, notasRelevantes, (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
 
                     rng = Globals.ThisAddIn.Application.ActiveDocument.Range(Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1, Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1);
                 }
 
-                DataRow[] comentarios = AccessUtility.GetComentarios(funcionarios[i]["ID"].ToString());
+                DataRow[] comentarios = Datos.Instance.GetComentarios(funcionarios[i]["ID"].ToString());
                 if (comentarios.Length > 0)
                 {
                     rng.Select();
@@ -677,7 +724,7 @@ namespace LegalTropics
                         comments += comentarios[j]["Referencia"].ToString().Replace("\n\n", "\n");
                         comments += (j == comentarios.Length - 1) ? string.Empty : "\n";
                     }
-                    tabla5.Cell(1, 2).Range.ListFormat.ApplyBulletDefault(ref oMissing);
+                    //tabla5.Cell(1, 2).Range.ListFormat.ApplyBulletDefault(ref oMissing);
                     WriteLine(tabla5.Cell(1, 2).Range, comments, (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
                     rng = Globals.ThisAddIn.Application.ActiveDocument.Range(Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1, Globals.ThisAddIn.Application.ActiveDocument.Content.End - 1);
                 }
@@ -747,7 +794,7 @@ namespace LegalTropics
         {
             if (DataBaseInicializada)
             {
-                DataRow[] funcionarios = AccessUtility.GetFuncionarios();
+                DataRow[] funcionarios = Datos.Instance.GetFuncionarios();
                 //Range rng = Globals.ThisAddIn.Application.ActiveDocument.Range(0, 0);
                 Range rng = Globals.ThisAddIn.Application.Selection.Range;
                 ImprimeDatosFuncionarios(rng, funcionarios);
@@ -757,7 +804,7 @@ namespace LegalTropics
 
         public void GeneraReporte(string ID)
         {
-            DataRow[] funcionarios = AccessUtility.GetFuncionario(ID);
+            DataRow[] funcionarios = Datos.Instance.GetFuncionario(ID);
             //Range rng = Globals.ThisAddIn.Application.ActiveDocument.Range(0, 0);
             Range rng = Globals.ThisAddIn.Application.Selection.Range;
             if (funcionarios.Length > 1)
@@ -784,7 +831,7 @@ namespace LegalTropics
         {
             if (DataBaseInicializada)
             {
-                DataRow[] IDs = AccessUtility.GetIDPuestos(comboBoxPuestos.Text);
+                DataRow[] IDs = Datos.Instance.GetIDPuestos(comboBoxPuestos.Text);
                 for (int i = 0; i < IDs.Length; i++)
                 {
                     GeneraReporte(IDs[i]["ID"].ToString());

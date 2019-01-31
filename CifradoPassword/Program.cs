@@ -1,6 +1,6 @@
 ﻿using System;
-using MSAccess;
-using CifradoPeta;
+using AccesoBaseDatos;
+using Peta;
 
 namespace CifradoPassword
 {
@@ -13,7 +13,7 @@ namespace CifradoPassword
             Console.WriteLine("Dame Password");
             string password = Console.ReadLine();
             Console.WriteLine("User: {0}, Password: {1}", user, password);
-            AccessUtility.AltaUserPassword(user, PetaSecure.ComputeSha256Hash(password));
+            Datos.Instance.AltaUserPassword(user, PetaSecure.ComputeSha256Hash(password));
         }
     }
 }

@@ -33,7 +33,7 @@
     <PublishUrl>D:\VSProjects\LegalTropics\Published\LegalTropics\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>1.0.0.25</ApplicationVersion>
+    <ApplicationVersion>1.0.0.30</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>7</UpdateInterval>
@@ -122,7 +122,13 @@
     This section specifies references for the project.
   -->
   <ItemGroup>
+    <Reference Include="AccesoBaseDatos">
+      <HintPath>..\AccesoBaseDatos\bin\Debug\AccesoBaseDatos.dll</HintPath>
+    </Reference>
     <Reference Include="Accessibility" />
+    <Reference Include="Peta">
+      <HintPath>..\..\Peta\Peta\bin\Debug\Peta.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
@@ -192,11 +198,11 @@
     <Compile Include="ImageScroll.Designer.cs">
       <DependentUpon>ImageScroll.cs</DependentUpon>
     </Compile>
-    <Compile Include="NavegaciónAPF.cs">
+    <Compile Include="OrganigramaAPF.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NavegaciónAPF.Designer.cs">
-      <DependentUpon>NavegaciónAPF.cs</DependentUpon>
+    <Compile Include="OrganigramaAPF.Designer.cs">
+      <DependentUpon>OrganigramaAPF.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -220,8 +226,8 @@
     <EmbeddedResource Include="ImageScroll.resx">
       <DependentUpon>ImageScroll.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NavegaciónAPF.resx">
-      <DependentUpon>NavegaciónAPF.cs</DependentUpon>
+    <EmbeddedResource Include="OrganigramaAPF.resx">
+      <DependentUpon>OrganigramaAPF.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -268,29 +274,9 @@
       <Project>{78e95583-3d1a-4b69-a3e2-734756f80145}</Project>
       <Name>APFInfo</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Arboles\Arboles.csproj">
-      <Project>{0365e5a2-c233-4090-ac0a-1b9ac833be16}</Project>
-      <Name>Arboles</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Buscar\Buscar.csproj">
-      <Project>{295a5418-8989-4fde-8464-d6645fdd354e}</Project>
-      <Name>Buscar</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CifradoPeta\CifradoPeta.csproj">
-      <Project>{3d6bb4c5-a330-483f-a41a-e7c5632e6ad0}</Project>
-      <Name>CifradoPeta</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FuncionesAuxiliares\FuncionesAuxiliares.csproj">
-      <Project>{67844adb-37ea-49e2-8db2-59c1cfa5ac1f}</Project>
-      <Name>FuncionesAuxiliares</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Globales\Globales.csproj">
       <Project>{9875d5fc-5821-4cd5-a9e0-2a18db463db9}</Project>
       <Name>Globales</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MSAccess\MSAccess.csproj">
-      <Project>{4887b47f-4a46-487e-ae56-782ae53c39d7}</Project>
-      <Name>MSAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\OrganigramaAdmin\OrganigramaAdmin.csproj">
       <Project>{0d4b448c-a406-49be-89ee-fc3875d57da5}</Project>
@@ -299,10 +285,6 @@
     <ProjectReference Include="..\OrgBusqueda\OrgBusqueda.csproj">
       <Project>{c57a13ea-c816-4575-b35c-2a3828547514}</Project>
       <Name>OrgBusqueda</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PetaPublish\PetaPublish.csproj">
-      <Project>{6e8d55e7-f2d3-4992-b3b4-1ffe9ad3ebc4}</Project>
-      <Name>PetaPublish</Name>
     </ProjectReference>
     <ProjectReference Include="..\Traductor\Traductor.csproj">
       <Project>{8f1ccffe-6dfa-49bd-8721-48e47d72bc2b}</Project>

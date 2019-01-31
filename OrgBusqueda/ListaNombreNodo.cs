@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
-using Arboles;
+using Peta;
 using APFInfo;
-using MSAccess;
+using AccesoBaseDatos;
 
 namespace OrgBusqueda
 {
     public class ListaNombreNodo
     {
         List<NombreNodo> LaLista = new List<NombreNodo>();
+        
         public void Add(Node<Registro> nodo)
         {
-            string NombreCompleto = AccessUtility.GetNombreFuncionario(nodo.Data.ID);
+            string NombreCompleto = Datos.Instance.GetNombreFuncionario(nodo.Data.ID);
             LaLista.Add(new NombreNodo(nodo, NombreCompleto));
         }
 

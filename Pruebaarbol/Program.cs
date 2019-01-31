@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using APFInfo;
-using Arboles;
+using Peta;
 
 namespace Pruebaarbol
 {

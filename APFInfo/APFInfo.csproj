@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Peta">
+      <HintPath>..\..\Peta\Peta\bin\Debug\Peta.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
@@ -48,10 +51,6 @@
     <Compile Include="Tokens.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Arboles\Arboles.csproj">
-      <Project>{0365e5a2-c233-4090-ac0a-1b9ac833be16}</Project>
-      <Name>Arboles</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Globales\Globales.csproj">
       <Project>{9875d5fc-5821-4cd5-a9e0-2a18db463db9}</Project>
       <Name>Globales</Name>

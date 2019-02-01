@@ -18,7 +18,7 @@ namespace UpLoadPresupuestoToMsAccess
             string Entidad = string.Empty;
 
             Entidad = Regex.Replace(Regex.Replace(Path.GetFileName(filename), @"CALENDARIO de presupuesto ", string.Empty,
-                RegexOptions.IgnoreCase, TimeSpan.FromSeconds(0.25)), " ", string.Empty, RegexOptions.IgnoreCase, TimeSpan.FromSeconds(0.25));
+                RegexOptions.IgnoreCase, TimeSpan.FromSeconds(0.25)), " ", "_", RegexOptions.IgnoreCase, TimeSpan.FromSeconds(0.25));
 
             Console.WriteLine(Entidad);
             Console.ReadKey();
@@ -65,6 +65,24 @@ namespace UpLoadPresupuestoToMsAccess
     {
         static private OleDbConnectionStringBuilder Builder = new OleDbConnectionStringBuilder();
 
+        static void limpiaDataBase(string DB)
+        {
+            Builder.Provider = Defines.StringAccessProvider;
+            Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+
+            using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+            {
+                cn.Open();
+                string sql = "Delete from " + DB
+                    ;
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                cn.Close();
+            }
+        }
+
         static bool AcceptedFileType(string PDFFileName)
         {
             if (PDFFileName != string.Empty)
@@ -83,6 +101,8 @@ namespace UpLoadPresupuestoToMsAccess
 
         static void Main(string[] args)
         {
+            limpiaDataBase("PDFPresupuesto");
+            Console.WriteLine("Base de datos PDFPresupuesto limpia");
             Console.WriteLine("Vamos a subir los archivos PDF de presupuesto");
 
             string[] PDFFiles = Directory.GetFiles(Defines.PDFBasePath, "*.*");

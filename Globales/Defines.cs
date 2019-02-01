@@ -9,9 +9,11 @@ namespace Globales
         //public const string DataBaseFileName = @"BDSecretarias1.accdb";
         //public const string FotoBasePath = @"D:\Base de datos de las Secretarías de Estado\nueva versión\Base de datos Secretarías Fotografías";
         public const string DataBasePath = @"C:\INFO APF\";
+        public const string PresupuestoBasePath = @"D:\CALENDARIO de presupuesto\";
         public const string DataBaseFileName = @"AMLOTeam.accdb";
         public const string BackupDataBaseFileName = @"Backup.accdb";
         public const string FotoBasePath = DataBasePath + @"Base de Datos Fotografías";
+        public const string PDFBasePath = PresupuestoBasePath + @"PDF\";
         public const string DataBaseFileNameEncriptado = @"qqsaved.peta";
         public const int PosInicial = 20;
         public const int PosFinal = 253;

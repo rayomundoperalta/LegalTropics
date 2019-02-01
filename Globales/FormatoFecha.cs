@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FuncionesAuxiliares
 {
-    static public class FormatoFecha
+    static public class FFormatoFecha
     {
         static public string FechaString(string año, string mes, string dia, string PorDefecto)
         {

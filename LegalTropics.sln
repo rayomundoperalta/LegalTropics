@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrgBusqueda", "OrgBusqueda\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccesoBaseDatos", "AccesoBaseDatos\AccesoBaseDatos.csproj", "{25AE4EDC-93FA-4876-BCE5-15B456DACA44}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpLoadPresupuestoToMsAccess", "UpLoadPresupuestoToMsAccess\UpLoadPresupuestoToMsAccess.csproj", "{C7019D23-0BB8-44C3-BFB2-2B93F92826AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -96,6 +98,10 @@ Global
 		{25AE4EDC-93FA-4876-BCE5-15B456DACA44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25AE4EDC-93FA-4876-BCE5-15B456DACA44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25AE4EDC-93FA-4876-BCE5-15B456DACA44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7019D23-0BB8-44C3-BFB2-2B93F92826AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7019D23-0BB8-44C3-BFB2-2B93F92826AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7019D23-0BB8-44C3-BFB2-2B93F92826AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7019D23-0BB8-44C3-BFB2-2B93F92826AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

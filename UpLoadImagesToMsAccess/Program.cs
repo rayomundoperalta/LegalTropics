@@ -81,7 +81,7 @@ namespace UpLoadImagesToMsAccess
                 }
             }
         }
-    } 
+    }
 
     class Program
     {
@@ -91,7 +91,7 @@ namespace UpLoadImagesToMsAccess
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
-            
+
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
                 cn.Open();
@@ -101,7 +101,7 @@ namespace UpLoadImagesToMsAccess
                     cmd.ExecuteNonQuery();
                 }
                 cn.Close();
-            }   
+            }
         }
 
         static bool AcceptedFileType(string PhotoFileName)

@@ -27,7 +27,7 @@ namespace ActualizaBaseDatos
             set
             {
                 this.año = value;
-                labelFecha.Text = FormatoFecha.FechaString(this.año.ToString(),
+                labelFecha.Text = FFormatoFecha.FechaString(this.año.ToString(),
                 this.mes.ToString(),
                 this.dia.ToString(), "Fecha: no disponible");
             }
@@ -42,7 +42,7 @@ namespace ActualizaBaseDatos
             set
             {
                 this.mes = value;
-                labelFecha.Text = FormatoFecha.FechaString(this.año.ToString(),
+                labelFecha.Text = FFormatoFecha.FechaString(this.año.ToString(),
                 this.mes.ToString(),
                 this.dia.ToString(), "Fecha: no disponible");
             }
@@ -57,7 +57,7 @@ namespace ActualizaBaseDatos
             set
             {
                 this.dia = value;
-                labelFecha.Text = FormatoFecha.FechaString(año.ToString(),
+                labelFecha.Text = FFormatoFecha.FechaString(año.ToString(),
                 this.mes.ToString(),
                 this.dia.ToString(), "Fecha: no disponible");
             }
@@ -76,7 +76,7 @@ namespace ActualizaBaseDatos
             this.año = Año;
             this.mes = Mes;
             this.dia = Dia;
-            labelFecha.Text = FormatoFecha.FechaString(this.año.ToString(),
+            labelFecha.Text = FFormatoFecha.FechaString(this.año.ToString(),
                 this.mes.ToString(),
                 this.dia.ToString(), "Fecha: no disponible");
         }
@@ -88,7 +88,7 @@ namespace ActualizaBaseDatos
             dateTimePickerPeta.CustomFormat = "yyyy-MMM-dd";
             dateTimePickerPeta.Format = DateTimePickerFormat.Custom;
             
-            labelFecha.Text = FormatoFecha.FechaString(dateTimePickerPeta.Value.Year.ToString(),
+            labelFecha.Text = FFormatoFecha.FechaString(dateTimePickerPeta.Value.Year.ToString(),
                 dateTimePickerPeta.Value.Month.ToString(),
                 dateTimePickerPeta.Value.Day.ToString(), "Fecha: no disponible");
         }
@@ -106,7 +106,7 @@ namespace ActualizaBaseDatos
             this.año = dateTimePickerPeta.Value.Year;
             this.mes = dateTimePickerPeta.Value.Month;
             this.dia = dateTimePickerPeta.Value.Day;
-            labelFecha.Text = FormatoFecha.FechaString(dateTimePickerPeta.Value.Year.ToString(),
+            labelFecha.Text = FFormatoFecha.FechaString(dateTimePickerPeta.Value.Year.ToString(),
                 dateTimePickerPeta.Value.Month.ToString(),
                 dateTimePickerPeta.Value.Day.ToString(), "Fecha: no disponible");
         }

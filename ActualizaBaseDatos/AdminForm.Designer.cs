@@ -37,6 +37,7 @@
             this.label22 = new System.Windows.Forms.Label();
             this.textBoxRecuperaID = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
+            this.muestraCapturaFechaNacimiento = new ActualizaBaseDatos.MuestraCapturaFecha();
             this.buttonCargaBD = new System.Windows.Forms.Button();
             this.buttonNuevo = new System.Windows.Forms.Button();
             this.buttonModifica = new System.Windows.Forms.Button();
@@ -59,6 +60,8 @@
             this.tabPageEscolaridad = new System.Windows.Forms.TabPage();
             this.labelAbogadoRespEsc = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
+            this.muestraCapturaFechaFin = new ActualizaBaseDatos.MuestraCapturaFecha();
+            this.muestraCapturaFechaInicio = new ActualizaBaseDatos.MuestraCapturaFecha();
             this.buttonEscolaridadElimina = new System.Windows.Forms.Button();
             this.buttonEscolaridadLimpia = new System.Windows.Forms.Button();
             this.buttonEscolaridadInserta = new System.Windows.Forms.Button();
@@ -94,6 +97,8 @@
             this.label12 = new System.Windows.Forms.Label();
             this.textBoxAPPartido = new System.Windows.Forms.TextBox();
             this.textBoxAPID = new System.Windows.Forms.TextBox();
+            this.muestraCapturaFechaAPFin = new ActualizaBaseDatos.MuestraCapturaFecha();
+            this.muestraCapturaFechaAPInicio = new ActualizaBaseDatos.MuestraCapturaFecha();
             this.tabPageINFO = new System.Windows.Forms.TabPage();
             this.checkedListBoxTipoInformacion = new System.Windows.Forms.CheckedListBox();
             this.labelAbogadoRespInfoGral = new System.Windows.Forms.Label();
@@ -135,6 +140,8 @@
             this.textBoxPuestosPuesto = new System.Windows.Forms.TextBox();
             this.textBoxPuestosDependencia = new System.Windows.Forms.TextBox();
             this.textBoxPuestosID = new System.Windows.Forms.TextBox();
+            this.muestraCapturaFechaPuestoFin = new ActualizaBaseDatos.MuestraCapturaFecha();
+            this.muestraCapturaFechaPuestoInicio = new ActualizaBaseDatos.MuestraCapturaFecha();
             this.tabPageCirculoCerrado = new System.Windows.Forms.TabPage();
             this.labelCirculoCercanoAbogadoResp = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
@@ -216,13 +223,10 @@
             this.openFileDialogFoto = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialogDataBase = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogTreeAPF = new System.Windows.Forms.SaveFileDialog();
-            this.muestraCapturaFechaNacimiento = new ActualizaBaseDatos.MuestraCapturaFecha();
-            this.muestraCapturaFechaFin = new ActualizaBaseDatos.MuestraCapturaFecha();
-            this.muestraCapturaFechaInicio = new ActualizaBaseDatos.MuestraCapturaFecha();
-            this.muestraCapturaFechaAPFin = new ActualizaBaseDatos.MuestraCapturaFecha();
-            this.muestraCapturaFechaAPInicio = new ActualizaBaseDatos.MuestraCapturaFecha();
-            this.muestraCapturaFechaPuestoFin = new ActualizaBaseDatos.MuestraCapturaFecha();
-            this.muestraCapturaFechaPuestoInicio = new ActualizaBaseDatos.MuestraCapturaFecha();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.comboBoxPDFPresupuesto = new System.Windows.Forms.ComboBox();
+            this.buttonAsignaPresupuesto = new System.Windows.Forms.Button();
+            this.buttonInsertPDFFile = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tabControlInformación.SuspendLayout();
@@ -239,6 +243,7 @@
             this.groupBox2.SuspendLayout();
             this.tabPagePublica.SuspendLayout();
             this.tabPageIdentificate.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -349,6 +354,17 @@
             this.label21.Size = new System.Drawing.Size(21, 17);
             this.label21.TabIndex = 21;
             this.label21.Text = "ID";
+            // 
+            // muestraCapturaFechaNacimiento
+            // 
+            this.muestraCapturaFechaNacimiento.Año = 2018;
+            this.muestraCapturaFechaNacimiento.Dia = 19;
+            this.muestraCapturaFechaNacimiento.Location = new System.Drawing.Point(899, 133);
+            this.muestraCapturaFechaNacimiento.Mes = 12;
+            this.muestraCapturaFechaNacimiento.Name = "muestraCapturaFechaNacimiento";
+            this.muestraCapturaFechaNacimiento.Size = new System.Drawing.Size(211, 59);
+            this.muestraCapturaFechaNacimiento.TabIndex = 20;
+            this.muestraCapturaFechaNacimiento.Load += new System.EventHandler(this.muestraCapturaFechaNacimiento_Load);
             // 
             // buttonCargaBD
             // 
@@ -579,6 +595,26 @@
             this.label23.Size = new System.Drawing.Size(91, 17);
             this.label23.TabIndex = 22;
             this.label23.Text = "Responsable";
+            // 
+            // muestraCapturaFechaFin
+            // 
+            this.muestraCapturaFechaFin.Año = 2018;
+            this.muestraCapturaFechaFin.Dia = 19;
+            this.muestraCapturaFechaFin.Location = new System.Drawing.Point(288, 125);
+            this.muestraCapturaFechaFin.Mes = 12;
+            this.muestraCapturaFechaFin.Name = "muestraCapturaFechaFin";
+            this.muestraCapturaFechaFin.Size = new System.Drawing.Size(211, 59);
+            this.muestraCapturaFechaFin.TabIndex = 21;
+            // 
+            // muestraCapturaFechaInicio
+            // 
+            this.muestraCapturaFechaInicio.Año = 2018;
+            this.muestraCapturaFechaInicio.Dia = 19;
+            this.muestraCapturaFechaInicio.Location = new System.Drawing.Point(6, 125);
+            this.muestraCapturaFechaInicio.Mes = 12;
+            this.muestraCapturaFechaInicio.Name = "muestraCapturaFechaInicio";
+            this.muestraCapturaFechaInicio.Size = new System.Drawing.Size(211, 59);
+            this.muestraCapturaFechaInicio.TabIndex = 20;
             // 
             // buttonEscolaridadElimina
             // 
@@ -921,6 +957,26 @@
             this.textBoxAPID.ReadOnly = true;
             this.textBoxAPID.Size = new System.Drawing.Size(100, 22);
             this.textBoxAPID.TabIndex = 1;
+            // 
+            // muestraCapturaFechaAPFin
+            // 
+            this.muestraCapturaFechaAPFin.Año = 2018;
+            this.muestraCapturaFechaAPFin.Dia = 19;
+            this.muestraCapturaFechaAPFin.Location = new System.Drawing.Point(276, 135);
+            this.muestraCapturaFechaAPFin.Mes = 12;
+            this.muestraCapturaFechaAPFin.Name = "muestraCapturaFechaAPFin";
+            this.muestraCapturaFechaAPFin.Size = new System.Drawing.Size(211, 59);
+            this.muestraCapturaFechaAPFin.TabIndex = 30;
+            // 
+            // muestraCapturaFechaAPInicio
+            // 
+            this.muestraCapturaFechaAPInicio.Año = 2018;
+            this.muestraCapturaFechaAPInicio.Dia = 19;
+            this.muestraCapturaFechaAPInicio.Location = new System.Drawing.Point(3, 135);
+            this.muestraCapturaFechaAPInicio.Mes = 12;
+            this.muestraCapturaFechaAPInicio.Name = "muestraCapturaFechaAPInicio";
+            this.muestraCapturaFechaAPInicio.Size = new System.Drawing.Size(211, 59);
+            this.muestraCapturaFechaAPInicio.TabIndex = 29;
             // 
             // tabPageINFO
             // 
@@ -1348,6 +1404,26 @@
             this.textBoxPuestosID.Size = new System.Drawing.Size(100, 22);
             this.textBoxPuestosID.TabIndex = 1;
             // 
+            // muestraCapturaFechaPuestoFin
+            // 
+            this.muestraCapturaFechaPuestoFin.Año = 2018;
+            this.muestraCapturaFechaPuestoFin.Dia = 19;
+            this.muestraCapturaFechaPuestoFin.Location = new System.Drawing.Point(264, 262);
+            this.muestraCapturaFechaPuestoFin.Mes = 12;
+            this.muestraCapturaFechaPuestoFin.Name = "muestraCapturaFechaPuestoFin";
+            this.muestraCapturaFechaPuestoFin.Size = new System.Drawing.Size(211, 59);
+            this.muestraCapturaFechaPuestoFin.TabIndex = 30;
+            // 
+            // muestraCapturaFechaPuestoInicio
+            // 
+            this.muestraCapturaFechaPuestoInicio.Año = 2018;
+            this.muestraCapturaFechaPuestoInicio.Dia = 19;
+            this.muestraCapturaFechaPuestoInicio.Location = new System.Drawing.Point(2, 265);
+            this.muestraCapturaFechaPuestoInicio.Mes = 12;
+            this.muestraCapturaFechaPuestoInicio.Name = "muestraCapturaFechaPuestoInicio";
+            this.muestraCapturaFechaPuestoInicio.Size = new System.Drawing.Size(211, 59);
+            this.muestraCapturaFechaPuestoInicio.TabIndex = 29;
+            // 
             // tabPageCirculoCerrado
             // 
             this.tabPageCirculoCerrado.Controls.Add(this.labelCirculoCercanoAbogadoResp);
@@ -1734,7 +1810,7 @@
             this.tabControlAdministracionBaseDatos.Location = new System.Drawing.Point(12, 12);
             this.tabControlAdministracionBaseDatos.Name = "tabControlAdministracionBaseDatos";
             this.tabControlAdministracionBaseDatos.SelectedIndex = 0;
-            this.tabControlAdministracionBaseDatos.Size = new System.Drawing.Size(1474, 667);
+            this.tabControlAdministracionBaseDatos.Size = new System.Drawing.Size(1474, 894);
             this.tabControlAdministracionBaseDatos.TabIndex = 3;
             // 
             // tabPageFichas
@@ -1744,7 +1820,7 @@
             this.tabPageFichas.Location = new System.Drawing.Point(4, 25);
             this.tabPageFichas.Name = "tabPageFichas";
             this.tabPageFichas.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageFichas.Size = new System.Drawing.Size(1466, 638);
+            this.tabPageFichas.Size = new System.Drawing.Size(1466, 865);
             this.tabPageFichas.TabIndex = 0;
             this.tabPageFichas.Text = "Fichas";
             this.tabPageFichas.UseVisualStyleBackColor = true;
@@ -1752,6 +1828,7 @@
             // tabPageOrganigrama
             // 
             this.tabPageOrganigrama.BackColor = System.Drawing.SystemColors.Window;
+            this.tabPageOrganigrama.Controls.Add(this.groupBox4);
             this.tabPageOrganigrama.Controls.Add(this.buttonBuscaFunSeleccionado);
             this.tabPageOrganigrama.Controls.Add(this.button1);
             this.tabPageOrganigrama.Controls.Add(this.labelLoginAs2);
@@ -1774,7 +1851,7 @@
             this.tabPageOrganigrama.Location = new System.Drawing.Point(4, 25);
             this.tabPageOrganigrama.Name = "tabPageOrganigrama";
             this.tabPageOrganigrama.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageOrganigrama.Size = new System.Drawing.Size(1466, 638);
+            this.tabPageOrganigrama.Size = new System.Drawing.Size(1466, 865);
             this.tabPageOrganigrama.TabIndex = 1;
             this.tabPageOrganigrama.Text = "Organigrama APF";
             this.tabPageOrganigrama.Click += new System.EventHandler(this.tabPageOrganigrama_Click);
@@ -1841,7 +1918,7 @@
             // 
             this.labelOrgAbogadoIrresponsable.AutoSize = true;
             this.labelOrgAbogadoIrresponsable.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelOrgAbogadoIrresponsable.Location = new System.Drawing.Point(1027, 525);
+            this.labelOrgAbogadoIrresponsable.Location = new System.Drawing.Point(1000, 715);
             this.labelOrgAbogadoIrresponsable.Name = "labelOrgAbogadoIrresponsable";
             this.labelOrgAbogadoIrresponsable.Size = new System.Drawing.Size(73, 19);
             this.labelOrgAbogadoIrresponsable.TabIndex = 18;
@@ -1850,7 +1927,7 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(755, 525);
+            this.label25.Location = new System.Drawing.Point(755, 715);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(213, 17);
             this.label25.TabIndex = 17;
@@ -1878,7 +1955,7 @@
             // 
             // buttonListaDeNodosPorID
             // 
-            this.buttonListaDeNodosPorID.Location = new System.Drawing.Point(1144, 572);
+            this.buttonListaDeNodosPorID.Location = new System.Drawing.Point(1119, 748);
             this.buttonListaDeNodosPorID.Name = "buttonListaDeNodosPorID";
             this.buttonListaDeNodosPorID.Size = new System.Drawing.Size(266, 33);
             this.buttonListaDeNodosPorID.TabIndex = 12;
@@ -1888,7 +1965,7 @@
             // 
             // buttonPrintTree
             // 
-            this.buttonPrintTree.Location = new System.Drawing.Point(761, 572);
+            this.buttonPrintTree.Location = new System.Drawing.Point(758, 748);
             this.buttonPrintTree.Name = "buttonPrintTree";
             this.buttonPrintTree.Size = new System.Drawing.Size(170, 33);
             this.buttonPrintTree.TabIndex = 11;
@@ -2070,7 +2147,7 @@
             this.treeViewOrganigramaAPF.AllowDrop = true;
             this.treeViewOrganigramaAPF.Location = new System.Drawing.Point(3, 3);
             this.treeViewOrganigramaAPF.Name = "treeViewOrganigramaAPF";
-            this.treeViewOrganigramaAPF.Size = new System.Drawing.Size(715, 598);
+            this.treeViewOrganigramaAPF.Size = new System.Drawing.Size(715, 778);
             this.treeViewOrganigramaAPF.TabIndex = 0;
             this.treeViewOrganigramaAPF.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewOrganigramaAPF_AfterSelect);
             // 
@@ -2080,7 +2157,7 @@
             this.tabPagePublica.Location = new System.Drawing.Point(4, 25);
             this.tabPagePublica.Name = "tabPagePublica";
             this.tabPagePublica.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPagePublica.Size = new System.Drawing.Size(1466, 638);
+            this.tabPagePublica.Size = new System.Drawing.Size(1466, 865);
             this.tabPagePublica.TabIndex = 2;
             this.tabPagePublica.Text = "Publica Info";
             this.tabPagePublica.UseVisualStyleBackColor = true;
@@ -2105,7 +2182,7 @@
             this.tabPageIdentificate.Location = new System.Drawing.Point(4, 25);
             this.tabPageIdentificate.Name = "tabPageIdentificate";
             this.tabPageIdentificate.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageIdentificate.Size = new System.Drawing.Size(1466, 638);
+            this.tabPageIdentificate.Size = new System.Drawing.Size(1466, 865);
             this.tabPageIdentificate.TabIndex = 3;
             this.tabPageIdentificate.Text = "Identificate";
             this.tabPageIdentificate.UseVisualStyleBackColor = true;
@@ -2157,7 +2234,7 @@
             // 
             this.tabPageDesconectate.Location = new System.Drawing.Point(4, 25);
             this.tabPageDesconectate.Name = "tabPageDesconectate";
-            this.tabPageDesconectate.Size = new System.Drawing.Size(1466, 638);
+            this.tabPageDesconectate.Size = new System.Drawing.Size(1466, 865);
             this.tabPageDesconectate.TabIndex = 4;
             this.tabPageDesconectate.Text = "Desconectate";
             this.tabPageDesconectate.UseVisualStyleBackColor = true;
@@ -2173,82 +2250,49 @@
             this.saveFileDialogTreeAPF.Title = "APF Tree";
             this.saveFileDialogTreeAPF.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialogTreeAPF_FileOk);
             // 
-            // muestraCapturaFechaNacimiento
+            // groupBox4
             // 
-            this.muestraCapturaFechaNacimiento.Año = 2018;
-            this.muestraCapturaFechaNacimiento.Dia = 19;
-            this.muestraCapturaFechaNacimiento.Location = new System.Drawing.Point(899, 133);
-            this.muestraCapturaFechaNacimiento.Mes = 12;
-            this.muestraCapturaFechaNacimiento.Name = "muestraCapturaFechaNacimiento";
-            this.muestraCapturaFechaNacimiento.Size = new System.Drawing.Size(211, 59);
-            this.muestraCapturaFechaNacimiento.TabIndex = 20;
-            this.muestraCapturaFechaNacimiento.Load += new System.EventHandler(this.muestraCapturaFechaNacimiento_Load);
+            this.groupBox4.Controls.Add(this.buttonInsertPDFFile);
+            this.groupBox4.Controls.Add(this.buttonAsignaPresupuesto);
+            this.groupBox4.Controls.Add(this.comboBoxPDFPresupuesto);
+            this.groupBox4.Location = new System.Drawing.Point(758, 537);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(652, 130);
+            this.groupBox4.TabIndex = 25;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Asignación de Presupuesto";
             // 
-            // muestraCapturaFechaFin
+            // comboBoxPDFPresupuesto
             // 
-            this.muestraCapturaFechaFin.Año = 2018;
-            this.muestraCapturaFechaFin.Dia = 19;
-            this.muestraCapturaFechaFin.Location = new System.Drawing.Point(288, 125);
-            this.muestraCapturaFechaFin.Mes = 12;
-            this.muestraCapturaFechaFin.Name = "muestraCapturaFechaFin";
-            this.muestraCapturaFechaFin.Size = new System.Drawing.Size(211, 59);
-            this.muestraCapturaFechaFin.TabIndex = 21;
+            this.comboBoxPDFPresupuesto.FormattingEnabled = true;
+            this.comboBoxPDFPresupuesto.Location = new System.Drawing.Point(26, 34);
+            this.comboBoxPDFPresupuesto.Name = "comboBoxPDFPresupuesto";
+            this.comboBoxPDFPresupuesto.Size = new System.Drawing.Size(601, 24);
+            this.comboBoxPDFPresupuesto.TabIndex = 0;
             // 
-            // muestraCapturaFechaInicio
+            // buttonAsignaPresupuesto
             // 
-            this.muestraCapturaFechaInicio.Año = 2018;
-            this.muestraCapturaFechaInicio.Dia = 19;
-            this.muestraCapturaFechaInicio.Location = new System.Drawing.Point(6, 125);
-            this.muestraCapturaFechaInicio.Mes = 12;
-            this.muestraCapturaFechaInicio.Name = "muestraCapturaFechaInicio";
-            this.muestraCapturaFechaInicio.Size = new System.Drawing.Size(211, 59);
-            this.muestraCapturaFechaInicio.TabIndex = 20;
+            this.buttonAsignaPresupuesto.Location = new System.Drawing.Point(477, 74);
+            this.buttonAsignaPresupuesto.Name = "buttonAsignaPresupuesto";
+            this.buttonAsignaPresupuesto.Size = new System.Drawing.Size(151, 36);
+            this.buttonAsignaPresupuesto.TabIndex = 1;
+            this.buttonAsignaPresupuesto.Text = "Asigna Presupuesto";
+            this.buttonAsignaPresupuesto.UseVisualStyleBackColor = true;
             // 
-            // muestraCapturaFechaAPFin
+            // buttonInsertPDFFile
             // 
-            this.muestraCapturaFechaAPFin.Año = 2018;
-            this.muestraCapturaFechaAPFin.Dia = 19;
-            this.muestraCapturaFechaAPFin.Location = new System.Drawing.Point(276, 135);
-            this.muestraCapturaFechaAPFin.Mes = 12;
-            this.muestraCapturaFechaAPFin.Name = "muestraCapturaFechaAPFin";
-            this.muestraCapturaFechaAPFin.Size = new System.Drawing.Size(211, 59);
-            this.muestraCapturaFechaAPFin.TabIndex = 30;
-            // 
-            // muestraCapturaFechaAPInicio
-            // 
-            this.muestraCapturaFechaAPInicio.Año = 2018;
-            this.muestraCapturaFechaAPInicio.Dia = 19;
-            this.muestraCapturaFechaAPInicio.Location = new System.Drawing.Point(3, 135);
-            this.muestraCapturaFechaAPInicio.Mes = 12;
-            this.muestraCapturaFechaAPInicio.Name = "muestraCapturaFechaAPInicio";
-            this.muestraCapturaFechaAPInicio.Size = new System.Drawing.Size(211, 59);
-            this.muestraCapturaFechaAPInicio.TabIndex = 29;
-            // 
-            // muestraCapturaFechaPuestoFin
-            // 
-            this.muestraCapturaFechaPuestoFin.Año = 2018;
-            this.muestraCapturaFechaPuestoFin.Dia = 19;
-            this.muestraCapturaFechaPuestoFin.Location = new System.Drawing.Point(264, 262);
-            this.muestraCapturaFechaPuestoFin.Mes = 12;
-            this.muestraCapturaFechaPuestoFin.Name = "muestraCapturaFechaPuestoFin";
-            this.muestraCapturaFechaPuestoFin.Size = new System.Drawing.Size(211, 59);
-            this.muestraCapturaFechaPuestoFin.TabIndex = 30;
-            // 
-            // muestraCapturaFechaPuestoInicio
-            // 
-            this.muestraCapturaFechaPuestoInicio.Año = 2018;
-            this.muestraCapturaFechaPuestoInicio.Dia = 19;
-            this.muestraCapturaFechaPuestoInicio.Location = new System.Drawing.Point(2, 265);
-            this.muestraCapturaFechaPuestoInicio.Mes = 12;
-            this.muestraCapturaFechaPuestoInicio.Name = "muestraCapturaFechaPuestoInicio";
-            this.muestraCapturaFechaPuestoInicio.Size = new System.Drawing.Size(211, 59);
-            this.muestraCapturaFechaPuestoInicio.TabIndex = 29;
+            this.buttonInsertPDFFile.Location = new System.Drawing.Point(26, 74);
+            this.buttonInsertPDFFile.Name = "buttonInsertPDFFile";
+            this.buttonInsertPDFFile.Size = new System.Drawing.Size(258, 37);
+            this.buttonInsertPDFFile.TabIndex = 2;
+            this.buttonInsertPDFFile.Text = "Inserta Archivo PDF Presupuesto";
+            this.buttonInsertPDFFile.UseVisualStyleBackColor = true;
             // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1567, 734);
+            this.ClientSize = new System.Drawing.Size(1682, 918);
             this.Controls.Add(this.tabControlAdministracionBaseDatos);
             this.Name = "AdminForm";
             this.Text = "Administración de la Administración la Base de Datos";
@@ -2281,6 +2325,7 @@
             this.tabPagePublica.PerformLayout();
             this.tabPageIdentificate.ResumeLayout(false);
             this.tabPageIdentificate.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2482,6 +2527,10 @@
         private System.Windows.Forms.Label labelPuesto;
         private System.Windows.Forms.Label labelNodoAgrupación;
         private System.Windows.Forms.Button buttonSelect;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button buttonAsignaPresupuesto;
+        private System.Windows.Forms.ComboBox comboBoxPDFPresupuesto;
+        private System.Windows.Forms.Button buttonInsertPDFFile;
     }
 }
 

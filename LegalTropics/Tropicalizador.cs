@@ -509,7 +509,8 @@ namespace LegalTropics
                 //         Adscripción Política
                 tabla1.Cell(2, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
                 WriteLine(tabla1.Cell(2, 1).Range, "Partido", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
-                DataRow[] adscripcionPolitica = Datos.Instance.GetAdscripcionPolitica(funcionarios[i]["ID"].ToString());
+                string nombrefuncionario = funcionarios[i]["ID"].ToString();
+                DataRow[] adscripcionPolitica = Datos.Instance.GetAdscripcionPolitica(nombrefuncionario);
                 string HistoriaPartidista = "";
                 for (int j = 0; j < adscripcionPolitica.Length; j++)
                 {
@@ -541,7 +542,7 @@ namespace LegalTropics
                 //     Datos de Contacto
                 tabla1.Cell(4, 1).Shading.BackgroundPatternColor = (Microsoft.Office.Interop.Word.WdColor)Defines.ColorInstitucional;
                 WriteLine(tabla1.Cell(4, 1).Range, "Datos de Contacto", (float)10, Italic.NoItalicas, "Century Gothic", Formato.Justificado, Bold.NoBold, ALaLinea.NoNewLine);
-                DataRow[] DatosContacto = Datos.Instance.GetDatosDeContacto(funcionarios[i]["ID"].ToString());
+                DataRow[] DatosContacto = Datos.Instance.GetDatosContacto(funcionarios[i]["ID"].ToString());
                 string StringDatosContacto = "";
                 for (int j = 0; j < DatosContacto.Length; j++)
                 {

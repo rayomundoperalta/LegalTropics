@@ -46,6 +46,7 @@ namespace AccesoBaseDatos
         System.Data.DataTable DataTableOrganigramaFederal;
         System.Data.DataTable DataTableFotos;
         System.Data.DataTable DataTableAbogados;
+        System.Data.DataTable DataTablePDFPresupuesto;
 
         bool boolFuncionarios = false;
         bool boolDatosContacto = false;
@@ -56,6 +57,7 @@ namespace AccesoBaseDatos
         bool boolInformaciónGeneral = false;
         bool boolOrganigramaFederal = false;
         bool boolFotos = false;
+        bool boolPDFPresupuesto = false;
         //bool boolAbogados = false;
 
         Datos()
@@ -72,7 +74,7 @@ namespace AccesoBaseDatos
             // 8 OrganigramaFederal
             // 9 Fotos
             // 10 Abogados  -- Esta tabla se carga cada vez que se usa, ya que puede cambiar.
-            
+            // 11 PDFPresupuesto
         }
 
         static public Datos Instance
@@ -260,6 +262,24 @@ namespace AccesoBaseDatos
             }
         }
 
+        private void UpLoadPDFPresupuesto()
+        {
+            //var sql = "SELECT * FROM PDFPresupuesto";
+            Builder.Provider = Defines.StringAccessProvider;
+            Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+            DataTablePDFPresupuesto = new System.Data.DataTable();
+            using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+            {
+                var sql = "SELECT * FROM PDFPresupuesto;";
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    cn.Open();
+                    DataTablePDFPresupuesto.Load(cmd.ExecuteReader());
+                    cn.Close();
+                }
+            }
+        }
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -344,7 +364,7 @@ namespace AccesoBaseDatos
                 UpLoadFuncionarios();
                 boolFuncionarios = true;
             }
-            var renglón = DataTableFuncionarios.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID));
+            System.Data.EnumerableRowCollection<System.Data.DataRow> renglón = DataTableFuncionarios.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID));
             DataTable renglones = MakeFuncionariosTable();
             int i = 0;
             foreach (DataRow ren in renglón)
@@ -378,7 +398,7 @@ namespace AccesoBaseDatos
                 UpLoadFuncionarios();
                 boolFuncionarios = true;
             }
-            var funcionarios = DataTableFuncionarios.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID));
+            System.Data.EnumerableRowCollection<System.Data.DataRow> funcionarios = DataTableFuncionarios.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID));
             String name = string.Empty;
             int i = 0;
             foreach(DataRow renglón in funcionarios)
@@ -431,7 +451,7 @@ namespace AccesoBaseDatos
                 boolDatosContacto = true;
             }
             // return (DataTableDatosContacto.Select("ID = " + ID));
-            var renglón = DataTableDatosContacto.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID));
+            System.Data.EnumerableRowCollection<System.Data.DataRow> renglón = DataTableDatosContacto.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID));
             DataTable renglones = MakeDatosContactoTable();
             int i = 0;
             foreach (DataRow ren in renglón)
@@ -493,9 +513,8 @@ namespace AccesoBaseDatos
                 boolCirculoCercano = true;
             }
             //return (DataTableCirculoCercano.Select("ID = " + ID));
-            var renglón = DataTableCirculoCercano.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID));
+            System.Data.EnumerableRowCollection<System.Data.DataRow> renglón = DataTableCirculoCercano.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID));
             DataTable renglones = MakeCirculoCercanoTable();
-            int i = 0;
             foreach (DataRow ren in renglón)
             {
                 DataRow row = renglones.NewRow();
@@ -505,11 +524,6 @@ namespace AccesoBaseDatos
                 row["Información"] = ren["Información"];
                 row["Abogado"] = ren["Abogado"];
                 renglones.Rows.Add(row);
-                i++;
-            }
-            if (i > 1)
-            {
-                MessageBox.Show("Problema de Linq en GetCirculoCercano(string ID)");
             }
             return renglones.Select();
         }
@@ -585,9 +599,8 @@ namespace AccesoBaseDatos
                 boolEscolaridad = true;
             }
             //return (DataTableEscolaridad.Select("ID = " + ID));
-            var renglón = DataTableEscolaridad.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID));
+            System.Data.EnumerableRowCollection<System.Data.DataRow> renglón = DataTableEscolaridad.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID));
             DataTable renglones = MakeEscolaridadTable();
-            int i = 0;
             foreach (DataRow ren in renglón)
             {
                 DataRow row = renglones.NewRow();
@@ -603,11 +616,6 @@ namespace AccesoBaseDatos
                 row["Grado"] = ren["Grado"];
                 row["Abogado"] = ren["Abogado"];
                 renglones.Rows.Add(row);
-                i++;
-            }
-            if (i > 1)
-            {
-                MessageBox.Show("Problema de Linq en GetEscolaridad(string ID)");
             }
             return renglones.Select();
         }
@@ -658,9 +666,8 @@ namespace AccesoBaseDatos
                 boolAdscripciónPolítica = true;
             }
             //return (DataTableAdscripciónPolítica.Select("ID = " + ID )); // + " order by Id1"
-            var renglón = DataTableAdscripciónPolítica.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID)).OrderBy(o => o);
+            System.Data.OrderedEnumerableRowCollection<System.Data.DataRow> renglón = DataTableAdscripciónPolítica.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID)).OrderBy(x => x.Field<System.Int32>("Id1"));
             DataTable renglones = MakeAdscripciónPolíticaTable();
-            int i = 0;
             foreach (DataRow ren in renglón)
             {
                 DataRow row = renglones.NewRow();
@@ -671,11 +678,6 @@ namespace AccesoBaseDatos
                 row["NombreDelPartido"] = ren["NombreDelPartido"];
                 row["Abogado"] = ren["Abogado"];
                 renglones.Rows.Add(row);
-                i++;
-            }
-            if (i > 1)
-            {
-                MessageBox.Show("Problema de Linq en GetAdscripcionPolitica(string ID)");
             }
             return renglones.Select();
         }
@@ -766,9 +768,8 @@ namespace AccesoBaseDatos
                 boolPuestos = true;
             }
             //return (DataTablePuestos.Select("ID = " + ID));
-            var renglón = DataTablePuestos.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID));
+            System.Data.EnumerableRowCollection<System.Data.DataRow> renglón = DataTablePuestos.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID));
             DataTable renglones = MakePuestosTable();
-            int i = 0;
             foreach (DataRow ren in renglón)
             {
                 DataRow row = renglones.NewRow();
@@ -787,11 +788,6 @@ namespace AccesoBaseDatos
                 row["CargoActual"] = ren["CargoActual"];
                 row["Abogado"] = ren["Abogado"];
                 renglones.Rows.Add(row);
-                i++;
-            }
-            if (i > 1)
-            {
-                MessageBox.Show("Problema de Linq en GetPuestos(string ID)");
             }
             return renglones.Select();
         }
@@ -838,9 +834,8 @@ namespace AccesoBaseDatos
                 boolInformaciónGeneral = true;
             }
             //return (DataTableInformaciónGeneral.Select("ID = " + ID));
-            var renglón = DataTableInformaciónGeneral.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID));
+            System.Data.EnumerableRowCollection<System.Data.DataRow> renglón = DataTableInformaciónGeneral.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID));
             DataTable renglones = MakeInformaciónGeneralTable();
-            int i = 0;
             foreach (DataRow ren in renglón)
             {
                 DataRow row = renglones.NewRow();
@@ -850,11 +845,6 @@ namespace AccesoBaseDatos
                 row["Referencia"] = ren["Referencia"];
                 row["Abogado"] = ren["Abogado"];
                 renglones.Rows.Add(row);
-                i++;
-            }
-            if (i > 1)
-            {
-                MessageBox.Show("Problema de Linq en GetNotasRelevantes(string ID)");
             }
             return renglones.Select();
         }
@@ -867,9 +857,8 @@ namespace AccesoBaseDatos
                 boolInformaciónGeneral = true;
             }
             //return (DataTableInformaciónGeneral.Select("ID = " + ID + " and TipoDeInformación = Comentario"));
-            var renglón = DataTableInformaciónGeneral.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID) & x.Field<string>("TipoDeInformación").Equals("Comentario"));
+            System.Data.EnumerableRowCollection<System.Data.DataRow> renglón = DataTableInformaciónGeneral.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID) & x.Field<string>("TipoDeInformación").Equals("Comentario"));
             DataTable renglones = MakeInformaciónGeneralTable();
-            int i = 0;
             foreach (DataRow ren in renglón)
             {
                 DataRow row = renglones.NewRow();
@@ -879,11 +868,6 @@ namespace AccesoBaseDatos
                 row["Referencia"] = ren["Referencia"];
                 row["Abogado"] = ren["Abogado"];
                 renglones.Rows.Add(row);
-                i++;
-            }
-            if (i > 1)
-            {
-                MessageBox.Show("Problema de Linq en GetComentarios(string ID)");
             }
             return renglones.Select();
         }
@@ -896,7 +880,7 @@ namespace AccesoBaseDatos
                 boolPuestos = true;
             }
             //return (DataTablePuestos.Select("distinct(Puesto)"));
-            var listaPuestos = DataTablePuestos.AsEnumerable().Select(x => x.Field<string>("Puesto")).Distinct();
+            System.Collections.Generic.IEnumerable<string> listaPuestos = DataTablePuestos.AsEnumerable().Select(x => x.Field<string>("Puesto")).Distinct();
             List<string> result = new List<string>();
             foreach (string puesto in listaPuestos)
             {
@@ -925,9 +909,8 @@ namespace AccesoBaseDatos
                 boolPuestos = true;
             }
             //return (DataTablePuestos.Select("Puesto = " + Puesto));
-            var renglón = DataTablePuestos.AsEnumerable().Where(x => x.Field<string>("Puesto").Equals(Puesto));
+            System.Data.EnumerableRowCollection<System.Data.DataRow> renglón = DataTablePuestos.AsEnumerable().Where(x => x.Field<string>("Puesto").Equals(Puesto));
             DataTable renglones = MakePuestosTable();
-            int i = 0;
             foreach (DataRow ren in renglón)
             {
                 DataRow row = renglones.NewRow();
@@ -946,7 +929,6 @@ namespace AccesoBaseDatos
                 row["CargoActual"] = ren["CargoActual"];
                 row["Abogado"] = ren["Abogado"];
                 renglones.Rows.Add(row);
-                i++;
             }
             return renglones.Select();
         }
@@ -998,7 +980,7 @@ namespace AccesoBaseDatos
                 boolOrganigramaFederal = true;
             }
             // return (DataTableOrganigramaFederal.Select(" NombrePuesto = " + NombrePuesto));
-            var renglón = DataTableOrganigramaFederal.AsEnumerable().Where(x => x.Field<string>("NombrePuesto").Equals(NombrePuesto));
+            System.Data.EnumerableRowCollection<System.Data.DataRow> renglón = DataTableOrganigramaFederal.AsEnumerable().Where(x => x.Field<string>("NombrePuesto").Equals(NombrePuesto));
             DataTable renglones = MakeOrganigramaFederalTable();
             int i = 0;
             foreach (DataRow ren in renglón)
@@ -1029,9 +1011,8 @@ namespace AccesoBaseDatos
                 boolPuestos = true;
             }
             //return (DataTablePuestos.Select("DependenciaEntidad = " + Dependencia));
-            var renglón = DataTablePuestos.AsEnumerable().Where(x => x.Field<string>("DependenciaEntidad").Equals(Dependencia));
+            System.Data.EnumerableRowCollection<System.Data.DataRow> renglón = DataTablePuestos.AsEnumerable().Where(x => x.Field<string>("DependenciaEntidad").Equals(Dependencia));
             DataTable renglones = MakePuestosTable();
-            int i = 0;
             foreach (DataRow ren in renglón)
             {
                 DataRow row = renglones.NewRow();
@@ -1050,11 +1031,6 @@ namespace AccesoBaseDatos
                 row["CargoActual"] = ren["CargoActual"];
                 row["Abogado"] = ren["Abogado"];
                 renglones.Rows.Add(row);
-                i++;
-            }
-            if (i > 1)
-            {
-                MessageBox.Show("Linq error en GetIDDependencias(string Dependencia)");
             }
             return renglones.Select();
         }
@@ -1532,7 +1508,7 @@ namespace AccesoBaseDatos
                 UpLoadOrganigramaFederal();
                 boolOrganigramaFederal = true;
             }
-            var Rows = DataTableOrganigramaFederal.AsEnumerable().OrderBy(o => o).Last();
+            var Rows = DataTableOrganigramaFederal.AsEnumerable().OrderBy(x => x.Field<System.Int32>("Id1")).Last();
             return Rows.Field<long>("Id1").ToString();
         }
 
@@ -1597,27 +1573,6 @@ namespace AccesoBaseDatos
             }
         }
 
-        public DataRow[] GetDatosDeContacto(string ID)
-        {
-            //var sql = "SELECT * FROM DatosContacto where ID = @ID;";
-            if (!boolDatosContacto)
-            {
-                UpLoadDatosContacto();
-                boolDatosContacto = false;
-            }
-            //return (DataTableDatosContacto.Select("where ID = " + ID));
-            var renglón = DataTableDatosContacto.AsEnumerable().Where(x => x.Field<string>("ID").Equals(ID));
-            DataTable renglones = new DataTable();
-            int i = 0;
-            foreach (DataRow ren in renglón)
-            {
-                renglones.Rows.Add(ren);
-                i++;
-            }
-         
-            return renglones.Select();
-        }
-
         public void AltaUserPassword(string Nombre, string Clave)
         {
             Builder.Provider = Defines.StringAccessProvider;
@@ -1643,6 +1598,86 @@ namespace AccesoBaseDatos
                 }
             }
             //boolAbogados = false;
+        }
+
+        private DataTable MakePDFPresupuestoTable()
+        {
+            DataTable PDFPresupuesto = new DataTable("PDFPresupuesto");
+
+            DataColumn Id1 = new DataColumn();
+            Id1.DataType = System.Type.GetType("System.Int64");
+            Id1.ColumnName = "Id1";
+            Id1.AutoIncrement = true;
+            PDFPresupuesto.Columns.Add(Id1);
+
+            DataColumn PDFFileName = new DataColumn();
+            PDFFileName.DataType = System.Type.GetType("System.String");
+            PDFFileName.ColumnName = "PDFFileName";
+            PDFPresupuesto.Columns.Add(PDFFileName);
+
+            DataColumn PDF = new DataColumn();
+            PDF.DataType = System.Type.GetType("System.Byte[]");
+            PDF.ColumnName = "PDF";
+            PDFPresupuesto.Columns.Add(PDF);
+
+            DataColumn Abogado = new DataColumn();
+            Abogado.DataType = System.Type.GetType("System.String");
+            Abogado.ColumnName = "Abogado";
+            PDFPresupuesto.Columns.Add(Abogado);
+
+            DataColumn Asignado = new DataColumn();
+            Asignado.DataType = System.Type.GetType("System.Boolean");
+            Asignado.ColumnName = "Asignado";
+            PDFPresupuesto.Columns.Add(Asignado);
+
+            return PDFPresupuesto;
+        }
+
+
+        public DataRow[] GetPresupuesto()
+        {
+            if (!boolPDFPresupuesto)
+            {
+                UpLoadPDFPresupuesto();
+                boolPDFPresupuesto = true;
+            }
+            //return (DataTablePDFPresupuesto.Select("ID = " + ID));
+            System.Data.EnumerableRowCollection<System.Data.DataRow> PDFPresupuetos = DataTablePDFPresupuesto.AsEnumerable().Where(x => !x.Field<bool>("Asignado"));
+            DataTable renglones = MakePDFPresupuestoTable();
+            foreach (DataRow ren in PDFPresupuetos)
+            {
+                DataRow row = renglones.NewRow();
+                row["Id1"] = ren["Id1"];
+                row["PDFFileName"] = ren["PDFFileName"];
+                row["PDF"] = ren["PDF"];
+                row["Abogado"] = ren["Abogado"];
+                row["Asignado"] = ren["Asignado"];
+                renglones.Rows.Add(row);
+            }
+            return renglones.Select();
+
+        }
+
+        public DataRow[] GetFilePDFPresupuesto(long Id1)
+        {
+            if (!boolPDFPresupuesto)
+            {
+                UpLoadPDFPresupuesto();
+                boolPDFPresupuesto = true;
+            }
+            System.Data.EnumerableRowCollection<System.Data.DataRow> renglón = DataTablePDFPresupuesto.AsEnumerable().Where(x => x.Field<long>("Id1") == Id1);
+            DataTable renglones = MakePDFPresupuestoTable();
+            foreach (DataRow ren in renglón)
+            {
+                DataRow row = renglones.NewRow();
+                row["Id1"] = ren["Id1"];
+                row["PDFFileName"] = ren["PDFFileName"];
+                row["PDF"] = ren["PDF"];
+                row["Abogado"] = ren["Abogado"];
+                row["Asignado"] = ren["Asignado"];
+                renglones.Rows.Add(row);
+            }
+            return renglones.Select();
         }
     }
 }

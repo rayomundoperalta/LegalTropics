@@ -30,6 +30,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>OrganigramaAdmin.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AccesoBaseDatos">
       <HintPath>..\AccesoBaseDatos\bin\Debug\AccesoBaseDatos.dll</HintPath>
@@ -60,6 +66,9 @@
       <Project>{c57a13ea-c816-4575-b35c-2a3828547514}</Project>
       <Name>OrgBusqueda</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="OrganigramaAdmin.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

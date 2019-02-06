@@ -42,6 +42,7 @@ namespace ActualizaBaseDatos
         DataRow[] Puestos;
         DataRow[] CirculoCercano;
         DataRow[] DatosContacto;
+        DataRow[] PDFPresupuesto;
         const int NumeroDeBotones = 3;
 
         string NewFotoFileName = string.Empty;
@@ -264,7 +265,7 @@ namespace ActualizaBaseDatos
 
             funcionarios = Datos.Instance.GetFuncionarios();
             funcionarioMostrado = new IndiceBD(funcionarios.Length);
-            if (funcionarioMostrado.Length > 0)
+            if (funcionarioMostrado.Inicializado())
             {
                 DespliegaInformación(funcionarioMostrado.Pos);
                 buttonInserta.Enabled = false;
@@ -280,6 +281,13 @@ namespace ActualizaBaseDatos
             }
             organigrama.LlenaTreeAPF(treeViewOrganigramaAPF.Nodes, APF, 0, true, ref RaizTreeView);
             //organigrama.PrintTreeAPF(APF, ImprimeConsola);
+            
+            PDFPresupuesto = Datos.Instance.GetPresupuesto();
+            foreach( DataRow row in PDFPresupuesto)
+            {
+                comboBoxPDFPresupuesto.Items.Add(row["Id1"] + "-" + row["PDFFileName"]);
+            }
+           
         }
 
         private void AdminForm_Load(object sender, EventArgs e)
@@ -735,7 +743,7 @@ namespace ActualizaBaseDatos
                 if (MessageBox.Show("¿Desea ignorar las modificaciones hechas a la ficha?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     // YES
-                    if (funcionarioMostrado.Length > 0)
+                    if (funcionarioMostrado.Inicializado())
                     {
                         funcionarioMostrado.Previous();
                         DespliegaInformación(funcionarioMostrado.Pos);
@@ -760,7 +768,7 @@ namespace ActualizaBaseDatos
             }
             else
             {
-                if (funcionarioMostrado.Length > 0)
+                if (funcionarioMostrado.Inicializado())
                 {
                     funcionarioMostrado.Previous();
                     DespliegaInformación(funcionarioMostrado.Pos);
@@ -786,7 +794,7 @@ namespace ActualizaBaseDatos
                 if (MessageBox.Show("¿Desea ignorar las modificaciones hechas a la ficha?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     // YES
-                    if (funcionarioMostrado.Length > 0)
+                    if (funcionarioMostrado.Inicializado())
                     {
                         funcionarioMostrado.Next();
                         DespliegaInformación(funcionarioMostrado.Pos);
@@ -809,7 +817,7 @@ namespace ActualizaBaseDatos
             }
             else
             {
-                if (funcionarioMostrado.Length > 0)
+                if (funcionarioMostrado.Inicializado())
                 {
                     funcionarioMostrado.Next();
                     DespliegaInformación(funcionarioMostrado.Pos);
@@ -829,26 +837,38 @@ namespace ActualizaBaseDatos
 
         private void buttonEscolaridadInicial_Click(object sender, EventArgs e)
         {
-            indexEscolaridad.Inicial();
-            LlenaEscolaridad(IDFuncionario);
+            if (indexEscolaridad.Inicializado())
+            {
+                indexEscolaridad.Inicial();
+                LlenaEscolaridad(IDFuncionario);
+            }
         }
 
         private void buttonEscolaridadSiguiente_Click(object sender, EventArgs e)
         {
-            indexEscolaridad.Next();
-            LlenaEscolaridad(IDFuncionario);
+            if (indexEscolaridad.Inicializado())
+            {
+                indexEscolaridad.Next();
+                LlenaEscolaridad(IDFuncionario);
+            }
         }
 
         private void buttonEscolaridadPrevio_Click(object sender, EventArgs e)
         {
-            indexEscolaridad.Previous();
-            LlenaEscolaridad(IDFuncionario);
+            if (indexEscolaridad.Inicializado())
+            {
+                indexEscolaridad.Previous();
+                LlenaEscolaridad(IDFuncionario);
+            }
         }
 
         private void buttonEscolaridadFinal_Click(object sender, EventArgs e)
         {
-            indexEscolaridad.Final();
-            LlenaEscolaridad(IDFuncionario);
+            if (indexEscolaridad.Inicializado())
+            {
+                indexEscolaridad.Final();
+                LlenaEscolaridad(IDFuncionario);
+            }
         }
 
         private void buttonEscolaridadLimpia_Click(object sender, EventArgs e)
@@ -882,26 +902,38 @@ namespace ActualizaBaseDatos
 
         private void buttonAPInicial_Click(object sender, EventArgs e)
         {
-            indexAP.Inicial();
-            LlenaAP(IDFuncionario);
+            if (indexAP.Inicializado())
+            {
+                indexAP.Inicial();
+                LlenaAP(IDFuncionario);
+            }
         }
 
         private void buttonAPPrevious_Click(object sender, EventArgs e)
         {
-            indexAP.Previous();
-            LlenaAP(IDFuncionario);
+            if (indexAP.Inicializado())
+            {
+                indexAP.Previous();
+                LlenaAP(IDFuncionario);
+            }
         }
 
         private void buttonAPSiguiente_Click(object sender, EventArgs e)
         {
-            indexAP.Next();
-            LlenaAP(IDFuncionario);
+            if (indexAP.Inicializado())
+            {
+                indexAP.Next();
+                LlenaAP(IDFuncionario);
+            }
         }
 
         private void buttonAPFinal_Click(object sender, EventArgs e)
         {
-            indexAP.Final();
-            LlenaAP(IDFuncionario);
+            if (indexAP.Inicializado())
+            {
+                indexAP.Final();
+                LlenaAP(IDFuncionario);
+            }
         }
 
         private void buttonAPInserta_Click(object sender, EventArgs e)
@@ -934,26 +966,38 @@ namespace ActualizaBaseDatos
 
         private void buttonINFOInicial_Click(object sender, EventArgs e)
         {
-            indexINFO.Inicial();
-            LlenaINFO(IDFuncionario);
+            if (indexINFO.Inicializado())
+            {
+                indexINFO.Inicial();
+                LlenaINFO(IDFuncionario);
+            }
         }
 
         private void buttonINFOPrevious_Click(object sender, EventArgs e)
         {
-            indexINFO.Previous();
-            LlenaINFO(IDFuncionario);
+            if (indexINFO.Inicializado())
+            {
+                indexINFO.Previous();
+                LlenaINFO(IDFuncionario);
+            }
         }
 
         private void buttonINFOSiguiente_Click(object sender, EventArgs e)
         {
-            indexINFO.Next();
-            LlenaINFO(IDFuncionario);
+            if (indexINFO.Inicializado())
+            {
+                indexINFO.Next();
+                LlenaINFO(IDFuncionario);
+            }
         }
 
         private void buttonINFOFinal_Click(object sender, EventArgs e)
         {
-            indexINFO.Final();
-            LlenaINFO(IDFuncionario);
+            if (indexINFO.Inicializado())
+            {
+                indexINFO.Final();
+                LlenaINFO(IDFuncionario);
+            }
         }
 
         private void buttonINFOInserta_Click(object sender, EventArgs e)
@@ -988,26 +1032,38 @@ namespace ActualizaBaseDatos
 
         private void buttonPuestosInicial_Click(object sender, EventArgs e)
         {
-            indexPuestos.Inicial();
-            LlenaPuestos(IDFuncionario);
+            if (indexPuestos.Inicializado())
+            {
+                indexPuestos.Inicial();
+                LlenaPuestos(IDFuncionario);
+            }
         }
 
         private void buttonPuestosPrevious_Click(object sender, EventArgs e)
         {
-            indexPuestos.Previous();
-            LlenaPuestos(IDFuncionario);
+            if (indexPuestos.Inicializado())
+            {
+                indexPuestos.Previous();
+                LlenaPuestos(IDFuncionario);
+            }
         }
 
         private void buttonPuestosSiguiente_Click(object sender, EventArgs e)
         {
-            indexPuestos.Next();
-            LlenaPuestos(IDFuncionario);
+            if (indexPuestos.Inicializado())
+            {
+                indexPuestos.Next();
+                LlenaPuestos(IDFuncionario);
+            }
         }
 
         private void buttonPuestosFinal_Click(object sender, EventArgs e)
         {
-            indexPuestos.Final();
-            LlenaPuestos(IDFuncionario);
+            if (indexPuestos.Inicializado())
+            {
+                indexPuestos.Final();
+                LlenaPuestos(IDFuncionario);
+            }
         }
 
         private void buttonPuestosInserta_Click(object sender, EventArgs e)
@@ -1178,7 +1234,7 @@ namespace ActualizaBaseDatos
             funcionarios = Datos.Instance.GetFuncionarios();
             funcionarioMostrado = new IndiceBD(funcionarios.Length);
             funcionarioMostrado.Pos = DespliegaInformacionDelID(ID);
-            if (funcionarioMostrado.Length > 0)
+            if (funcionarioMostrado.Inicializado())
             {
                 DespliegaInformación(funcionarioMostrado.Pos);
                 buttonInserta.Enabled = false;
@@ -1748,26 +1804,38 @@ namespace ActualizaBaseDatos
 
         private void buttonDatosContactoInicial_Click(object sender, EventArgs e)
         {
-            indexDatosContacto.Inicial();
-            LlenaDatosContacto(IDFuncionario);
+            if (indexDatosContacto.Inicializado())
+            {
+                indexDatosContacto.Inicial();
+                LlenaDatosContacto(IDFuncionario);
+            }
         }
 
         private void buttonDatosContactoPrevio_Click(object sender, EventArgs e)
         {
-            indexDatosContacto.Previous();
-            LlenaDatosContacto(IDFuncionario);
+            if (indexDatosContacto.Inicializado())
+            {
+                indexDatosContacto.Previous();
+                LlenaDatosContacto(IDFuncionario);
+            }
         }
 
         private void buttonDatosContactoSiguiente_Click(object sender, EventArgs e)
         {
-            indexDatosContacto.Next();
-            LlenaDatosContacto(IDFuncionario);
+            if (indexDatosContacto.Inicializado())
+            {
+                indexDatosContacto.Next();
+                LlenaDatosContacto(IDFuncionario);
+            }
         }
 
         private void buttonDatosContactoFinal_Click(object sender, EventArgs e)
         {
-            indexDatosContacto.Final();
-            LlenaDatosContacto(IDFuncionario);
+            if (indexDatosContacto.Inicializado())
+            {
+                indexDatosContacto.Final();
+                LlenaDatosContacto(IDFuncionario);
+            } 
         }
 
         private void buttonDatosContactoLimpia_Click(object sender, EventArgs e)
@@ -1867,26 +1935,38 @@ namespace ActualizaBaseDatos
 
         private void buttonCirculoCercanoInicial_Click(object sender, EventArgs e)
         {
-            indexCirculoCercano.Inicial();
-            LlenaCirculoCercano(IDFuncionario);
+            if (indexCirculoCercano.Inicializado())
+            {
+                indexCirculoCercano.Inicial();
+                LlenaCirculoCercano(IDFuncionario);
+            }
         }
 
         private void buttonCirculoCercanoPrevio_Click(object sender, EventArgs e)
         {
-            indexCirculoCercano.Previous();
-            LlenaCirculoCercano(IDFuncionario);
+            if (indexCirculoCercano.Inicializado())
+            {
+                indexCirculoCercano.Previous();
+                LlenaCirculoCercano(IDFuncionario);
+            }
         }
 
         private void buttonCirculoCercanoSIguiente_Click(object sender, EventArgs e)
         {
-            indexCirculoCercano.Next();
-            LlenaCirculoCercano(IDFuncionario);
+            if (indexCirculoCercano.Inicializado())
+            {
+                indexCirculoCercano.Next();
+                LlenaCirculoCercano(IDFuncionario);
+            }
         }
 
         private void buttonCirculoCercanoFinal_Click(object sender, EventArgs e)
         {
-            indexCirculoCercano.Final();
-            LlenaCirculoCercano(IDFuncionario);
+            if (indexCirculoCercano.Inicializado())
+            {
+                indexCirculoCercano.Final();
+                LlenaCirculoCercano(IDFuncionario);
+            }
         }
 
         private void buttonCirculoCercanoInserta_Click(object sender, EventArgs e)
@@ -1909,6 +1989,12 @@ namespace ActualizaBaseDatos
             CirculoCercano = Datos.Instance.GetCirculoCercano(IDFuncionario);
             indexCirculoCercano = new IndiceBD(CirculoCercano.Length);
             LlenaCirculoCercano(IDFuncionario);
+        }
+
+        private void LlenaPDFPresupuesto()
+        {
+            // PDF Presupuesto
+            
         }
 
         private void buttonVerificaOK_Click(object sender, EventArgs e)

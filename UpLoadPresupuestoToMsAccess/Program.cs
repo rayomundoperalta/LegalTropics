@@ -15,12 +15,12 @@ namespace UpLoadPresupuestoToMsAccess
         static public void SubePDF(string filename)
         {
             string PDFType = Path.GetExtension(filename);
-            string Entidad = string.Empty;
+            string PDFFileName = string.Empty;
 
-            Entidad = Regex.Replace(Regex.Replace(Path.GetFileName(filename), @"CALENDARIO de presupuesto ", string.Empty,
+            PDFFileName = Regex.Replace(Regex.Replace(Path.GetFileName(filename), @"CALENDARIO de presupuesto ", string.Empty,
                 RegexOptions.IgnoreCase, TimeSpan.FromSeconds(0.25)), " ", "_", RegexOptions.IgnoreCase, TimeSpan.FromSeconds(0.25));
 
-            Console.WriteLine(Entidad);
+            Console.WriteLine(PDFFileName);
             Console.ReadKey();
             
             FileInfo fi = new FileInfo(filename);
@@ -31,9 +31,7 @@ namespace UpLoadPresupuestoToMsAccess
                 Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
                 DataTable = new DataTable();
                 byte[] bData = null;
-
                 // Read file data into buffer
-
                 using (FileStream fs = fi.OpenRead())
                 {
                     bData = new byte[fi.Length];
@@ -45,13 +43,13 @@ namespace UpLoadPresupuestoToMsAccess
                         cn.Open();
                         // Add file info into DB
                         string sql = "INSERT INTO PDFPresupuesto "
-                              + " ( Entidad, PDF, Abogado ) "
+                              + " ( PDFFileName, PDF, Abogado, Asignado ) "
                               + " VALUES "
-                              + " ( @Entidad, @PDF, 'Luis' ) ";
+                              + " ( @PDFFileName, @PDF, 'Luis', " +  false + " ) ";
 
                         using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                         {
-                            cmd.Parameters.Add("@Entidad", OleDbType.VarChar, 80).Value = Entidad;
+                            cmd.Parameters.Add("@PDFFileName", OleDbType.VarChar, 4000).Value = PDFFileName;
                             cmd.Parameters.Add("@PDF", OleDbType.LongVarBinary, (int)fi.Length).Value = bData;
                             cmd.ExecuteReader();
                         }
@@ -73,8 +71,7 @@ namespace UpLoadPresupuestoToMsAccess
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
                 cn.Open();
-                string sql = "Delete from " + DB
-                    ;
+                string sql = "Delete from " + DB;
                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                 {
                     cmd.ExecuteNonQuery();

@@ -30,6 +30,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>APFInfo.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Peta">
       <HintPath>..\..\Peta\Peta\bin\Debug\Peta.dll</HintPath>
@@ -55,6 +61,9 @@
       <Project>{9875d5fc-5821-4cd5-a9e0-2a18db463db9}</Project>
       <Name>Globales</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="APFInfo.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

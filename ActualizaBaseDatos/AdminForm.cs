@@ -14,6 +14,7 @@ using System.Drawing;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
+using iText.Kernel.Font;
 
 // In case of installation problems:  Solo indicar que borrando todas las claves del registro 
 // HKEY_CURRENT_USER\Software\Classes\Software\Microsoft\Windows\CurrentVersion\PackageMetadata
@@ -258,7 +259,7 @@ namespace ActualizaBaseDatos
 
         private void InicializaDS()
         {
-            Registro Presidente = new Registro("Presidencia", "Presidencia", "A0", "El sistema");
+            Registro Presidente = new Registro("Presidencia", "Presidencia", "A0", 0, "El sistema", 0);
             APF = new Node<Registro>(Presidente);
             ListaDeNodosPorID.Add("A0", APF);
             p.Parsea(APF, 0, ListaDeNodosPorID);
@@ -285,7 +286,7 @@ namespace ActualizaBaseDatos
             PDFPresupuesto = Datos.Instance.GetPresupuesto();
             foreach( DataRow row in PDFPresupuesto)
             {
-                comboBoxPDFPresupuesto.Items.Add(row["Id1"] + "-" + row["PDFFileName"]);
+                comboBoxPDFPresupuesto.Items.Add(row["PDFFileName"]);
             }
            
         }
@@ -1312,7 +1313,11 @@ namespace ActualizaBaseDatos
         private void buttonOrgActualizaFuncionario_Click(object sender, EventArgs e)
         {
             bool NodoDeAgrupación = false;
-            if (NodoSeleccionado == null) MessageBox.Show("Error NodoSeleccionado null " + AbogadoIrresponsable);
+            if (NodoSeleccionado == null)
+            {
+                MessageBox.Show("Error NodoSeleccionado null " + AbogadoIrresponsable);
+                return;
+            }
             int PosiciónTipoID = NodoDeArbolMostrado.Text.IndexOf('_');
             if (NodoDeArbolMostrado.Text[PosiciónTipoID + 1] == 'O') NodoDeAgrupación = true;
             if (!AbogadoIrresponsable.Equals(""))
@@ -1335,7 +1340,7 @@ namespace ActualizaBaseDatos
                                     ID = "O" + rnd.Next(1, 100000).ToString();
                                 }
                                 NodoDeArbolMostrado.Text = textBoxOrgNombrePuestoModificado.Text + "- _" + ID;
-                                NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, textBoxOrgNombrePuestoModificado.Text, ID, AbogadoIrresponsable);
+                                NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, textBoxOrgNombrePuestoModificado.Text, ID, -1, AbogadoIrresponsable, 0);
                                 NuevoNode = new Node<Registro>(NuevoRegistro, NodoSeleccionado.Sons, NodoSeleccionado.Padre);
                                 ListaDeNodosPorID.Add(ID, NuevoNode);
                                 // tengo que actualizar APF
@@ -1352,7 +1357,7 @@ namespace ActualizaBaseDatos
                             if (!NodoDeAgrupación)
                             {
                                 NodoDeArbolMostrado.Text = textBoxOrgNombrePuestoModificado.Text + " - " + Datos.Instance.GetNombreFuncionario(IDMostrado) + "_" + IDMostrado;
-                                NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, textBoxOrgNombrePuestoModificado.Text, IDMostrado, AbogadoIrresponsable);
+                                NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, textBoxOrgNombrePuestoModificado.Text, IDMostrado, -1, AbogadoIrresponsable, NodoSeleccionado.Data.Id1Presupuesto);
                                 NuevoNode = new Node<Registro>(NuevoRegistro, NodoSeleccionado.Sons, NodoSeleccionado.Padre);
                                 // tengo que actualizar APF
                                 ListaDeNodosPorID[IDMostrado].Data = NuevoRegistro;
@@ -1370,7 +1375,7 @@ namespace ActualizaBaseDatos
                                 ID = funcionarios[funcionarioMostrado.Pos]["ID"].ToString();
                                 int gion = NodoDeArbolMostrado.Text.IndexOf('-');
                                 NodoDeArbolMostrado.Text = NodoDeArbolMostrado.Text.Substring(0, gion - 1) + " - " + Datos.Instance.GetNombreFuncionario(ID) + "_" + ID;
-                                NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, NodoDeArbolMostrado.Text.Substring(0, gion - 1), ID, AbogadoIrresponsable);
+                                NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, NodoDeArbolMostrado.Text.Substring(0, gion - 1), ID, -1, AbogadoIrresponsable, NodoSeleccionado.Data.Id1Presupuesto);
                                 NuevoNode = new Node<Registro>(NuevoRegistro, NodoSeleccionado.Sons, NodoSeleccionado.Padre);
                                 ListaDeNodosPorID.Add(ID, NuevoNode);
                                 // tengo que actualizar APF
@@ -1403,7 +1408,6 @@ namespace ActualizaBaseDatos
         // Inserta
         private void buttonOrgInsertaPuesto_Click(object sender, EventArgs e)
         {
-
             if (!AbogadoIrresponsable.Equals(""))
             {
                 string ID;
@@ -1424,6 +1428,7 @@ namespace ActualizaBaseDatos
                 if (NodoSeleccionado == null)
                 {
                     MessageBox.Show("Nodo Selecccionado es nulo");
+                    return;
                 }
 
                 if (!textBoxOrgNombrePuesto.Text.Equals(string.Empty) && !ListaDeNodosPorID.ContainsKey(ID) && !(NodoSeleccionado == null))
@@ -1431,7 +1436,7 @@ namespace ActualizaBaseDatos
                     // Hay que modificar APF y ListadeNodosPorID
                     // siempre vamos a inserta el nuevo registro como un hijo, y el único nodo que no puedo borrar es el raiz (el presidente)
                     NodeList<Registro> SinHijos = new NodeList<Registro>();
-                    Registro NuevoRegistro = new Registro(NivelSIguiente[NodoSeleccionado.Data.TipoRegistro], textBoxOrgNombrePuesto.Text, ID, AbogadoIrresponsable);
+                    Registro NuevoRegistro = new Registro(NivelSIguiente[NodoSeleccionado.Data.TipoRegistro], textBoxOrgNombrePuesto.Text, ID, -1, AbogadoIrresponsable, 0);
                     Node<Registro> NuevoPuesto = new Node<Registro>(NuevoRegistro, SinHijos, NodoSeleccionado);
                     ListaDeNodosPorID.Add(ID, NuevoPuesto);
                     //ImprimeConsola("+-> Contenido nodo insertado: " + NodoSeleccionado.Data.ToString());
@@ -1721,7 +1726,7 @@ namespace ActualizaBaseDatos
             System.IO.File.Copy(Defines.DataBasePath + Defines.BackupDataBaseFileName, Defines.DataBasePath + Defines.DataBaseFileName, true);
             treeViewOrganigramaAPF.Nodes.Remove(RaizTreeView);
             ListaDeNodosPorID.Clear();
-            Registro Presidente = new Registro("Presidencia", "Presidencia", "A0", "El Sistema");
+            Registro Presidente = new Registro("Presidencia", "Presidencia", "A0", -1, "El Sistema", 0);
             APF = new Node<Registro>(Presidente);
             ListaDeNodosPorID.Add("A0", APF);
             p.InitTokens();
@@ -2025,7 +2030,7 @@ namespace ActualizaBaseDatos
                 System.IO.File.Move(openFileDialogDataBase.FileName, Defines.DataBasePath + Defines.DataBaseFileName);
                 treeViewOrganigramaAPF.Nodes.Remove(RaizTreeView);
                 ListaDeNodosPorID.Clear();
-                Registro Presidente = new Registro("Presidencia", "Presidencia", "A0", "El Sistema");
+                Registro Presidente = new Registro("Presidencia", "Presidencia", "A0", -1, "El Sistema", 0);
                 APF = new Node<Registro>(Presidente);
                 ListaDeNodosPorID.Add("A0", APF);
                 p.InitTokens();
@@ -2068,8 +2073,72 @@ namespace ActualizaBaseDatos
         {
 
         }
+
+        private void buttonAsignaPresupuesto_Click(object sender, EventArgs e)
+        {
+            if (!AbogadoIrresponsable.Equals(""))
+            {
+                if (NodoSeleccionado == null) //  Este nodo corresponde al árbol de funcionarios
+                    MessageBox.Show("Error NodoSeleccionado null " + AbogadoIrresponsable);
+                int PosiciónTipoID = NodoDeArbolMostrado.Text.IndexOf('_');   // este es el árbol que se muestra en windowsform
+                if (NodoDeArbolMostrado.Text[PosiciónTipoID + 1] == 'O')
+                {
+                    MessageBox.Show("No se puede asignar un presupuesto a un nodo de agrupación");
+                    return;
+                }
+                if (!AbogadoIrresponsable.Equals(""))
+                {
+                    String IDMostrado = NodoSeleccionado.Data.ID; // ID del Nodo del Árbol que estamos viendo
+                    NodoDeArbolMostrado.Text = "# " + NodoDeArbolMostrado.Text;
+                    NodoSeleccionado.Data.Id1Presupuesto = Datos.Instance.GetID1Presupuesto(comboBoxPDFPresupuesto.Text);
+                }
+            }
+            else
+                MessageBox.Show("Tienes que identificarte Primero");
+        }
+
+        private void comboBoxPDFPresupuesto_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private bool PDFType(string FileName)
+        {
+            if (FileName != string.Empty)
+            {
+                switch (Path.GetExtension(FileName).ToLower())
+                {
+                    case ".pdf":
+                        if (File.Exists(FileName))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+
+                    default:
+                        return false;
+                }
+            }
+            else
+                return false;
+        }
+
+        private void buttonInsertPDFFile_Click(object sender, EventArgs e)
+        {
+            if (!AbogadoIrresponsable.Equals(""))
+            {
+                openFileDialogPDFPresupuesto.ShowDialog();
+                if (File.Exists(openFileDialogPDFPresupuesto.FileName) && PDFType(openFileDialogPDFPresupuesto.FileName))
+                {
+                    Datos.Instance.SubePDF(openFileDialogPDFPresupuesto.FileName, labelOrgAbogadoIrresponsable.Text);
+                }
+            }
+            else
+                MessageBox.Show("Tienes que identificarte primero");
+                
+        }
     }
 }
-// TODO: Agrupacion de arbol
-// TODO: Probar DatosContacto y CirculoCercano
-// fabricación de mosaicos de pasta en hermosillo

@@ -112,7 +112,7 @@ namespace LegalTropics
         {
             ListaDeNodosPorID = new Dictionary<string, Node<Registro>>();
             Parser parser = new Parser(ImprimeConsola);
-            Registro Presidente = new Registro("P", "Presidencia", "A0", "El Sistema");
+            Registro Presidente = new Registro("P", "Presidencia", "A0", -1, "El Sistema", 0);
             APF = new Node<Registro>(Presidente);
             parser.Parsea(APF, 0, ListaDeNodosPorID);
             // Console.WriteLine("Imprimimos arbol");

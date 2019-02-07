@@ -1658,7 +1658,7 @@ namespace AccesoBaseDatos
 
         }
 
-        public DataRow[] GetFilePDFPresupuesto(long Id1)
+        public string GetFilePDFPresupuesto(long Id1)
         {
             if (!boolPDFPresupuesto)
             {
@@ -1666,18 +1666,98 @@ namespace AccesoBaseDatos
                 boolPDFPresupuesto = true;
             }
             System.Data.EnumerableRowCollection<System.Data.DataRow> renglón = DataTablePDFPresupuesto.AsEnumerable().Where(x => x.Field<long>("Id1") == Id1);
+           
+            foreach (DataRow ren in renglón)
+            {
+                int tamaño = (ren.Field<byte[]>("PDF")).Length;
+                if (tamaño > 0)
+                {
+                    string FullName;
+                    Guid guid;
+                    FileInfo fi;
+                    do
+                    {
+                        guid = Guid.NewGuid();
+                        string UniqueFileName = guid.ToString();
+                        FullName = Defines.FotoTempBasePath + UniqueFileName + ".pdf";
+                        fi = new FileInfo(FullName);
+                    } while (fi.Exists);
+                    using (FileStream fs = fi.Create())
+                    {
+                        fs.Write(ren.Field<byte[]>("PDF"), 0, tamaño);
+                    }
+                    return FullName;
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+            return String.Empty;
+        }
+
+        public long GetID1Presupuesto(String PDFFileName)
+        {
+            if (!boolPDFPresupuesto)
+            {
+                UpLoadPDFPresupuesto();
+                boolPDFPresupuesto = true;
+            }
+            System.Data.EnumerableRowCollection<System.Data.DataRow> renglón = DataTablePDFPresupuesto.AsEnumerable().Where(x => x.Field<string>("PDFFileName") == PDFFileName);
             DataTable renglones = MakePDFPresupuestoTable();
             foreach (DataRow ren in renglón)
             {
-                DataRow row = renglones.NewRow();
-                row["Id1"] = ren["Id1"];
-                row["PDFFileName"] = ren["PDFFileName"];
-                row["PDF"] = ren["PDF"];
-                row["Abogado"] = ren["Abogado"];
-                row["Asignado"] = ren["Asignado"];
-                renglones.Rows.Add(row);
+                return (long) ren["Id1"];
             }
-            return renglones.Select();
+            return 0;
+        }
+
+        public void SubePDF(string filename, string AbogadoIrresponsable)
+        {
+            OleDbConnectionStringBuilder Builder = new OleDbConnectionStringBuilder();
+            DataTable DataTable;
+            string PDFType = Path.GetExtension(filename);
+            string PDFFileName = string.Empty;
+
+            PDFFileName = Regex.Replace(Regex.Replace(Path.GetFileName(filename), @"CALENDARIO de presupuesto ", string.Empty,
+                RegexOptions.IgnoreCase, TimeSpan.FromSeconds(0.25)), " ", "_", RegexOptions.IgnoreCase, TimeSpan.FromSeconds(0.25));
+
+            Console.WriteLine(PDFFileName);
+            //Console.ReadKey();
+
+            FileInfo fi = new FileInfo(filename);
+
+            if (fi.Exists)
+            {
+                Builder.Provider = Defines.StringAccessProvider;
+                Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+                DataTable = new DataTable();
+                byte[] bData = null;
+                // Read file data into buffer
+                using (FileStream fs = fi.OpenRead())
+                {
+                    bData = new byte[fi.Length];
+
+                    int nReadLength = fs.Read(bData, 0, (int)(fi.Length));
+
+                    using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+                    {
+                        cn.Open();
+                        // Add file info into DB
+                        string sql = "INSERT INTO PDFPresupuesto "
+                              + " ( PDFFileName, PDF, Abogado, Asignado ) "
+                              + " VALUES "
+                              + " ( @PDFFileName, @PDF, '"+ AbogadoIrresponsable + "', " + false + " ) ";
+
+                        using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                        {
+                            cmd.Parameters.Add("@PDFFileName", OleDbType.VarChar, 4000).Value = PDFFileName;
+                            cmd.Parameters.Add("@PDF", OleDbType.LongVarBinary, (int)fi.Length).Value = bData;
+                            cmd.ExecuteReader();
+                        }
+                    }
+                }
+            }
         }
     }
 }

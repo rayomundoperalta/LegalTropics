@@ -50,7 +50,7 @@ namespace APFInfo
                         int i = 0;
                         foreach (DataRow row in Posiciones)
                         {
-                            Registros[i] = new Registro(row["TipoRegistro"].ToString(), row["NombrePuesto"].ToString(), row["ID"].ToString(), row["Abogado"].ToString());
+                            Registros[i] = new Registro(row["TipoRegistro"].ToString(), row["NombrePuesto"].ToString(), row["ID"].ToString(),  Convert.ToInt32(row["Sec"]), row["Abogado"].ToString(),  Convert.ToInt32(row["Id1Presupuesto"]));
 #if Debug
                             // Print((i + 1) + "-> " + Registros[i].ToString());
 #endif

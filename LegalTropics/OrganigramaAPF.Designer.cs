@@ -34,6 +34,9 @@
             this.textBoxOrgBuscaID = new System.Windows.Forms.TextBox();
             this.buttonOrgTraeID = new System.Windows.Forms.Button();
             this.buttonOrgBuscaPuesto = new System.Windows.Forms.Button();
+            this.buttonVerFicha = new System.Windows.Forms.Button();
+            this.buttonVerPresupuesto = new System.Windows.Forms.Button();
+            this.buttonVerAmbos = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // treeViewAPF
@@ -90,12 +93,48 @@
             this.buttonOrgBuscaPuesto.UseVisualStyleBackColor = true;
             this.buttonOrgBuscaPuesto.Click += new System.EventHandler(this.buttonOrgBuscaPuesto_Click);
             // 
-            // NavegaciónAPF
+            // buttonVerFicha
+            // 
+            this.buttonVerFicha.Enabled = false;
+            this.buttonVerFicha.Location = new System.Drawing.Point(368, 656);
+            this.buttonVerFicha.Name = "buttonVerFicha";
+            this.buttonVerFicha.Size = new System.Drawing.Size(102, 23);
+            this.buttonVerFicha.TabIndex = 7;
+            this.buttonVerFicha.Text = "Ver Ficha";
+            this.buttonVerFicha.UseVisualStyleBackColor = true;
+            this.buttonVerFicha.Click += new System.EventHandler(this.buttonVerFicha_Click);
+            // 
+            // buttonVerPresupuesto
+            // 
+            this.buttonVerPresupuesto.Enabled = false;
+            this.buttonVerPresupuesto.Location = new System.Drawing.Point(516, 655);
+            this.buttonVerPresupuesto.Name = "buttonVerPresupuesto";
+            this.buttonVerPresupuesto.Size = new System.Drawing.Size(145, 23);
+            this.buttonVerPresupuesto.TabIndex = 8;
+            this.buttonVerPresupuesto.Text = "Ver Presupuesto";
+            this.buttonVerPresupuesto.UseVisualStyleBackColor = true;
+            this.buttonVerPresupuesto.Click += new System.EventHandler(this.buttonVerPresupuesto_Click);
+            // 
+            // buttonVerAmbos
+            // 
+            this.buttonVerAmbos.Enabled = false;
+            this.buttonVerAmbos.Location = new System.Drawing.Point(705, 656);
+            this.buttonVerAmbos.Name = "buttonVerAmbos";
+            this.buttonVerAmbos.Size = new System.Drawing.Size(122, 23);
+            this.buttonVerAmbos.TabIndex = 9;
+            this.buttonVerAmbos.Text = "Ver Ambos";
+            this.buttonVerAmbos.UseVisualStyleBackColor = true;
+            this.buttonVerAmbos.Click += new System.EventHandler(this.buttonVerAmbos_Click);
+            // 
+            // OrganigramaAPF
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(991, 713);
             this.ControlBox = false;
+            this.Controls.Add(this.buttonVerAmbos);
+            this.Controls.Add(this.buttonVerPresupuesto);
+            this.Controls.Add(this.buttonVerFicha);
             this.Controls.Add(this.buttonOrgBuscaPuesto);
             this.Controls.Add(this.buttonOrgTraeID);
             this.Controls.Add(this.textBoxOrgBuscaID);
@@ -103,7 +142,7 @@
             this.Controls.Add(this.textBoxOrgCadenaBusqueda);
             this.Controls.Add(this.treeViewAPF);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "NavegaciónAPF";
+            this.Name = "OrganigramaAPF";
             this.Text = "Organigrama de la APF";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -118,5 +157,8 @@
         private System.Windows.Forms.TextBox textBoxOrgBuscaID;
         private System.Windows.Forms.Button buttonOrgTraeID;
         private System.Windows.Forms.Button buttonOrgBuscaPuesto;
+        private System.Windows.Forms.Button buttonVerFicha;
+        private System.Windows.Forms.Button buttonVerPresupuesto;
+        private System.Windows.Forms.Button buttonVerAmbos;
     }
 }

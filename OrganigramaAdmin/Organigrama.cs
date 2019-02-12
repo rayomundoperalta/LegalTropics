@@ -11,7 +11,16 @@ namespace OrganigramaAdmin
     {
         public void LlenaTreeAPF(TreeNodeCollection APFtreeNodes, Node<Registro> APF, int i, bool IsTheFirstTime, ref TreeNode raiz)
         {
-            TreeNode newNode = new TreeNode(APF.Data.NombrePuesto + " - " + Datos.Instance.GetNombreFuncionario(APF.Data.ID) + "_" + APF.Data.ID);
+            TreeNode newNode;
+            if (APF.Data.Id1Presupuesto > 0)
+            {
+                newNode = new TreeNode("#" + APF.Data.Id1Presupuesto + " " + APF.Data.NombrePuesto + " - " + Datos.Instance.GetNombreFuncionario(APF.Data.ID) + "_" + APF.Data.ID);
+            }
+            else
+            {
+                newNode = new TreeNode(APF.Data.NombrePuesto + " - " + Datos.Instance.GetNombreFuncionario(APF.Data.ID) + "_" + APF.Data.ID);
+
+            }
             APF.Data.NodoDelTreeView = newNode;
             if (IsTheFirstTime)
             {
@@ -49,7 +58,7 @@ namespace OrganigramaAdmin
 
             if (NoFirstTime)
             {
-                Datos.Instance.InsertRegistroOrganigrama(APF.Data.TipoRegistro, APF.Data.NombrePuesto, APF.Data.ID, APF.Data.AbogadoIrresponsable, i++, Print);
+                Datos.Instance.InsertRegistroOrganigrama(APF.Data.TipoRegistro, APF.Data.NombrePuesto, APF.Data.ID, APF.Data.AbogadoIrresponsable, APF.Data.Id1Presupuesto, i++, Print);
             }
             else
             {

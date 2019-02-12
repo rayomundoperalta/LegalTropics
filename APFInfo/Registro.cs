@@ -29,10 +29,6 @@ namespace APFInfo
 
         public override string ToString()
         {
-            if (id1Presupuesto > 0)
-            {
-                return "# " + nombrePuesto + "_" + id;
-            }
             return nombrePuesto + "_" + id;
         }
 

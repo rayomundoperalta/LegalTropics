@@ -251,7 +251,7 @@ namespace ActualizaBaseDatos
 
         private int ImprimeConsola(string line)
         {
-            //Console.WriteLine(line);
+            Console.WriteLine(line);
             return 0;
         }
 
@@ -1261,6 +1261,7 @@ namespace ActualizaBaseDatos
         private void treeViewOrganigramaAPF_AfterSelect(object sender, TreeViewEventArgs e)
         {
             int pos = e.Node.Text.IndexOf('_');
+            
             string ID = e.Node.Text.Substring(pos + 1, e.Node.Text.Length - pos - 1);
             if (ListaDeNodosPorID.ContainsKey(ID))
             {
@@ -1270,7 +1271,13 @@ namespace ActualizaBaseDatos
                 labelOrgAbogadoIrresponsable.Text = NodoSeleccionado.Data.AbogadoIrresponsable.Equals("") ? "     " : NodoSeleccionado.Data.AbogadoIrresponsable;
                 //ImprimeConsola("-->  " + NodoSeleccionado.Data.ToString() + " # " + e.Node.Text);
                 int gion = e.Node.Text.IndexOf('-');
-                textBoxOrgNombrePuestoModificado.Text = e.Node.Text.Substring(0, gion - 1);
+                int posBlanco = 0;
+                if (e.Node.Text.Substring(0,1).Equals("#"))
+                {
+                    posBlanco = e.Node.Text.IndexOf(' ') + 1;
+                    gion -= posBlanco;
+                }
+                textBoxOrgNombrePuestoModificado.Text = e.Node.Text.Substring(posBlanco, gion - 1);
             }
             else
             {
@@ -1356,7 +1363,17 @@ namespace ActualizaBaseDatos
                         case 2:  // Modificamos un Puesto
                             if (!NodoDeAgrupación)
                             {
-                                NodoDeArbolMostrado.Text = textBoxOrgNombrePuestoModificado.Text + " - " + Datos.Instance.GetNombreFuncionario(IDMostrado) + "_" + IDMostrado;
+                                string prefijo = string.Empty;
+                                if (NodoSeleccionado.Data.Id1Presupuesto > 0)
+                                {
+                                    prefijo = "#" + NodoSeleccionado.Data.Id1Presupuesto + " ";
+                                }
+                                if (textBoxOrgNombrePuestoModificado.Text.Substring(0,1).Equals("#"))
+                                {
+                                    MessageBox.Show("No es valido introducir # en el nombre del puesto");
+                                    return;
+                                }
+                                NodoDeArbolMostrado.Text = prefijo + textBoxOrgNombrePuestoModificado.Text + " - " + Datos.Instance.GetNombreFuncionario(IDMostrado) + "_" + IDMostrado;
                                 NuevoRegistro = new Registro(NodoSeleccionado.Data.TipoRegistro, textBoxOrgNombrePuestoModificado.Text, IDMostrado, -1, AbogadoIrresponsable, NodoSeleccionado.Data.Id1Presupuesto);
                                 NuevoNode = new Node<Registro>(NuevoRegistro, NodoSeleccionado.Sons, NodoSeleccionado.Padre);
                                 // tengo que actualizar APF
@@ -1427,12 +1444,17 @@ namespace ActualizaBaseDatos
                 
                 if (NodoSeleccionado == null)
                 {
-                    MessageBox.Show("Nodo Selecccionado es nulo");
+                    MessageBox.Show("Nodo Seleccionado es nulo");
                     return;
                 }
 
                 if (!textBoxOrgNombrePuesto.Text.Equals(string.Empty) && !ListaDeNodosPorID.ContainsKey(ID) && !(NodoSeleccionado == null))
                 {
+                    if (textBoxOrgNombrePuesto.Text.Substring(0,1).Equals("#"))
+                    {
+                        MessageBox.Show("No es valido comenzar el nombre de puesto con #");
+                        return;
+                    }
                     // Hay que modificar APF y ListadeNodosPorID
                     // siempre vamos a inserta el nuevo registro como un hijo, y el único nodo que no puedo borrar es el raiz (el presidente)
                     NodeList<Registro> SinHijos = new NodeList<Registro>();
@@ -2086,12 +2108,9 @@ namespace ActualizaBaseDatos
                     MessageBox.Show("No se puede asignar un presupuesto a un nodo de agrupación");
                     return;
                 }
-                if (!AbogadoIrresponsable.Equals(""))
-                {
-                    String IDMostrado = NodoSeleccionado.Data.ID; // ID del Nodo del Árbol que estamos viendo
-                    NodoDeArbolMostrado.Text = "# " + NodoDeArbolMostrado.Text;
-                    NodoSeleccionado.Data.Id1Presupuesto = Datos.Instance.GetID1Presupuesto(comboBoxPDFPresupuesto.Text);
-                }
+                String IDMostrado = NodoSeleccionado.Data.ID; // ID del Nodo del Árbol que estamos viendo
+                NodoSeleccionado.Data.Id1Presupuesto = Datos.Instance.GetID1Presupuesto(comboBoxPDFPresupuesto.Text);
+                NodoDeArbolMostrado.Text = "#" + NodoSeleccionado.Data.Id1Presupuesto + " " + NodoDeArbolMostrado.Text;
             }
             else
                 MessageBox.Show("Tienes que identificarte Primero");

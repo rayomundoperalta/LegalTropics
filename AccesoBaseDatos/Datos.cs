@@ -232,7 +232,7 @@ namespace AccesoBaseDatos
             DataTableOrganigramaFederal = new System.Data.DataTable();
             using (OleDbConnection cn = new OleDbConnection{ConnectionString = Builder.ConnectionString})
             {
-                var sql = "SELECT ID FROM OrganigramaFederal;";
+                var sql = "SELECT * FROM OrganigramaFederal;";
                 using (OleDbCommand cmd = new OleDbCommand{CommandText = sql,Connection = cn})
                 {
                     //cmd.Parameters.Add("@Puesto", OleDbType.VarChar, 80).Value = Puesto;
@@ -938,7 +938,7 @@ namespace AccesoBaseDatos
             DataTable OrganigramaFederal = new DataTable("OrganigramaFederal");
 
             DataColumn Id1 = new DataColumn();
-            Id1.DataType = System.Type.GetType("System.Int64");
+            Id1.DataType = System.Type.GetType("System.Int32");
             Id1.ColumnName = "Id1";
             Id1.AutoIncrement = true;
             OrganigramaFederal.Columns.Add(Id1);
@@ -967,6 +967,11 @@ namespace AccesoBaseDatos
             Abogado.DataType = System.Type.GetType("System.String");
             Abogado.ColumnName = "Abogado";
             OrganigramaFederal.Columns.Add(Abogado);
+
+            DataColumn Id1Presupuesto = new DataColumn();
+            Id1Presupuesto.DataType = System.Type.GetType("System.Int32");
+            Id1Presupuesto.ColumnName = "Id1Presupuesto";
+            OrganigramaFederal.Columns.Add(Id1Presupuesto);
 
             return OrganigramaFederal;
         }
@@ -1508,8 +1513,9 @@ namespace AccesoBaseDatos
                 UpLoadOrganigramaFederal();
                 boolOrganigramaFederal = true;
             }
-            var Rows = DataTableOrganigramaFederal.AsEnumerable().OrderBy(x => x.Field<System.Int32>("Id1")).Last();
-            return Rows.Field<long>("Id1").ToString();
+            System.Data.DataRow RenglónOrganigrama = DataTableOrganigramaFederal.AsEnumerable().OrderBy(x => x.Field<System.Int32>("Id1")).Last();
+            string MaxId1 = RenglónOrganigrama["Id1"].ToString();
+            return MaxId1;
         }
 
         public void DeleteOrganigrama(string MaxId1)
@@ -1529,14 +1535,14 @@ namespace AccesoBaseDatos
             boolOrganigramaFederal = false;
         }
 
-        public void InsertRegistroOrganigrama(string TipoRegistro, string NombrePuesto, string ID, string AbogadoIrresponsable, int Sec, Func<string, int> Print)
+        public void InsertRegistroOrganigrama(string TipoRegistro, string NombrePuesto, string ID, string AbogadoIrresponsable, long Id1Presupuesto, int Sec, Func<string, int> Print)
         {
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
             {
-                var sql = "INSERT INTO OrganigramaFederal (TipoRegistro, NombrePuesto, Abogado, ID, Sec) VALUES ('" + TipoRegistro + "', '" + NombrePuesto + "', '" + AbogadoIrresponsable + "', '" +
-                    ID + "', '" + Sec.ToString() + "');";
+                var sql = "INSERT INTO OrganigramaFederal (TipoRegistro, NombrePuesto, Abogado, ID, Sec, Id1Presupuesto) VALUES ('" + TipoRegistro + "', '" + NombrePuesto + "', '" + AbogadoIrresponsable + "', '" +
+                    ID + "', '" + Sec.ToString() + "', '" + Id1Presupuesto + "');";
                 using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
                 {
                     Print(cmd.CommandText);
@@ -1658,16 +1664,26 @@ namespace AccesoBaseDatos
 
         }
 
-        public string GetFilePDFPresupuesto(long Id1)
+        public string GetFilePDFPresupuesto(System.Int64 Id1)
         {
             if (!boolPDFPresupuesto)
             {
                 UpLoadPDFPresupuesto();
                 boolPDFPresupuesto = true;
             }
-            System.Data.EnumerableRowCollection<System.Data.DataRow> renglón = DataTablePDFPresupuesto.AsEnumerable().Where(x => x.Field<long>("Id1") == Id1);
-           
-            foreach (DataRow ren in renglón)
+            System.Data.EnumerableRowCollection<System.Data.DataRow> Renglones = DataTablePDFPresupuesto.AsEnumerable().Where(x => Convert.ToInt64(x["Id1"]) == Id1);
+            DataTable renglonesSeleccionados = MakePDFPresupuestoTable();
+            foreach (DataRow ren in Renglones)
+            {
+                DataRow row = renglonesSeleccionados.NewRow();
+                row["Id1"] = ren["Id1"];
+                row["PDFFileName"] = ren["PDFFileName"];
+                row["PDF"] = ren["PDF"];
+                row["Abogado"] = ren["Abogado"];
+                row["Asignado"] = ren["Asignado"];
+                renglonesSeleccionados.Rows.Add(row);
+            }
+            foreach (DataRow ren in renglonesSeleccionados.Select())
             {
                 int tamaño = (ren.Field<byte[]>("PDF")).Length;
                 if (tamaño > 0)
@@ -1707,7 +1723,7 @@ namespace AccesoBaseDatos
             DataTable renglones = MakePDFPresupuestoTable();
             foreach (DataRow ren in renglón)
             {
-                return (long) ren["Id1"];
+                return Convert.ToInt32(ren["Id1"]);
             }
             return 0;
         }

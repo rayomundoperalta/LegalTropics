@@ -4,6 +4,9 @@ using System.Windows.Forms;
 using OrganigramaAdmin;
 using Peta;
 using OrgBusqueda;
+using System.Text.RegularExpressions;
+using System.Diagnostics;
+using AccesoBaseDatos;
 
 namespace LegalTropics
 {
@@ -34,6 +37,9 @@ namespace LegalTropics
             treeViewAPF.BeforeSelect += TreeViewAPF_BeforeSelect;
             textBoxOrgCadenaBusqueda.Click += TextBoxOrgCadenaBusqueda_Click;
             textBoxOrgBuscaID.Click += TextBoxOrgBuscaID_Click;
+            buttonVerFicha.Enabled = false;
+            buttonVerPresupuesto.Enabled = false;
+            buttonVerAmbos.Enabled = false;
         }
 
         private void TextBoxOrgBuscaID_Click(object sender, EventArgs e)
@@ -57,11 +63,29 @@ namespace LegalTropics
             // treeViewAPF.Size = new Size(this.Width - 42, this.Height - 71);
         }
 
+        private string ID;
+        private long Id1Presupuesto;
+
         private void treeViewAPF_AfterSelect(object sender, TreeViewEventArgs e)
         {
             int pos = e.Node.Text.IndexOf('_');
-            string ID = e.Node.Text.Substring(pos + 1, e.Node.Text.Length - pos - 1);
-            Globals.Ribbons.Tropicalizador.GeneraReporte(ID);
+            int posBlanco = e.Node.Text.IndexOf(' ');
+            ID = e.Node.Text.Substring(pos + 1, e.Node.Text.Length - pos - 1);
+            if (e.Node.Text.Substring(0, 1).Equals("#"))
+            {
+                //Ficha_Presupuesto VentanaDesición = new Ficha_Presupuesto();
+                //VentanaDesición.ID = ID;
+                Id1Presupuesto = Convert.ToInt64(e.Node.Text.Substring(1, posBlanco - 1));
+                //VentanaDesición.Id1Presupuesto = Id1Presupuesto;
+                //VentanaDesición.Show();
+                buttonVerFicha.Enabled = true;
+                buttonVerPresupuesto.Enabled = true;
+                buttonVerAmbos.Enabled = true;
+            }
+            else
+            {
+                Globals.Ribbons.Tropicalizador.GeneraReporte(ID);
+            }
         }
 
         private void buttonOrgTraeID_Click(object sender, EventArgs e)
@@ -190,6 +214,31 @@ namespace LegalTropics
         private void textBoxOrgBuscaID_TextChanged(object sender, EventArgs e)
         {
             if (FuncionarioEncontrado != null) FuncionarioEncontrado.BackColor = Color.White;
+        }
+
+        private void buttonVerFicha_Click(object sender, EventArgs e)
+        {
+            Globals.Ribbons.Tropicalizador.GeneraReporte(ID);
+            buttonVerFicha.Enabled = false;
+            buttonVerPresupuesto.Enabled = false;
+            buttonVerAmbos.Enabled = false;
+        }
+
+        private void buttonVerPresupuesto_Click(object sender, EventArgs e)
+        {
+            Process.Start(Datos.Instance.GetFilePDFPresupuesto(Id1Presupuesto));
+            buttonVerFicha.Enabled = false;
+            buttonVerPresupuesto.Enabled = false;
+            buttonVerAmbos.Enabled = false;
+        }
+
+        private void buttonVerAmbos_Click(object sender, EventArgs e)
+        {
+            Globals.Ribbons.Tropicalizador.GeneraReporte(ID);
+            Process.Start(Datos.Instance.GetFilePDFPresupuesto(Id1Presupuesto));
+            buttonVerFicha.Enabled = false;
+            buttonVerPresupuesto.Enabled = false;
+            buttonVerAmbos.Enabled = false;
         }
     }
 }

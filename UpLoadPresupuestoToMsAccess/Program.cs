@@ -6,8 +6,6 @@ using AccesoBaseDatos;
 
 namespace UpLoadPresupuestoToMsAccess
 {
-    
-
     class Program
     {
         static private OleDbConnectionStringBuilder Builder = new OleDbConnectionStringBuilder();

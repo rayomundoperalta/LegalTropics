@@ -52,7 +52,7 @@ namespace APFInfo
                         {
                             Registros[i] = new Registro(row["TipoRegistro"].ToString(), row["NombrePuesto"].ToString(), row["ID"].ToString(),  Convert.ToInt32(row["Sec"]), row["Abogado"].ToString(),  Convert.ToInt32(row["Id1Presupuesto"]));
 #if Debug
-                            // Print((i + 1) + "-> " + Registros[i].ToString());
+                            Print((i + 1) + "-> " + Registros[i].ToString());
 #endif
                             i++;
                         }
@@ -71,7 +71,7 @@ namespace APFInfo
         private bool AdvanceToken()
         {
 #if Debug
-            //Print("Cursor " + cursor + "(++Cursor < " + Registros.Length + ")");
+            Print("Cursor " + cursor + "(++Cursor < " + Registros.Length + ")");
 #endif
             if (++cursor < Registros.Length)
             {
@@ -91,7 +91,7 @@ namespace APFInfo
         {
             // SOLO AVANZA EL PARSER SI ENCONTRÓ EL TOKEN
 #if Debug
-            //if (CurrentToken != null) Print("CurrentToken-> " + CurrentToken.TipoRegistro + " =? " + TipoRegistro);
+            if (CurrentToken != null) Print("CurrentToken-> " + CurrentToken.TipoRegistro + " =? " + TipoRegistro);
 #endif
             if (CurrentToken != null && CurrentToken.TipoRegistro.Equals(TipoRegistro))
             {

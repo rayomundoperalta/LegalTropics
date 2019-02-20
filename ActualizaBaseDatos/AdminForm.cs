@@ -15,6 +15,7 @@ using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 using iText.Kernel.Font;
+using System.Text;
 
 // In case of installation problems:  Solo indicar que borrando todas las claves del registro 
 // HKEY_CURRENT_USER\Software\Classes\Software\Microsoft\Windows\CurrentVersion\PackageMetadata
@@ -2024,10 +2025,28 @@ namespace ActualizaBaseDatos
             
         }
 
+        string PrintHexaConsole(string cadena)
+        {
+            for (int j = 0; j < cadena.Length; j++)
+            {
+                Console.Write(cadena[j]);
+                Console.Write(" ");
+            }
+            Console.WriteLine();
+            byte[] ba = Encoding.Default.GetBytes(cadena);
+            var hexString = BitConverter.ToString(ba);
+            hexString = hexString.Replace("-", "");
+            return hexString;
+        }
+
         private void buttonVerificaOK_Click(object sender, EventArgs e)
         {
             if (Datos.Instance.VerificaAbogadoIrresponsable(textBoxAbogadoIrresponsable.Text, textBoxPassword.Text))
             {
+                MessageBox.Show("-" + textBoxAbogadoIrresponsable.Text + "-" + 
+                    PrintHexaConsole(textBoxAbogadoIrresponsable.Text) + "-" +
+                    textBoxPassword.Text + "-" +
+                    PrintHexaConsole(textBoxPassword.Text) + "-");
                 AbogadoIrresponsable = textBoxAbogadoIrresponsable.Text;
                 buttonVerificaOK.Text = "OK";
                 textBoxAbogadoIrresponsable.Text = string.Empty;

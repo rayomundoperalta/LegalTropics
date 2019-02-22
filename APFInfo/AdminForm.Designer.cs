@@ -182,7 +182,6 @@
             this.tabPageFichas = new System.Windows.Forms.TabPage();
             this.tabPageOrganigrama = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.buttonQuitarArchivoPresupuesto = new System.Windows.Forms.Button();
             this.buttonInsertPDFFile = new System.Windows.Forms.Button();
             this.buttonAsignaPresupuesto = new System.Windows.Forms.Button();
             this.comboBoxPDFPresupuesto = new System.Windows.Forms.ComboBox();
@@ -229,6 +228,7 @@
             this.openFileDialogDataBase = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogTreeAPF = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialogPDFPresupuesto = new System.Windows.Forms.OpenFileDialog();
+            this.buttonQuitarArchivoPresupuesto = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tabControlInformación.SuspendLayout();
@@ -1968,16 +1968,6 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Asignación de Presupuesto";
             // 
-            // buttonQuitarArchivoPresupuesto
-            // 
-            this.buttonQuitarArchivoPresupuesto.Location = new System.Drawing.Point(325, 74);
-            this.buttonQuitarArchivoPresupuesto.Name = "buttonQuitarArchivoPresupuesto";
-            this.buttonQuitarArchivoPresupuesto.Size = new System.Drawing.Size(136, 37);
-            this.buttonQuitarArchivoPresupuesto.TabIndex = 3;
-            this.buttonQuitarArchivoPresupuesto.Text = "Quitar Achivo";
-            this.buttonQuitarArchivoPresupuesto.UseVisualStyleBackColor = true;
-            this.buttonQuitarArchivoPresupuesto.Click += new System.EventHandler(this.buttonQuitarArchivoPresupuesto_Click);
-            // 
             // buttonInsertPDFFile
             // 
             this.buttonInsertPDFFile.Location = new System.Drawing.Point(27, 74);
@@ -2437,6 +2427,15 @@
             // openFileDialogPDFPresupuesto
             // 
             this.openFileDialogPDFPresupuesto.FileName = "PDF Presupuesto";
+            // 
+            // buttonQuitarArchivoPresupuesto
+            // 
+            this.buttonQuitarArchivoPresupuesto.Location = new System.Drawing.Point(325, 74);
+            this.buttonQuitarArchivoPresupuesto.Name = "buttonQuitarArchivoPresupuesto";
+            this.buttonQuitarArchivoPresupuesto.Size = new System.Drawing.Size(136, 37);
+            this.buttonQuitarArchivoPresupuesto.TabIndex = 3;
+            this.buttonQuitarArchivoPresupuesto.Text = "Quitar Achivo";
+            this.buttonQuitarArchivoPresupuesto.UseVisualStyleBackColor = true;
             // 
             // AdminForm
             // 

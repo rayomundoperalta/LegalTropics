@@ -1728,6 +1728,26 @@ namespace AccesoBaseDatos
             return 0;
         }
 
+        public void SetAsignadoID1Presupuesto(long Id1, bool Asignado)
+        {
+            boolPDFPresupuesto = false;
+
+            Builder.Provider = Defines.StringAccessProvider;
+            Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+            using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+            {
+                var sql = "UPDATE PDFPresupuesto SET Asignado = @Asignado  WHERE Id1 = @Id1;";
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    cmd.Parameters.Add("@Id1", OleDbType.BigInt, 80).Value = Id1;
+                    cmd.Parameters.Add("@Asignado", OleDbType.Boolean, 80).Value = Asignado;
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+        }
+
         public void SubePDF(string filename, string AbogadoIrresponsable)
         {
             OleDbConnectionStringBuilder Builder = new OleDbConnectionStringBuilder();

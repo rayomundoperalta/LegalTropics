@@ -2138,34 +2138,14 @@ namespace ActualizaBaseDatos
                 String IDMostrado = NodoSeleccionado.Data.ID; // ID del Nodo del Árbol que estamos viendo
                 NodoSeleccionado.Data.Id1Presupuesto = Datos.Instance.GetID1Presupuesto(comboBoxPDFPresupuesto.Text);
                 NodoDeArbolMostrado.Text = "#" + NodoSeleccionado.Data.Id1Presupuesto + " " + NodoDeArbolMostrado.Text;
-                Datos.Instance.SetAsignadoID1Presupuesto(NodoSeleccionado.Data.Id1Presupuesto, true);
+                Datos.Instance.SetAsignadoID1Presupuesto(NodoSeleccionado.Data.Id1Presupuesto);
                 LlenaComboBoxPresupuesto();
             }
             else
                 MessageBox.Show("Tienes que identificarte Primero");
         }
 
-        private void buttonQuitarArchivoPresupuesto_Click(object sender, EventArgs e)
-        {
-            if (!AbogadoIrresponsable.Equals(""))
-            {
-                if (NodoSeleccionado == null) //  Este nodo corresponde al árbol de funcionarios
-                    MessageBox.Show("Error NodoSeleccionado null " + AbogadoIrresponsable);
-                int PosiciónTipoID = NodoDeArbolMostrado.Text.IndexOf('_');   // este es el árbol que se muestra en windowsform
-                if (NodoDeArbolMostrado.Text[PosiciónTipoID + 1] == 'O')
-                {
-                    MessageBox.Show("No se puede asignar un presupuesto a un nodo de agrupación");
-                    return;
-                }
-                String IDMostrado = NodoSeleccionado.Data.ID; // ID del Nodo del Árbol que estamos viendo
-                NodoDeArbolMostrado.Text = NodoDeArbolMostrado.Text;
-                Datos.Instance.SetAsignadoID1Presupuesto(NodoSeleccionado.Data.Id1Presupuesto, false);
-                NodoSeleccionado.Data.Id1Presupuesto = 0;
-                LlenaComboBoxPresupuesto();
-            }
-            else
-                MessageBox.Show("Tienes que identificarte Primero");
-        }
+       
 
         private void comboBoxPDFPresupuesto_SelectedIndexChanged(object sender, EventArgs e)
         {

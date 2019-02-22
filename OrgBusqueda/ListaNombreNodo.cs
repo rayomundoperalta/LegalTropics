@@ -17,7 +17,7 @@ namespace OrgBusqueda
 
         public Node<Registro> this[int index]
         {
-            get { return LaLista[index].nodo; }
+            get { return LaLista[index].nodo; } 
 
         }
 

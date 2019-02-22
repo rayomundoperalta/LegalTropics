@@ -1761,7 +1761,7 @@ namespace ActualizaBaseDatos
 
         private void buttonOrgBackup_Click(object sender, EventArgs e)
         {
-            System.IO.File.Copy(Defines.DataBasePath + Defines.DataBaseFileName, Defines.DataBasePath + Defines.BackupDataBaseFileName, true);
+            System.IO.File.Copy(Defines.DataBasePath + Defines.DataBaseFileName, Defines.DataBasePath + DateTime.Now.ToString("yyyy_MM_dd_hh_mm_ss") + "_" + Defines.DataBaseFileName, true);
         }
 
         private void buttonOrgGuardar_Click(object sender, EventArgs e)

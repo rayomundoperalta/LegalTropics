@@ -17,6 +17,8 @@ using iText.Layout.Element;
 using iText.Kernel.Font;
 using System.Text;
 
+using OfficeOpenXml;
+
 // In case of installation problems:  Solo indicar que borrando todas las claves del registro 
 // HKEY_CURRENT_USER\Software\Classes\Software\Microsoft\Windows\CurrentVersion\PackageMetadata
 
@@ -286,8 +288,26 @@ namespace ActualizaBaseDatos
             LlenaComboBoxPresupuesto();
         }
 
+        HashSet<long> HashSetId1PDFPresupuesto = new HashSet<long>();
+
+        void ExtraeListaPDFPresupuestoAsignado(Node<Registro> APF)
+        {
+            HashSetId1PDFPresupuesto.Add(APF.Data.Id1Presupuesto);
+            if (APF.Sons == null || APF.Sons.Count == 0)
+            {
+            }
+            else
+            {
+                foreach (Node<Registro> nodo in APF.Sons)
+                {
+                    ExtraeListaPDFPresupuestoAsignado(nodo);
+                }
+            }
+        }
+
         void LlenaComboBoxPresupuesto()
         {
+            ExtraeListaPDFPresupuestoAsignado(APF);
             if (comboBoxPDFPresupuesto.Items.Count > 0)
             {
                 comboBoxPDFPresupuesto.Items.Clear();
@@ -295,7 +315,7 @@ namespace ActualizaBaseDatos
             PDFPresupuesto = Datos.Instance.GetPresupuesto();
             foreach (DataRow row in PDFPresupuesto)
             {
-                if (!Convert.ToBoolean(row["Asignado"]))
+                if (!HashSetId1PDFPresupuesto.Contains(Convert.ToInt64(row["Id1"])))
                     comboBoxPDFPresupuesto.Items.Add(row["PDFFileName"]);
             }
         }
@@ -2051,10 +2071,12 @@ namespace ActualizaBaseDatos
         {
             if (Datos.Instance.VerificaAbogadoIrresponsable(textBoxAbogadoIrresponsable.Text, textBoxPassword.Text))
             {
+                /*
                 MessageBox.Show("-" + textBoxAbogadoIrresponsable.Text + "-" + 
                     PrintHexaConsole(textBoxAbogadoIrresponsable.Text) + "-" +
                     textBoxPassword.Text + "-" +
                     PrintHexaConsole(textBoxPassword.Text) + "-");
+                */
                 AbogadoIrresponsable = textBoxAbogadoIrresponsable.Text;
                 buttonVerificaOK.Text = "OK";
                 textBoxAbogadoIrresponsable.Text = string.Empty;
@@ -2138,7 +2160,7 @@ namespace ActualizaBaseDatos
                 String IDMostrado = NodoSeleccionado.Data.ID; // ID del Nodo del Árbol que estamos viendo
                 NodoSeleccionado.Data.Id1Presupuesto = Datos.Instance.GetID1Presupuesto(comboBoxPDFPresupuesto.Text);
                 NodoDeArbolMostrado.Text = "#" + NodoSeleccionado.Data.Id1Presupuesto + " " + NodoDeArbolMostrado.Text;
-                Datos.Instance.SetAsignadoID1Presupuesto(NodoSeleccionado.Data.Id1Presupuesto, true);
+                HashSetId1PDFPresupuesto.Add(NodoSeleccionado.Data.Id1Presupuesto);
                 LlenaComboBoxPresupuesto();
             }
             else
@@ -2158,8 +2180,8 @@ namespace ActualizaBaseDatos
                     return;
                 }
                 String IDMostrado = NodoSeleccionado.Data.ID; // ID del Nodo del Árbol que estamos viendo
-                NodoDeArbolMostrado.Text = NodoDeArbolMostrado.Text;
-                Datos.Instance.SetAsignadoID1Presupuesto(NodoSeleccionado.Data.Id1Presupuesto, false);
+                NodoDeArbolMostrado.Text = NodoDeArbolMostrado.Text.Substring(NodoDeArbolMostrado.Text.IndexOf(' ') + 1);
+                HashSetId1PDFPresupuesto.Remove(NodoSeleccionado.Data.Id1Presupuesto);
                 NodoSeleccionado.Data.Id1Presupuesto = 0;
                 LlenaComboBoxPresupuesto();
             }
@@ -2211,6 +2233,61 @@ namespace ActualizaBaseDatos
                 
         }
 
-        
+        private void buttonFuncionariosNoAsignados_Click(object sender, EventArgs e)
+        {
+            // select * From Funcionarios INNER JOIN Puestos ON Funcionarios.ID = Puestos.ID where Puestos.CargoActual = 'actual'
+            using (ExcelPackage excel = new ExcelPackage())
+            {
+                saveFileDialogFuncionariosYPuestos.DefaultExt = "pdf";
+                saveFileDialogFuncionariosYPuestos.ShowDialog();
+                if (!saveFileDialogFuncionariosYPuestos.FileName.Equals(string.Empty))
+                {
+                    excel.Workbook.Worksheets.Add("FuncionariosYPuestos");
+                    List<string[]> headerRow = new List<string[]>()
+                    {   //              A       B      C                  D                  E               F                G               H                I                J                K          L      M     N             O             P             Q           R           S           T                     U         V                         W                  X              Y         Z               
+                        new string[] { "Id1",  "ID",  "ApellidoPaterno", "ApellidoMaterno", "PrimerNombre", "SegundoNombre", "Nacionalidad", "AñoNacimiento", "MesNacimiento", "DiaNacimiento", "Abogado", "Id1P", "IDP", "AñoInicial", "MesInicial", "DiaInicial", "AñoFinal", "MesFinal", "DiaFinal", "DependenciaEntidad", "Puesto", "JefeInmediantoSuperior", "CurrículumVitae", "CargoActual", "Abogado"}
+                    };
+                    string headerRange = "A1:Y1";
+                    var Worksheet = excel.Workbook.Worksheets["FuncionariosYPuestos"];
+                    Worksheet.Cells[headerRange].LoadFromArrays(headerRow);
+                    //
+                    DataRow[] FuncionariosYPuestos = Datos.Instance.UpLoadFuncionariosYPuestos();
+                    int renglonExcel = 2;
+                    foreach (DataRow row in FuncionariosYPuestos)
+                    {
+                        Worksheet.Cells["A" +renglonExcel].Value = row.ItemArray[0];
+                        Worksheet.Cells["B" + renglonExcel].Value = row.ItemArray[1];
+                        Worksheet.Cells["C" + renglonExcel].Value = row.ItemArray[2];
+                        Worksheet.Cells["D" + renglonExcel].Value = row.ItemArray[3];
+                        Worksheet.Cells["E" + renglonExcel].Value = row.ItemArray[4];
+                        Worksheet.Cells["F" + renglonExcel].Value = row.ItemArray[5];
+                        Worksheet.Cells["G" + renglonExcel].Value = row.ItemArray[6];
+                        Worksheet.Cells["H" + renglonExcel].Value = row.ItemArray[7];
+                        Worksheet.Cells["I" + renglonExcel].Value = row.ItemArray[8];
+                        Worksheet.Cells["J" + renglonExcel].Value = row.ItemArray[9];
+                        Worksheet.Cells["K" + renglonExcel].Value = row.ItemArray[10];
+                        Worksheet.Cells["L" + renglonExcel].Value = row.ItemArray[11];
+                        Worksheet.Cells["M" + renglonExcel].Value = row.ItemArray[12];
+                        Worksheet.Cells["N" + renglonExcel].Value = row.ItemArray[13];
+                        Worksheet.Cells["O" + renglonExcel].Value = row.ItemArray[14];
+                        Worksheet.Cells["P" + renglonExcel].Value = row.ItemArray[15];
+                        Worksheet.Cells["Q" + renglonExcel].Value = row.ItemArray[16];
+                        Worksheet.Cells["R" + renglonExcel].Value = row.ItemArray[17];
+                        Worksheet.Cells["S" + renglonExcel].Value = row.ItemArray[18];
+                        Worksheet.Cells["T" + renglonExcel].Value = row.ItemArray[19];
+                        Worksheet.Cells["U" + renglonExcel].Value = row.ItemArray[20];
+                        Worksheet.Cells["V" + renglonExcel].Value = row.ItemArray[21];
+                        Worksheet.Cells["w" + renglonExcel].Value = row.ItemArray[22];
+                        Worksheet.Cells["X" + renglonExcel].Value = row.ItemArray[23];
+                        Worksheet.Cells["Y" + renglonExcel].Value = row.ItemArray[24];
+
+                        renglonExcel++;
+                    }
+                    //
+                    FileInfo excelfile = new FileInfo(saveFileDialogFuncionariosYPuestos.FileName);
+                    excel.SaveAs(excelfile);
+                }
+            }
+        }
     }
 }

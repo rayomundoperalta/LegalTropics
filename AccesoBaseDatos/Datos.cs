@@ -280,6 +280,25 @@ namespace AccesoBaseDatos
             }
         }
 
+        public DataRow[] UpLoadFuncionariosYPuestos()
+        {
+            //var sql = "select * From Funcionarios INNER JOIN Puestos ON Funcionarios.ID = Puestos.ID where Puestos.CargoActual = 'actual';";
+            Builder.Provider = Defines.StringAccessProvider;
+            Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
+            DataTable FuncionariosYPuestos = new System.Data.DataTable();
+            using (OleDbConnection cn = new OleDbConnection { ConnectionString = Builder.ConnectionString })
+            {
+                var sql = "select * From Funcionarios INNER JOIN Puestos ON Funcionarios.ID = Puestos.ID order by Funcionarios.Id1, Puestos.Id1;";
+                using (OleDbCommand cmd = new OleDbCommand { CommandText = sql, Connection = cn })
+                {
+                    cn.Open();
+                    FuncionariosYPuestos.Load(cmd.ExecuteReader());
+                    cn.Close();
+                }
+            }
+            return FuncionariosYPuestos.Select();
+        }
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1513,6 +1532,7 @@ namespace AccesoBaseDatos
                 UpLoadOrganigramaFederal();
                 boolOrganigramaFederal = true;
             }
+            
             System.Data.DataRow RenglónOrganigrama = DataTableOrganigramaFederal.AsEnumerable().OrderBy(x => x.Field<System.Int32>("Id1")).Last();
             string MaxId1 = RenglónOrganigrama["Id1"].ToString();
             return MaxId1;
@@ -1631,14 +1651,8 @@ namespace AccesoBaseDatos
             Abogado.ColumnName = "Abogado";
             PDFPresupuesto.Columns.Add(Abogado);
 
-            DataColumn Asignado = new DataColumn();
-            Asignado.DataType = System.Type.GetType("System.Boolean");
-            Asignado.ColumnName = "Asignado";
-            PDFPresupuesto.Columns.Add(Asignado);
-
             return PDFPresupuesto;
         }
-
 
         public DataRow[] GetPresupuesto()
         {
@@ -1648,7 +1662,8 @@ namespace AccesoBaseDatos
                 boolPDFPresupuesto = true;
             }
             //return (DataTablePDFPresupuesto.Select("ID = " + ID));
-            System.Data.EnumerableRowCollection<System.Data.DataRow> PDFPresupuetos = DataTablePDFPresupuesto.AsEnumerable().Where(x => !x.Field<bool>("Asignado"));
+            //System.Data.EnumerableRowCollection<System.Data.DataRow> PDFPresupuetos = DataTablePDFPresupuesto.AsEnumerable().Where(x => !x.Field<bool>("Asignado"));
+            DataRow[] PDFPresupuetos = DataTablePDFPresupuesto.Select();
             DataTable renglones = MakePDFPresupuestoTable();
             foreach (DataRow ren in PDFPresupuetos)
             {
@@ -1657,11 +1672,9 @@ namespace AccesoBaseDatos
                 row["PDFFileName"] = ren["PDFFileName"];
                 row["PDF"] = ren["PDF"];
                 row["Abogado"] = ren["Abogado"];
-                row["Asignado"] = ren["Asignado"];
                 renglones.Rows.Add(row);
             }
             return renglones.Select();
-
         }
 
         public string GetFilePDFPresupuesto(System.Int64 Id1)
@@ -1742,7 +1755,8 @@ namespace AccesoBaseDatos
                     cmd.Parameters.Add("@Id1", OleDbType.BigInt, 80).Value = Id1;
                     cmd.Parameters.Add("@Asignado", OleDbType.Boolean, 80).Value = Asignado;
                     cn.Open();
-                    cmd.ExecuteNonQuery();
+                    int result = cmd.ExecuteNonQuery();
+                    MessageBox.Show("Result " + result);
                     cn.Close();
                 }
             }

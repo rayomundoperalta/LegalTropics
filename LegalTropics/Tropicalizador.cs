@@ -444,8 +444,20 @@ namespace LegalTropics
                 DataRow[] puestos = Datos.Instance.GetPuestos(funcionarios[i]["ID"].ToString());
                 if (puestos.Length > 0)
                 {
+                    bool YaImprimiDependencia = false;
                     //WriteLine(rng, puestos[puestos.Length - 1]["Puesto"].ToString(), (float)10.5, Italic.NoItalicas, "Century Gothic", Formato.Centrado, Bold.NoBold, ALaLinea.NewLine);
-                    WriteLine(rng, puestos[puestos.Length - 1]["DependenciaEntidad"].ToString(), (float)10.5, Italic.NoItalicas, "Century Gothic", Formato.Centrado, Bold.NoBold, ALaLinea.NewLine);
+                    for (int k = 0; k < puestos.Length; k++)
+                    {
+                        if (puestos[k]["CargoActual"].ToString().Equals("actual"))
+                        {
+                            WriteLine(rng, puestos[k]["DependenciaEntidad"].ToString(), (float)10.5, Italic.NoItalicas, "Century Gothic", Formato.Centrado, Bold.NoBold, ALaLinea.NewLine);
+                            YaImprimiDependencia = true;
+                        }
+                    }
+                    if (!YaImprimiDependencia)
+                    {
+                        WriteLine(rng, puestos[0]["DependenciaEntidad"].ToString(), (float)10.5, Italic.NoItalicas, "Century Gothic", Formato.Centrado, Bold.NoBold, ALaLinea.NewLine);
+                    }
                 }
 
                 /* Poner la foto aquí */

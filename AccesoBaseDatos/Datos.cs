@@ -8,6 +8,8 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using System.Data.Linq;
+using System.Reflection;
 
 /*
 bool	System.Boolean
@@ -58,7 +60,7 @@ namespace AccesoBaseDatos
         bool boolOrganigramaFederal = false;
         bool boolFotos = false;
         bool boolPDFPresupuesto = false;
-        //bool boolAbogados = false;
+        bool boolAbogados = false;
 
         Datos()
         {
@@ -92,9 +94,35 @@ namespace AccesoBaseDatos
             }
         }
 
+        private void CreateDataTableFromLinqSP(Type LinqType)   // se llama con myObject.GetType()
+        {
+            //Type myType = myObject.GetType();
+            IList<PropertyInfo> props = new List<PropertyInfo>(LinqType.GetProperties());
+
+            
+            foreach (PropertyInfo prop in props)
+            {
+                Console.WriteLine(prop.Name + "   " + prop.PropertyType);
+
+                // Do something with propValue
+            }
+        } 
+
         private void UpLoadFuncionarios()
         {
-            //var sql = "SELECT * FROM Funcionarios order by ApellidoPaterno;";
+           //var sql = "SELECT * FROM Funcionarios order by ApellidoPaterno;";
+
+            //string ConnectionString = Globales.Defines.CadenaConexionAPFInteligencia;
+            //APFInteligenciaDataContext APFInteligenciaDBData = new APFInteligenciaDataContext(ConnectionString + @"user=sa; password=Samahil14200");
+            //ISingleResult<UpLoadFuncionariosResult> funcionarios = APFInteligenciaDBData.UpLoadFuncionarios();
+
+            //CreateDataTableFromLinqSP(funcionarios.GetType());
+
+            //foreach (var fun in funcionarios)
+            //{
+            //    fun.
+            //}
+
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             DataTableFuncionarios = new System.Data.DataTable();

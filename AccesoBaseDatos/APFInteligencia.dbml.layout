@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 12, 11.875" name="APFInteligencia">
+  <DataContextMoniker Name="/APFInteligenciaDataContext" />
+  <nestedChildShapes>
+    <classShape Id="f3410460-bdc4-4eca-82b8-16951228afa2" absoluteBounds="0.75, 0.75, 2, 1.3862939453125">
+      <DataClassMoniker Name="/APFInteligenciaDataContext/Abogado" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3cbe1f58-f4e7-41bf-a84c-1cab5ea60b99" absoluteBounds="0.765, 1.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="55c8b1fc-a577-47ca-8664-55c0a33d1a31" absoluteBounds="3.75, 0.75, 2, 3.5016097005208326">
+      <DataClassMoniker Name="/APFInteligenciaDataContext/Puesto" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c7d8c1d0-113c-4598-92a5-e8bc42a88ec5" absoluteBounds="3.765, 1.21, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a2713677-ded5-452d-bca2-e0f88f712d38" absoluteBounds="0.75, 5.75, 2, 1.9631982421875005">
+      <DataClassMoniker Name="/APFInteligenciaDataContext/AdscripciónPolítica" />
+      <nestedChildShapes>
+        <elementListCompartment Id="dfc86f64-358b-4539-a727-366d18c8c725" absoluteBounds="0.765, 6.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="06a68c6f-1630-4cca-bdd7-aa7fa122d264" absoluteBounds="3.75, 5.75, 2, 1.7708968098958327">
+      <DataClassMoniker Name="/APFInteligenciaDataContext/CirculoCercano" />
+      <nestedChildShapes>
+        <elementListCompartment Id="47c045ff-7099-48a2-a488-f894e907b0c0" absoluteBounds="3.765, 6.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1fbea3cb-c82b-4da8-9869-c18c22acfcad" absoluteBounds="6.75, 0.75, 2, 1.7708968098958329">
+      <DataClassMoniker Name="/APFInteligenciaDataContext/DatosContacto" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e220cb17-fee2-493a-91ba-5dc92de45dd9" absoluteBounds="6.765, 1.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="70281735-60d0-4bdb-895b-41c535a0219a" absoluteBounds="6.75, 3.75, 2, 2.9247054036458326">
+      <DataClassMoniker Name="/APFInteligenciaDataContext/Escolaridad" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6c7eeb69-7cf8-466d-ac26-6c126e983794" absoluteBounds="6.765, 4.21, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c18d8208-4033-4a03-a475-7ae25824c59a" absoluteBounds="6.75, 7.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/APFInteligenciaDataContext/Foto" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d1645c9e-4f5c-424f-8969-b1f98f96fd61" absoluteBounds="6.765, 8.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="80ea867f-8b9f-48a0-b32a-ce4694c2d069" absoluteBounds="0.75, 8.75, 2, 2.9247054036458309">
+      <DataClassMoniker Name="/APFInteligenciaDataContext/Funcionario" />
+      <nestedChildShapes>
+        <elementListCompartment Id="fd5d5f88-9b62-4f81-b82b-20aaa75d50c0" absoluteBounds="0.765, 9.21, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="85182972-8821-4e47-8e23-3ad52fa37492" absoluteBounds="9.75, 0.75, 2, 1.7708968098958329">
+      <DataClassMoniker Name="/APFInteligenciaDataContext/InformaciónGeneral" />
+      <nestedChildShapes>
+        <elementListCompartment Id="05075735-4e6d-460d-9476-ab2665a6cc81" absoluteBounds="9.765, 1.21, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1e335a28-ecb9-4a35-8365-01c966b2cbbf" absoluteBounds="9.75, 3.75, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/APFInteligenciaDataContext/OrganigramaFederal" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3646b299-52ef-4f1b-9b60-360481c53f87" absoluteBounds="9.765, 4.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3462e539-320f-43da-9a19-f0b712b71d23" absoluteBounds="9.75, 6.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/APFInteligenciaDataContext/PDFPresupuesto" />
+      <nestedChildShapes>
+        <elementListCompartment Id="419d5950-1edf-4ef5-aee8-33b805f2614b" absoluteBounds="9.765, 7.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

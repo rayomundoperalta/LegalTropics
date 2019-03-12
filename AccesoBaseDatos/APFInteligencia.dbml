@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="APF-Inteligencia" Class="APFInteligenciaDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=GINSA.nets.uno;Initial Catalog=APF-Inteligencia;Persist Security Info=True;User ID=sa" SettingsObjectName="AccesoBaseDatos.Properties.Settings" SettingsPropertyName="APF_InteligenciaConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Abogados" Member="Abogados">
+    <Type Name="Abogado">
+      <Column Name="Id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Clave" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Puestos" Member="Puestos">
+    <Type Name="Puesto">
+      <Column Name="Id1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="AñoInicial" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MesInicial" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DiaInicial" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AñoFinal" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MesFinal" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DiaFinal" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DependenciaEntidad" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Puesto" Member="Puesto1" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="JefeInmediantoSuperior" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="CurrículumVitae" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="CargoActual" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AdscripciónPolítica" Member="AdscripciónPolíticas">
+    <Type Name="AdscripciónPolítica">
+      <Column Name="Id1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="FechaDeInicio" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="FechaDeFin" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NombreDelPartido" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CirculoCercano" Member="CirculoCercanos">
+    <Type Name="CirculoCercano">
+      <Column Name="Id1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Información" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DatosContacto" Member="DatosContactos">
+    <Type Name="DatosContacto">
+      <Column Name="Id1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Tipo" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="dato" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Escolaridad" Member="Escolaridads">
+    <Type Name="Escolaridad">
+      <Column Name="Id1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="AñoInicial" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MesInicial" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="DiaInicial" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AñoFinal" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MesFinal" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="DiaFinal" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Universidad" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Grado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Fotos" Member="Fotos">
+    <Type Name="Foto">
+      <Column Name="ID" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Foto" Member="Foto1" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="PhotoType" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Funcionarios" Member="Funcionarios">
+    <Type Name="Funcionario">
+      <Column Name="Id1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ApellidoPaterno" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ApellidoMaterno" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PrimerNombre" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="SegundoNombre" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Nacionalidad" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="AñoNacimiento" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MesNacimiento" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="DiaNacimiento" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.InformaciónGeneral" Member="InformaciónGenerals">
+    <Type Name="InformaciónGeneral">
+      <Column Name="Id1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="TipoDeInformación" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Referencia" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OrganigramaFederal" Member="OrganigramaFederals">
+    <Type Name="OrganigramaFederal">
+      <Column Name="Id1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TipoRegistro" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="NombrePuesto" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ID" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Sec" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Id1Presupuesto" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PDFPresupuesto" Member="PDFPresupuestos">
+    <Type Name="PDFPresupuesto">
+      <Column Name="Id1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PDFFileName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PDF" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.UpLoadFuncionarios" Method="UpLoadFuncionarios">
+    <ElementType Name="UpLoadFuncionariosResult">
+      <Column Name="Id1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ApellidoPaterno" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ApellidoMaterno" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PrimerNombre" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="SegundoNombre" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Nacionalidad" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="AñoNacimiento" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MesNacimiento" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="DiaNacimiento" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+</Database>

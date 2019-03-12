@@ -18,6 +18,8 @@ namespace Globales
         public const int PosInicial = 20;
         public const int PosFinal = 253;
 
+        public const string CadenaConexionAPFInteligencia = @"Data Source=GINSA.nets.uno;Initial Catalog=APF-Inteligencia;Persist Security Info=True;";
+
         public const string FotoTempBasePath = @"C:\APFFotos\";
         public const int ColorInstitucional = 149 + 0x100 * 179 + 0x10000 * 215;
         public const string StringAccessProvider = @"Microsoft.ACE.OLEDB.12.0";

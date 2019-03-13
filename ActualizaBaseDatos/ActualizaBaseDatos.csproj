@@ -212,7 +212,17 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="SQL Store Procedures\UpLoadAdscripciónPolítica.sql" />
+    <Content Include="SQL Store Procedures\UpLoadCirculoCercano.sql" />
+    <Content Include="SQL Store Procedures\UpLoadDatosContacto.sql" />
+    <Content Include="SQL Store Procedures\UpLoadEscolaridad.sql" />
+    <Content Include="SQL Store Procedures\UpLoadFotos.sql" />
     <Content Include="SQL Store Procedures\UpLoadFuncionarios.sql" />
+    <Content Include="SQL Store Procedures\UpLoadFuncionariosYPuestos.sql" />
+    <Content Include="SQL Store Procedures\UpLoadInformaciónGeneral.sql" />
+    <Content Include="SQL Store Procedures\UpLoadOrganigramaFederal.sql" />
+    <Content Include="SQL Store Procedures\UpLoadPDFPresupuesto.sql" />
+    <Content Include="SQL Store Procedures\UpLoadPuestos.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

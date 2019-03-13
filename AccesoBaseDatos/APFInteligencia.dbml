@@ -134,4 +134,130 @@
       <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
     </ElementType>
   </Function>
+  <Function Name="dbo.UpLoadDatosContacto" Method="UpLoadDatosContacto">
+    <ElementType Name="UpLoadDatosContactoResult">
+      <Column Name="Id1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Tipo" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="dato" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.UpLoadCirculoCercano" Method="UpLoadCirculoCercano">
+    <ElementType Name="UpLoadCirculoCercanoResult">
+      <Column Name="Id1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Información" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.UpLoadEscolaridad" Method="UpLoadEscolaridad">
+    <ElementType Name="UpLoadEscolaridadResult">
+      <Column Name="Id1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="AñoInicial" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MesInicial" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="DiaInicial" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="AñoFinal" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MesFinal" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="DiaFinal" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Universidad" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Grado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.UpLoadAdscripciónPolítica" Method="UpLoadAdscripciónPolítica">
+    <ElementType Name="UpLoadAdscripciónPolíticaResult">
+      <Column Name="Id1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="FechaDeInicio" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="FechaDeFin" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NombreDelPartido" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.UpLoadPuestos" Method="UpLoadPuestos">
+    <ElementType Name="UpLoadPuestosResult">
+      <Column Name="Id1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="AñoInicial" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MesInicial" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DiaInicial" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AñoFinal" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MesFinal" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DiaFinal" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DependenciaEntidad" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Puesto" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="JefeInmediantoSuperior" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="CurrículumVitae" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="CargoActual" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.UpLoadInformaciónGeneral" Method="UpLoadInformaciónGeneral">
+    <ElementType Name="UpLoadInformaciónGeneralResult">
+      <Column Name="Id1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="TipoDeInformación" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Referencia" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.UpLoadOrganigramaFederal" Method="UpLoadOrganigramaFederal">
+    <ElementType Name="UpLoadOrganigramaFederalResult">
+      <Column Name="Id1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TipoRegistro" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="NombrePuesto" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ID" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Sec" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Id1Presupuesto" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.UpLoadFotos" Method="UpLoadFotos">
+    <ElementType Name="UpLoadFotosResult">
+      <Column Name="ID" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Foto" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" />
+      <Column Name="PhotoType" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.UpLoadPDFPresupuesto" Method="UpLoadPDFPresupuesto">
+    <ElementType Name="UpLoadPDFPresupuestoResult">
+      <Column Name="Id1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PDFFileName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PDF" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" />
+      <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.UpLoadFuncionariosYPuestos" Method="UpLoadFuncionariosYPuestos">
+    <ElementType Name="UpLoadFuncionariosYPuestosResult">
+      <Column Name="Id1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ApellidoPaterno" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ApellidoMaterno" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PrimerNombre" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="SegundoNombre" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Nacionalidad" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="AñoNacimiento" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MesNacimiento" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="DiaNacimiento" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Abogado" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Id11" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ID2" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="AñoInicial" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MesInicial" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DiaInicial" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AñoFinal" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MesFinal" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DiaFinal" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DependenciaEntidad" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Puesto" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="JefeInmediantoSuperior" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="CurrículumVitae" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="CargoActual" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Abogado1" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </ElementType>
+  </Function>
 </Database>

@@ -1,0 +1,16 @@
+﻿IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_NAME = N'UpLoadInformaciónGeneral')
+BEGIN
+   DROP PROCEDURE [dbo].[UpLoadInformaciónGeneral]
+END 
+go
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[UpLoadInformaciónGeneral]
+AS
+BEGIN
+	SET NOCOUNT ON;
+	SELECT * FROM [dbo].[InformaciónGeneral]
+END
+GO

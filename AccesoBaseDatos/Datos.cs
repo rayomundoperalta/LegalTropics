@@ -94,35 +94,16 @@ namespace AccesoBaseDatos
             }
         }
 
-        private void CreateDataTableFromLinqSP(Type LinqType)   // se llama con myObject.GetType()
-        {
-            //Type myType = myObject.GetType();
-            IList<PropertyInfo> props = new List<PropertyInfo>(LinqType.GetProperties());
-
-            
-            foreach (PropertyInfo prop in props)
-            {
-                Console.WriteLine(prop.Name + "   " + prop.PropertyType);
-
-                // Do something with propValue
-            }
-        } 
-
         private void UpLoadFuncionarios()
         {
-           //var sql = "SELECT * FROM Funcionarios order by ApellidoPaterno;";
+            string ConnectionString = Globales.Defines.CadenaConexionAPFInteligencia;
+            APFInteligenciaDataContext APFInteligenciaDBData = new APFInteligenciaDataContext(ConnectionString + @"user=sa; password=Samahil14200");
+            ISingleResult<UpLoadFuncionariosResult> funcionarios = APFInteligenciaDBData.UpLoadFuncionarios();
+            UpLoadFuncionariosResult funs = new UpLoadFuncionariosResult();
 
-            //string ConnectionString = Globales.Defines.CadenaConexionAPFInteligencia;
-            //APFInteligenciaDataContext APFInteligenciaDBData = new APFInteligenciaDataContext(ConnectionString + @"user=sa; password=Samahil14200");
-            //ISingleResult<UpLoadFuncionariosResult> funcionarios = APFInteligenciaDBData.UpLoadFuncionarios();
+            DataTableFuncionarios = U.CreateDataTableFromLinqSP(funs.GetType(), "Funcionarios");
 
-            //CreateDataTableFromLinqSP(funcionarios.GetType());
-
-            //foreach (var fun in funcionarios)
-            //{
-            //    fun.
-            //}
-
+            /*
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             DataTableFuncionarios = new System.Data.DataTable();
@@ -136,11 +117,18 @@ namespace AccesoBaseDatos
                     cn.Close();
                 }
             }
+            */
         }
 
         private void UpLoadDatosContacto()
         {
-            //var sql = "SELECT * FROM DatosContacto where ID = @ID;";
+            string ConnectionString = Globales.Defines.CadenaConexionAPFInteligencia;
+            APFInteligenciaDataContext APFInteligenciaDBData = new APFInteligenciaDataContext(ConnectionString + @"user=sa; password=Samahil14200");
+            ISingleResult<UpLoadDatosContactoResult> funcionarios = APFInteligenciaDBData.UpLoadDatosContacto();
+            UpLoadDatosContactoResult dc = new UpLoadDatosContactoResult();
+
+            DataTableDatosContacto = U.CreateDataTableFromLinqSP(dc.GetType(), "DatosContacto");
+            /*
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             DataTableDatosContacto = new System.Data.DataTable();
@@ -155,11 +143,18 @@ namespace AccesoBaseDatos
                     cn.Close();
                 }
             }
+            */
         }
 
         private void UpLoadCirculoCercano()
         {
-            //var sql = "SELECT * FROM CirculoCercano where ID = @ID;";
+            string ConnectionString = Globales.Defines.CadenaConexionAPFInteligencia;
+            APFInteligenciaDataContext APFInteligenciaDBData = new APFInteligenciaDataContext(ConnectionString + @"user=sa; password=Samahil14200");
+            ISingleResult<UpLoadCirculoCercanoResult> funcionarios = APFInteligenciaDBData.UpLoadCirculoCercano();
+            UpLoadCirculoCercanoResult cc = new UpLoadCirculoCercanoResult();
+
+            DataTableCirculoCercano = U.CreateDataTableFromLinqSP(cc.GetType(), "CirculoCercano");
+            /*
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             DataTableCirculoCercano = new System.Data.DataTable();
@@ -174,11 +169,19 @@ namespace AccesoBaseDatos
                     cn.Close();
                 }
             }
+            */
         }
 
         private void UpLoadEscolaridad()
         {
-            //var sql = "SELECT * FROM Escolaridad where ID = @ID;";
+            string ConnectionString = Globales.Defines.CadenaConexionAPFInteligencia;
+            APFInteligenciaDataContext APFInteligenciaDBData = new APFInteligenciaDataContext(ConnectionString + @"user=sa; password=Samahil14200");
+            ISingleResult<UpLoadEscolaridadResult> funcionarios = APFInteligenciaDBData.UpLoadEscolaridad();
+            UpLoadEscolaridadResult esco = new UpLoadEscolaridadResult();
+
+            DataTableEscolaridad = U.CreateDataTableFromLinqSP(esco.GetType(), "Escolaridad");
+
+            /*
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             DataTableEscolaridad = new System.Data.DataTable();
@@ -193,11 +196,19 @@ namespace AccesoBaseDatos
                     cn.Close();
                 }
             }
+            */
         }
 
         private void UpLoadAdscripciónPolítica()
         {
-            //var sql = "SELECT * FROM AdscripciónPolítica where ID = @ID order by Id1;";
+            string ConnectionString = Globales.Defines.CadenaConexionAPFInteligencia;
+            APFInteligenciaDataContext APFInteligenciaDBData = new APFInteligenciaDataContext(ConnectionString + @"user=sa; password=Samahil14200");
+            ISingleResult<UpLoadAdscripciónPolíticaResult> funcionarios = APFInteligenciaDBData.UpLoadAdscripciónPolítica();
+            UpLoadAdscripciónPolíticaResult ap = new UpLoadAdscripciónPolíticaResult();
+
+            DataTableAdscripciónPolítica = U.CreateDataTableFromLinqSP(ap.GetType(), "AdscripciónPolítica");
+
+            /*
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             DataTableAdscripciónPolítica = new System.Data.DataTable();
@@ -212,11 +223,19 @@ namespace AccesoBaseDatos
                     cn.Close();
                 }
             }
+            */
         }
 
         private void UpLoadPuestos()
         {
-            //var sql = "SELECT * FROM Puestos where ID = @ID;";
+            string ConnectionString = Globales.Defines.CadenaConexionAPFInteligencia;
+            APFInteligenciaDataContext APFInteligenciaDBData = new APFInteligenciaDataContext(ConnectionString + @"user=sa; password=Samahil14200");
+            ISingleResult<UpLoadPuestosResult> funcionarios = APFInteligenciaDBData.UpLoadPuestos();
+            UpLoadPuestosResult pu = new UpLoadPuestosResult();
+
+            DataTablePuestos = U.CreateDataTableFromLinqSP(pu.GetType(), "Puestos");
+
+            /*
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             DataTablePuestos = new System.Data.DataTable();
@@ -231,11 +250,19 @@ namespace AccesoBaseDatos
                     cn.Close();
                 }
             }
+            */
         }
 
         private void UpLoadInformaciónGeneral()
         {
-            //var sql = "SELECT * FROM InformaciónGeneral where ID = @ID;";
+            string ConnectionString = Globales.Defines.CadenaConexionAPFInteligencia;
+            APFInteligenciaDataContext APFInteligenciaDBData = new APFInteligenciaDataContext(ConnectionString + @"user=sa; password=Samahil14200");
+            ISingleResult<UpLoadInformaciónGeneralResult> funcionarios = APFInteligenciaDBData.UpLoadInformaciónGeneral();
+            UpLoadInformaciónGeneralResult infogral = new UpLoadInformaciónGeneralResult();
+
+            DataTableInformaciónGeneral = U.CreateDataTableFromLinqSP(infogral.GetType(), "InformaciónGeneral");
+
+            /*
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             DataTableInformaciónGeneral = new System.Data.DataTable();
@@ -250,11 +277,19 @@ namespace AccesoBaseDatos
                     cn.Close();
                 }
             }
+            */
         }
 
         private void UpLoadOrganigramaFederal()
         {
-            //var sql = "SELECT ID FROM OrganigramaFederal where NombrePuesto = @Puesto;";
+            string ConnectionString = Globales.Defines.CadenaConexionAPFInteligencia;
+            APFInteligenciaDataContext APFInteligenciaDBData = new APFInteligenciaDataContext(ConnectionString + @"user=sa; password=Samahil14200");
+            ISingleResult<UpLoadOrganigramaFederalResult> funcionarios = APFInteligenciaDBData.UpLoadOrganigramaFederal();
+            UpLoadOrganigramaFederalResult organiAPF = new UpLoadOrganigramaFederalResult();
+
+            DataTableOrganigramaFederal = U.CreateDataTableFromLinqSP(organiAPF.GetType(), "OrganigramaFederal");
+
+            /*
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             DataTableOrganigramaFederal = new System.Data.DataTable();
@@ -269,11 +304,19 @@ namespace AccesoBaseDatos
                     cn.Close();
                 }
             }
+            */
         }
 
         private void UpLoadFotos()
         {
-            //var sql = "SELECT * FROM Fotos where ID = @ID;";
+            string ConnectionString = Globales.Defines.CadenaConexionAPFInteligencia;
+            APFInteligenciaDataContext APFInteligenciaDBData = new APFInteligenciaDataContext(ConnectionString + @"user=sa; password=Samahil14200");
+            ISingleResult<UpLoadFotosResult> funcionarios = APFInteligenciaDBData.UpLoadFotos();
+            UpLoadFotosResult fotos = new UpLoadFotosResult();
+
+            DataTableFotos = U.CreateDataTableFromLinqSP(fotos.GetType(), "Fotos");
+
+            /*
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             DataTableFotos = new System.Data.DataTable();
@@ -288,11 +331,19 @@ namespace AccesoBaseDatos
                     cn.Close();
                 }
             }
+            */
         }
 
         private void UpLoadPDFPresupuesto()
         {
-            //var sql = "SELECT * FROM PDFPresupuesto";
+            string ConnectionString = Globales.Defines.CadenaConexionAPFInteligencia;
+            APFInteligenciaDataContext APFInteligenciaDBData = new APFInteligenciaDataContext(ConnectionString + @"user=sa; password=Samahil14200");
+            ISingleResult<UpLoadPDFPresupuestoResult> pdf = APFInteligenciaDBData.UpLoadPDFPresupuesto();
+            UpLoadPDFPresupuestoResult pdf = new UpLoadPDFPresupuestoResult();
+
+            DataTablePDFPresupuesto = U.CreateDataTableFromLinqSP(pdf.GetType(), "PDFPresupuesto");
+
+            /*
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
             DataTablePDFPresupuesto = new System.Data.DataTable();
@@ -306,10 +357,19 @@ namespace AccesoBaseDatos
                     cn.Close();
                 }
             }
+            */
         }
 
         public DataRow[] UpLoadFuncionariosYPuestos()
         {
+            string ConnectionString = Globales.Defines.CadenaConexionAPFInteligencia;
+            APFInteligenciaDataContext APFInteligenciaDBData = new APFInteligenciaDataContext(ConnectionString + @"user=sa; password=Samahil14200");
+            ISingleResult<UpLoadFuncionariosYPuestosResult> pdf = APFInteligenciaDBData.UpLoadFuncionariosYPuestos();
+            UpLoadFuncionariosYPuestosResult fyp = new UpLoadFuncionariosYPuestosResult();
+
+            DataTable FuncionariosYPuestos = U.CreateDataTableFromLinqSP(fyp.GetType(), "FuncionarioYPuestos");
+
+            /*
             //var sql = "select * From Funcionarios INNER JOIN Puestos ON Funcionarios.ID = Puestos.ID where Puestos.CargoActual = 'actual';";
             Builder.Provider = Defines.StringAccessProvider;
             Builder.DataSource = Path.Combine(Defines.DataBasePath, Defines.DataBaseFileName);
@@ -324,6 +384,7 @@ namespace AccesoBaseDatos
                     cn.Close();
                 }
             }
+            */
             return FuncionariosYPuestos.Select();
         }
 

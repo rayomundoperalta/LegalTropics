@@ -156,6 +156,76 @@ namespace AccesoBaseDatos
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
 			return ((ISingleResult<UpLoadFuncionariosResult>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UpLoadDatosContacto")]
+		public ISingleResult<UpLoadDatosContactoResult> UpLoadDatosContacto()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<UpLoadDatosContactoResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UpLoadCirculoCercano")]
+		public ISingleResult<UpLoadCirculoCercanoResult> UpLoadCirculoCercano()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<UpLoadCirculoCercanoResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UpLoadEscolaridad")]
+		public ISingleResult<UpLoadEscolaridadResult> UpLoadEscolaridad()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<UpLoadEscolaridadResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UpLoadAdscripciónPolítica")]
+		public ISingleResult<UpLoadAdscripciónPolíticaResult> UpLoadAdscripciónPolítica()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<UpLoadAdscripciónPolíticaResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UpLoadPuestos")]
+		public ISingleResult<UpLoadPuestosResult> UpLoadPuestos()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<UpLoadPuestosResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UpLoadInformaciónGeneral")]
+		public ISingleResult<UpLoadInformaciónGeneralResult> UpLoadInformaciónGeneral()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<UpLoadInformaciónGeneralResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UpLoadOrganigramaFederal")]
+		public ISingleResult<UpLoadOrganigramaFederalResult> UpLoadOrganigramaFederal()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<UpLoadOrganigramaFederalResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UpLoadFotos")]
+		public ISingleResult<UpLoadFotosResult> UpLoadFotos()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<UpLoadFotosResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UpLoadPDFPresupuesto")]
+		public ISingleResult<UpLoadPDFPresupuestoResult> UpLoadPDFPresupuesto()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<UpLoadPDFPresupuestoResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.UpLoadFuncionariosYPuestos")]
+		public ISingleResult<UpLoadFuncionariosYPuestosResult> UpLoadFuncionariosYPuestos()
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+			return ((ISingleResult<UpLoadFuncionariosYPuestosResult>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Abogados")]
@@ -1808,6 +1878,1634 @@ namespace AccesoBaseDatos
 				if ((this._Abogado != value))
 				{
 					this._Abogado = value;
+				}
+			}
+		}
+	}
+	
+	public partial class UpLoadDatosContactoResult
+	{
+		
+		private System.Nullable<int> _Id1;
+		
+		private string _ID;
+		
+		private string _Tipo;
+		
+		private string _dato;
+		
+		private string _Abogado;
+		
+		public UpLoadDatosContactoResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id1", DbType="Int")]
+		public System.Nullable<int> Id1
+		{
+			get
+			{
+				return this._Id1;
+			}
+			set
+			{
+				if ((this._Id1 != value))
+				{
+					this._Id1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="NVarChar(255)")]
+		public string ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Tipo", DbType="NVarChar(255)")]
+		public string Tipo
+		{
+			get
+			{
+				return this._Tipo;
+			}
+			set
+			{
+				if ((this._Tipo != value))
+				{
+					this._Tipo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dato", DbType="NVarChar(255)")]
+		public string dato
+		{
+			get
+			{
+				return this._dato;
+			}
+			set
+			{
+				if ((this._dato != value))
+				{
+					this._dato = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Abogado", DbType="NVarChar(255)")]
+		public string Abogado
+		{
+			get
+			{
+				return this._Abogado;
+			}
+			set
+			{
+				if ((this._Abogado != value))
+				{
+					this._Abogado = value;
+				}
+			}
+		}
+	}
+	
+	public partial class UpLoadCirculoCercanoResult
+	{
+		
+		private System.Nullable<int> _Id1;
+		
+		private string _ID;
+		
+		private string _Nombre;
+		
+		private string _Información;
+		
+		private string _Abogado;
+		
+		public UpLoadCirculoCercanoResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id1", DbType="Int")]
+		public System.Nullable<int> Id1
+		{
+			get
+			{
+				return this._Id1;
+			}
+			set
+			{
+				if ((this._Id1 != value))
+				{
+					this._Id1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="NVarChar(255)")]
+		public string ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="NVarChar(255)")]
+		public string Nombre
+		{
+			get
+			{
+				return this._Nombre;
+			}
+			set
+			{
+				if ((this._Nombre != value))
+				{
+					this._Nombre = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Información", DbType="NVarChar(255)")]
+		public string Información
+		{
+			get
+			{
+				return this._Información;
+			}
+			set
+			{
+				if ((this._Información != value))
+				{
+					this._Información = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Abogado", DbType="NVarChar(255)")]
+		public string Abogado
+		{
+			get
+			{
+				return this._Abogado;
+			}
+			set
+			{
+				if ((this._Abogado != value))
+				{
+					this._Abogado = value;
+				}
+			}
+		}
+	}
+	
+	public partial class UpLoadEscolaridadResult
+	{
+		
+		private System.Nullable<int> _Id1;
+		
+		private string _ID;
+		
+		private System.Nullable<double> _AñoInicial;
+		
+		private System.Nullable<double> _MesInicial;
+		
+		private System.Nullable<double> _DiaInicial;
+		
+		private System.Nullable<double> _AñoFinal;
+		
+		private System.Nullable<double> _MesFinal;
+		
+		private System.Nullable<double> _DiaFinal;
+		
+		private string _Universidad;
+		
+		private string _Grado;
+		
+		private string _Abogado;
+		
+		public UpLoadEscolaridadResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id1", DbType="Int")]
+		public System.Nullable<int> Id1
+		{
+			get
+			{
+				return this._Id1;
+			}
+			set
+			{
+				if ((this._Id1 != value))
+				{
+					this._Id1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="NVarChar(255)")]
+		public string ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AñoInicial", DbType="Float")]
+		public System.Nullable<double> AñoInicial
+		{
+			get
+			{
+				return this._AñoInicial;
+			}
+			set
+			{
+				if ((this._AñoInicial != value))
+				{
+					this._AñoInicial = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MesInicial", DbType="Float")]
+		public System.Nullable<double> MesInicial
+		{
+			get
+			{
+				return this._MesInicial;
+			}
+			set
+			{
+				if ((this._MesInicial != value))
+				{
+					this._MesInicial = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiaInicial", DbType="Float")]
+		public System.Nullable<double> DiaInicial
+		{
+			get
+			{
+				return this._DiaInicial;
+			}
+			set
+			{
+				if ((this._DiaInicial != value))
+				{
+					this._DiaInicial = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AñoFinal", DbType="Float")]
+		public System.Nullable<double> AñoFinal
+		{
+			get
+			{
+				return this._AñoFinal;
+			}
+			set
+			{
+				if ((this._AñoFinal != value))
+				{
+					this._AñoFinal = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MesFinal", DbType="Float")]
+		public System.Nullable<double> MesFinal
+		{
+			get
+			{
+				return this._MesFinal;
+			}
+			set
+			{
+				if ((this._MesFinal != value))
+				{
+					this._MesFinal = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiaFinal", DbType="Float")]
+		public System.Nullable<double> DiaFinal
+		{
+			get
+			{
+				return this._DiaFinal;
+			}
+			set
+			{
+				if ((this._DiaFinal != value))
+				{
+					this._DiaFinal = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Universidad", DbType="NVarChar(255)")]
+		public string Universidad
+		{
+			get
+			{
+				return this._Universidad;
+			}
+			set
+			{
+				if ((this._Universidad != value))
+				{
+					this._Universidad = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Grado", DbType="NVarChar(255)")]
+		public string Grado
+		{
+			get
+			{
+				return this._Grado;
+			}
+			set
+			{
+				if ((this._Grado != value))
+				{
+					this._Grado = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Abogado", DbType="NVarChar(255)")]
+		public string Abogado
+		{
+			get
+			{
+				return this._Abogado;
+			}
+			set
+			{
+				if ((this._Abogado != value))
+				{
+					this._Abogado = value;
+				}
+			}
+		}
+	}
+	
+	public partial class UpLoadAdscripciónPolíticaResult
+	{
+		
+		private System.Nullable<int> _Id1;
+		
+		private string _ID;
+		
+		private System.Nullable<double> _FechaDeInicio;
+		
+		private System.Nullable<int> _FechaDeFin;
+		
+		private string _NombreDelPartido;
+		
+		private string _Abogado;
+		
+		public UpLoadAdscripciónPolíticaResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id1", DbType="Int")]
+		public System.Nullable<int> Id1
+		{
+			get
+			{
+				return this._Id1;
+			}
+			set
+			{
+				if ((this._Id1 != value))
+				{
+					this._Id1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="NVarChar(255)")]
+		public string ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaDeInicio", DbType="Float")]
+		public System.Nullable<double> FechaDeInicio
+		{
+			get
+			{
+				return this._FechaDeInicio;
+			}
+			set
+			{
+				if ((this._FechaDeInicio != value))
+				{
+					this._FechaDeInicio = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FechaDeFin", DbType="Int")]
+		public System.Nullable<int> FechaDeFin
+		{
+			get
+			{
+				return this._FechaDeFin;
+			}
+			set
+			{
+				if ((this._FechaDeFin != value))
+				{
+					this._FechaDeFin = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NombreDelPartido", DbType="NVarChar(255)")]
+		public string NombreDelPartido
+		{
+			get
+			{
+				return this._NombreDelPartido;
+			}
+			set
+			{
+				if ((this._NombreDelPartido != value))
+				{
+					this._NombreDelPartido = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Abogado", DbType="NVarChar(255)")]
+		public string Abogado
+		{
+			get
+			{
+				return this._Abogado;
+			}
+			set
+			{
+				if ((this._Abogado != value))
+				{
+					this._Abogado = value;
+				}
+			}
+		}
+	}
+	
+	public partial class UpLoadPuestosResult
+	{
+		
+		private System.Nullable<int> _Id1;
+		
+		private string _ID;
+		
+		private System.Nullable<double> _AñoInicial;
+		
+		private System.Nullable<int> _MesInicial;
+		
+		private System.Nullable<int> _DiaInicial;
+		
+		private System.Nullable<double> _AñoFinal;
+		
+		private System.Nullable<int> _MesFinal;
+		
+		private System.Nullable<int> _DiaFinal;
+		
+		private string _DependenciaEntidad;
+		
+		private string _Puesto;
+		
+		private string _JefeInmediantoSuperior;
+		
+		private string _CurrículumVitae;
+		
+		private string _CargoActual;
+		
+		private string _Abogado;
+		
+		public UpLoadPuestosResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id1", DbType="Int")]
+		public System.Nullable<int> Id1
+		{
+			get
+			{
+				return this._Id1;
+			}
+			set
+			{
+				if ((this._Id1 != value))
+				{
+					this._Id1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="NVarChar(255)")]
+		public string ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AñoInicial", DbType="Float")]
+		public System.Nullable<double> AñoInicial
+		{
+			get
+			{
+				return this._AñoInicial;
+			}
+			set
+			{
+				if ((this._AñoInicial != value))
+				{
+					this._AñoInicial = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MesInicial", DbType="Int")]
+		public System.Nullable<int> MesInicial
+		{
+			get
+			{
+				return this._MesInicial;
+			}
+			set
+			{
+				if ((this._MesInicial != value))
+				{
+					this._MesInicial = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiaInicial", DbType="Int")]
+		public System.Nullable<int> DiaInicial
+		{
+			get
+			{
+				return this._DiaInicial;
+			}
+			set
+			{
+				if ((this._DiaInicial != value))
+				{
+					this._DiaInicial = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AñoFinal", DbType="Float")]
+		public System.Nullable<double> AñoFinal
+		{
+			get
+			{
+				return this._AñoFinal;
+			}
+			set
+			{
+				if ((this._AñoFinal != value))
+				{
+					this._AñoFinal = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MesFinal", DbType="Int")]
+		public System.Nullable<int> MesFinal
+		{
+			get
+			{
+				return this._MesFinal;
+			}
+			set
+			{
+				if ((this._MesFinal != value))
+				{
+					this._MesFinal = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiaFinal", DbType="Int")]
+		public System.Nullable<int> DiaFinal
+		{
+			get
+			{
+				return this._DiaFinal;
+			}
+			set
+			{
+				if ((this._DiaFinal != value))
+				{
+					this._DiaFinal = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DependenciaEntidad", DbType="NVarChar(255)")]
+		public string DependenciaEntidad
+		{
+			get
+			{
+				return this._DependenciaEntidad;
+			}
+			set
+			{
+				if ((this._DependenciaEntidad != value))
+				{
+					this._DependenciaEntidad = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Puesto", DbType="NVarChar(255)")]
+		public string Puesto
+		{
+			get
+			{
+				return this._Puesto;
+			}
+			set
+			{
+				if ((this._Puesto != value))
+				{
+					this._Puesto = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JefeInmediantoSuperior", DbType="NVarChar(255)")]
+		public string JefeInmediantoSuperior
+		{
+			get
+			{
+				return this._JefeInmediantoSuperior;
+			}
+			set
+			{
+				if ((this._JefeInmediantoSuperior != value))
+				{
+					this._JefeInmediantoSuperior = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CurrículumVitae", DbType="NVarChar(255)")]
+		public string CurrículumVitae
+		{
+			get
+			{
+				return this._CurrículumVitae;
+			}
+			set
+			{
+				if ((this._CurrículumVitae != value))
+				{
+					this._CurrículumVitae = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CargoActual", DbType="NVarChar(255)")]
+		public string CargoActual
+		{
+			get
+			{
+				return this._CargoActual;
+			}
+			set
+			{
+				if ((this._CargoActual != value))
+				{
+					this._CargoActual = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Abogado", DbType="NVarChar(255)")]
+		public string Abogado
+		{
+			get
+			{
+				return this._Abogado;
+			}
+			set
+			{
+				if ((this._Abogado != value))
+				{
+					this._Abogado = value;
+				}
+			}
+		}
+	}
+	
+	public partial class UpLoadInformaciónGeneralResult
+	{
+		
+		private System.Nullable<int> _Id1;
+		
+		private string _ID;
+		
+		private string _TipoDeInformación;
+		
+		private string _Referencia;
+		
+		private string _Abogado;
+		
+		public UpLoadInformaciónGeneralResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id1", DbType="Int")]
+		public System.Nullable<int> Id1
+		{
+			get
+			{
+				return this._Id1;
+			}
+			set
+			{
+				if ((this._Id1 != value))
+				{
+					this._Id1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="NVarChar(255)")]
+		public string ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TipoDeInformación", DbType="NVarChar(255)")]
+		public string TipoDeInformación
+		{
+			get
+			{
+				return this._TipoDeInformación;
+			}
+			set
+			{
+				if ((this._TipoDeInformación != value))
+				{
+					this._TipoDeInformación = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Referencia", DbType="NVarChar(MAX)")]
+		public string Referencia
+		{
+			get
+			{
+				return this._Referencia;
+			}
+			set
+			{
+				if ((this._Referencia != value))
+				{
+					this._Referencia = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Abogado", DbType="NVarChar(255)")]
+		public string Abogado
+		{
+			get
+			{
+				return this._Abogado;
+			}
+			set
+			{
+				if ((this._Abogado != value))
+				{
+					this._Abogado = value;
+				}
+			}
+		}
+	}
+	
+	public partial class UpLoadOrganigramaFederalResult
+	{
+		
+		private System.Nullable<int> _Id1;
+		
+		private string _TipoRegistro;
+		
+		private string _NombrePuesto;
+		
+		private string _ID;
+		
+		private System.Nullable<double> _Sec;
+		
+		private string _Abogado;
+		
+		private System.Nullable<int> _Id1Presupuesto;
+		
+		public UpLoadOrganigramaFederalResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id1", DbType="Int")]
+		public System.Nullable<int> Id1
+		{
+			get
+			{
+				return this._Id1;
+			}
+			set
+			{
+				if ((this._Id1 != value))
+				{
+					this._Id1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TipoRegistro", DbType="NVarChar(255)")]
+		public string TipoRegistro
+		{
+			get
+			{
+				return this._TipoRegistro;
+			}
+			set
+			{
+				if ((this._TipoRegistro != value))
+				{
+					this._TipoRegistro = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NombrePuesto", DbType="NVarChar(255)")]
+		public string NombrePuesto
+		{
+			get
+			{
+				return this._NombrePuesto;
+			}
+			set
+			{
+				if ((this._NombrePuesto != value))
+				{
+					this._NombrePuesto = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="NVarChar(255)")]
+		public string ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Sec", DbType="Float")]
+		public System.Nullable<double> Sec
+		{
+			get
+			{
+				return this._Sec;
+			}
+			set
+			{
+				if ((this._Sec != value))
+				{
+					this._Sec = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Abogado", DbType="NVarChar(255)")]
+		public string Abogado
+		{
+			get
+			{
+				return this._Abogado;
+			}
+			set
+			{
+				if ((this._Abogado != value))
+				{
+					this._Abogado = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id1Presupuesto", DbType="Int")]
+		public System.Nullable<int> Id1Presupuesto
+		{
+			get
+			{
+				return this._Id1Presupuesto;
+			}
+			set
+			{
+				if ((this._Id1Presupuesto != value))
+				{
+					this._Id1Presupuesto = value;
+				}
+			}
+		}
+	}
+	
+	public partial class UpLoadFotosResult
+	{
+		
+		private string _ID;
+		
+		private System.Data.Linq.Binary _Foto;
+		
+		private string _PhotoType;
+		
+		private string _Abogado;
+		
+		public UpLoadFotosResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="NVarChar(255)")]
+		public string ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Foto", DbType="Image")]
+		public System.Data.Linq.Binary Foto
+		{
+			get
+			{
+				return this._Foto;
+			}
+			set
+			{
+				if ((this._Foto != value))
+				{
+					this._Foto = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhotoType", DbType="NVarChar(255)")]
+		public string PhotoType
+		{
+			get
+			{
+				return this._PhotoType;
+			}
+			set
+			{
+				if ((this._PhotoType != value))
+				{
+					this._PhotoType = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Abogado", DbType="NVarChar(255)")]
+		public string Abogado
+		{
+			get
+			{
+				return this._Abogado;
+			}
+			set
+			{
+				if ((this._Abogado != value))
+				{
+					this._Abogado = value;
+				}
+			}
+		}
+	}
+	
+	public partial class UpLoadPDFPresupuestoResult
+	{
+		
+		private System.Nullable<int> _Id1;
+		
+		private string _PDFFileName;
+		
+		private System.Data.Linq.Binary _PDF;
+		
+		private string _Abogado;
+		
+		public UpLoadPDFPresupuestoResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id1", DbType="Int")]
+		public System.Nullable<int> Id1
+		{
+			get
+			{
+				return this._Id1;
+			}
+			set
+			{
+				if ((this._Id1 != value))
+				{
+					this._Id1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PDFFileName", DbType="NVarChar(255)")]
+		public string PDFFileName
+		{
+			get
+			{
+				return this._PDFFileName;
+			}
+			set
+			{
+				if ((this._PDFFileName != value))
+				{
+					this._PDFFileName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PDF", DbType="Image")]
+		public System.Data.Linq.Binary PDF
+		{
+			get
+			{
+				return this._PDF;
+			}
+			set
+			{
+				if ((this._PDF != value))
+				{
+					this._PDF = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Abogado", DbType="NVarChar(255)")]
+		public string Abogado
+		{
+			get
+			{
+				return this._Abogado;
+			}
+			set
+			{
+				if ((this._Abogado != value))
+				{
+					this._Abogado = value;
+				}
+			}
+		}
+	}
+	
+	public partial class UpLoadFuncionariosYPuestosResult
+	{
+		
+		private System.Nullable<int> _Id1;
+		
+		private string _ID;
+		
+		private string _ApellidoPaterno;
+		
+		private string _ApellidoMaterno;
+		
+		private string _PrimerNombre;
+		
+		private string _SegundoNombre;
+		
+		private string _Nacionalidad;
+		
+		private System.Nullable<double> _AñoNacimiento;
+		
+		private System.Nullable<double> _MesNacimiento;
+		
+		private System.Nullable<double> _DiaNacimiento;
+		
+		private string _Abogado;
+		
+		private System.Nullable<int> _Id11;
+		
+		private string _ID2;
+		
+		private System.Nullable<double> _AñoInicial;
+		
+		private System.Nullable<int> _MesInicial;
+		
+		private System.Nullable<int> _DiaInicial;
+		
+		private System.Nullable<double> _AñoFinal;
+		
+		private System.Nullable<int> _MesFinal;
+		
+		private System.Nullable<int> _DiaFinal;
+		
+		private string _DependenciaEntidad;
+		
+		private string _Puesto;
+		
+		private string _JefeInmediantoSuperior;
+		
+		private string _CurrículumVitae;
+		
+		private string _CargoActual;
+		
+		private string _Abogado1;
+		
+		public UpLoadFuncionariosYPuestosResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id1", DbType="Int")]
+		public System.Nullable<int> Id1
+		{
+			get
+			{
+				return this._Id1;
+			}
+			set
+			{
+				if ((this._Id1 != value))
+				{
+					this._Id1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="NVarChar(255)")]
+		public string ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApellidoPaterno", DbType="NVarChar(255)")]
+		public string ApellidoPaterno
+		{
+			get
+			{
+				return this._ApellidoPaterno;
+			}
+			set
+			{
+				if ((this._ApellidoPaterno != value))
+				{
+					this._ApellidoPaterno = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ApellidoMaterno", DbType="NVarChar(255)")]
+		public string ApellidoMaterno
+		{
+			get
+			{
+				return this._ApellidoMaterno;
+			}
+			set
+			{
+				if ((this._ApellidoMaterno != value))
+				{
+					this._ApellidoMaterno = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PrimerNombre", DbType="NVarChar(255)")]
+		public string PrimerNombre
+		{
+			get
+			{
+				return this._PrimerNombre;
+			}
+			set
+			{
+				if ((this._PrimerNombre != value))
+				{
+					this._PrimerNombre = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SegundoNombre", DbType="NVarChar(255)")]
+		public string SegundoNombre
+		{
+			get
+			{
+				return this._SegundoNombre;
+			}
+			set
+			{
+				if ((this._SegundoNombre != value))
+				{
+					this._SegundoNombre = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nacionalidad", DbType="NVarChar(255)")]
+		public string Nacionalidad
+		{
+			get
+			{
+				return this._Nacionalidad;
+			}
+			set
+			{
+				if ((this._Nacionalidad != value))
+				{
+					this._Nacionalidad = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AñoNacimiento", DbType="Float")]
+		public System.Nullable<double> AñoNacimiento
+		{
+			get
+			{
+				return this._AñoNacimiento;
+			}
+			set
+			{
+				if ((this._AñoNacimiento != value))
+				{
+					this._AñoNacimiento = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MesNacimiento", DbType="Float")]
+		public System.Nullable<double> MesNacimiento
+		{
+			get
+			{
+				return this._MesNacimiento;
+			}
+			set
+			{
+				if ((this._MesNacimiento != value))
+				{
+					this._MesNacimiento = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiaNacimiento", DbType="Float")]
+		public System.Nullable<double> DiaNacimiento
+		{
+			get
+			{
+				return this._DiaNacimiento;
+			}
+			set
+			{
+				if ((this._DiaNacimiento != value))
+				{
+					this._DiaNacimiento = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Abogado", DbType="NVarChar(255)")]
+		public string Abogado
+		{
+			get
+			{
+				return this._Abogado;
+			}
+			set
+			{
+				if ((this._Abogado != value))
+				{
+					this._Abogado = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id11", DbType="Int")]
+		public System.Nullable<int> Id11
+		{
+			get
+			{
+				return this._Id11;
+			}
+			set
+			{
+				if ((this._Id11 != value))
+				{
+					this._Id11 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID2", DbType="NVarChar(255)")]
+		public string ID2
+		{
+			get
+			{
+				return this._ID2;
+			}
+			set
+			{
+				if ((this._ID2 != value))
+				{
+					this._ID2 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AñoInicial", DbType="Float")]
+		public System.Nullable<double> AñoInicial
+		{
+			get
+			{
+				return this._AñoInicial;
+			}
+			set
+			{
+				if ((this._AñoInicial != value))
+				{
+					this._AñoInicial = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MesInicial", DbType="Int")]
+		public System.Nullable<int> MesInicial
+		{
+			get
+			{
+				return this._MesInicial;
+			}
+			set
+			{
+				if ((this._MesInicial != value))
+				{
+					this._MesInicial = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiaInicial", DbType="Int")]
+		public System.Nullable<int> DiaInicial
+		{
+			get
+			{
+				return this._DiaInicial;
+			}
+			set
+			{
+				if ((this._DiaInicial != value))
+				{
+					this._DiaInicial = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AñoFinal", DbType="Float")]
+		public System.Nullable<double> AñoFinal
+		{
+			get
+			{
+				return this._AñoFinal;
+			}
+			set
+			{
+				if ((this._AñoFinal != value))
+				{
+					this._AñoFinal = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MesFinal", DbType="Int")]
+		public System.Nullable<int> MesFinal
+		{
+			get
+			{
+				return this._MesFinal;
+			}
+			set
+			{
+				if ((this._MesFinal != value))
+				{
+					this._MesFinal = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiaFinal", DbType="Int")]
+		public System.Nullable<int> DiaFinal
+		{
+			get
+			{
+				return this._DiaFinal;
+			}
+			set
+			{
+				if ((this._DiaFinal != value))
+				{
+					this._DiaFinal = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DependenciaEntidad", DbType="NVarChar(255)")]
+		public string DependenciaEntidad
+		{
+			get
+			{
+				return this._DependenciaEntidad;
+			}
+			set
+			{
+				if ((this._DependenciaEntidad != value))
+				{
+					this._DependenciaEntidad = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Puesto", DbType="NVarChar(255)")]
+		public string Puesto
+		{
+			get
+			{
+				return this._Puesto;
+			}
+			set
+			{
+				if ((this._Puesto != value))
+				{
+					this._Puesto = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JefeInmediantoSuperior", DbType="NVarChar(255)")]
+		public string JefeInmediantoSuperior
+		{
+			get
+			{
+				return this._JefeInmediantoSuperior;
+			}
+			set
+			{
+				if ((this._JefeInmediantoSuperior != value))
+				{
+					this._JefeInmediantoSuperior = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CurrículumVitae", DbType="NVarChar(255)")]
+		public string CurrículumVitae
+		{
+			get
+			{
+				return this._CurrículumVitae;
+			}
+			set
+			{
+				if ((this._CurrículumVitae != value))
+				{
+					this._CurrículumVitae = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CargoActual", DbType="NVarChar(255)")]
+		public string CargoActual
+		{
+			get
+			{
+				return this._CargoActual;
+			}
+			set
+			{
+				if ((this._CargoActual != value))
+				{
+					this._CargoActual = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Abogado1", DbType="NVarChar(255)")]
+		public string Abogado1
+		{
+			get
+			{
+				return this._Abogado1;
+			}
+			set
+			{
+				if ((this._Abogado1 != value))
+				{
+					this._Abogado1 = value;
 				}
 			}
 		}
